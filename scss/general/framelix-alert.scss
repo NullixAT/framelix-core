@@ -1,0 +1,53 @@
+.framelix-alert {
+  padding: 7px 15px;
+  border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
+  margin-bottom: 5px;
+  background: var(--color-subtle-bg);
+  color: var(--color-subtle-bg-text);
+
+  &.framelix-alert-primary {
+    background: var(--color-primary-bg-subtle);
+    color: var(--color-primary-bg-subtle-text);
+  }
+
+  &.framelix-alert-success {
+    background: var(--color-success-bg-subtle);
+    color: var(--color-success-bg-subtle-text);
+  }
+
+  &.framelix-alert-warning {
+    background: var(--color-warning-bg-subtle);
+    color: var(--color-warning-bg-subtle-text);
+  }
+
+  &.framelix-alert-error {
+    background: var(--color-error-bg-subtle);
+    color:  var(--color-error-bg-subtle-text);
+  }
+
+  &:not(.framelix-alert-no-icon) {
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: "priority_high";
+      font-family: "Material Icons";
+      font-size: 24px;
+      flex: 0 0 auto;
+      opacity: 0.1;
+      margin-right: 10px;
+    }
+
+    &.framelix-alert-success::before {
+      content: "check";
+    }
+
+    &.framelix-alert-warning::before {
+      content: "warning";
+    }
+
+    &.framelix-alert-error::before {
+      content: "error";
+    }
+  }
+}

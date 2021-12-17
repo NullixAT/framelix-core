@@ -1,0 +1,190 @@
+.framelix-table {
+  width: 100%;
+  overflow: auto;
+
+  > table {
+    padding: 0;
+    width: 100%;
+    margin: 0 0 10px;
+    border-spacing: 1px;
+    height: 1px; /* Hack, to make 100% div height in cells possible, tested for edge old/new, chrome, firefox */
+    border: 1px solid var(--color-subtle-bg);
+
+
+    > tbody,
+    > thead,
+    > tfoot {
+      > tr {
+        background-color: var(--color-page-bg);
+
+        > * {
+          &[data-flag-smallwidth='1'] {
+            white-space: nowrap;
+            width: 1%;
+          }
+
+          &[data-flag-smallfont='1'] {
+            font-size: 80%;
+          }
+
+          &[data-flag-icon='1'] {
+            white-space: nowrap;
+            width: 1%;
+            min-width: 30px;
+            vertical-align: middle;
+            padding: 0;
+            height: 100%;
+
+            html[data-touch='1'] & {
+              min-height: 30px;
+            }
+
+            .framelix-button {
+              border-radius: 0;
+              border: 0;
+              margin: 0;
+              box-sizing: border-box;
+              height: 100%;
+              width: 100%;
+              padding: 2px 4px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              user-select: none;
+              text-align: center;
+              opacity: 0.8;
+
+              &:hover {
+                opacity: 1;
+              }
+
+              &::before {
+                font-size: 16px;
+
+                html[data-touch='1'] & {
+                  font-size: 24px;
+                }
+              }
+            }
+          }
+        }
+
+        > td {
+          padding: 2px 8px;
+        }
+
+        > [data-column-name="_checkbox"] {
+          text-align: center;
+          padding: 0;
+
+          label {
+            padding: 0;
+            width: 100%;
+            display: block;
+            cursor: pointer;
+          }
+        }
+
+        &.framelix-table-row-highlight td {
+          border-top: 1px solid var(--color-primary-bg-strong);
+          border-bottom: 1px solid var(--color-primary-bg-strong);
+        }
+
+        &:nth-child(even) {
+          background-color: var(--color-table-zebra);
+        }
+
+        &[data-url] > td:not([data-flag-ignoreurl='1']) {
+          cursor: pointer;
+        }
+      }
+    }
+
+    > thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+
+      th {
+        text-align: left;
+        margin: 0;
+        padding: 8px;
+        vertical-align: bottom;
+        user-select: none;
+        background: var(--color-subtle-bg);
+        color: var(--color-subtle-bg-text);
+        border-bottom: 3px solid var(--color-border-subtle);
+
+        &:not([data-flag-ignoresort]) {
+          cursor: pointer;
+        }
+      }
+    }
+
+    > tbody > tr:hover {
+      outline: 1px solid rgba(0, 0, 0, 0.5);
+    }
+
+    > tfoot td {
+      font-weight: bold;
+      border-top: 3px solid var(--color-border-subtle);
+      background: var(--color-subtle-bg);
+      color: var(--color-subtle-bg-text);
+    }
+  }
+
+  &.framelix-table-sortable > table > thead th {
+    &:not([data-flag-ignoresort]):hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .framelix-table-row-deleted {
+    text-decoration: line-through;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .framelix-table-row-deleted {
+    text-decoration: line-through;
+    opacity: 0.2;
+  }
+
+  [data-flag-ignoresort] .framelix-table-header-sort-info {
+    display: none;
+  }
+
+  .framelix-table-header-sort-info {
+    margin-top: 5px;
+    height: 18px;
+    display: flex;
+    font-size: 0.6rem;
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: var(--border-radius);
+    min-width: 50px;
+  }
+
+  .framelix-table-header-sort-info-number {
+    background-color: var(--color-strong-bg);
+    color: var(--color-strong-bg-text);
+    border-radius: var(--border-radius);
+    display: flex;
+    padding: 0 5px;
+    align-items: center;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .framelix-table-header-sort-info-text {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

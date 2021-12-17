@@ -1,0 +1,26 @@
+.framelix-form-field-search {
+  .framelix-form-field-search-input{
+    margin-bottom: 3px;
+  }
+  .framelix-form-field-search-input .framelix-button {
+    cursor: default;
+  }
+
+  .framelix-form-field-search-selected-options {
+    padding: 0;
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+.framelix-form-field-search-popup {
+  &.framelix-form-field-input {
+    padding: 0;
+  }
+
+  &[data-multiple='0'] .framelix-form-field-select-option-checkbox {
+    display: none;
+  }
+}

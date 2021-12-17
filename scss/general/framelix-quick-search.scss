@@ -1,0 +1,66 @@
+.framelix-quick-search {
+  .framelix-quick-search-options {
+    padding: 10px;
+    border: 1px solid var(--color-border-subtle);
+    margin-bottom: 10px;
+
+    .framelix-form-submit-status {
+      display: none;
+    }
+  }
+
+  .framelix-quick-search-settings {
+    font-size: 24px;
+  }
+
+  .framelix-quick-search-input {
+    display: flex;
+    padding: 0;
+    border-bottom: 3px solid var(--color-border-subtle);
+
+    .material-icons {
+      align-self: center;
+      margin: 0 10px;
+    }
+
+    button {
+      margin: 0;
+      box-shadow: none;
+      padding: 0 10px;
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      &:before {
+        font-size: 20px;
+      }
+    }
+
+    .framelix-quick-search-input-editable {
+      font-size: 110%;
+      font-weight: bold;
+      flex: 1 1 auto;
+      padding: 5px 5px 5px 10px;
+      overflow: hidden;
+      display: flex;
+
+      &:before {
+        content: "search";
+        font-family: "Material Icons";
+        padding-right: 10px;
+        align-self: center;
+      }
+
+      &[data-placeholder]:empty::before {
+        content: attr(data-placeholder);
+        font-family: var(--font);
+        opacity: 0.6;
+      }
+
+      [data-placeholder]:empty:focus::before {
+        content: "";
+      }
+    }
+  }
+}

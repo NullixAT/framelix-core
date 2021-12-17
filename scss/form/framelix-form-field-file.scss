@@ -1,0 +1,64 @@
+.framelix-form-field-file {
+
+  .dragging & {
+    border: 0;
+    background: var(--color-success-bg-subtle);
+    box-shadow: var(--color-success-bg) 0 0 10px inset, var(--color-success-bg) 0 0 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    transition: .2s;
+  }
+
+  .framelix-form-field-file-button input {
+    display: none;
+  }
+
+  .framelix-form-field-file-file {
+    padding: 2px 5px;
+    background: var(--color-subtle-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    margin-bottom: 3px;
+
+    button {
+      margin: 0 10px 0 0;
+
+      .material-icons {
+        margin: 0;
+      }
+    }
+  }
+
+  .framelix-form-field-file-file-strikethrough {
+    text-decoration: line-through;
+  }
+
+  .framelix-form-field-file-file-label {
+    display: flex;
+    align-items: center;
+  }
+
+  .framelix-form-field-file-file-label-size {
+    margin-left: 10px;
+    font-size: 90%;
+    line-height: 1.4;
+    opacity: 0.8;
+  }
+
+
+  .framelix-form-field-file-file-label-text {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .framelix-form-field-file-file-remove {
+    cursor: pointer;
+    opacity: 0.7;
+    padding: 5px;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

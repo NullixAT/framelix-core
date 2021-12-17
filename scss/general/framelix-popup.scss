@@ -1,0 +1,88 @@
+.framelix-popup {
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  z-index: 61;
+  background: var(--color-strong-bg);
+  color: var(--color-strong-bg-text);
+  box-shadow: rgba(0, 0, 0, 0.9) 0 0 5px;
+  --arrow-color: var(--color-strong-bg);
+  --arrow-size: 7px;
+
+  .framelix-popup-inner {
+    overflow: auto;
+    max-width: calc(100vw - 50px);
+    max-height: calc(100vh - 50px);
+  }
+
+  > [data-popper-arrow] {
+    opacity: 0;
+  }
+
+  &[data-show-arrow='1'] > [data-popper-arrow] {
+    opacity: 1;
+    transition: 0.2s;
+  }
+
+  &[data-popper-placement^='top'] > [data-popper-arrow] {
+    border-left: var(--arrow-size) solid transparent;
+    border-right: var(--arrow-size) solid transparent;
+    border-top: var(--arrow-size) solid var(--arrow-color);
+    bottom: calc(var(--arrow-size) * -1);
+  }
+
+  &[data-popper-placement^='bottom'] > [data-popper-arrow] {
+    border-left: var(--arrow-size) solid transparent;
+    border-right: var(--arrow-size) solid transparent;
+    border-bottom: var(--arrow-size) solid var(--arrow-color);
+    top: calc(var(--arrow-size) * -1);
+  }
+
+  &[data-popper-placement^='right'] > [data-popper-arrow] {
+    border-top: var(--arrow-size) solid transparent;
+    border-bottom: var(--arrow-size) solid transparent;
+    border-right: var(--arrow-size) solid var(--arrow-color);
+    left: calc(var(--arrow-size) * -1);
+  }
+
+  &[data-popper-placement^='left'] > [data-popper-arrow] {
+    border-top: var(--arrow-size) solid transparent;
+    border-bottom: var(--arrow-size) solid transparent;
+    border-left: var(--arrow-size) solid var(--arrow-color);
+    right: calc(var(--arrow-size) * -1);
+  }
+
+  &.framelix-popup-hex {
+    --arrow-color: transparent;
+    background: transparent;
+    color: transparent;
+  }
+
+  &.framelix-popup-primary {
+    --arrow-color: var(--color-primary-bg-subtle);
+    background: var(--color-primary-bg-subtle);
+    color: var(--color-primary-bg-subtle-text);
+  }
+
+  &.framelix-popup-success {
+    --arrow-color: var(--color-success-bg-subtle);
+    background: var(--color-success-bg-subtle);
+    color: var(--color-success-bg-subtle-text);
+  }
+
+  &.framelix-popup-warning {
+    --arrow-color: var(--color-warning-bg-subtle);
+    background: var(--color-warning-bg-subtle);
+    color: var(--color-warning-bg-subtle-text);
+  }
+
+  &.framelix-popup-error {
+    --arrow-color: var(--color-error-bg-subtle);
+    background: var(--color-error-bg-subtle);
+    color: var(--color-error-bg-subtle-text);
+  }
+
+  &.framelix-popup-trans {
+    background: transparent;
+    color: var(--color-page-text);
+  }
+}

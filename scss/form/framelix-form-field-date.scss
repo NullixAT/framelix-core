@@ -1,0 +1,11 @@
+.framelix-form-field-date {
+  .framelix-form-field-input {
+    padding: 4px;
+  }
+
+  html[data-color-scheme='dark'] & {
+    ::-webkit-calendar-picker-indicator {
+      filter: invert(90%);
+    }
+  }
+}

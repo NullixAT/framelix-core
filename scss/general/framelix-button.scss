@@ -1,0 +1,100 @@
+.framelix-button {
+  display: inline-flex;
+  text-decoration: none;
+  padding: 7px 10px;
+  min-height: 30px;
+  min-width: 30px;
+  border-radius: var(--border-radius);
+  margin-bottom: 3px;
+  cursor: pointer;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  box-sizing: border-box;
+  transition: box-shadow .2s;
+  background: var(--color-button-default);
+  color: var(--color-button-default-text);
+  border: none;
+
+  &:any-link {
+    color: var(--color-button-default-text);
+  }
+
+  &.framelix-button-subtle {
+    background: var(--color-subtle-bg);
+    color: var(--color-subtle-bg-text);
+  }
+
+  &.framelix-button-primary {
+    background: var(--color-primary-bg-strong);
+    color: var(--color-primary-bg-strong-text);
+  }
+
+  &.framelix-button-success {
+    background: var(--color-success-bg-strong);
+    color: var(--color-success-bg-strong-text);
+  }
+
+  &.framelix-button-warning {
+    background: var(--color-warning-bg-strong);
+    color: var(--color-warning-bg-strong-text);
+  }
+
+  &.framelix-button-error {
+    background: var(--color-error-bg-strong);
+    color: var(--color-error-bg-strong-text);
+  }
+
+  &.framelix-button-trans {
+    background: transparent;
+    box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
+    color: var(--color-page-text);
+  }
+
+  &[data-icon-left]::before {
+    font-family: "Material Icons";
+    font-size: 12px;
+    line-height: 10px;
+    display: block;
+    content: attr(data-icon-left);
+    margin-right: 10px;
+    font-weight: normal;
+  }
+
+  &[data-icon-right]::after {
+    font-family: "Material Icons";
+    font-size: 12px;
+    line-height: 10px;
+    display: block;
+    content: attr(data-icon-right);
+    margin-left: 10px;
+    font-weight: normal;
+  }
+
+  &:empty::before,
+  &:empty::after {
+    margin: 0;
+  }
+
+  &:hover {
+    box-shadow: rgba(255, 255, 255, 0.3) 0 0 999px inset;
+  }
+
+  &:active {
+    box-shadow: rgba(255, 255, 255, 0.4) 0 0 999px inset;
+  }
+
+  &.framelix-button-small {
+    font-size: 0.8rem;
+    padding: 4px 7px;
+  }
+
+  &.framelix-button-block {
+    display: flex;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

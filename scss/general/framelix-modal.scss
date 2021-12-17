@@ -1,0 +1,90 @@
+.framelix-modal-backdrop {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100%;
+  min-width: 100vw;
+  min-height: 100%;
+  opacity: 0;
+  transition: .5s;
+}
+
+.framelix-modal-backdrop-visible {
+  opacity: 1;
+}
+
+.framelix-modal {
+  pointer-events: auto;
+  z-index: 51;
+  text-align: center;
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  transition: .5s;
+  transform: translateY(200%) perspective(700px) rotateX(-180deg);
+
+  &.framelix-modal-visible {
+    transform: translateY(0) perspective(700px) rotateX(0deg);
+  }
+
+  .framelix-modal-inner {
+    text-align: left;
+    margin: 40px;
+    background: var(--color-page-bg);
+    color: var(--color-page-text);
+    border-radius: var(--border-radius);
+    box-shadow: rgba(0, 0, 0, 0.7) 0 0 10px;
+    position: relative;
+    min-height: 50px;
+    min-width: 50vw;
+    display: flex;
+  }
+
+  .framelix-modal-content {
+    min-height: 20px;
+    min-width: 60vw;
+    max-width: 94vw;
+    max-height: 90vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .framelix-modal-content-maximized {
+    width: 94vw;
+    height: 90vh;
+  }
+
+  .framelix-modal-content-body {
+    padding: 25px;
+    flex: 1 1 auto;
+    overflow: auto;
+  }
+
+  .framelix-modal-content-bottom {
+    padding: 10px;
+    text-align: center;
+  }
+
+  .framelix-modal-close {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+
+    button {
+      padding: 15px 8px;
+    }
+
+    button::before {
+      font-size: 24px;
+    }
+  }
+
+}

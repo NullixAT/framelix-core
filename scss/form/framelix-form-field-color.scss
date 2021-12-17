@@ -1,0 +1,70 @@
+.framelix-form-field-color {
+  .framelix-form-field-input {
+    padding: 4px;
+  }
+
+  .framelix-form-field-container-color-wrap {
+    display: flex;
+    align-items: center;
+    padding: 2px 5px;
+
+    label {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  input[type='text'] {
+    flex: 1 1 auto;
+    background: initial;
+    margin-right: 10px;
+    padding: 3px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--color-input-text);
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+    }
+  }
+
+  input[type='color'] {
+    cursor: pointer;
+    flex: 1 1 auto;
+    padding: 0;
+    height: 25px;
+    max-width: 30px;
+    background: initial;
+    -webkit-appearance: none;
+
+    &::-webkit-color-swatch-wrapper {
+      padding: 0;
+    }
+
+    &::-webkit-color-swatch {
+      border: none;
+    }
+  }
+
+  .framelix-form-field-container-color-pick {
+    display: none;
+  }
+
+  .framelix-form-field-container[data-empty='1'] {
+    input[type='color'] {
+      position: absolute;
+      visibility: hidden;
+    }
+
+    .framelix-form-field-container-color-pick {
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+}

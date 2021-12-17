@@ -1,0 +1,30 @@
+.framelix-form-field-twofactorcode {
+  .framelix-form-field-twofactorcode-inputs {
+    width: 200px;
+    display: inline-flex;
+    justify-content: center;
+
+    input {
+      text-align: center;
+      font-weight: bold;
+      margin-right: 2px;
+
+      &:nth-child(3) {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .framelix-form-field-twofactorcode-label {
+    margin-bottom: 5px;
+  }
+
+  .framelix-form-field-twofactorcode-backup {
+    margin-top: 15px;
+    font-size: 90%;
+
+    button {
+      font-size: 0.9rem;
+    }
+  }
+}

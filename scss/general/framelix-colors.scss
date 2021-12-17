@@ -1,0 +1,140 @@
+:root {
+  --color-primary-hue: 204;
+  --color-success-hue: 160;
+  --color-warning-hue: 28;
+  --color-error-hue: 353;
+  --color-subtle-hue: 205;
+
+  --color-contrast-modifier: 0%;
+
+  --color-page-bg-hue: 0;
+  --color-page-bg-saturation: 0%;
+  --color-page-bg-lightness: 100%;
+  --color-page-bg: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness)));
+  --color-page-text: #111;
+
+  --color-border-strong: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 50%));
+  --color-border-subtle: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 30%));
+
+  --color-success-bg-strong: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-success-bg-strong-text: white;
+  --color-success-bg-subtle: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-success-bg-subtle-text: var(--color-page-text);
+  --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+
+  --color-warning-bg-strong: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-warning-bg-strong-text: white;
+  --color-warning-bg-subtle: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-warning-bg-subtle-text: var(--color-page-text);
+  --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+
+  --color-error-bg-strong: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-error-bg-strong-text: white;
+  --color-error-bg-subtle: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-error-bg-subtle-text: var(--color-page-text);
+  --color-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+
+  --color-primary-bg-strong: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-primary-bg-strong-text: white;
+  --color-primary-bg-subtle: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-primary-bg-subtle-text: var(--color-page-text);
+  --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+
+  --color-button-default: hsl(240, 2%, 8%);
+  --color-button-default-text: white;
+
+  --color-strong-bg: hsl(var(--color-subtle-hue), 10%, 17%);
+  --color-strong-bg-text: white;
+  --color-strong-text: hsl(var(--color-subtle-hue), 10%, 5%);
+
+  --color-subtle-bg: hsl(var(--color-subtle-hue), 20%, 95%);
+  --color-subtle-bg-text: #333;
+  --color-subtle-text: hsl(var(--color-subtle-hue), 20%, 87%);
+
+  --color-input-background: var(--color-subtle-bg);
+  --color-input-border: hsl(var(--color-subtle-hue), 20%, 77%);
+  --color-input-text: var(--color-page-text);
+  --color-input-checkbox-background: hsl(0, 0%, 80%);
+
+  --color-table-zebra: hsl(var(--color-subtle-hue), 20%, 95%);
+
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 100px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+[data-color-scheme='dark'] {
+  --color-primary-hue: 204;
+  --color-success-hue: 160;
+  --color-warning-hue: 28;
+  --color-error-hue: 353;
+  --color-subtle-hue: 205;
+
+  --color-page-bg-hue: 220;
+  --color-page-bg-saturation: 10%;
+  --color-page-bg-lightness: 10%;
+  --color-page-bg: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness)));
+  --color-page-text: hsl(var(--color-page-bg-hue), 50%, 95%);
+
+  --color-border-strong: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 15%));
+  --color-border-subtle: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 5%));
+
+  --color-success-bg-strong: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-success-bg-strong-text: white;
+  --color-success-bg-subtle: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-success-bg-subtle-text: white;
+  --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+
+  --color-warning-bg-strong: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-warning-bg-strong-text: white;
+  --color-warning-bg-subtle: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-warning-bg-subtle-text: white;
+  --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+
+  --color-error-bg-strong: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-error-bg-strong-text: white;
+  --color-error-bg-subtle: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-error-bg-subtle-text: white;
+  --color-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+
+  --color-primary-bg-strong: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-primary-bg-strong-text: white;
+  --color-primary-bg-subtle: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-primary-bg-subtle-text: white;
+  --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+
+  --color-button-default: hsl(var(--color-subtle-hue), 20%, 20%);
+  --color-button-default-text: var(--color-page-text);
+
+  --color-strong-bg: hsl(var(--color-subtle-hue), 10%, 17%);
+  --color-strong-bg-text: var(--color-page-text);
+  --color-strong-text: hsl(var(--color-subtle-hue), 10%, 87%);
+
+  --color-subtle-bg: hsl(var(--color-subtle-hue), 20%, 20%);
+  --color-subtle-bg-text: var(--color-page-text);
+  --color-subtle-text: var(--color-page-text);
+
+  --color-input-background: var(--color-subtle-bg);
+  --color-input-border: hsl(var(--color-subtle-hue), 20%, 35%);
+  --color-input-text: var(--color-page-text);
+  --color-input-checkbox-background: rgba(0, 0, 0, 0.2);
+
+  --color-table-zebra: hsl(var(--color-subtle-hue), 20%, 13%);
+}
+
+[data-color-contrast='less'] {
+  --color-contrast-modifier: -40%;
+}
+
+[data-color-contrast='more'] {
+  --color-contrast-modifier: 30%;
+}

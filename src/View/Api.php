@@ -1,0 +1,151 @@
+<?php
+
+namespace Framelix\Framelix\View;
+
+use Framelix\Framelix\Network\JsCall;
+use Framelix\Framelix\Network\Request;
+use Framelix\Framelix\Network\Response;
+use Framelix\Framelix\Storable\Storable;
+use Framelix\Framelix\Storable\StorableFile;
+use Framelix\Framelix\Storable\User;
+use Framelix\Framelix\Url;
+use Framelix\Framelix\Utils\Buffer;
+use Framelix\Framelix\Utils\JsonUtils;
+use Framelix\Framelix\View;
+use ReflectionClass;
+
+use function header;
+use function http_response_code;
+use function strtolower;
+
+/**
+ * API view
+ */
+class Api extends View
+{
+    /**
+     * Custom api url
+     * @var string|null
+     */
+    protected ?string $customUrl = "~/api/(?<requestMethod>[A-Za-z0-9]+$)~";
+
+    /**
+     * Access role
+     * @var string|bool
+     */
+    protected string|bool $accessRole = "*";
+
+    /**
+     * Request type get|post|put|delete
+     * @var string
+     */
+    protected string $requestType;
+
+    /**
+     * Get signed url to point to the callPhpMethod() function
+     * @param string $phpMethod
+     * @param string $action
+     * @param array|null $additionalUrlParameters Additional array parameters to pass by
+     * @return string
+     */
+    public static function getSignedCallPhpMethodUrlString(
+        string $phpMethod,
+        string $action,
+        ?array $additionalUrlParameters = null
+    ): string {
+        return View::getUrl(
+            __CLASS__,
+            ['requestMethod' => 'callPhpMethod']
+        )->setParameter('phpMethod', $phpMethod)
+            ->setParameter('action', $action)
+            ->addParameters($additionalUrlParameters)
+            ->sign()
+            ->getUrlAsString();
+    }
+
+    /**
+     * On request
+     */
+    public function onRequest(): void
+    {
+        $requestMethod = $this->customUrlParameters['requestMethod'];
+        $reflection = new ReflectionClass($this);
+        $method = $reflection->hasMethod($requestMethod) ? $reflection->getMethod($requestMethod) : null;
+        if (!$method || $method->getDeclaringClass()->getName() !== $reflection->getName()) {
+            $this->error('Invalid api path/function');
+        }
+        $this->requestType = strtolower($_SERVER['REQUEST_METHOD'] ?? "get");
+        $method->invoke($this);
+    }
+
+    /**
+     * Download file
+     */
+    public function downloadFile(): void
+    {
+        Url::create()->verify();
+        $file = StorableFile::getById(Request::getGet('id'), Request::getGet('connectionId'));
+        if (!$file) {
+            http_response_code(404);
+            return;
+        }
+        Response::download($file);
+    }
+
+    /**
+     * Delete storable
+     */
+    public function deleteStorable(): void
+    {
+        Url::create()->verify(true);
+        $storable = Storable::getById(Request::getGet('id'), Request::getGet('connectionId'));
+        $storable?->delete();
+    }
+
+    /**
+     * Call php method
+     */
+    public function callPhpMethod(): void
+    {
+        Url::create()->verify(true);
+        $jsCall = new JsCall((string)Request::getGet('action'), Request::getBody());
+        $this->success($jsCall->call((string)Request::getGet('phpMethod')));
+    }
+
+    /**
+     * Require a specific role, return error of role does not match
+     * @param mixed $role
+     * @return void
+     */
+    public function requireRole(mixed $role): void
+    {
+        if (!User::hasRole($role)) {
+            $this->error('User has not the required role');
+        }
+    }
+
+    /**
+     * Show success
+     * @param mixed|null $result
+     * @return never
+     */
+    public function success(mixed $result = null): never
+    {
+        header("content-type: application/json");
+        echo JsonUtils::encode($result);
+        Buffer::flush();
+        die();
+    }
+
+    /**
+     * Show error response
+     * @param string|null $result
+     * @return never
+     */
+    public function error(?string $result = null): never
+    {
+        http_response_code(500);
+        echo $result;
+        die();
+    }
+}

@@ -1,0 +1,275 @@
+{
+    "directoryListHash": "1|31156227",
+    "views": {
+        "Framelix\\Framelix\\View\\Api": {
+            "accessRole": "*",
+            "customUrl": "~\/api\/(?<requestMethod>[A-Za-z0-9]+$)~",
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 101,
+            "pageTitle": "{classLangKey}",
+            "url": "\/api"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Config\\BackupRestore": {
+            "accessRole": "admin,configuration",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/config\/backuprestore"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Config\\Index": {
+            "accessRole": "admin,configuration",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/config"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Config\\ModuleConfig": {
+            "accessRole": "admin,configuration",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/config\/moduleconfig"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Config\\ModuleConfigTab": {
+            "accessRole": "admin,configuration",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/config\/moduleconfigtab"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Dev\\LangEditor": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": true,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/dev\/langeditor"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Dev\\Update": {
+            "accessRole": "admin,dev",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/dev\/update"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Dev\\UpdateDatabase": {
+            "accessRole": "admin,dev",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/dev\/updatedatabase"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Dev\\UpdateSourceCode": {
+            "accessRole": "admin,dev",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/dev\/updatesourcecode"
+        },
+        "Framelix\\Framelix\\View\\Backend\\ForgotPassword": {
+            "accessRole": "*",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/forgotpassword"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Login": {
+            "accessRole": "*",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/login"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Login2FA": {
+            "accessRole": "*",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/login2fa"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Logout": {
+            "accessRole": "*",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/logout"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Logs\\ErrorLogs": {
+            "accessRole": "admin,logs",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/logs\/errorlogs"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Logs\\SystemEventLogs": {
+            "accessRole": "admin,logs",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/logs\/systemeventlogs"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Setup": {
+            "accessRole": "*",
+            "customUrl": "\/setup",
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/setup"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Tests\\FormsDemo": {
+            "accessRole": "*",
+            "customUrl": null,
+            "devModeOnly": true,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/tests\/formsdemo"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Tests\\LayoutDemo": {
+            "accessRole": "*",
+            "customUrl": null,
+            "devModeOnly": true,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/tests\/layoutdemo"
+        },
+        "Framelix\\Framelix\\View\\Backend\\User\\Basic": {
+            "accessRole": "admin,usermanagement",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/user\/basic"
+        },
+        "Framelix\\Framelix\\View\\Backend\\User\\CancelSimulation": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 1,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/user\/cancelsimulation"
+        },
+        "Framelix\\Framelix\\View\\Backend\\User\\Index": {
+            "accessRole": "admin,usermanagement",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/user"
+        },
+        "Framelix\\Framelix\\View\\Backend\\User\\Password": {
+            "accessRole": "admin,usermanagement",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/user\/password"
+        },
+        "Framelix\\Framelix\\View\\Backend\\User\\Roles": {
+            "accessRole": "admin",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/user\/roles"
+        },
+        "Framelix\\Framelix\\View\\Backend\\User\\Search": {
+            "accessRole": "admin,usermanagement",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/user\/search"
+        },
+        "Framelix\\Framelix\\View\\Backend\\UserProfile\\Email": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/userprofile\/email"
+        },
+        "Framelix\\Framelix\\View\\Backend\\UserProfile\\EmailVerification": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/userprofile\/emailverification"
+        },
+        "Framelix\\Framelix\\View\\Backend\\UserProfile\\Fido2": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/userprofile\/fido2"
+        },
+        "Framelix\\Framelix\\View\\Backend\\UserProfile\\Index": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/userprofile"
+        },
+        "Framelix\\Framelix\\View\\Backend\\UserProfile\\Password": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/userprofile\/password"
+        },
+        "Framelix\\Framelix\\View\\Backend\\UserProfile\\TwoFactor": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/userprofile\/twofactor"
+        }
+    }
+}

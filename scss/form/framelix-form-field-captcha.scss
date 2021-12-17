@@ -1,0 +1,17 @@
+.framelix-form-field-captcha {
+  .framelix-form-field-captcha-verified {
+    display: inline-flex;
+    align-items: center;
+    margin: 5px 0;
+
+    .framelix-loading {
+      margin-right: 10px;
+    }
+
+    .material-icons {
+      font-size: 16px;
+      margin-right: 10px;
+      color: var(--color-success-text);
+    }
+  }
+}

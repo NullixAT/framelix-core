@@ -1,0 +1,15 @@
+.framelix-form-field-textarea {
+  textarea {
+    display: none;
+  }
+
+  .framelix-form-field-textarea-contenteditable {
+    overflow: auto;
+
+    :not(br):not(p):not(div):not(span), {
+      all: unset;
+      display: block;
+
+    }
+  }
+}

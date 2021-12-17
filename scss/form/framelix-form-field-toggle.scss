@@ -1,0 +1,33 @@
+.framelix-form-field-toggle {
+
+  .framelix-form-field-input {
+    cursor: pointer;
+    user-select: none;
+    width: 68px;
+    padding: 3px;
+    display: inline-flex;
+    color: white;
+    min-height: 34px;
+
+    input[type='checkbox'] {
+      flex: 1 1 auto;
+      margin: 0;
+      height: auto;
+      width: auto;
+    }
+
+    &[data-style='toggle'] {
+      input:not(:checked) {
+        margin-right: calc(50% + 3px);
+      }
+
+      input:checked {
+        margin-left: calc(50% + 3px);
+      }
+    }
+
+    &[data-style='checkbox'] {
+      width: 34px;
+    }
+  }
+}

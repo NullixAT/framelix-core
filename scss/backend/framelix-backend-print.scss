@@ -1,0 +1,22 @@
+@media print {
+  .framelix-sidebar,
+  .framelix-sidebar-toggle,
+  .framelix-toast,
+  [data-flag-icon='1'],
+  button,
+  .framelix-popup {
+    display: none !important;
+  }
+  .framelix-page-title {
+    padding: 0 !important;
+  }
+  table {
+    border-spacing: 0 !important;
+  }
+  td, th {
+    border: 1px solid black !important;
+  }
+  .framelix-content {
+    padding: 0 !important;
+  }
+}

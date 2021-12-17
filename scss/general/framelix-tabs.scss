@@ -1,0 +1,44 @@
+.framelix-tabs {
+  .framelix-tab-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: var(--border-radius);
+  }
+
+  .framelix-tab-button {
+    margin: 0;
+    font-weight: bold;
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+    color: var(--color-page-text);
+    padding: 10px 25px;
+
+    &[data-active='1'] {
+      background: var(--color-primary-bg-subtle);
+      color: var(--color-primary-bg-subtle-text);
+    }
+
+    &:hover {
+      box-shadow: rgba(0, 0, 0, 0.1) 0 0 1000px inset;
+    }
+
+    html[data-screen-size='s'] & {
+      width: 50%;
+    }
+  }
+
+  .framelix-tab-contents {
+    padding: 15px;
+    border: 1px solid var(--color-border-subtle);
+    border-radius: var(--border-radius);
+  }
+
+  .framelix-tab-content {
+    display: none;
+
+    &[data-active='1'] {
+      display: block;
+    }
+  }
+}
