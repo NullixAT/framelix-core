@@ -2,6 +2,7 @@
 
 namespace Framelix\Framelix\View\Backend;
 
+use Exception;
 use Framelix\Framelix\Config;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
@@ -19,13 +20,17 @@ use Framelix\Framelix\Storable\UserToken;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
+use Framelix\Framelix\Utils\Shell;
 use Throwable;
 
 use function file_exists;
 use function http_response_code;
 use function strtolower;
+use function version_compare;
 
+use const FRAMELIX_MIN_PHP_VERSION;
 use const FRAMELIX_MODULE;
+use const PHP_VERSION;
 
 /**
  * Setup interface for application setup
@@ -55,14 +60,24 @@ class Setup extends View
             echo "This application is already setup";
             exit;
         }
-        $minPhpVersion = "8.1.0";
-        if (version_compare(PHP_VERSION, $minPhpVersion) < 0) {
+        if (version_compare(PHP_VERSION, FRAMELIX_MIN_PHP_VERSION) < 0) {
             http_response_code(500);
-            echo "This application requires at least PHP $minPhpVersion";
+            echo "This application requires at least PHP " . FRAMELIX_MIN_PHP_VERSION;
             exit;
         }
 
-        $requiredExtensions = ['exif', 'fileinfo', 'mbstring', 'mysqli', 'sockets', 'json', 'curl', 'simplexml', 'zip', 'openssl'];
+        $requiredExtensions = [
+            'exif',
+            'fileinfo',
+            'mbstring',
+            'mysqli',
+            'sockets',
+            'json',
+            'curl',
+            'simplexml',
+            'zip',
+            'openssl'
+        ];
         $missingExtensions = [];
 
         foreach ($requiredExtensions as $requiredExtension) {
@@ -72,8 +87,10 @@ class Setup extends View
         }
         if ($missingExtensions) {
             http_response_code(500);
-            echo "This application requires the following php extensions to be functional: " . implode(", ",
-                    $missingExtensions) . "<br/>Please add it to your php.ini configuration";
+            echo "This application requires the following php extensions to be functional: " . implode(
+                    ", ",
+                    $missingExtensions
+                ) . "<br/>Please add it to your php.ini configuration";
             exit;
         }
 
@@ -86,6 +103,16 @@ class Setup extends View
                 Response::showFormValidationErrorResponse(['password2' => '__framelix_password_notmatch__']);
             }
             try {
+                Config::set('shellAliases[php]', Request::getPost('phpExecutable'));
+                $shell = Shell::execute("php {*}", ["-r", "echo PHP_VERSION;"]);
+                if ($shell->status !== 0 || !($shell->output[0] ?? null) && version_compare(
+                        $shell->output[0],
+                        FRAMELIX_MIN_PHP_VERSION
+                    ) < 0) {
+                    throw new Exception(
+                        "PHP Executable must point to a php command line which has at least version " . FRAMELIX_MIN_PHP_VERSION
+                    );
+                }
                 Config::set('database[default]', [
                     "host" => Request::getPost('dbHost'),
                     "username" => Request::getPost('dbUser'),
@@ -132,7 +159,8 @@ class Setup extends View
                     'salts',
                     'languageDefault',
                     'languageFallback',
-                    'languageMultiple'
+                    'languageMultiple',
+                    'shellAliases'
                 ];
                 $configData = [];
                 foreach ($keys as $key) {
@@ -140,12 +168,12 @@ class Setup extends View
                 }
                 $configData['errorLogDisk'] = true;
                 Config::writetConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
-                if(Config::get('setupDoneRedirect')){
-                    Url::create()->appendPath(Config::get('setupDoneRedirect'))->redirect();
+                if (Config::get('setupDoneRedirect')) {
+                    Url::getApplicationUrl()->appendPath(Config::get('setupDoneRedirect'))->redirect();
                 }
                 Url::getApplicationUrl()->redirect();
             } catch (Throwable $e) {
-                Response::showFormValidationErrorResponse($e->getMessage() . $e->getTraceAsString());
+                Response::showFormValidationErrorResponse($e->getMessage() . "\n" . $e->getTraceAsString());
             }
         }
         $this->showContentBasedOnRequestType();
@@ -184,6 +212,36 @@ class Setup extends View
         $field->required = true;
         $field->type = "url";
         $field->defaultValue = Url::getApplicationUrl()->getUrlAsString();
+        $form->addField($field);
+
+        // check for default php paths
+        $paths = [
+            '/usr/bin/php8.1',
+            '/usr/bin/php8.2',
+            '/usr/sbin/php8.1',
+            '/usr/sbin/php8.2',
+            'php8.1',
+            'php',
+            '/usr/bin/php',
+            'c:/php/php.exe'
+        ];
+        $phpPath = '';
+        foreach ($paths as $path) {
+            $shell = Shell::execute("{*}", [$path, "-r", "echo PHP_VERSION;"]);
+            if ($shell->status === 0 && $shell->output[0] && version_compare(
+                    $shell->output[0],
+                    FRAMELIX_MIN_PHP_VERSION
+                ) >= 0) {
+                $phpPath = $path;
+            }
+        }
+
+        $field = new Text();
+        $field->name = "phpExecutable";
+        $field->label = "__framelix_setup_phpexecutable_label__";
+        $field->labelDescription = "__framelix_setup_phpexecutable_desc__";
+        $field->required = true;
+        $field->defaultValue = $phpPath;
         $form->addField($field);
 
         $field = new Html();

@@ -1033,5 +1033,11 @@
     ],
     "__yes__": [
         "Yes"
+    ],
+    "__framelix_setup_phpexecutable_label__" : [
+        "PHP Path"
+    ],
+    "__framelix_setup_phpexecutable_desc__" : [
+        "The path to the executable php command line.<br/>It should already be prefilled when the best matching path."
     ]
 }

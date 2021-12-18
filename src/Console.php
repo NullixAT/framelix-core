@@ -17,6 +17,7 @@ use function is_array;
 use function is_bool;
 use function is_string;
 use function readline;
+use function readline_add_history;
 use function str_starts_with;
 use function unlink;
 
@@ -169,6 +170,7 @@ class Console
         if (is_array($availableAnswers) && !in_array($answer, $availableAnswers)) {
             return self::question($message, $availableAnswers, $defaultAnswer);
         }
+        readline_add_history($answer);
         return is_string($answer) ? $answer : '';
     }
 

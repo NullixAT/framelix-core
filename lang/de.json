@@ -252,8 +252,8 @@
         "d5ef9"
     ],
     "__framelix_backupreestore__": [
-        "Hier kannst du die aktuelle Konfiguration sichern oder ein Backup aus der Sicherung einspielen.<br/>Achtung: Dieses Backup beinhaltet nur die Konfiguration, keine Datenbankdaten oder Source Codes.",
-        "ddde8"
+        "Hier kannst du die aktuelle Konfiguration sichern oder ein Backup aus der Sicherung einspielen.<br\/>Achtung: Dieses Backup beinhaltet nur die Konfiguration, keine Datenbankdaten oder Source Codes.",
+        "af0bc"
     ],
     "__framelix_backupreestore_download__": [
         "Backup downloaden",

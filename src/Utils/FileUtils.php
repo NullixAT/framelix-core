@@ -8,11 +8,13 @@ use function file_exists;
 use function is_dir;
 use function preg_match;
 use function realpath;
+use function rmdir;
 use function scandir;
 use function str_replace;
 use function strlen;
 use function strpos;
 use function substr;
+use function unlink;
 
 use const SCANDIR_SORT_ASCENDING;
 
@@ -112,16 +114,41 @@ class FileUtils
             }
             $path = $directory . "/" . $file;
             if (is_dir($path)) {
-                if ($recursive) {
-                    $files = array_merge($files, self::getFiles($path, $regex, $recursive));
-                }
                 if ($includeDirectoriesPaths) {
                     $files[] = $path;
+                }
+                if ($recursive) {
+                    $files = array_merge($files, self::getFiles($path, $regex, $recursive));
                 }
             } elseif (!$regex || preg_match($regex, $path)) {
                 $files[] = $path;
             }
         }
         return $files;
+    }
+
+    /**
+     * Delete directory including all files in it including the directory itself
+     * @param string $directory
+     * @return void
+     */
+    public static function deleteDirectory(string $directory): void
+    {
+        if (!is_dir($directory)) {
+            return;
+        }
+        $files = scandir($directory);
+        foreach ($files as $file) {
+            if ($file === "." || $file === "..") {
+                continue;
+            }
+            $path = $directory . "/" . $file;
+            if (is_dir($path)) {
+                self::deleteDirectory($path);
+            } else {
+                unlink($path);
+            }
+        }
+        rmdir($directory);
     }
 }

@@ -15,6 +15,7 @@ use function filesize;
 use function header;
 use function http_response_code;
 use function implode;
+use function nl2br;
 use function readfile;
 use function strlen;
 use function substr;
@@ -100,7 +101,7 @@ class Response
     public static function showFormValidationErrorResponse(array|string|null $messages): never
     {
         http_response_code(406);
-        JsonUtils::output($messages);
+        JsonUtils::output(nl2br($messages));
     }
 
 
