@@ -132,7 +132,7 @@
         "Multilanguage"
     ],
     "__config_languagemultiple_label_desc__": [
-        "This will allow the user to choose between supported languages.<br\/>Attention: Once you have a running application and you disable multilanguage, ALL existing URLs are invalid, because the language is not contained in the URL anymore. Effectively making all existing google entries, bookmarks, etc... invalid. Never do disable this in production when it was activated before."
+        "This will allow the user to choose between supported languages.<br\/>This setting is for the backend and also maybe for frontend pages, depending on the implementation of the application.<br\/>Attention: Once you have a running application and you disable multilanguage, ALL existing URLs are invalid, because the language is not contained in the URL anymore. Effectively making all existing google entries, bookmarks, etc... invalid. Never do disable this in production when it was activated before."
     ],
     "__config_languagessupported_label__": [
         "Supported languages"
@@ -715,6 +715,9 @@
     ],
     "__framelix_systemeventlog_5__": [
         "Login successfull with e-mail {email}"
+    ],
+    "__framelix_systemeventlog_6__": [
+        "Cron: {0}"
     ],
     "__framelix_systemvalues__": [
         "Basic app values"

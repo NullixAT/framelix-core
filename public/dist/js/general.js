@@ -3475,19 +3475,15 @@ class FramelixTable {
       switch (action) {
         case 'delete-storable':
           if ((await FramelixModal.confirm('__sure__').closed).confirmed) {
-            const request = FramelixRequest.request('get', $(this).attr('data-url'), null);
+            const result = await FramelixApi.callPhpMethod($(this).attr('data-url'));
 
-            if ((await request.checkHeaders()) === 0) {
-              const result = await request.getJson();
-
-              if (result.content !== '') {
-                FramelixToast.error(result.content);
-                return;
-              }
-
-              let row = $(this).closest('tr');
-              row.addClass('framelix-table-row-deleted');
+            if (result !== true) {
+              FramelixToast.error(result);
+              return;
             }
+
+            let row = $(this).closest('tr');
+            row.addClass('framelix-table-row-deleted');
           }
 
           break;

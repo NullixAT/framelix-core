@@ -10,7 +10,6 @@ use Framelix\Framelix\StorableMeta;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\ClassUtils;
-use Framelix\Framelix\View\Api;
 use PHPMailer\PHPMailer\Exception;
 
 use function get_class;
@@ -200,7 +199,7 @@ class Search extends Select
             throw new \Exception('Missing search method for ' . get_class($this));
         }
         $properties = parent::jsonSerialize();
-        $properties['properties']['signedUrlSearch'] = Api::getSignedCallPhpMethodUrlString(
+        $properties['properties']['signedUrlSearch'] = JsCall::getCallUrl(
             $this->searchMethod['callableMethod'],
             $this->searchMethod['action'],
             $this->searchMethod['parameters']

@@ -26,7 +26,7 @@ class UpdateDatabase extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin,dev";
+    protected string|bool $accessRole = "dev";
 
     /**
      * On request
@@ -34,16 +34,16 @@ class UpdateDatabase extends View
     public function onRequest(): void
     {
         if (Request::getPost('safeQueriesExecute') || Request::getPost('unsafeQueriesExecute')) {
-            $shell = Shell::execute("php {*}", [
+            $shell = Shell::prepare("php {*}", [
                 __DIR__ . "/../../../../console.php",
                 "updateDatabaseSafe"
-            ]);
+            ])->execute();
             Toast::info(implode("<br/>", $shell->output));
             if (Request::getPost('unsafeQueriesExecute')) {
-                $shell = Shell::execute("php {*}", [
+                $shell = Shell::prepare("php {*}", [
                     __DIR__ . "/../../../../console.php",
                     "updateDatabaseUnsafe"
-                ]);
+                ])->execute();
                 Toast::info(implode("<br/>", $shell->output));
             }
             Url::getBrowserUrl()->redirect();

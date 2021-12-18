@@ -30,7 +30,7 @@ $arr = [
 $filelist = array_keys($arr);
 
 foreach ($builtInModules as $module) {
-    $shell = Shell::execute("php {*}", [__DIR__ . "/create-module-package.php", $module]);
+    $shell = Shell::prepare("php {*}", [__DIR__ . "/create-module-package.php", $module])->execute();
     $zipFile = $shell->output[0];
     $arr["modules/$module.zip"] = $zipFile;
 }

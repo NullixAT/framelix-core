@@ -8,6 +8,7 @@ use Framelix\Framelix\Html\Compiler;
 use Framelix\Framelix\Html\HtmlUtils;
 use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Lang;
+use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\Buffer;
@@ -141,7 +142,7 @@ abstract class LayoutView extends View
               FramelixLang.debugMissingLangKeysApiUrl = <?=JsonUtils::encode(
                   Config::get(
                       'langDebugMode'
-                  ) ? Api::getSignedCallPhpMethodUrlString(Lang::class, 'missing-keys') : null
+                  ) ? JsCall::getCallUrl(Lang::class, 'missing-keys') : null
               )?>;
               FramelixLang.lang = <?=JsonUtils::encode(Lang::$lang)?>;
               FramelixLang.langFallback = <?=JsonUtils::encode(Config::get('languageFallback') ?? 'en')?>;

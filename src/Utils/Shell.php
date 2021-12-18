@@ -44,13 +44,13 @@ class Shell
     public array $output = [];
 
     /**
-     * Execute a shell command
+     * Prepare a shell command
      * @param string $cmd Example: mysql --host={host} -u {user} {db} < {file}
      *      If the cmd ends with {*} than all $params will be appended automatically and you not need to use {placeholders}
      * @param array $params The parameters to replace in $cmd
      * @return Shell
      */
-    public static function execute(
+    public static function prepare(
         string $cmd,
         array $params = []
     ): Shell {
@@ -74,7 +74,16 @@ class Shell
         }
         // 2>&1 pipes stderr to stdout to catch all to output
         $shell->cmd = "2>&1 " . $cmd;
-        exec($shell->cmd, $shell->output, $shell->status);
         return $shell;
+    }
+
+    /**
+     * Execute the shell command
+     * @return self
+     */
+    public function execute(): self
+    {
+        exec($this->cmd, $this->output, $this->status);
+        return $this;
     }
 }

@@ -1,5 +1,5 @@
 {
-    "directoryListHash": "1|31156227",
+    "directoryListHash": "1|2970201324",
     "views": {
         "Framelix\\Framelix\\View\\Api": {
             "accessRole": "*",
@@ -56,7 +56,7 @@
             "url": "\/backend\/dev\/langeditor"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\Update": {
-            "accessRole": "admin,dev",
+            "accessRole": "dev",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -65,7 +65,7 @@
             "url": "\/backend\/dev\/update"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\UpdateDatabase": {
-            "accessRole": "admin,dev",
+            "accessRole": "dev",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -74,7 +74,7 @@
             "url": "\/backend\/dev\/updatedatabase"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\UpdateSourceCode": {
-            "accessRole": "admin,dev",
+            "accessRole": "dev",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -144,24 +144,6 @@
             "depth": 3,
             "pageTitle": "{classLangKey}",
             "url": "\/backend\/setup"
-        },
-        "Framelix\\Framelix\\View\\Backend\\Tests\\FormsDemo": {
-            "accessRole": "*",
-            "customUrl": null,
-            "devModeOnly": true,
-            "multilanguage": true,
-            "depth": 3,
-            "pageTitle": "{classLangKey}",
-            "url": "\/backend\/tests\/formsdemo"
-        },
-        "Framelix\\Framelix\\View\\Backend\\Tests\\LayoutDemo": {
-            "accessRole": "*",
-            "customUrl": null,
-            "devModeOnly": true,
-            "multilanguage": true,
-            "depth": 3,
-            "pageTitle": "{classLangKey}",
-            "url": "\/backend\/tests\/layoutdemo"
         },
         "Framelix\\Framelix\\View\\Backend\\User\\Basic": {
             "accessRole": "admin,usermanagement",

@@ -2,6 +2,7 @@
 
 namespace Framelix\Framelix\View\Backend\Dev;
 
+use Framelix\Framelix\Config;
 use Framelix\Framelix\Form\Field\Html;
 use Framelix\Framelix\Form\Field\Toggle;
 use Framelix\Framelix\Form\Form;
@@ -12,7 +13,6 @@ use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\Shell;
-use Framelix\Framelix\View\Api;
 use Framelix\Framelix\View\Backend\View;
 use SimpleXMLElement;
 
@@ -31,7 +31,7 @@ class UpdateSourceCode extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin,dev";
+    protected string|bool $accessRole = "dev";
 
     /**
      * On js call
@@ -41,7 +41,7 @@ class UpdateSourceCode extends View
     {
         switch ($jsCall->action) {
             case 'check-svn-status':
-                $shell = Shell::execute("update-source-svn status -u --xml {*}", [FRAMELIX_APP_ROOT]);
+                $shell = Shell::prepare("update-source-svn status -u --xml {*}", [FRAMELIX_APP_ROOT])->execute();
                 $output = $shell->output;
                 if ($shell->status) {
                     $jsCall->result = implode(",", $output);
@@ -73,7 +73,7 @@ class UpdateSourceCode extends View
     {
         if (Request::getPost('update-source')) {
             if (Request::getPost('update-svn')) {
-                $shell = Shell::execute("update-source-svn up {*}", [FRAMELIX_APP_ROOT]);
+                $shell = Shell::prepare("update-source-svn up {*}", [FRAMELIX_APP_ROOT])->execute();
                 if ($shell->status) {
                     Toast::error('Command error: ' . implode("<br/>", $shell->output));
                 } else {
@@ -83,10 +83,10 @@ class UpdateSourceCode extends View
             if (Request::getPost('dbupdate')) {
                 // sleep for 3 seconds because default opcache is configured to check only each 2 seconds for file updates
                 sleep(3);
-                $shell = Shell::execute("php {*}", [
+                $shell = Shell::prepare("php {*}", [
                     __DIR__ . "/../../../../console.php",
                     "updateDatabaseSafe"
-                ]);
+                ])->execute();
                 Toast::info(implode("<br/>", $shell->output));
             }
             Url::getBrowserUrl()->redirect();
@@ -103,19 +103,15 @@ class UpdateSourceCode extends View
         if ($this->isSvn()) {
             $form->addSubmitButton("update-svn", '__framelix_view_backend_dev_updatesourcecode_svnupdate__', "upgrade");
         }
-        if ($this->isGit()) {
-            $form->addSubmitButton("pull-git", "__framelix_view_backend_dev_updatesourcecode_gitpull__", "upgrade");
-        }
         $form->show();
         ?>
         <script>
           (async function () {
             const isSvn = <?=JsonUtils::encode($this->isSvn())?>;
-            const isGit = <?=JsonUtils::encode($this->isGit())?>;
             const form = FramelixForm.getById('<?=$form->id?>')
             const status = form.fields['status']
             if (isSvn) {
-              status.setValue(await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+              status.setValue(await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                   __CLASS__,
                   'check-svn-status'
               )?>'))
@@ -146,15 +142,6 @@ class UpdateSourceCode extends View
         $form->addField($field);
 
         return $form;
-    }
-
-    /**
-     * Check if app is under git version control
-     * @return bool
-     */
-    private function isGit(): bool
-    {
-        return is_dir(FRAMELIX_APP_ROOT . "/.git");
     }
 
     /**

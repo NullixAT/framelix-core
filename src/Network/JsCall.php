@@ -4,6 +4,7 @@ namespace Framelix\Framelix\Network;
 
 use Exception;
 use Framelix\Framelix\Utils\Buffer;
+use Framelix\Framelix\View;
 use ReflectionClass;
 
 use function class_exists;
@@ -25,6 +26,28 @@ class JsCall
      * @var mixed
      */
     public mixed $result = null;
+
+    /**
+     * Get signed url to point to the callPhpMethod() function
+     * @param string $phpMethod
+     * @param string $action
+     * @param array|null $additionalUrlParameters Additional array parameters to pass by
+     * @return string
+     */
+    public static function getCallUrl(
+        string $phpMethod,
+        string $action,
+        ?array $additionalUrlParameters = null
+    ): string {
+        return View::getUrl(
+            View\Api::class,
+            ['requestMethod' => 'callPhpMethod']
+        )->setParameter('phpMethod', $phpMethod)
+            ->setParameter('action', $action)
+            ->addParameters($additionalUrlParameters)
+            ->sign()
+            ->getUrlAsString();
+    }
 
     /**
      * Constructor

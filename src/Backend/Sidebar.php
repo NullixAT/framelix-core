@@ -248,7 +248,7 @@ abstract class Sidebar
         }
         echo '</div>';
 
-        echo '<div class="framelix-sidebar-settings" data-url="' . View\Api::getSignedCallPhpMethodUrlString(
+        echo '<div class="framelix-sidebar-settings" data-url="' . JsCall::getCallUrl(
                 __CLASS__,
                 'settings'
             ) . '">';

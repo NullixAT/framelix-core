@@ -3,9 +3,9 @@
 namespace Framelix\Framelix\Html;
 
 use Framelix\Framelix\Form\Field;
+use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
-use Framelix\Framelix\View\Api;
 use JsonSerializable;
 
 /**
@@ -180,7 +180,7 @@ class QuickSearch implements JsonSerializable
         foreach ($this as $key => $value) {
             $properties[$key] = $value;
         }
-        $properties['signedUrlSearch'] = Api::getSignedCallPhpMethodUrlString(
+        $properties['signedUrlSearch'] = JsCall::getCallUrl(
             $this->searchMethod['callableMethod'],
             $this->searchMethod['action'],
             $this->searchMethod['parameters']

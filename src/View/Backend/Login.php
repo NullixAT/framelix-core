@@ -20,7 +20,6 @@ use Framelix\Framelix\Storable\User;
 use Framelix\Framelix\Storable\UserToken;
 use Framelix\Framelix\Storable\UserWebAuthn;
 use Framelix\Framelix\Url;
-use Framelix\Framelix\View\Api;
 use Framelix\Framelix\View\Backend\UserProfile\Fido2;
 use lbuchs\WebAuthn\Binary\ByteBuffer;
 
@@ -202,7 +201,7 @@ class Login extends View
               const fidoButton = $('.framelix-button[data-action=\'fido2\']')
               fidoButton.addClass('fido2-enabled')
               fidoButton.on('click', async function () {
-                let getArgsServerData = await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                let getArgsServerData = await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                     __CLASS__,
                     'webauthn-getargs'
                 )?>', form.getValues())
@@ -220,7 +219,7 @@ class Login extends View
                     'authenticatorData': Framelix.arrayBufferToBase64(getArgsClientData.response.authenticatorData),
                     'signature': Framelix.arrayBufferToBase64(getArgsClientData.response.signature),
                   }
-                  let loginResult = await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                  let loginResult = await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                       __CLASS__,
                       'webauthn-login'
                   )?>', loginArgsParams)

@@ -42,28 +42,6 @@ class Api extends View
     protected string $requestType;
 
     /**
-     * Get signed url to point to the callPhpMethod() function
-     * @param string $phpMethod
-     * @param string $action
-     * @param array|null $additionalUrlParameters Additional array parameters to pass by
-     * @return string
-     */
-    public static function getSignedCallPhpMethodUrlString(
-        string $phpMethod,
-        string $action,
-        ?array $additionalUrlParameters = null
-    ): string {
-        return View::getUrl(
-            __CLASS__,
-            ['requestMethod' => 'callPhpMethod']
-        )->setParameter('phpMethod', $phpMethod)
-            ->setParameter('action', $action)
-            ->addParameters($additionalUrlParameters)
-            ->sign()
-            ->getUrlAsString();
-    }
-
-    /**
      * On request
      */
     public function onRequest(): void
@@ -90,16 +68,6 @@ class Api extends View
             return;
         }
         Response::download($file);
-    }
-
-    /**
-     * Delete storable
-     */
-    public function deleteStorable(): void
-    {
-        Url::create()->verify(true);
-        $storable = Storable::getById(Request::getGet('id'), Request::getGet('connectionId'));
-        $storable?->delete();
     }
 
     /**

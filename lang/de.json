@@ -176,8 +176,8 @@
         "75543"
     ],
     "__config_languagemultiple_label_desc__": [
-        "Das erlaubt dem Benutzer die Auswahl aus mehreren Sprachen.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte diese Einstellung\u00a0 nicht mehr ge\u00e4ndert werden. Bei \u00c4nderung werden ALLE existierenden URLs ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
-        "1a124"
+        "Das erlaubt dem Benutzer die Auswahl aus mehreren Sprachen.<br\/>Diese Einstellung gilt f\u00fcr dieses Backend und m\u00f6glicherweise auch f\u00fcr eventuelle Frontend Seiten. Dies kommt auf die Implentierung an.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte diese Einstellung\u00a0 nicht mehr ge\u00e4ndert werden. Bei \u00c4nderung werden ALLE existierenden URLs ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
+        "33752"
     ],
     "__config_languagessupported_label__": [
         "Unterst\u00fctzte Sprachen",
@@ -954,6 +954,10 @@
     "__framelix_systemeventlog_5__": [
         "Login erfolgreich mit E-Mail {email}",
         "9932d"
+    ],
+    "__framelix_systemeventlog_6__": [
+        "Cron: {0}",
+        "33324"
     ],
     "__framelix_systemvalues__": [
         "Grundeinstellungen",

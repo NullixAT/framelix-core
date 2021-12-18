@@ -9,7 +9,6 @@ use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Utils\CryptoUtils;
 use Framelix\Framelix\Utils\JsonUtils;
-use Framelix\Framelix\View\Api;
 
 use function explode;
 use function file_get_contents;
@@ -121,7 +120,7 @@ class Captcha extends Field
                 $key === $this->type
             );
         }
-        $data['properties']['signedUrlVerifyToken'] = Api::getSignedCallPhpMethodUrlString(
+        $data['properties']['signedUrlVerifyToken'] = JsCall::getCallUrl(
             Captcha::class,
             'verify'
         );

@@ -15,6 +15,7 @@ class SystemEventLog extends StorableExtended
     public const CATEGORY_STORABLE_DELETED = 3;
     public const CATEGORY_LOGIN_FAILED = 4;
     public const CATEGORY_LOGIN_SUCCESS = 5;
+    public const CATEGORY_CRON = 6;
 
     /**
      * Create system event log

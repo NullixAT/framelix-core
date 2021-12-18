@@ -4,6 +4,7 @@ namespace Framelix\Framelix;
 
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
+use Framelix\Framelix\Storable\SystemEventLog;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\Zip;
@@ -114,12 +115,15 @@ class Console
                     call_user_func_array([$cronClass, "run"], []);
                     $diff = microtime(true) - $start;
                     $diff = round($diff * 1000);
-                    echo "OK Job $cronClass::run() done in {$diff}ms\n";
+                    $info = "[OK] Job $cronClass::run() done in {$diff}ms";
+                    self::green("$info\n");
                 } catch (Throwable $e) {
-                    echo "ERR Job $cronClass::run() error: " . $e->getMessage() . "\n";
+                    $info = "[ERR] Job $cronClass::run() error: " . $e->getMessage();
+                    self::red("$info\n");
                 }
+                SystemEventLog::create(SystemEventLog::CATEGORY_CRON, null, [$info]);
             } else {
-                echo "SKIP $module as no cron handler is installed\n";
+                self::yellow("[SKIP] $module as no cron handler is installed\n");
             }
         }
     }

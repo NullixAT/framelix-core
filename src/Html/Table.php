@@ -4,6 +4,8 @@ namespace Framelix\Framelix\Html;
 
 use Exception;
 use Framelix\Framelix\Lang;
+use Framelix\Framelix\Network\JsCall;
+use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\ObjectTranformable;
 use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Time;
@@ -12,8 +14,6 @@ use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\NumberUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\Utils\StringUtils;
-use Framelix\Framelix\View;
-use Framelix\Framelix\View\Api;
 use JsonSerializable;
 
 use function array_combine;
@@ -170,6 +170,25 @@ class Table implements JsonSerializable
     public ?string $appendHtml = null;
 
     /**
+     * On js call
+     * @param JsCall $jsCall
+     */
+    public static function onJsCall(JsCall $jsCall): void
+    {
+        switch ($jsCall->action) {
+            case 'deleteStorable':
+                try {
+                    $storable = Storable::getById(Request::getGet('id'), Request::getGet('connectionId'));
+                    $storable?->delete();
+                    $jsCall->result = true;
+                } catch (Exception $e) {
+                    $jsCall->result = $e->getMessage();
+                }
+                break;
+        }
+    }
+
+    /**
      * Show table
      */
     final public function show(): void
@@ -282,10 +301,11 @@ class Table implements JsonSerializable
             $this->setRowUrl($rowKey, $storable->getEditUrl(), $group);
         }
         if ($this->storableDeletable && $storable->isDeletable()) {
-            $deleteUrl = View::getUrl(Api::class, ['requestMethod' => 'deleteStorable'])
-                ->setParameter('id', $storable->id)
-                ->setParameter("connectionId", $storable->connectionId)
-                ->sign();
+            $deleteUrl = JsCall::getCallUrl(
+                __CLASS__,
+                'deleteStorable',
+                ['id' => $storable->id, 'connectionId' => $storable->connectionId]
+            );
             $cell = new TableCell();
             $cell->icon = "clear";
             $cell->iconTooltip = "__delete_entry__";

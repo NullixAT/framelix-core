@@ -18,7 +18,6 @@ use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\StringUtils;
-use Framelix\Framelix\View\Api;
 use JsonSerializable;
 
 use function base64_decode;
@@ -437,7 +436,7 @@ abstract class StorableMeta implements JsonSerializable
     ): Table {
         $table = $this->getTable($objects, $idAffix);
         $table->dragSort = true;
-        $table->appendHtml = '<script>FramelixStorableMeta.enableStorableSorting("' . $table->id . '", "' . Api::getSignedCallPhpMethodUrlString(
+        $table->appendHtml = '<script>FramelixStorableMeta.enableStorableSorting("' . $table->id . '", "' . JsCall::getCallUrl(
                 __CLASS__,
                 "savesort"
             ) . '")</script>';

@@ -14,7 +14,6 @@ use Framelix\Framelix\Storable\User;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
-use Framelix\Framelix\View\Api;
 use Framelix\Framelix\View\Backend\View;
 use RobThree\Auth\TwoFactorAuth;
 
@@ -273,35 +272,35 @@ class TwoFactor extends View
                   await FramelixDom.includeCompiledFile('Framelix', 'js', 'qrcodejs', 'QRCode')
                   let name = (await FramelixModal.prompt('__framelix_view_backend_userprofile_2fa_enable_name__', '<?=FRAMELIX_MODULE?>').closed).promptResult
                   Framelix.showProgressBar(-1)
-                  FramelixModal.show(await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                  FramelixModal.show(await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                       __CLASS__,
                       'enable'
                   )?>', { 'name': name }))
                   Framelix.showProgressBar()
                   break
                 case 'test':
-                  FramelixModal.show(await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                  FramelixModal.show(await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                       __CLASS__,
                       'test'
                   )?>'))
                   break
                 case 'disable':
                   if ((await FramelixModal.confirm('__framelix_view_backend_userprofile_2fa_disable_warning__').closed).confirmed) {
-                    FramelixModal.show(await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                    FramelixModal.show(await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                         __CLASS__,
                         'disable'
                     )?>'))
                   }
                   break
                 case 'getcodes':
-                  await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                  await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                       __CLASS__,
                       'getcodes'
                   )?>')
                   break
                 case 'regenerate':
                   if ((await FramelixModal.confirm('__framelix_view_backend_userprofile_2fa_regenerate_codes_warning__').closed).confirmed) {
-                    await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                    await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                         __CLASS__,
                         'regenerate'
                     )?>')

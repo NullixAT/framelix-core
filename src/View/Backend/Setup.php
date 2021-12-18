@@ -104,7 +104,7 @@ class Setup extends View
             }
             try {
                 Config::set('shellAliases[php]', Request::getPost('phpExecutable'));
-                $shell = Shell::execute("php {*}", ["-r", "echo PHP_VERSION;"]);
+                $shell = Shell::prepare("php {*}", ["-r", "echo PHP_VERSION;"])->execute();
                 if ($shell->status !== 0 || !($shell->output[0] ?? null) && version_compare(
                         $shell->output[0],
                         FRAMELIX_MIN_PHP_VERSION
@@ -228,7 +228,7 @@ class Setup extends View
         ];
         $phpPath = '';
         foreach ($paths as $path) {
-            $shell = Shell::execute("{*}", [$path, "-r", "echo PHP_VERSION;"]);
+            $shell = Shell::prepare("{*}", [$path, "-r", "echo PHP_VERSION;"])->execute();
             if ($shell->status === 0 && $shell->output[0] && version_compare(
                     $shell->output[0],
                     FRAMELIX_MIN_PHP_VERSION

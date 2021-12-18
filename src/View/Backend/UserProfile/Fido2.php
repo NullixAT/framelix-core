@@ -13,7 +13,6 @@ use Framelix\Framelix\Network\Session;
 use Framelix\Framelix\Storable\User;
 use Framelix\Framelix\Storable\UserWebAuthn;
 use Framelix\Framelix\Url;
-use Framelix\Framelix\View\Api;
 use Framelix\Framelix\View\Backend\View;
 use lbuchs\WebAuthn\Binary\ByteBuffer;
 use lbuchs\WebAuthn\WebAuthn;
@@ -196,7 +195,7 @@ class Fido2 extends View
                 }
                 if (!await form.validate()) return
 
-                let createArgsServerData = await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                let createArgsServerData = await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                     __CLASS__,
                     'createargs'
                 )?>')
@@ -213,7 +212,7 @@ class Fido2 extends View
                     'clientData': Framelix.arrayBufferToBase64(createArgsClientData.response.clientDataJSON),
                     'attestationObject': Framelix.arrayBufferToBase64(createArgsClientData.response.attestationObject)
                   }
-                  let processArgsResult = await FramelixApi.callPhpMethod('<?=Api::getSignedCallPhpMethodUrlString(
+                  let processArgsResult = await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                       __CLASS__,
                       'processargs'
                   )?>', processArgsParams)
