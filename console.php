@@ -69,24 +69,29 @@ foreach (\Framelix\Framelix\Config::$loadedModules as $module) {
 }
 
 if (!$argv || !isset($actions[$argv[1] ?? ''])) {
-    drawLine("");
     drawLine("Welcome to the Framelix console");
     drawLine("Following actions are available");
     drawLine("Call script with console.php {actionName} [optional parameters]");
-    drawLine("");
+    drawLine("=======");
     foreach ($actions as $action => $row) {
-        drawLine($action . " => " . $row['description']);
+        $lines = explode("\n", $row['description']);
+        $firstLine = array_shift($lines);
+        foreach ($lines as $key => $line) {
+            $lines[$key] = "   $line";
+        }
+        drawLine("*) " . $action . " => " . $firstLine);
+        if ($lines) {
+            drawLine(implode("\n", $lines));
+        }
     }
-    drawLine("");
+    drawLine("=======");
     return;
 }
 
 $activeModule = "Framelix";
 
-drawLine("");
 drawLine("Context: " . FRAMELIX_MODULE);
 drawLine("Action: " . $argv[1]);
-drawLine("");
 
 $action = $actions[$argv[1]];
 call_user_func_array($action['callable'], []);

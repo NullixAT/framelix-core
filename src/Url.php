@@ -15,9 +15,11 @@ use function header;
 use function http_build_query;
 use function http_response_code;
 use function is_array;
+use function ltrim;
 use function parse_str;
 use function parse_url;
 use function realpath;
+use function rtrim;
 use function str_ends_with;
 use function str_replace;
 use function str_starts_with;
@@ -206,6 +208,86 @@ class Url implements JsonSerializable
     public function getUrlAsString(): string
     {
         return (string)$this;
+    }
+
+    /**
+     * Set scheme (http/https)
+     * @param string $str
+     * @return self
+     */
+    public function setScheme(string $str): self
+    {
+        $this->urlData['scheme'] = $str;
+        return $this;
+    }
+
+    /**
+     * Set username
+     * @param string|null $str
+     * @return self
+     */
+    public function setUsername(?string $str): self
+    {
+        $this->urlData['username'] = $str;
+        return $this;
+    }
+
+    /**
+     * Set password
+     * @param string|null $str
+     * @return self
+     */
+    public function getPassword(?string $str): self
+    {
+        $this->urlData['pass'] = $str;
+        return $this;
+    }
+
+    /**
+     * Set host
+     * @param string $str
+     * @return self
+     */
+    public function setHost(string $str): self
+    {
+        $this->urlData['host'] = $str;
+        return $this;
+    }
+
+    /**
+     * Set port
+     * @param int|null $port
+     * @return self
+     */
+    public function setPort(?int $port): self
+    {
+        $this->urlData['port'] = $port;
+        return $this;
+    }
+
+    /**
+     * Set path
+     * @param string $path
+     * @return self
+     */
+    public function setPath(string $path): self
+    {
+        $this->urlData['path'] = $path;
+        return $this;
+    }
+
+    /**
+     * Append given path to existing path
+     * @param string $path
+     * @return self
+     */
+    public function appendPath(string $path): self
+    {
+        if (!$path || $path === "/") {
+            return $this;
+        }
+        $this->urlData['path'] = rtrim($this->urlData['path'] ?? '', '/') . "/" . ltrim($path, "/");
+        return $this;
     }
 
     /**
@@ -442,20 +524,6 @@ class Url implements JsonSerializable
             throw new Exception("Hash must not begin with #");
         }
         $this->urlData['fragment'] = $hash;
-        return $this;
-    }
-
-    /**
-     * Append given path to existing path
-     * @param string $path
-     * @return self
-     */
-    public function appendPath(string $path): self
-    {
-        if (!$path || $path === "/") {
-            return $this;
-        }
-        $this->urlData['path'] = rtrim($this->urlData['path'] ?? '', '/') . "/" . ltrim($path, "/");
         return $this;
     }
 

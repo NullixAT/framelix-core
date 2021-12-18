@@ -189,7 +189,7 @@
         "Download file"
     ],
     "__framelix_backupreestore__": [
-        "Here you can download a backup of your current configuration or you can restore your configuration from a backup file."
+        "Here you can download a backup of your current configuration or you can restore your configuration from a backup file.<br/>Attention: This backup only contains configuration data, no database data or source code."
     ],
     "__framelix_backupreestore_download__": [
         "Download backup file"

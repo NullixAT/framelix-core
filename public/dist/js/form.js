@@ -476,11 +476,11 @@ class FramelixForm {
           case 'like':
           case 'notLike':
             if (requiredValue !== null && typeof requiredValue !== 'object') {
-              requiredValue = [requiredValue];
+              requiredValue = [requiredValue + ''];
             }
 
             if (conditionFieldValue !== null && typeof conditionFieldValue !== 'object') {
-              conditionFieldValue = [conditionFieldValue];
+              conditionFieldValue = [conditionFieldValue + ''];
             }
 
             for (let requiredValueKey in requiredValue) {
@@ -1469,26 +1469,26 @@ class FramelixFormFieldSelect extends FramelixFormField {
     let countChecked = 0;
 
     if (value === null || JSON.stringify(value) !== JSON.stringify(this.getValue())) {
+      let arrValues = [];
+
       if (value !== null) {
         if (typeof value !== 'object') {
           value = [value];
         }
 
-        let arrValues = [];
-
         for (let i in value) {
           arrValues.push(this.stringifyValue(value[i]));
         }
+      }
 
-        this.optionsContainer.html('');
+      this.optionsContainer.html('');
 
-        for (let key in this.options) {
-          const optionValue = this.stringifyValue(this.options[key][0]);
-          const checked = arrValues.indexOf(optionValue) > -1;
-          if (this.dropdown && !checked) continue;
-          this.optionsContainer.append(this.getOptionHtml(key, checked));
-          countChecked++;
-        }
+      for (let key in this.options) {
+        const optionValue = this.stringifyValue(this.options[key][0]);
+        const checked = arrValues.indexOf(optionValue) > -1;
+        if (this.dropdown && !checked) continue;
+        this.optionsContainer.append(this.getOptionHtml(key, checked));
+        countChecked++;
       }
 
       if (!countChecked) {

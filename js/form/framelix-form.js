@@ -434,10 +434,10 @@ class FramelixForm {
           case 'like':
           case 'notLike':
             if (requiredValue !== null && typeof requiredValue !== 'object') {
-              requiredValue = [requiredValue]
+              requiredValue = [requiredValue + '']
             }
             if (conditionFieldValue !== null && typeof conditionFieldValue !== 'object') {
-              conditionFieldValue = [conditionFieldValue]
+              conditionFieldValue = [conditionFieldValue + '']
             }
             for (let requiredValueKey in requiredValue) {
               if (conditionRow.type === 'equal' || conditionRow.type === 'like') {
@@ -654,7 +654,7 @@ class FramelixForm {
     self.setSubmitStatus(true)
     let formData
     if (this.submitAsyncRaw) {
-      formData = JSON.stringify(FormDataJson.toJson(this.form, {'includeDisabled': true }))
+      formData = JSON.stringify(FormDataJson.toJson(this.form, { 'includeDisabled': true }))
     } else {
       let values = FormDataJson.toJson(this.form, { 'flatList': true, 'includeDisabled': true })
       formData = new FormData()

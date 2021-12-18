@@ -4,14 +4,23 @@ namespace Framelix\Framelix;
 
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
+use Framelix\Framelix\Utils\FileUtils;
 use Throwable;
 
 use function array_key_exists;
 use function array_shift;
 use function array_values;
+use function file_exists;
+use function implode;
+use function in_array;
+use function is_array;
 use function is_bool;
 use function is_string;
+use function readline;
 use function str_starts_with;
+use function unlink;
+
+use const FRAMELIX_MODULE;
 
 /**
  * Console runner
@@ -23,6 +32,30 @@ class Console
      * @var array
      */
     protected static array $overridenParameters = [];
+
+    /**
+     * Reset application
+     * This does delete EVERY data in the dabasase and delete all configuration settings
+     * It cannot be undone
+     * @return void
+     */
+    public static function resetApplication(): void
+    {
+        if (!Config::isDevMode()) {
+            self::red("Can only be executed in devMode");
+            return;
+        }
+        self::question("Are you sure? This cannot be undone!", ['yes']);
+        $db = Mysql::get();
+        $fetch = $db->fetchAssoc("SHOW TABLE STATUS FROM `{$db->connectionConfig['database']}`");
+        foreach ($fetch as $row) {
+            $db->query("DROP TABLE `{$row['Name']}`");
+        }
+        $configFile = FileUtils::getModuleRootPath(FRAMELIX_MODULE) . "/config/config-editable.php";
+        if (file_exists($configFile)) {
+            unlink($configFile);
+        }
+    }
 
     /**
      * Update database (Only safe queries)
@@ -58,7 +91,7 @@ class Console
 
     /**
      * Running the cronjob (Install to run every 5 minutes)
-     *     Example: *\/5 * * * * php console.php cron
+     * Example: *\/5 * * * * php console.php cron
      * @return void
      */
     public static function cron(): void
@@ -79,6 +112,64 @@ class Console
                 echo "SKIP $module as no cron handler is installed\n";
             }
         }
+    }
+
+    /**
+     * Draw red text
+     * @param string $text
+     * @return void
+     */
+    protected static function red(string $text): void
+    {
+        echo "\033[31m$text\033[0m";
+    }
+
+    /**
+     * Draw yellow text
+     * @param string $text
+     * @return void
+     */
+    protected static function yellow(string $text): void
+    {
+        echo "\033[33m$text\033[0m";
+    }
+
+    /**
+     * Draw green text
+     * @param string $text
+     * @return void
+     */
+    protected static function green(string $text): void
+    {
+        echo "\033[32m$text\033[0m";
+    }
+
+    /**
+     * Display a message after which the user must enter some text
+     * The entered text is returned
+     * @param string $message
+     * @param string[]|null $availableAnswers Only this answer are accepted, the question will be repeated until the user enter a correct answer
+     * @param string|null $defaultAnswer
+     * @return string
+     */
+    protected static function question(
+        string $message,
+        ?array $availableAnswers = null,
+        ?string $defaultAnswer = null
+    ): string {
+        $readlinePrompt = $message;
+        if (is_array($availableAnswers)) {
+            $readlinePrompt .= " [" . implode("|", $availableAnswers) . "]";
+        }
+        if (is_string($defaultAnswer)) {
+            $readlinePrompt .= " (Default: $defaultAnswer)";
+        }
+        $readlinePrompt .= ": ";
+        $answer = readline($readlinePrompt);
+        if (is_array($availableAnswers) && !in_array($answer, $availableAnswers)) {
+            return self::question($message, $availableAnswers, $defaultAnswer);
+        }
+        return is_string($answer) ? $answer : '';
     }
 
     /**

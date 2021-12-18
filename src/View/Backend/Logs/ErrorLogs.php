@@ -58,7 +58,7 @@ class ErrorLogs extends View
      */
     public function showContent(): void
     {
-        $files = FileUtils::getFiles(FileUtils::getAppRootPath() . "/logs", sortOrder: SCANDIR_SORT_DESCENDING);
+        $files = FileUtils::getFiles(FileUtils::getAppRootPath() . "/logs", "~\.php$~", sortOrder: SCANDIR_SORT_DESCENDING);
         if (!$files) {
             ?>
             <p class="framelix-alert"><?= Lang::get('__framelix_view_backend_logs_nologs__') ?></p>
@@ -75,7 +75,7 @@ class ErrorLogs extends View
             Buffer::start();
             require $file;
             $contents = Buffer::get();
-            Error::showErrorFromExceptionLog(JsonUtils::decode($contents));
+            Error::showErrorFromExceptionLog(JsonUtils::decode($contents), true);
         }
     }
 }

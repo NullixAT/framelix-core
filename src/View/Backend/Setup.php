@@ -53,8 +53,30 @@ class Setup extends View
         if (file_exists(FileUtils::getModuleRootPath(FRAMELIX_MODULE . "/config/config-editable.php"))) {
             http_response_code(500);
             echo "This application is already setup";
-            die();
+            exit;
         }
+        $minPhpVersion = "8.1.0";
+        if (version_compare(PHP_VERSION, $minPhpVersion) < 0) {
+            http_response_code(500);
+            echo "This application requires at least PHP $minPhpVersion";
+            exit;
+        }
+
+        $requiredExtensions = ['exif', 'fileinfo', 'mbstring', 'mysqli', 'sockets', 'json', 'curl', 'simplexml', 'zip', 'openssl'];
+        $missingExtensions = [];
+
+        foreach ($requiredExtensions as $requiredExtension) {
+            if (!extension_loaded($requiredExtension)) {
+                $missingExtensions[$requiredExtension] = $requiredExtension;
+            }
+        }
+        if ($missingExtensions) {
+            http_response_code(500);
+            echo "This application requires the following php extensions to be functional: " . implode(", ",
+                    $missingExtensions) . "<br/>Please add it to your php.ini configuration";
+            exit;
+        }
+
         $this->layout = self::LAYOUT_SMALL_CENTERED;
         $this->showSidebar = false;
         if (Form::isFormSubmitted('setup')) {
@@ -94,7 +116,6 @@ class Setup extends View
                     $user = new User();
                     $user->email = Request::getPost('email');
                     $user->roles = ['admin'];
-                    $user->flagLocked = false;
                 }
                 $user->flagLocked = false;
                 $user->addRole("admin");
@@ -119,6 +140,9 @@ class Setup extends View
                 }
                 $configData['errorLogDisk'] = true;
                 Config::writetConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
+                if(Config::get('setupDoneRedirect')){
+                    Url::create()->appendPath(Config::get('setupDoneRedirect'))->redirect();
+                }
                 Url::getApplicationUrl()->redirect();
             } catch (Throwable $e) {
                 Response::showFormValidationErrorResponse($e->getMessage() . $e->getTraceAsString());

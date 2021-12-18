@@ -121,10 +121,11 @@ class Error
     /**
      * Show error as html from exception data
      * @param array $logData
+     * @param bool $forceShowDetails If true, then all exception data will be shown. If false, this info is only visible in devMode
      */
-    public static function showErrorFromExceptionLog(array $logData): void
+    public static function showErrorFromExceptionLog(array $logData, bool $forceShowDetails = false): void
     {
-        if (!Config::isDevMode()) {
+        if (!Config::isDevMode() && !$forceShowDetails) {
             echo '<pre style="color:red; font-weight: bold">' . htmlentities($logData['message']) . '</pre>';
         } else {
             $id = RandomGenerator::getRandomHtmlId();

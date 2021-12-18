@@ -72,22 +72,22 @@ class FramelixFormFieldSelect extends FramelixFormField {
   setValue (value, isUserChange = false) {
     let countChecked = 0
     if (value === null || JSON.stringify(value) !== JSON.stringify(this.getValue())) {
+      let arrValues = []
       if (value !== null) {
         if (typeof value !== 'object') {
           value = [value]
         }
-        let arrValues = []
         for (let i in value) {
           arrValues.push(this.stringifyValue(value[i]))
         }
-        this.optionsContainer.html('')
-        for (let key in this.options) {
-          const optionValue = this.stringifyValue(this.options[key][0])
-          const checked = arrValues.indexOf(optionValue) > -1
-          if (this.dropdown && !checked) continue
-          this.optionsContainer.append(this.getOptionHtml(key, checked))
-          countChecked++
-        }
+      }
+      this.optionsContainer.html('')
+      for (let key in this.options) {
+        const optionValue = this.stringifyValue(this.options[key][0])
+        const checked = arrValues.indexOf(optionValue) > -1
+        if (this.dropdown && !checked) continue
+        this.optionsContainer.append(this.getOptionHtml(key, checked))
+        countChecked++
       }
       if (!countChecked) {
         this.optionsContainer.html(`<div class="framelix-form-field-select-option">${FramelixLang.get(this.options.length ? this.chooseOptionLabel : this.noOptionsLabel)}</div>`)
