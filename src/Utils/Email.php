@@ -2,6 +2,7 @@
 
 namespace Framelix\Framelix\Utils;
 
+use Exception;
 use Framelix\Framelix\Config;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Storable\User;
@@ -21,7 +22,7 @@ class Email
      */
     public static function isAvailable(): bool
     {
-        return !!Config::get('smtpHost');
+        return !!self::getPhpMailer();
     }
 
     /**
@@ -47,6 +48,9 @@ class Email
         array|null $attachments = null
     ): bool {
         $mailer = self::getPhpMailer();
+        if (!$mailer) {
+            throw new Exception('E-Mail is not configured correctly');
+        }
         $mailer->Subject = str_replace(
             ['{title}'],
             [Lang::get($title)],
@@ -113,27 +117,40 @@ class Email
 
     /**
      * Get naked php mailer instance
-     * @return PHPMailer
+     * @return PHPMailer|null Null when not configured correctly
      */
-    public static function getPhpMailer(): PHPMailer
+    public static function getPhpMailer(): ?PHPMailer
     {
         $folder = FileUtils::getModuleRootPath("Framelix") . "/vendor/phpmailer";
         require_once("$folder/PHPMailer.php");
         require_once("$folder/Exception.php");
         $mail = new PHPMailer(true);
         $mail->CharSet = 'UTF-8';
-        $smtp = Config::get('smtpHost');
-        if ($smtp) {
-            require_once("$folder/SMTP.php");
-            $mail->isSMTP();
-            $mail->Host = Config::get('smtpHost');
-            $mail->Port = Config::get('smtpPort');
-            $mail->Username = Config::get('smtpUsername');
-            $mail->Password = Config::get('smtpPassword');
-            if ($mail->Username) {
-                $mail->SMTPAuth = true;
-                $mail->SMTPSecure = Config::get('smtpSecure');
-            }
+        switch (Config::get('mailSendType')) {
+            case 'mail':
+                $mail->isMail();
+                break;
+            case 'smtp':
+                $smtp = Config::get('smtpHost');
+                if (!$smtp) {
+                    return null;
+                }
+                require_once("$folder/SMTP.php");
+                $mail->isSMTP();
+                $mail->Host = Config::get('smtpHost');
+                $mail->Port = Config::get('smtpPort');
+                $mail->Username = Config::get('smtpUsername');
+                $mail->Password = Config::get('smtpPassword');
+                if ($mail->Username) {
+                    $mail->SMTPAuth = true;
+                    $mail->SMTPSecure = Config::get('smtpSecure');
+                }
+                break;
+            case 'sendmail':
+                $mail->isSendmail();
+                break;
+            default:
+                return null;
         }
         $from = Config::get('emailDefaultFrom');
         if ($from) {

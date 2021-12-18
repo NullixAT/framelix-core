@@ -195,6 +195,10 @@
         "Achtung: Falls du das aktivierst, kontrolliere sofort in einem 2ten Inkognito Tab ob der Login dann auch noch funktioniert. Im Falle eines Problems kannst du dich sonst nicht mehr einloggen.Falls das passiert, dann kannst du nur mehr via Kommandozeile die Datei\u00a0config-editable.php bearbeiten und das Hakerl dort wieder entfernen.",
         "31562"
     ],
+    "__config_mailsendtype_label__": [
+        "Mail Send-Architektur",
+        "63f89"
+    ],
     "__config_smtphost_label__": [
         "SMTP Hostname",
         "4cb45"
@@ -282,6 +286,22 @@
     "__framelix_configuration_module_captcha_pagetitle__": [
         "Captcha",
         "45d04"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_mail__": [
+        "PHP mail (Muss in php.ini konfiguriert werden)",
+        "2756b"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_none__": [
+        "Mail senden deaktiviert",
+        "b7991"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_sendmail__": [
+        "Sendmail (Muss in php.ini konfiguriert werden)",
+        "1eb42"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_smtp__": [
+        "SMTP",
+        "c2239"
     ],
     "__framelix_configuration_module_email_pagetitle__": [
         "E-Mail\/Smtp",
@@ -846,6 +866,14 @@
     "__framelix_setup_next__": [
         "N\u00e4chster Schritt",
         "c290a"
+    ],
+    "__framelix_setup_phpexecutable_desc__": [
+        "Pfad zur ausf\u00fchrbaren PHP Kommandozeile.<br\/>Dies sollte bereits automatisch mit dem passenden Pfad ausgef\u00fcllt sein.",
+        "23ca2"
+    ],
+    "__framelix_setup_phpexecutable_label__": [
+        "PHP Pfad",
+        "5edc4"
     ],
     "__framelix_setup_step_application_title__": [
         "Grundeinstellungen",

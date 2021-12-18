@@ -103,7 +103,9 @@ class ModuleConfig extends View
                 if (!Lang::keyExist($field->labelDescription)) {
                     $field->labelDescription = null;
                 }
-                $field->defaultValue = Config::get($field->name);
+                $field->defaultValue = Config::keyExists($field->name) ? Config::get(
+                    $field->name
+                ) : $field->defaultValue;
             }
         }
     }

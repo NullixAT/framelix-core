@@ -43,6 +43,16 @@ class Config
     }
 
     /**
+     * Check if config key exists, even if it is null it returns true
+     * @param string $key
+     * @return bool
+     */
+    public static function keyExists(string $key): bool
+    {
+        return ArrayUtils::keyExists(self::$data, $key);
+    }
+
+    /**
      * Get config value
      * @param string $key
      * @param bool $throwException If true, then throw exception if key doesn't exist

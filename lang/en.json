@@ -146,6 +146,9 @@
     "__config_logincaptcha_label_desc__": [
         "Attention: Verify the backend login in a second incognito tab before you logout here.In case you have a problem with the keys bellow, you not will be able to login again.<br\/>You then must manually unset the flag in config-editable.php on the command-line."
     ],
+    "__config_mailsendtype_label__": [
+        "Mail Send Architecture"
+    ],
     "__config_smtphost_label__": [
         "SMTP Hostname"
     ],
@@ -189,7 +192,7 @@
         "Download file"
     ],
     "__framelix_backupreestore__": [
-        "Here you can download a backup of your current configuration or you can restore your configuration from a backup file.<br/>Attention: This backup only contains configuration data, no database data or source code."
+        "Here you can download a backup of your current configuration or you can restore your configuration from a backup file.<br\/>Attention: This backup only contains configuration data, no database data or source code."
     ],
     "__framelix_backupreestore_download__": [
         "Download backup file"
@@ -211,6 +214,18 @@
     ],
     "__framelix_configuration_module_captcha_pagetitle__": [
         "Captcha"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_mail__": [
+        "PHP mail (Must be configured in php.ini)"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_none__": [
+        "Disable Mail Sending"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_sendmail__": [
+        "Sendmail (Must be configured in php.ini)"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_smtp__": [
+        "SMTP"
     ],
     "__framelix_configuration_module_email_pagetitle__": [
         "E-Mail\/Stmp"
@@ -635,6 +650,12 @@
     "__framelix_setup_next__": [
         "Next step"
     ],
+    "__framelix_setup_phpexecutable_desc__": [
+        "The path to the executable php command line.<br\/>It should already be prefilled when the best matching path."
+    ],
+    "__framelix_setup_phpexecutable_label__": [
+        "PHP Path"
+    ],
     "__framelix_setup_step_application_title__": [
         "Application basics"
     ],
@@ -1033,11 +1054,5 @@
     ],
     "__yes__": [
         "Yes"
-    ],
-    "__framelix_setup_phpexecutable_label__" : [
-        "PHP Path"
-    ],
-    "__framelix_setup_phpexecutable_desc__" : [
-        "The path to the executable php command line.<br/>It should already be prefilled when the best matching path."
     ]
 }

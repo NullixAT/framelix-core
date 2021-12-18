@@ -104,33 +104,47 @@ $form->addField($field);
 ModuleConfig::addForm($form, '__framelix_configuration_module_captcha_pagetitle__');
 
 $form = new \Framelix\Framelix\Form\Form();
+
+
+$field = new \Framelix\Framelix\Form\Field\Select();
+$field->name = "mailSendType";
+$field->addOption('none', '__framelix_configuration_module_email_mailsendtype_none__');
+$field->addOption('mail', '__framelix_configuration_module_email_mailsendtype_mail__');
+$field->addOption('smtp', '__framelix_configuration_module_email_mailsendtype_smtp__');
+$field->addOption('sendmail', '__framelix_configuration_module_email_mailsendtype_sendmail__');
+$form->addField($field);
+
 $field = new \Framelix\Framelix\Form\Field\Text();
 $field->name = "smtpHost";
+$field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new \Framelix\Framelix\Form\Field\Number();
 $field->name = "smtpPort";
 $field->decimals = 0;
+$field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new \Framelix\Framelix\Form\Field\Text();
 $field->name = "smtpUsername";
+$field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new \Framelix\Framelix\Form\Field\Password();
 $field->name = "smtpPassword";
+$field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new \Framelix\Framelix\Form\Field\Select();
 $field->name = "smtpSecure";
 $field->addOption('tls', "TLS");
 $field->addOption('ssl', "SSL");
+$field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new \Framelix\Framelix\Form\Field\Email();
 $field->name = "emailOverrideRecipient";
 $form->addField($field);
-
 
 $field = new \Framelix\Framelix\Form\Field\Email();
 $field->name = "emailDefaultFrom";

@@ -167,6 +167,7 @@ class Setup extends View
                     $configData[$key] = Config::get($key);
                 }
                 $configData['errorLogDisk'] = true;
+                $configData['mailSendType'] = 'mail';
                 Config::writetConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
                 if (Config::get('setupDoneRedirect')) {
                     Url::getApplicationUrl()->appendPath(Config::get('setupDoneRedirect'))->redirect();
