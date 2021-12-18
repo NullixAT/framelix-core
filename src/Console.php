@@ -5,19 +5,28 @@ namespace Framelix\Framelix;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
 use Framelix\Framelix\Utils\FileUtils;
+use Framelix\Framelix\Utils\JsonUtils;
+use Framelix\Framelix\Utils\Zip;
 use Throwable;
 
+use function array_combine;
 use function array_key_exists;
 use function array_shift;
 use function array_values;
+use function copy;
 use function file_exists;
 use function implode;
 use function in_array;
 use function is_array;
 use function is_bool;
+use function is_dir;
+use function is_file;
 use function is_string;
+use function mkdir;
 use function readline;
 use function readline_add_history;
+use function realpath;
+use function rename;
 use function str_starts_with;
 use function unlink;
 
@@ -113,6 +122,96 @@ class Console
                 echo "SKIP $module as no cron handler is installed\n";
             }
         }
+    }
+
+    /**
+     * Update/install module/app updates by given zip file
+     * @param string|null $zipPath If set, this action will update directly without asking for zipfile (is used from web based update)
+     * @return void
+     */
+    public static function installZipPackage(?string $zipPath = null): void
+    {
+        if (!is_string($zipPath)) {
+            $zipPath = self::getParameter('zipPath', 'string');
+            // try relative path
+            if (!is_file($zipPath)) {
+                $zipPath = __DIR__ . "/" . $zipPath;
+            }
+        }
+        if (!file_exists($zipPath)) {
+            self::red("$zipPath does not exist");
+            return;
+        }
+        $tmpPath = __DIR__ . "/../tmp/unzip";
+        FileUtils::deleteDirectory($tmpPath);
+        mkdir($tmpPath);
+        Zip::unzip($zipPath, $tmpPath);
+        $packageJson = JsonUtils::readFromFile($tmpPath . "/package.json");
+        $moduleName = $packageJson['framelix']['module'] ?? null;
+        $rootPackage = $packageJson['framelix']['isRootPackage'] ?? null;
+        if (!$moduleName && !$rootPackage) {
+            self::red("$zipPath is not a valid archive");
+            return;
+        }
+        if ($packageJson['framelix']['isRootPackage'] ?? null) {
+            $rootDirectory = realpath(__DIR__ . "/../../..");
+        } else {
+            $rootDirectory = FileUtils::getModuleRootPath($moduleName);
+        }
+        $filelistNew = JsonUtils::readFromFile($tmpPath . "/filelist.json");
+        if (!$filelistNew) {
+            self::red(
+                "$zipPath has no filelist. Build the archive with the build tools that generate the filelist for you."
+            );
+            return;
+        }
+        $filelistNew = array_combine($filelistNew, $filelistNew);
+        $filelistExist = file_exists($rootDirectory . "/filelist.json") ? JsonUtils::readFromFile(
+            $rootDirectory . "/filelist.json"
+        ) : [];
+        $filelistExist = array_combine($filelistExist, $filelistExist);
+        if (!is_dir($rootDirectory)) {
+            mkdir($rootDirectory);
+        }
+        foreach ($filelistNew as $relativeFile) {
+            $tmpFilePath = FileUtils::normalizePath(realpath($tmpPath . "/" . $relativeFile));
+            $newPath = $rootDirectory . "/" . $relativeFile;
+            if (is_dir($tmpFilePath)) {
+                if (!is_dir($newPath)) {
+                    mkdir($newPath);
+                    self::green('[ADDED] Directory "' . $newPath . '"' . "\n");
+                } else {
+                    self::yellow('[SKIPPED] Directory "' . $newPath . '" already exist' . "\n");
+                }
+            } elseif (is_file($tmpFilePath)) {
+                if (file_exists($newPath)) {
+                    copy($tmpFilePath, $newPath);
+                    self::green('[UPDATED] File "' . $newPath . '"' . "\n");
+                } else {
+                    copy($tmpFilePath, $newPath);
+                    self::green('[ADDED] File "' . $newPath . '"' . "\n");
+                }
+            }
+            unset($filelistExist[$relativeFile]);
+        }
+        foreach ($filelistExist as $fileExist) {
+            $newPath = $rootDirectory . "/" . $fileExist;
+            if (is_dir($newPath)) {
+                self::yellow('[REMOVED] Obsolete Directory "' . $newPath . '"' . "\n");
+            } elseif (is_file($newPath)) {
+                self::green('[REMOVED] Obsolete File "' . $newPath . '"' . "\n");
+                unlink($newPath);
+            }
+        }
+        if ($packageJson['framelix']['isRootPackage'] ?? null) {
+            rename($tmpPath, "$tmpPath-zips");
+            $tmpPath .= "-zips";
+            $moduleZipFiles = FileUtils::getFiles($tmpPath . "/modules", "~\.zip$~");
+            foreach ($moduleZipFiles as $moduleZipFile) {
+                self::installZipPackage($moduleZipFile);
+            }
+        }
+        FileUtils::deleteDirectory($tmpPath);
     }
 
     /**
