@@ -322,11 +322,11 @@ class Lang
     {
         $langDefault = $lang ?? self::$lang ?? Config::get('languageDefault');
         $langFallback = Config::get('languageFallback') ?? 'en';
-        if(!isset(self::$values[$langDefault])){
+        if (!isset(self::$values[$langDefault])) {
             self::$values[$langDefault] = [];
             self::loadValues($langDefault);
         }
-        if(!isset(self::$values[$langFallback])){
+        if (!isset(self::$values[$langFallback])) {
             self::$values[$langFallback] = [];
             self::loadValues($langFallback);
         }
@@ -350,7 +350,7 @@ class Lang
             if (Config::get('langDebugMode')) {
                 self::$debugMissingLangKeys[$key] = $key;
             }
-            if($key === "__browser_unsupported__" && $lang === "en"){
+            if ($key === "__browser_unsupported__" && $lang === "en") {
                 var_dump(self::$values);
             }
             return $key;

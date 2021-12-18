@@ -2,9 +2,7 @@
 
 namespace Framelix\Framelix\Network;
 
-use Framelix\Framelix\Config;
 use Framelix\Framelix\Html\Toast;
-use Framelix\Framelix\Lang;
 use Framelix\Framelix\Storable\StorableFile;
 use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\JsonUtils;
@@ -14,7 +12,6 @@ use function file_exists;
 use function filesize;
 use function header;
 use function http_response_code;
-use function implode;
 use function nl2br;
 use function readfile;
 use function strlen;

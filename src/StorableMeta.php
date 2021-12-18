@@ -272,7 +272,7 @@ abstract class StorableMeta implements JsonSerializable
             }
         }
         $property->setLabel($langKeyLabel);
-        if(Lang::keyExist($langKeyDesc)){
+        if (Lang::keyExist($langKeyDesc)) {
             $property->setLabelDescription($langKeyDesc);
         }
         $this->properties[$property->name] = $property;

@@ -94,14 +94,16 @@ abstract class Sidebar
      * Start a group (collapsable)
      * @param string $label
      * @param string $icon The icon
+     * @param string|null $badgeText Optional red badge text
      */
-    public function startGroup(string $label, string $icon = "menu"): void
+    public function startGroup(string $label, string $icon = "menu", ?string $badgeText = null): void
     {
         $this->linkData = [
             "type" => "group",
             "label" => $label,
             "links" => [],
-            "icon" => $icon
+            "icon" => $icon,
+            "badgeText" => $badgeText
         ];
     }
 
@@ -113,6 +115,7 @@ abstract class Sidebar
      * @param string $target The link target
      * @param array|null $urlParameters Additional url parameters to add to
      * @param array|null $viewUrlParameters Additional view url parameters. Only required when view has a custom url with regex placeholders
+     * @param string|null $badgeText Optional red badge text
      */
     public function addLink(
         string|Url $url,
@@ -121,6 +124,8 @@ abstract class Sidebar
         string $target = "_self",
         ?array $urlParameters = null,
         ?array $viewUrlParameters = null
+        ,
+        ?string $badgeText = null
     ): void {
         if (!$this->linkData) {
             $this->linkData = [
@@ -134,7 +139,8 @@ abstract class Sidebar
             "viewUrlParameters" => $viewUrlParameters,
             "label" => $label,
             "target" => $target,
-            "icon" => $icon
+            "icon" => $icon,
+            "badgeText" => $badgeText
         ];
     }
 
@@ -313,7 +319,9 @@ abstract class Sidebar
             <div class="framelix-sidebar-collapsable <?= $activeKey !== null ? 'framelix-sidebar-collapsable-active' : '' ?>">
             <button class="framelix-sidebar-collapsable-title framelix-activate-toggle-handler">
                 <span class="framelix-sidebar-main-icon material-icons"><?= $linkData['icon'] ?></span> <span
-                        class="framelix-sidebar-label"><?= Lang::get($linkData['label']) ?></span>
+                        class="framelix-sidebar-label"><?= $linkData['badgeText'] !== null ? '<span class="framelix-sidebar-badge">' . $linkData['badgeText'] . '</span>' : '' ?><?= Lang::get(
+                        $linkData['label']
+                    ) ?></span>
             </button>
             <div class="framelix-sidebar-collapsable-container">
             <?
@@ -335,7 +343,7 @@ abstract class Sidebar
             <a href="<?= $url ?>"
                class="framelix-sidebar-link <?= $activeKey === $key ? 'framelix-sidebar-link-active' : '' ?>">
                 <span class="<?= $type !== 'group' ? 'framelix-sidebar-main-icon' : '' ?> material-icons"><?= $row['icon'] ?></span>
-                <div class="framelix-sidebar-label"><?= $row['label'] ?></div>
+                <div class="framelix-sidebar-label"><?= $row['badgeText'] !== null ? '<span class="framelix-sidebar-badge">' . $row['badgeText'] . '</span>' : '' ?><?= $row['label'] ?></div>
             </a>
             <?
         }

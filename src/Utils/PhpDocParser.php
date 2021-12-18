@@ -13,7 +13,6 @@ use function strpos;
 use function strtolower;
 use function substr;
 use function trim;
-use function var_dump;
 
 /**
  * Php Doc Parser

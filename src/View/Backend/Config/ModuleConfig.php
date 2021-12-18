@@ -18,8 +18,6 @@ use function preg_replace;
 use function str_replace;
 use function strtolower;
 
-use function var_dump;
-
 use const FRAMELIX_MODULE;
 
 /**

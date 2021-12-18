@@ -254,6 +254,21 @@ hr {
   max-width: 80%;
   padding: 5px 0; }
 
+.framelix-sidebar .framelix-sidebar-badge {
+  background: red;
+  color: white;
+  border-radius: 50px;
+  width: 16px;
+  height: 16px;
+  line-height: 1;
+  font-size: 9px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  margin-left: -13px;
+  margin-top: -10px; }
+
 .framelix-sidebar .framelix-sidebar-label-nowrap {
   white-space: nowrap;
   text-overflow: ellipsis;

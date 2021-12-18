@@ -9,9 +9,6 @@ use function file_exists;
 use function is_dir;
 use function is_file;
 use function scandir;
-use function str_contains;
-use function strpos;
-use function substr;
 
 /**
  * Zip utilities
