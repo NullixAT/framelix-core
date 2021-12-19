@@ -44,6 +44,7 @@ if (($_GET['unpack'] ?? null) && file_exists($zipFile) && $currentFiles <= $maxF
             }
         }
         unlink(__FILE__);
+        unlink(__DIR__ . "/check-requirements.php");
         unlink($zipFile);
     }
     header("location: " . str_replace(["?unpack=1", "install.php"], "", $_SERVER['REQUEST_URI']));

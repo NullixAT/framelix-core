@@ -7,6 +7,7 @@ use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
 use Framelix\Framelix\Storable\SystemEventLog;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
+use Framelix\Framelix\Utils\Shell;
 use Framelix\Framelix\Utils\Zip;
 use Throwable;
 
@@ -28,6 +29,7 @@ use function readline;
 use function readline_add_history;
 use function realpath;
 use function rename;
+use function sleep;
 use function str_starts_with;
 use function unlink;
 
@@ -281,6 +283,15 @@ class Console
         foreach ($counts as $type => $count) {
             echo "$count " . $labels[$type] . "\n";
         }
+        // update database
+        // wait 3 seconds to prevent opcache in default configs
+        echo "Update database\n";
+        sleep(3);
+        $shell = Shell::prepare("php {*}", [
+            __DIR__ . "/../console.php",
+            "updateDatabaseSafe"
+        ])->execute();
+        echo implode("\n", $shell->output) . "\n";
         if ($packageJson['framelix']['isRootPackage'] ?? null) {
             self::green("App Update completed\n");
         } else {

@@ -81,7 +81,7 @@ class UpdateSourceCode extends View
                 }
             }
             if (Request::getPost('dbupdate')) {
-                // sleep for 3 seconds because default opcache is configured to check only each 2 seconds for file updates
+                // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
                 $shell = Shell::prepare("php {*}", [
                     __DIR__ . "/../../../../console.php",

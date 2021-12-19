@@ -16,6 +16,7 @@ use Framelix\Framelix\Utils\Shell;
 use Framelix\Framelix\View\Backend\View;
 
 use function implode;
+use function sleep;
 
 /**
  * Update database
@@ -40,6 +41,8 @@ class UpdateDatabase extends View
             ])->execute();
             Toast::info(implode("<br/>", $shell->output));
             if (Request::getPost('unsafeQueriesExecute')) {
+                // wait 3 seconds to prevent opcache in default configs
+                sleep(3);
                 $shell = Shell::prepare("php {*}", [
                     __DIR__ . "/../../../../console.php",
                     "updateDatabaseUnsafe"

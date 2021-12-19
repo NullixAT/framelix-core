@@ -25,6 +25,7 @@ use Throwable;
 
 use function file_exists;
 use function http_response_code;
+use function sleep;
 use function strtolower;
 use function version_compare;
 
@@ -135,6 +136,15 @@ class Setup extends View
                 $configData['errorLogDisk'] = true;
                 $configData['mailSendType'] = 'mail';
                 Config::writetConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
+
+                // again, update database with now correct config and all modules installed
+                // wait 3 seconds to prevent opcache in default configs
+                sleep(3);
+                Shell::prepare("php {*}", [
+                    __DIR__ . "/../../../console.php",
+                    "updateDatabaseSafe"
+                ])->execute();
+
                 if (Config::get('setupDoneRedirect')) {
                     Url::getApplicationUrl()->appendPath(Config::get('setupDoneRedirect'))->redirect();
                 }
