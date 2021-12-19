@@ -51,7 +51,11 @@ foreach ($files as $file) {
     $arr[substr($relativeName, 1)] = $file;
 }
 $filelistPath = __DIR__ . "/../tmp/filelist.json";
-JsonUtils::writeToFile($filelistPath, array_keys($arr));
+$filelist = [];
+foreach ($arr as $key => $file) {
+    $filelist[$key] = !is_dir($file) ? hash_file("crc32", $file) : null;
+}
+JsonUtils::writeToFile($filelistPath, $filelist);
 $arr["filelist.json"] = $filelistPath;
 $zipFile = FileUtils::normalizePath(
     __DIR__ . "/dist/$module-" . $modulePackageJson['version'] . ".zip"

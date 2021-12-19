@@ -1,5 +1,5 @@
 {
-    "directoryListHash": "1|2970201324",
+    "directoryListHash": "1|546937835",
     "views": {
         "Framelix\\Framelix\\View\\Api": {
             "accessRole": "*",
@@ -9,6 +9,15 @@
             "depth": 101,
             "pageTitle": "{classLangKey}",
             "url": "\/api"
+        },
+        "Framelix\\Framelix\\View\\Backend\\AppUpdate": {
+            "accessRole": "admin",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/appupdate"
         },
         "Framelix\\Framelix\\View\\Backend\\Config\\BackupRestore": {
             "accessRole": "admin,configuration",

@@ -255,6 +255,34 @@
         "Datei downloaden",
         "d5ef9"
     ],
+    "__framelix_appupdate_confirm__": [
+        "Ich best\u00e4tige diese Aktion",
+        "adfda"
+    ],
+    "__framelix_appupdate_confirm_desc__": [
+        "Ich habe ein Backup gemacht und wei\u00df, wie ich im Notfall das Backup wieder einspielen kann.",
+        "ea47c"
+    ],
+    "__framelix_appupdate_file__": [
+        "W\u00e4hle ein ZIP Paket",
+        "faae2"
+    ],
+    "__framelix_appupdate_updatetype_label__": [
+        "Update Methode",
+        "f361b"
+    ],
+    "__framelix_appupdate_updatetype_prerelease__": [
+        "Pre-Release Channel",
+        "b0104"
+    ],
+    "__framelix_appupdate_updatetype_stable__": [
+        "Stable Channel",
+        "c6ae5"
+    ],
+    "__framelix_appupdate_updatetype_upload__": [
+        "Upload ZIP",
+        "dfa3b"
+    ],
     "__framelix_backupreestore__": [
         "Hier kannst du die aktuelle Konfiguration sichern oder ein Backup aus der Sicherung einspielen.<br\/>Achtung: Dieses Backup beinhaltet nur die Konfiguration, keine Datenbankdaten oder Source Codes.",
         "af0bc"
@@ -1030,6 +1058,30 @@
     "__framelix_user_flag_locked_desc__": [
         "Falls aktiviert, dann wird der Benutzer sofort gesperrt und kann sich nicht mehr einloggen.",
         "a6146"
+    ],
+    "__framelix_view_backend_appupdate__": [
+        "App Update",
+        "0ea14"
+    ],
+    "__framelix_view_backend_appupdate_backup__": [
+        "Vollst\u00e4ndiges Backup downloaden",
+        "f9bc9"
+    ],
+    "__framelix_view_backend_appupdate_backup_desc__": [
+        "Hier kannst du ein vollst\u00e4ndiges Backup deiner Applikation herunterladen.<br\/>Diese Aktion kann dauern, je nachdem wie gro\u00df deine App ist.<br\/>Achtung: Dieses Backup beinhaltet ALLE Daten und Konfigurationen deiner Applikation. Stelle also sicher das du das Backup an einer sicheren Stelle aufbewahrst.",
+        "9c9a6"
+    ],
+    "__framelix_view_backend_appupdate_backup_download__": [
+        "Jetzt downloaden",
+        "f2d2d"
+    ],
+    "__framelix_view_backend_appupdate_do_update1__": [
+        "Ausf\u00fchren",
+        "40cd0"
+    ],
+    "__framelix_view_backend_appupdate_lastresult__": [
+        "Update Protokoll",
+        "fe61e"
     ],
     "__framelix_view_backend_config_backuprestore__": [
         "Backup\/Restore",

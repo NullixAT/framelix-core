@@ -27,8 +27,9 @@ $arr = [
     "index.php" => $root . "/index.php",
     "package.json" => $root . "/package.json"
 ];
-$filelist = array_keys($arr);
-
+foreach ($arr as $key => $file) {
+    $filelist[$key] = !is_dir($file) ? hash_file("crc32", $file) : null;
+}
 foreach ($builtInModules as $module) {
     $shell = Shell::prepare("php {*}", [__DIR__ . "/create-module-package.php", $module])->execute();
     $zipFile = $shell->output[0];

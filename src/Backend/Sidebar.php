@@ -229,6 +229,9 @@ abstract class Sidebar
         $this->addLink(View\Backend\Logs\SystemEventLogs::class);
         $this->showHtmlForLinkData();
 
+        $this->addLink(View\Backend\AppUpdate::class, icon: 'system_update');
+        $this->showHtmlForLinkData();
+
         $this->startGroup("__framelix_developer_options__", "developer_mode");
         $this->addLink(View\Backend\Dev\Update::class, null, "system_update");
         $this->addLink(View\Backend\Dev\LangEditor::class, null, "g_translate");

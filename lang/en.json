@@ -764,6 +764,45 @@
     "__framelix_unknown_user__": [
         "System\/Guest"
     ],
+    "__framelix_view_backend_appupdate__" : [
+        "App Update"
+    ],
+    "__framelix_view_backend_appupdate_backup__" : [
+        "Download a full backup"
+    ],
+    "__framelix_view_backend_appupdate_backup_desc__" : [
+        "Here you can download a full backup of your application included database.<br/>This action may take a while, depending on your app size.<br/>Attention: This contain ALL data and configuration, unencrypted, so keep this backup in a very secure place."
+    ],
+    "__framelix_view_backend_appupdate_backup_download__" : [
+        "Download now"
+    ],
+    "__framelix_view_backend_appupdate_lastresult__" : [
+        "Update Protocol"
+    ],
+    "__framelix_view_backend_appupdate_do_update1__" : [
+        "Execute"
+    ],
+    "__framelix_appupdate_updatetype_label__": [
+        "Update Method"
+    ],
+    "__framelix_appupdate_updatetype_stable__": [
+        "Stable Channel"
+    ],
+    "__framelix_appupdate_updatetype_prerelease__": [
+        "Pre-Release Channel"
+    ],
+    "__framelix_appupdate_updatetype_upload__": [
+        "Upload ZIP"
+    ],
+    "__framelix_appupdate_file__" : [
+        "Choose a ZIP Package"
+    ],
+    "__framelix_appupdate_confirm__" : [
+        "I confirm this action"
+    ],
+    "__framelix_appupdate_confirm_desc__" : [
+        "I've made a backup and i know how to restore the backup in case of failure."
+    ],
     "__framelix_user_edituser_validation_adminrequired__": [
         "There is always at least one, non locked, administrator account that must exist."
     ],

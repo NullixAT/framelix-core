@@ -10,12 +10,12 @@ use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\Zip;
 use Throwable;
 
-use function array_combine;
 use function array_key_exists;
 use function array_shift;
 use function array_values;
 use function copy;
 use function file_exists;
+use function hash_file;
 use function implode;
 use function in_array;
 use function is_array;
@@ -38,6 +38,12 @@ use const FRAMELIX_MODULE;
  */
 class Console
 {
+    /**
+     * If set to true, the output will be html formatted (Colors) instead of terminal control codes
+     * @var bool
+     */
+    public static bool $htmlOutput = false;
+
     /**
      * Overriden parameters
      * @var array
@@ -101,6 +107,22 @@ class Console
     }
 
     /**
+     * Check for app updates (Modules and App)
+     * @return void
+     */
+    public static function checkAppUpdates(): void
+    {
+        $builder = new MysqlStorableSchemeBuilder(Mysql::get());
+        $count = 0;
+        $queries = $builder->getUnsafeQueries();
+        foreach ($queries as $row) {
+            $builder->db->query($row['query']);
+            $count++;
+        }
+        echo $count . " unsafe queries has been executed\n";
+    }
+
+    /**
      * Running the cronjob (Install to run every 5 minutes)
      * Example: *\/5 * * * * php console.php cron
      * @return void
@@ -109,10 +131,10 @@ class Console
     {
         foreach (Config::$loadedModules as $module) {
             $cronClass = "\\Framelix\\$module\\Cron";
-            if (class_exists($cronClass) && method_exists($cronClass, "run")) {
+            if (class_exists($cronClass) && method_exists($cronClass, "runCron")) {
                 try {
                     $start = microtime(true);
-                    call_user_func_array([$cronClass, "run"], []);
+                    call_user_func_array([$cronClass, "runCron"], []);
                     $diff = microtime(true) - $start;
                     $diff = round($diff * 1000);
                     $info = "[OK] Job $cronClass::run() done in {$diff}ms";
@@ -159,8 +181,10 @@ class Console
         }
         if ($packageJson['framelix']['isRootPackage'] ?? null) {
             $rootDirectory = realpath(__DIR__ . "/../../..");
+            echo "Update App to " . $packageJson['version'] . "\n";
         } else {
             $rootDirectory = FileUtils::getModuleRootPath($moduleName);
+            echo "Update Module '" . $moduleName . "' to " . $packageJson['version'] . "\n";
         }
         $filelistNew = JsonUtils::readFromFile($tmpPath . "/filelist.json");
         if (!$filelistNew) {
@@ -169,41 +193,59 @@ class Console
             );
             return;
         }
-        $filelistNew = array_combine($filelistNew, $filelistNew);
         $filelistExist = file_exists($rootDirectory . "/filelist.json") ? JsonUtils::readFromFile(
             $rootDirectory . "/filelist.json"
         ) : [];
-        $filelistExist = array_combine($filelistExist, $filelistExist);
         if (!is_dir($rootDirectory)) {
             mkdir($rootDirectory);
         }
-        foreach ($filelistNew as $relativeFile) {
+        $counts = [
+            'addedDirectory' => 0,
+            'skippedDirectory' => 0,
+            'deletedDirectory' => 0,
+            'addedFile' => 0,
+            'updatedFile' => 0,
+            'skippedFile' => 0,
+            'deletedFile' => 0,
+        ];
+        foreach ($filelistNew as $relativeFile => $hash) {
             $tmpFilePath = FileUtils::normalizePath(realpath($tmpPath . "/" . $relativeFile));
             $newPath = $rootDirectory . "/" . $relativeFile;
             if (is_dir($tmpFilePath)) {
                 if (!is_dir($newPath)) {
                     mkdir($newPath);
                     self::green('[ADDED] Directory "' . $newPath . '"' . "\n");
+                    $counts['addedDirectory']++;
                 } else {
                     self::yellow('[SKIPPED] Directory "' . $newPath . '" already exist' . "\n");
+                    $counts['skippedDirectory']++;
                 }
             } elseif (is_file($tmpFilePath)) {
                 if (file_exists($newPath)) {
-                    copy($tmpFilePath, $newPath);
-                    self::green('[UPDATED] File "' . $newPath . '"' . "\n");
+                    if (hash_file("crc32", $newPath) === $hash) {
+                        self::yellow('[SKIPPED] File "' . $newPath . '" exist and is not changed' . "\n");
+                        $counts['skippedFile']++;
+                    } else {
+                        copy($tmpFilePath, $newPath);
+                        self::green('[UPDATED] File "' . $newPath . '"' . "\n");
+                        $counts['updatedFile']++;
+                    }
                 } else {
                     copy($tmpFilePath, $newPath);
                     self::green('[ADDED] File "' . $newPath . '"' . "\n");
+                    $counts['addedFile']++;
                 }
             }
             unset($filelistExist[$relativeFile]);
         }
-        foreach ($filelistExist as $fileExist) {
+        foreach ($filelistExist as $fileExist => $hash) {
             $newPath = $rootDirectory . "/" . $fileExist;
             if (is_dir($newPath)) {
                 self::yellow('[REMOVED] Obsolete Directory "' . $newPath . '"' . "\n");
+                $counts['deletedDirectory']++;
             } elseif (is_file($newPath)) {
                 self::green('[REMOVED] Obsolete File "' . $newPath . '"' . "\n");
+                $counts['deletedFile']++;
                 unlink($newPath);
             }
         }
@@ -216,6 +258,23 @@ class Console
             }
         }
         FileUtils::deleteDirectory($tmpPath);
+        $labels = [
+            'addedDirectory' => 'New directories',
+            'skippedDirectory' => 'Skipped directories',
+            'deletedDirectory' => 'Deleted directories',
+            'addedFile' => 'New files',
+            'updatedFile' => 'Updated files',
+            'skippedFile' => 'Skipped files',
+            'deletedFile' => 'Deleted files'
+        ];
+        foreach ($counts as $type => $count) {
+            echo "$count " . $labels[$type] . "\n";
+        }
+        if ($packageJson['framelix']['isRootPackage'] ?? null) {
+            self::green("App Update completed\n");
+        } else {
+            self::green("Module Update completed\n");
+        }
     }
 
     /**
@@ -225,6 +284,10 @@ class Console
      */
     protected static function red(string $text): void
     {
+        if (self::$htmlOutput) {
+            echo '<span style="color:var(--color-error-text)">' . $text . '</span>';
+            return;
+        }
         echo "\033[31m$text\033[0m";
     }
 
@@ -235,6 +298,10 @@ class Console
      */
     protected static function yellow(string $text): void
     {
+        if (self::$htmlOutput) {
+            echo '<span style="color:var(--color-warning-text)">' . $text . '</span>';
+            return;
+        }
         echo "\033[33m$text\033[0m";
     }
 
@@ -245,6 +312,10 @@ class Console
      */
     protected static function green(string $text): void
     {
+        if (self::$htmlOutput) {
+            echo '<span style="color:var(--color-success-text)">' . $text . '</span>';
+            return;
+        }
         echo "\033[32m$text\033[0m";
     }
 

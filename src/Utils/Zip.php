@@ -19,22 +19,31 @@ class Zip
      * Create a zip file with all
      * @param string $zipPath
      * @param string[] $files Key is name in zip, value is full filepath on disk
+     * @param int $compressionLevel ZipArchive::CM_*
      */
-    public static function createZip(string $zipPath, array $files): void
-    {
+    public static function createZip(
+        string $zipPath,
+        array $files,
+        int $compressionLevel = ZipArchive::CM_DEFAULT
+    ): void {
         $zipArchive = new ZipArchive();
         $openResult = $zipArchive->open($zipPath, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
         if ($openResult !== true) {
             throw new Exception("Cannot open ZIP File '$zipPath' ($openResult)");
         }
+        $index = 0;
         foreach ($files as $relativeName => $fullPath) {
             $fullPath = FileUtils::normalizePath($fullPath);
             if (is_dir($fullPath)) {
                 if ($zipArchive->getFromName($relativeName) === false) {
                     $zipArchive->addEmptyDir($relativeName);
+                    $zipArchive->setCommentIndex($index, $compressionLevel);
+                    $index++;
                 }
             } elseif (file_exists($fullPath)) {
                 $zipArchive->addFile($fullPath, $relativeName);
+                $zipArchive->setCommentIndex($index, $compressionLevel);
+                $index++;
             }
         }
         $zipArchive->close();

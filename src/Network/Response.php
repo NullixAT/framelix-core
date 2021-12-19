@@ -8,6 +8,7 @@ use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\JsonUtils;
 
 use function basename;
+use function call_user_func_array;
 use function file_exists;
 use function filesize;
 use function header;
@@ -27,12 +28,14 @@ class Response
      * @param string|StorableFile $fileOrData If starting with @, the parameter will be threaded as string rather than file
      * @param string|null $filename
      * @param string|null $filetype
+     * @param callable|null $afterDownload A hook after download before script execution stops
      * @return never
      */
     public static function download(
         string|StorableFile $fileOrData,
         ?string $filename = null,
-        ?string $filetype = "application/octet-stream"
+        ?string $filetype = "application/octet-stream",
+        ?callable $afterDownload = null
     ): never {
         Buffer::clear();
         if ($fileOrData instanceof StorableFile) {
@@ -68,6 +71,9 @@ class Response
             readfile($fileOrData);
         } else {
             echo $fileOrData;
+        }
+        if ($afterDownload) {
+            call_user_func_array($afterDownload, []);
         }
         die();
     }

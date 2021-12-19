@@ -28,7 +28,7 @@ class File extends Field
 
     /**
      * Allowed file types
-     * Example: Only allow images, use image/*
+     * Example: Only allow images, use image/*, allow only certain file endings use .txt for example
      * @var string|null
      */
     public ?string $allowedFileTypes = null;
