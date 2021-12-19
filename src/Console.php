@@ -172,6 +172,17 @@ class Console
         FileUtils::deleteDirectory($tmpPath);
         mkdir($tmpPath);
         Zip::unzip($zipPath, $tmpPath);
+
+        // check if is root package, then unpack package.zip which contains everything
+        if (file_exists($tmpPath . "/package.zip")) {
+            $tmpPathNew = $tmpPath . "-2";
+            FileUtils::deleteDirectory($tmpPathNew);
+            mkdir($tmpPathNew);
+            Zip::unzip($tmpPath . "/package.zip", $tmpPathNew);
+            FileUtils::deleteDirectory($tmpPath);
+            rename($tmpPathNew, $tmpPath);
+        }
+
         $packageJson = JsonUtils::readFromFile($tmpPath . "/package.json");
         $moduleName = $packageJson['framelix']['module'] ?? null;
         $rootPackage = $packageJson['framelix']['isRootPackage'] ?? null;

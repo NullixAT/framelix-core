@@ -30,7 +30,6 @@ use function version_compare;
 
 use const FRAMELIX_MIN_PHP_VERSION;
 use const FRAMELIX_MODULE;
-use const PHP_VERSION;
 
 /**
  * Setup interface for application setup
@@ -60,40 +59,7 @@ class Setup extends View
             echo "This application is already setup";
             exit;
         }
-        if (version_compare(PHP_VERSION, FRAMELIX_MIN_PHP_VERSION) < 0) {
-            http_response_code(500);
-            echo "This application requires at least PHP " . FRAMELIX_MIN_PHP_VERSION;
-            exit;
-        }
-
-        $requiredExtensions = [
-            'exif',
-            'fileinfo',
-            'mbstring',
-            'mysqli',
-            'sockets',
-            'json',
-            'curl',
-            'simplexml',
-            'zip',
-            'openssl'
-        ];
-        $missingExtensions = [];
-
-        foreach ($requiredExtensions as $requiredExtension) {
-            if (!extension_loaded($requiredExtension)) {
-                $missingExtensions[$requiredExtension] = $requiredExtension;
-            }
-        }
-        if ($missingExtensions) {
-            http_response_code(500);
-            echo "This application requires the following php extensions to be functional: " . implode(
-                    ", ",
-                    $missingExtensions
-                ) . "<br/>Please add it to your php.ini configuration";
-            exit;
-        }
-
+        require __DIR__ . "/../../../public/check-requirements.php";
         $this->layout = self::LAYOUT_SMALL_CENTERED;
         $this->showSidebar = false;
         if (Form::isFormSubmitted('setup')) {

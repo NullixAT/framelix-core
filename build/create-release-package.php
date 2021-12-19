@@ -38,4 +38,13 @@ foreach ($builtInModules as $module) {
 $filelistFile = __DIR__ . "/../tmp/filelist.json";
 JsonUtils::writeToFile($filelistFile, $filelist);
 $arr["filelist.json"] = $filelistFile;
+Zip::createZip(__DIR__ . "/dist/release-tmp.zip", $arr);
+
+// wrap into another zip so we can use it with initial setup and app update
+$arr = [
+    'package.zip' => __DIR__ . "/dist/release-tmp.zip",
+    'install.php' => __DIR__ . "/install.php",
+    'check-requirements.php' => __DIR__ . "/../public/check-requirements.php",
+];
 Zip::createZip(__DIR__ . "/dist/release-" . $packageJson['version'] . ".zip", $arr);
+unlink(__DIR__ . "/dist/release-tmp.zip");

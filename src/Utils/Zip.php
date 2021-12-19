@@ -72,7 +72,7 @@ class Zip
         }
         $zipArchive = new ZipArchive();
         $openResult = $zipArchive->open($zipPath, ZipArchive::RDONLY);
-        if ($zipArchive->open($zipPath, ZipArchive::RDONLY) !== true) {
+        if ($openResult !== true) {
             throw new Exception("Cannot open ZIP File '$zipPath' ($openResult)");
         }
         $zipArchive->extractTo($outputDirectory);

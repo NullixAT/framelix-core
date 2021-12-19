@@ -66,7 +66,6 @@ class FramelixResizeObserver {
   static init () {
     // polyfill - Edge <= 18 :( ugly
     if (typeof ResizeObserver === 'undefined') {
-      const rectMap = new Map()
       FramelixResizeObserver.observer = {
         'observe': function (element) {
 
