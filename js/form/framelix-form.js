@@ -214,11 +214,12 @@ class FramelixForm {
 
   /**
    * Get instance by id
+   * If multiple forms with the same id exist, return last
    * @param {string} id
    * @return {FramelixForm|null}
    */
   static getById (id) {
-    for (let i = 0; i < FramelixForm.instances.length; i++) {
+    for (let i = FramelixForm.instances.length - 1; i >= 0; i--) {
       if (FramelixForm.instances[i].id === id) {
         return FramelixForm.instances[i]
       }
