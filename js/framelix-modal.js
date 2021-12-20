@@ -10,6 +10,12 @@ class FramelixModal {
   static modalsContainer
 
   /**
+   * All instances
+   * @type {FramelixModal[]}
+   */
+  static instances = []
+
+  /**
    * The backdrop container
    * @type {Cash}
    */
@@ -53,6 +59,12 @@ class FramelixModal {
   closed
 
   /**
+   * Is true when close() is called but not already really closed
+   * @type {boolean}
+   */
+  isClosing = false
+
+  /**
    * The promise that hold the last apiResponse when callPhpMethod/apiRequest is used to show a modal
    * @type {Promise<*>}
    */
@@ -79,9 +91,17 @@ class FramelixModal {
 
   /**
    * Hide all modals at once
+   * @return {Promise} Resolved when all modals are really closed
    */
-  static hideAll () {
-    FramelixModal.modalsContainer.find('.framelix-modal-close').trigger('click')
+  static async hideAll () {
+    let promises = []
+    for (let i = 0; i < FramelixModal.instances.length; i++) {
+      const instance = FramelixModal.instances[i]
+      if (instance.container && !instance.isClosing) {
+        promises.push(instance.close())
+      }
+    }
+    return Promise.all(promises)
   }
 
   /**
@@ -227,17 +247,6 @@ class FramelixModal {
     instance.closed = new Promise(function (resolve) {
       instance._closedResolve = resolve
     })
-    instance.container = $(`<div tabindex="0" class="framelix-modal" role="dialog">
-        <div class="framelix-modal-inner">
-            <div class="framelix-modal-close">
-              <button class="framelix-button" data-icon-left="clear" title="${FramelixLang.get('__framelix_close__')}"></button>
-            </div>
-            <div class="framelix-modal-content" role="document">
-                <div class="framelix-modal-content-body"></div>
-                <div class="framelix-modal-content-bottom hidden"></div>
-            </div>
-        </div>
-    </div>`)
     instance.backdrop = $(`<div class="framelix-modal-backdrop"></div>`)
     FramelixModal.modalsContainer.children('.framelix-modal').addClass('framelix-blur')
     FramelixModal.modalsContainer.append(instance.container)
@@ -271,11 +280,32 @@ class FramelixModal {
   }
 
   /**
+   * Constructor
+   */
+  constructor () {
+    FramelixModal.instances.push(this)
+    this.container = $(`<div tabindex="0" class="framelix-modal" role="dialog">
+        <div class="framelix-modal-inner">
+            <div class="framelix-modal-close">
+              <button class="framelix-button" data-icon-left="clear" title="${FramelixLang.get('__framelix_close__')}"></button>
+            </div>
+            <div class="framelix-modal-content" role="document">
+                <div class="framelix-modal-content-body"></div>
+                <div class="framelix-modal-content-bottom hidden"></div>
+            </div>
+        </div>
+    </div>`)
+    this.container.attr('data-instance-id', FramelixModal.instances.length - 1)
+  }
+
+  /**
    * Close modal
+   * @return {Promise} Resolved when modal is completely closed and content is unloaded
    */
   async close () {
     // already closed
-    if (!this.container) return
+    if (!this.container || this.isClosing) return
+    this.isClosing = true
     const childs = FramelixModal.modalsContainer.children('.framelix-modal-visible').not(this.container)
     this.container.removeClass('framelix-modal-visible')
     this.backdrop.removeClass('framelix-modal-backdrop-visible')
@@ -295,6 +325,7 @@ class FramelixModal {
     this.backdrop.remove()
     this.container = null
     this.backdrop = null
+    this.isClosing = false
   }
 }
 

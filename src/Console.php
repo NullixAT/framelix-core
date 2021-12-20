@@ -267,7 +267,9 @@ class Console
             $tmpPath .= "-zips";
             $moduleZipFiles = FileUtils::getFiles($tmpPath . "/modules", "~\.zip$~");
             foreach ($moduleZipFiles as $moduleZipFile) {
+                self::overrideParameter('skipDatabaseUpdate', [true]);
                 self::installZipPackage($moduleZipFile);
+                self::overrideParameter('skipDatabaseUpdate', [false]);
             }
         }
         FileUtils::deleteDirectory($tmpPath);
@@ -283,15 +285,17 @@ class Console
         foreach ($counts as $type => $count) {
             echo "$count " . $labels[$type] . "\n";
         }
-        // update database
-        // wait 3 seconds to prevent opcache in default configs
-        echo "Update database\n";
-        sleep(3);
-        $shell = Shell::prepare("php {*}", [
-            __DIR__ . "/../console.php",
-            "updateDatabaseSafe"
-        ])->execute();
-        echo implode("\n", $shell->output) . "\n";
+        if (!self::getParameter('skipDatabaseUpdate')) {
+            // update database
+            // wait 3 seconds to prevent opcache in default configs
+            echo "Update database\n";
+            sleep(3);
+            $shell = Shell::prepare("php {*}", [
+                __DIR__ . "/../console.php",
+                "updateDatabaseSafe"
+            ])->execute();
+            echo implode("\n", $shell->output) . "\n";
+        }
         if ($packageJson['framelix']['isRootPackage'] ?? null) {
             self::green("App Update completed\n");
         } else {
@@ -373,10 +377,10 @@ class Console
     /**
      * Override a given command line parameter (Used when invoking a method inside of a method)
      * @param string $name
-     * @param mixed $value
+     * @param array|null $value
      * @return void
      */
-    protected static function overrideParameter(string $name, mixed $value): void
+    protected static function overrideParameter(string $name, ?array $value): void
     {
         self::$overridenParameters[$name] = $value;
     }
@@ -422,7 +426,10 @@ class Console
         if (array_key_exists($name, self::$overridenParameters)) {
             return self::$overridenParameters[$name];
         }
-        $args = $_SERVER['argv'];
+        $args = $_SERVER['argv'] ?? [];
+        if (!$args) {
+            return [];
+        }
         array_shift($args);
         array_shift($args);
         $arr = [];
