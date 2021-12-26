@@ -122,7 +122,7 @@ abstract class LayoutView extends View
                 if (!DataTransfer || !DataTransfer.prototype.setDragImage) {
                   setTimeout(function () {
                     document.body.innerHTML = '<div style="padding:20px; font-family: Arial, sans-serif; font-size: 24px"><?=Lang::get(
-                        '__browser_unsupported__'
+                        '__framelix_browser_unsupported__'
                     )?></div>'
                   }, 200)
                 }

@@ -557,7 +557,7 @@ class FramelixTable {
       const action = $(this).attr('data-action')
       switch (action) {
         case 'delete-storable':
-          if ((await FramelixModal.confirm('__sure__').closed).confirmed) {
+          if ((await FramelixModal.confirm('__framelix_sure__').closed).confirmed) {
             const result = await FramelixApi.callPhpMethod($(this).attr('data-url'))
             if (result !== true) {
               FramelixToast.error(result)

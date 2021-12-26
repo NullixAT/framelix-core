@@ -44,7 +44,7 @@ class Password extends View
             }
             $this->storable->setPassword(Request::getPost('passwordNew'));
             $this->storable->store();
-            Toast::success('__saved__');
+            Toast::success('__framelix_saved__');
             Url::getBrowserUrl()->setParameter('id', $this->storable)->redirect();
         }
         $this->showContentBasedOnRequestType();
@@ -56,7 +56,7 @@ class Password extends View
     public function showContent(): void
     {
         $form = $this->getForm();
-        $form->addSubmitButton('save', '__save__', 'save');
+        $form->addSubmitButton('save', '__framelix_save__', 'save');
         $form->show();
     }
 

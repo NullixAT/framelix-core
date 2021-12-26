@@ -45,7 +45,7 @@ class FramelixBackend {
 
     const darkModeSelect = new FramelixFormFieldToggle();
     darkModeSelect.name = 'darkMode';
-    darkModeSelect.label = FramelixLang.get('__dark_mode__') + ' <span class="material-icons">dark_mode</span>';
+    darkModeSelect.label = FramelixLang.get('__framelix_darkmode__') + ' <span class="material-icons">dark_mode</span>';
     darkModeSelect.defaultValue = FramelixLocalStorage.get('framelix-darkmode');
     darkModeSelect.render();
     sidebar.find('.framelix-sidebar-select-darkmode').append(darkModeSelect.container);

@@ -1,260 +1,4 @@
 {
-    "__browser_unsupported__": [
-        "Dein Browser wird leider nicht mehr unterst\u00fctzt. Bitte aktualisiere auf einen aktuelle Version von Chrome, Edge, Firefox oder Safari.",
-        "fd507"
-    ],
-    "__cancel__": [
-        "Abbrechen",
-        "ea478"
-    ],
-    "__config_applicationhost_label__": [
-        "Domain",
-        "eae63"
-    ],
-    "__config_applicationhost_label_desc__": [
-        "Die Domain unter der deine Applikation l\u00e4uft. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt. Nutze den Platzhalter {host} falls du einfach die aktuelle Domain, mit der du diese App gerade aufrufst, nehmen willst. Das erlaubt dir mehrere Domains auf eine Applikation zu legen.",
-        "5e96b"
-    ],
-    "__config_applicationhttps_label__": [
-        "Https aktiviert",
-        "34586"
-    ],
-    "__config_applicationhttps_label_desc__": [
-        "Die Applikation l\u00e4uft mit einer gesicherten https Verbindung. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt.",
-        "e7703"
-    ],
-    "__config_applicationurlbasepath_label__": [
-        "Pfad zur Applikation",
-        "76bf3"
-    ],
-    "__config_applicationurlbasepath_label_desc__": [
-        "Dies wird dann notwendig, wenn die Applikation in einem Unterordner deines Webservers l\u00e4uft.",
-        "3d1b7"
-    ],
-    "__config_captchakeys_recaptchav2_privatekey_label__": [
-        "Recaptcha V2 secret key",
-        "837cd"
-    ],
-    "__config_captchakeys_recaptchav2_privatekey_label_desc__": [
-        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-        "41340"
-    ],
-    "__config_captchakeys_recaptchav2_publickey_label__": [
-        "Recaptcha V2 public key",
-        "575cb"
-    ],
-    "__config_captchakeys_recaptchav2_publickey_label_desc__": [
-        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-        "41340"
-    ],
-    "__config_captchakeys_recaptchav3_privatekey_label__": [
-        "Recaptcha V3 secret key",
-        "de055"
-    ],
-    "__config_captchakeys_recaptchav3_privatekey_label_desc__": [
-        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-        "41340"
-    ],
-    "__config_captchakeys_recaptchav3_publickey_label__": [
-        "Recaptcha V3 public key",
-        "5eb6b"
-    ],
-    "__config_captchakeys_recaptchav3_publickey_label_desc__": [
-        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-        "41340"
-    ],
-    "__config_captchatype_label__": [
-        "Art des Captchas",
-        "6f340"
-    ],
-    "__config_captchatype_label_desc__": [
-        "Du kannst zwischen verschiedenen Captcha-Methoden w\u00e4hlen. Falls du nichts w\u00e4hlst, dann ist Captcha global deaktiviert.",
-        "27d38"
-    ],
-    "__config_emailbody_label__": [
-        "Text",
-        "c7e9e"
-    ],
-    "__config_emailbodytemplate_label__": [
-        "Body template",
-        "431ae"
-    ],
-    "__config_emailbodytemplate_label_desc__": [
-        "Hier kannst du deiner E-Mail ein generelles HTML Layout geben. Der Platzhalter {body} wird mit dem Nachrichtentext ersetzt.",
-        "f8cf9"
-    ],
-    "__config_emaildefaultfrom_label__": [
-        "Standard \"FROM\" gesendet von E-Mail",
-        "e0524"
-    ],
-    "__config_emailoverriderecipient_label__": [
-        "Leite alle ausgehenden E-Mails an diese E-Mail",
-        "e4636"
-    ],
-    "__config_emailoverriderecipient_label_desc__": [
-        "Dies leitet alle ausgehenden E-Mails an eine einzige E-Mailadresse. Das sollte unbedingt in der lokalen Entwicklung bzw. zum Debugging benutzt werden. Du willst ja nicht w\u00e4hrend dem Testen E-Mails an au\u00dfenstehende schicken.",
-        "16b7b"
-    ],
-    "__config_emailtest_error__": [
-        "Fehler beim senden der E-Mail",
-        "7c182"
-    ],
-    "__config_emailtest_success__": [
-        "E-Mail erfolgreich gesendet",
-        "f4775"
-    ],
-    "__config_emailtitle_label__": [
-        "Betreff",
-        "2f1bf"
-    ],
-    "__config_emailtitletemplate_label__": [
-        "Betreff Template",
-        "15bf5"
-    ],
-    "__config_emailtitletemplate_label_desc__": [
-        "Wenn du willst, dass immer ein fixer Text im Titel steht.<br\/>Beispiel:\u00a0\"{title} - Fixer text\"<br\/>{title} wird mit dem richtigen Betreff ersetzt",
-        "82a6e"
-    ],
-    "__config_emailto_label__": [
-        "E-Mail Empf\u00e4nger",
-        "5dc40"
-    ],
-    "__config_errorlogdisk_label__": [
-        "Schreibe Fehler auf Festplatte",
-        "9af22"
-    ],
-    "__config_errorlogdisk_label_desc__": [
-        "Diese Fehler k\u00f6nnen sp\u00e4ter in Entwickleroptionen -> Logs angesehen werden.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-        "3f5c1"
-    ],
-    "__config_errorlogemail_label__": [
-        "Schicke Fehler per E-Mail",
-        "d1938"
-    ],
-    "__config_errorlogemail_label_desc__": [
-        "Schickt alle Fehler an die angegebene E-Mail.<br\/>Diese Einstellung ist empfohlen.<br\/>Nachdem du das ge\u00e4ndert hast, wird dir eine Testemail geschickt.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-        "593e1"
-    ],
-    "__config_errorlogextended_label__": [
-        "Erweitertes Logging",
-        "aedc5"
-    ],
-    "__config_errorlogextended_label_desc__": [
-        "Falls aktiviert, dann werden alle Daten die das System zu diesem Zeitpunkt zur Verf\u00fcgung hat, geloggt.<br\/>Das beinhaltet mitunter Formulardaten, Benutzerdaten, Serverdaten, usw...<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-        "a267d"
-    ],
-    "__config_errorlogsyslog_label__": [
-        "Schreibe Fehler in syslog",
-        "5afd6"
-    ],
-    "__config_errorlogsyslog_label_desc__": [
-        "Schreibt die Fehler in den syslog des Systems.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-        "eccde"
-    ],
-    "__config_languagedefault_label__": [
-        "Standardsprache",
-        "c96a7"
-    ],
-    "__config_languagedefaultuser_label__": [
-        "Ermittle Standardsprache automatisch auf Basis der Browsereinstellungen vom Benutzer",
-        "24ddb"
-    ],
-    "__config_languagedefaultuser_label_desc__": [
-        "Falls aktiviert, dann wird das System versuchen automatisch die Standardsprache des Browsers vom Benutzer zu ermitteln. Wird keine passende Sprache gefunden, dann wird wieder die Standardsprache des System gew\u00e4hlt.",
-        "48e87"
-    ],
-    "__config_languagefallback_label__": [
-        "Fallback Sprache",
-        "9475d"
-    ],
-    "__config_languagefallback_label_desc__": [
-        "Falls ein Bezeichner nicht existiert oder noch nicht \u00fcbersetzt wurde, dann nutze diese Sprache als Fallback.",
-        "3ac39"
-    ],
-    "__config_languagemultiple_label__": [
-        "Mehrsprachig",
-        "75543"
-    ],
-    "__config_languagemultiple_label_desc__": [
-        "Das erlaubt dem Benutzer die Auswahl aus mehreren Sprachen.<br\/>Diese Einstellung gilt f\u00fcr dieses Backend und m\u00f6glicherweise auch f\u00fcr eventuelle Frontend Seiten. Dies kommt auf die Implentierung an.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte diese Einstellung\u00a0 nicht mehr ge\u00e4ndert werden. Bei \u00c4nderung werden ALLE existierenden URLs ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
-        "33752"
-    ],
-    "__config_languagessupported_label__": [
-        "Unterst\u00fctzte Sprachen",
-        "06c07"
-    ],
-    "__config_languagessupported_label_desc__": [
-        "Der Benutzer kann zwischen diesen Sprachen w\u00e4hlen.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte keine Sprache mehr entfernt werden. Bei Entfernung einer Sprache werden ALLE existierenden URLs die auf die Sprache referenzieren ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
-        "f2b13"
-    ],
-    "__config_logincaptcha_label__": [
-        "Login ben\u00f6tigt ausgef\u00fclltes Captcha",
-        "f9625"
-    ],
-    "__config_logincaptcha_label_desc__": [
-        "Achtung: Falls du das aktivierst, kontrolliere sofort in einem 2ten Inkognito Tab ob der Login dann auch noch funktioniert. Im Falle eines Problems kannst du dich sonst nicht mehr einloggen.Falls das passiert, dann kannst du nur mehr via Kommandozeile die Datei\u00a0config-editable.php bearbeiten und das Hakerl dort wieder entfernen.",
-        "31562"
-    ],
-    "__config_mailsendtype_label__": [
-        "Mail Send-Architektur",
-        "63f89"
-    ],
-    "__config_smtphost_label__": [
-        "SMTP Hostname",
-        "4cb45"
-    ],
-    "__config_smtppassword_label__": [
-        "SMTP Passwort",
-        "13dfa"
-    ],
-    "__config_smtpport_label__": [
-        "SMTP Port",
-        "63ede"
-    ],
-    "__config_smtpsecure_label__": [
-        "SMTP Verschl\u00fcsselung",
-        "336ff"
-    ],
-    "__config_smtpusername_label__": [
-        "SMTP Benutzername",
-        "bf4f9"
-    ],
-    "__config_systemeventlog_1_label__": [
-        "Loggt jede Aktion die einen neuen Datenbankeintrag erzeugt",
-        "26ee8"
-    ],
-    "__config_systemeventlog_2_label__": [
-        "Loggt jede Aktion die einen Datenbankeintrag aktualisiert",
-        "33670"
-    ],
-    "__config_systemeventlog_3_label__": [
-        "Loggt jede Aktion die einen Datenbankeintrag l\u00f6scht",
-        "ba9f5"
-    ],
-    "__config_systemeventlog_4_label__": [
-        "Loggt alle fehlgeschlagenen Logins",
-        "02385"
-    ],
-    "__config_systemeventlog_5_label__": [
-        "Loggt alle erfolgreichen Logins",
-        "987b8"
-    ],
-    "__config_systemeventlog_labeldesc__": [
-        "Die folgenden Logs sind Event Logs welche unabh\u00e4ngig von den oben gelisteten Optionen sind. Diese Logs k\u00f6nnen auch im Men\u00fc f\u00fcr Logs angesehen werden.",
-        "880dc"
-    ],
-    "__dark_mode__": [
-        "Dark Mode",
-        "51b5e"
-    ],
-    "__delete_entry__": [
-        "Eintrag l\u00f6schen",
-        "e313e"
-    ],
-    "__download_file__": [
-        "Datei downloaden",
-        "d5ef9"
-    ],
     "__framelix_appupdate_confirm__": [
         "Ich best\u00e4tige diese Aktion",
         "44bac"
@@ -303,13 +47,257 @@
         "Konfiguration wiederhergestellt",
         "fc67a"
     ],
+    "__framelix_browser_unsupported__": [
+        "Dein Browser wird leider nicht mehr unterst\u00fctzt. Bitte aktualisiere auf einen aktuelle Version von Chrome, Edge, Firefox oder Safari.",
+        "fd507"
+    ],
+    "__framelix_cancel__": [
+        "Abbrechen",
+        "ea478"
+    ],
     "__framelix_close__": [
         "Schlie\u00dfen",
         "d3d2e"
     ],
+    "__framelix_config_applicationhost_label__": [
+        "Domain",
+        "eae63"
+    ],
+    "__framelix_config_applicationhost_label_desc__": [
+        "Die Domain unter der deine Applikation l\u00e4uft. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt. Nutze den Platzhalter {host} falls du einfach die aktuelle Domain, mit der du diese App gerade aufrufst, nehmen willst. Das erlaubt dir mehrere Domains auf eine Applikation zu legen.",
+        "5e96b"
+    ],
+    "__framelix_config_applicationhttps_label__": [
+        "Https aktiviert",
+        "34586"
+    ],
+    "__framelix_config_applicationhttps_label_desc__": [
+        "Die Applikation l\u00e4uft mit einer gesicherten https Verbindung. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt.",
+        "e7703"
+    ],
+    "__framelix_config_applicationurlbasepath_label__": [
+        "Pfad zur Applikation",
+        "76bf3"
+    ],
+    "__framelix_config_applicationurlbasepath_label_desc__": [
+        "Dies wird dann notwendig, wenn die Applikation in einem Unterordner deines Webservers l\u00e4uft.",
+        "3d1b7"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_privatekey_label__": [
+        "Recaptcha V2 secret key",
+        "837cd"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_privatekey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_publickey_label__": [
+        "Recaptcha V2 public key",
+        "575cb"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_publickey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_privatekey_label__": [
+        "Recaptcha V3 secret key",
+        "de055"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_privatekey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_publickey_label__": [
+        "Recaptcha V3 public key",
+        "5eb6b"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_publickey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchatype_label__": [
+        "Art des Captchas",
+        "6f340"
+    ],
+    "__framelix_config_captchatype_label_desc__": [
+        "Du kannst zwischen verschiedenen Captcha-Methoden w\u00e4hlen. Falls du nichts w\u00e4hlst, dann ist Captcha global deaktiviert.",
+        "27d38"
+    ],
+    "__framelix_config_emailbody_label__": [
+        "Text",
+        "c7e9e"
+    ],
+    "__framelix_config_emailbodytemplate_label__": [
+        "Body template",
+        "431ae"
+    ],
+    "__framelix_config_emailbodytemplate_label_desc__": [
+        "Hier kannst du deiner E-Mail ein generelles HTML Layout geben. Der Platzhalter {body} wird mit dem Nachrichtentext ersetzt.",
+        "f8cf9"
+    ],
+    "__framelix_config_emaildefaultfrom_label__": [
+        "Standard \"FROM\" gesendet von E-Mail",
+        "e0524"
+    ],
+    "__framelix_config_emailoverriderecipient_label__": [
+        "Leite alle ausgehenden E-Mails an diese E-Mail",
+        "e4636"
+    ],
+    "__framelix_config_emailoverriderecipient_label_desc__": [
+        "Dies leitet alle ausgehenden E-Mails an eine einzige E-Mailadresse. Das sollte unbedingt in der lokalen Entwicklung bzw. zum Debugging benutzt werden. Du willst ja nicht w\u00e4hrend dem Testen E-Mails an au\u00dfenstehende schicken.",
+        "16b7b"
+    ],
+    "__framelix_config_emailtest_error__": [
+        "Fehler beim senden der E-Mail",
+        "7c182"
+    ],
+    "__framelix_config_emailtest_success__": [
+        "E-Mail erfolgreich gesendet",
+        "f4775"
+    ],
+    "__framelix_config_emailtitle_label__": [
+        "Betreff",
+        "2f1bf"
+    ],
+    "__framelix_config_emailtitletemplate_label__": [
+        "Betreff Template",
+        "15bf5"
+    ],
+    "__framelix_config_emailtitletemplate_label_desc__": [
+        "Wenn du willst, dass immer ein fixer Text im Titel steht.<br\/>Beispiel:\u00a0\"{title} - Fixer text\"<br\/>{title} wird mit dem richtigen Betreff ersetzt",
+        "82a6e"
+    ],
+    "__framelix_config_emailto_label__": [
+        "E-Mail Empf\u00e4nger",
+        "5dc40"
+    ],
+    "__framelix_config_errorlogdisk_label__": [
+        "Schreibe Fehler auf Festplatte",
+        "9af22"
+    ],
+    "__framelix_config_errorlogdisk_label_desc__": [
+        "Diese Fehler k\u00f6nnen sp\u00e4ter in Entwickleroptionen -> Logs angesehen werden.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "3f5c1"
+    ],
+    "__framelix_config_errorlogemail_label__": [
+        "Schicke Fehler per E-Mail",
+        "d1938"
+    ],
+    "__framelix_config_errorlogemail_label_desc__": [
+        "Schickt alle Fehler an die angegebene E-Mail.<br\/>Diese Einstellung ist empfohlen.<br\/>Nachdem du das ge\u00e4ndert hast, wird dir eine Testemail geschickt.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "593e1"
+    ],
+    "__framelix_config_errorlogextended_label__": [
+        "Erweitertes Logging",
+        "aedc5"
+    ],
+    "__framelix_config_errorlogextended_label_desc__": [
+        "Falls aktiviert, dann werden alle Daten die das System zu diesem Zeitpunkt zur Verf\u00fcgung hat, geloggt.<br\/>Das beinhaltet mitunter Formulardaten, Benutzerdaten, Serverdaten, usw...<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "a267d"
+    ],
+    "__framelix_config_errorlogsyslog_label__": [
+        "Schreibe Fehler in syslog",
+        "5afd6"
+    ],
+    "__framelix_config_errorlogsyslog_label_desc__": [
+        "Schreibt die Fehler in den syslog des Systems.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "eccde"
+    ],
+    "__framelix_config_languagedefault_label__": [
+        "Standardsprache",
+        "c96a7"
+    ],
+    "__framelix_config_languagedefaultuser_label__": [
+        "Ermittle Standardsprache automatisch auf Basis der Browsereinstellungen vom Benutzer",
+        "24ddb"
+    ],
+    "__framelix_config_languagedefaultuser_label_desc__": [
+        "Falls aktiviert, dann wird das System versuchen automatisch die Standardsprache des Browsers vom Benutzer zu ermitteln. Wird keine passende Sprache gefunden, dann wird wieder die Standardsprache des System gew\u00e4hlt.",
+        "48e87"
+    ],
+    "__framelix_config_languagefallback_label__": [
+        "Fallback Sprache",
+        "9475d"
+    ],
+    "__framelix_config_languagefallback_label_desc__": [
+        "Falls ein Bezeichner nicht existiert oder noch nicht \u00fcbersetzt wurde, dann nutze diese Sprache als Fallback.",
+        "3ac39"
+    ],
+    "__framelix_config_languagemultiple_label__": [
+        "Mehrsprachig",
+        "75543"
+    ],
+    "__framelix_config_languagemultiple_label_desc__": [
+        "Das erlaubt dem Benutzer die Auswahl aus mehreren Sprachen.<br\/>Diese Einstellung gilt f\u00fcr dieses Backend und m\u00f6glicherweise auch f\u00fcr eventuelle Frontend Seiten. Dies kommt auf die Implentierung an.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte diese Einstellung\u00a0 nicht mehr ge\u00e4ndert werden. Bei \u00c4nderung werden ALLE existierenden URLs ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
+        "33752"
+    ],
+    "__framelix_config_languagessupported_label__": [
+        "Unterst\u00fctzte Sprachen",
+        "06c07"
+    ],
+    "__framelix_config_languagessupported_label_desc__": [
+        "Der Benutzer kann zwischen diesen Sprachen w\u00e4hlen.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte keine Sprache mehr entfernt werden. Bei Entfernung einer Sprache werden ALLE existierenden URLs die auf die Sprache referenzieren ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
+        "f2b13"
+    ],
+    "__framelix_config_logincaptcha_label__": [
+        "Login ben\u00f6tigt ausgef\u00fclltes Captcha",
+        "f9625"
+    ],
+    "__framelix_config_logincaptcha_label_desc__": [
+        "Achtung: Falls du das aktivierst, kontrolliere sofort in einem 2ten Inkognito Tab ob der Login dann auch noch funktioniert. Im Falle eines Problems kannst du dich sonst nicht mehr einloggen.Falls das passiert, dann kannst du nur mehr via Kommandozeile die Datei\u00a0config-editable.php bearbeiten und das Hakerl dort wieder entfernen.",
+        "31562"
+    ],
+    "__framelix_config_mailsendtype_label__": [
+        "Mail Send-Architektur",
+        "63f89"
+    ],
     "__framelix_config_missing_forms_file__": [
         "Das Modul hat keine\u00a0config\/config-editable-form.php Datei",
         "554ce"
+    ],
+    "__framelix_config_smtphost_label__": [
+        "SMTP Hostname",
+        "4cb45"
+    ],
+    "__framelix_config_smtppassword_label__": [
+        "SMTP Passwort",
+        "13dfa"
+    ],
+    "__framelix_config_smtpport_label__": [
+        "SMTP Port",
+        "63ede"
+    ],
+    "__framelix_config_smtpsecure_label__": [
+        "SMTP Verschl\u00fcsselung",
+        "336ff"
+    ],
+    "__framelix_config_smtpusername_label__": [
+        "SMTP Benutzername",
+        "bf4f9"
+    ],
+    "__framelix_config_systemeventlog_1_label__": [
+        "Loggt jede Aktion die einen neuen Datenbankeintrag erzeugt",
+        "26ee8"
+    ],
+    "__framelix_config_systemeventlog_2_label__": [
+        "Loggt jede Aktion die einen Datenbankeintrag aktualisiert",
+        "33670"
+    ],
+    "__framelix_config_systemeventlog_3_label__": [
+        "Loggt jede Aktion die einen Datenbankeintrag l\u00f6scht",
+        "ba9f5"
+    ],
+    "__framelix_config_systemeventlog_4_label__": [
+        "Loggt alle fehlgeschlagenen Logins",
+        "02385"
+    ],
+    "__framelix_config_systemeventlog_5_label__": [
+        "Loggt alle erfolgreichen Logins",
+        "987b8"
+    ],
+    "__framelix_config_systemeventlog_labeldesc__": [
+        "Die folgenden Logs sind Event Logs welche unabh\u00e4ngig von den oben gelisteten Optionen sind. Diese Logs k\u00f6nnen auch im Men\u00fc f\u00fcr Logs angesehen werden.",
+        "880dc"
     ],
     "__framelix_configuration_module_captcha_pagetitle__": [
         "Captcha",
@@ -358,6 +346,10 @@
     "__framelix_configuration_warning__": [
         "Achtung: Jede \u00c4nderung an diesen Einstellungen wird sofort durchgef\u00fchrt und angewendet. Stelle sicher das du immer ein funktionierendes Backup hast, falls du dabei etwas falsch konfigurieren solltest.<br\/>Stelle auch sicher, das du immer Zugriff auf die Kommandozeile auf deinem Server hast, damit du die config-editable.php Datei bearbeiten kannst, falls wirklich alles den Bach runter geht.",
         "0200d"
+    ],
+    "__framelix_darkmode__": [
+        "Dark Mode",
+        "51b5e"
     ],
     "__framelix_date_quarter__": [
         "Quartal",
@@ -419,9 +411,17 @@
         "So",
         "ef657"
     ],
+    "__framelix_deleteentry__": [
+        "Eintrag l\u00f6schen",
+        "e313e"
+    ],
     "__framelix_developer_options__": [
         "Entwickleroptionen",
         "029a9"
+    ],
+    "__framelix_downloadfile__": [
+        "Datei downloaden",
+        "d5ef9"
     ],
     "__framelix_edituser_sidebar_title__": [
         "Benutzermanagement",
@@ -599,6 +599,10 @@
         "Der eingegebene Code ist nicht g\u00fcltig",
         "ac9d8"
     ],
+    "__framelix_goahead__": [
+        "Weiter",
+        "6dd82"
+    ],
     "__framelix_https_required__": [
         "Das Feature ist nur verf\u00fcgbar, wenn die Applikation unter https l\u00e4uft. Der Administrator dieser Applikation muss dieses Feature aktivieren.",
         "d5503"
@@ -618,6 +622,10 @@
     "__framelix_login_submit__": [
         "Jetzt einloggen",
         "88013"
+    ],
+    "__framelix_logout__": [
+        "Ausloggen",
+        "0323d"
     ],
     "__framelix_meta_searchandtable_entries__": [
         "Eintr\u00e4ge",
@@ -743,6 +751,10 @@
         "Nein",
         "bafd7"
     ],
+    "__framelix_ok__": [
+        "OK",
+        "e0aa0"
+    ],
     "__framelix_password__": [
         "Passwort",
         "dc647"
@@ -842,6 +854,22 @@
     "__framelix_quick_search_value__": [
         "Suche nach",
         "900c6"
+    ],
+    "__framelix_save__": [
+        "Speichern",
+        "c9cc8"
+    ],
+    "__framelix_save_edited__": [
+        "Ge\u00e4nderten Eintrag speichern",
+        "9e11d"
+    ],
+    "__framelix_save_new__": [
+        "Neuer Eintrag gespeichert",
+        "39c4b"
+    ],
+    "__framelix_saved__": [
+        "Daten wurden gespeichert",
+        "cfc9a"
     ],
     "__framelix_setup_applicationurl_desc__": [
         "Deine URL inklusive Domain zu deiner Applikation",
@@ -955,6 +983,14 @@
         "F\u00fcr 60 Tage eingeloggt bleiben",
         "5fef9"
     ],
+    "__framelix_stop_edit__": [
+        "Bearbeitung abbrechen",
+        "12c11"
+    ],
+    "__framelix_stop_edit_tooltip__": [
+        "Verwirft alle \u00c4nderungen in diesem Formular und \u00f6ffnet einen neuen Eintrag",
+        "784f4"
+    ],
     "__framelix_storable_systemeventlog_info_label__": [
         "Info",
         "4059b"
@@ -962,6 +998,10 @@
     "__framelix_storable_userwebauthn_devicename_label__": [
         "Ger\u00e4tename",
         "92394"
+    ],
+    "__framelix_sure__": [
+        "Bist du sicher?",
+        "729a5"
     ],
     "__framelix_systemeventlog_1__": [
         "Eintrag #{id} erstellt: {info}",
@@ -1058,6 +1098,14 @@
     "__framelix_user_flag_locked_desc__": [
         "Falls aktiviert, dann wird der Benutzer sofort gesperrt und kann sich nicht mehr einloggen.",
         "a6146"
+    ],
+    "__framelix_user_role_admin__": [
+        "Administrator - Darf alles",
+        "979c8"
+    ],
+    "__framelix_user_role_dev__": [
+        "Entwickler",
+        "672ca"
     ],
     "__framelix_view_backend_appupdate__": [
         "App Update",
@@ -1404,62 +1452,6 @@
         "acf1e"
     ],
     "__framelix_yes__": [
-        "Ja",
-        "93cba"
-    ],
-    "__goahead__": [
-        "Weiter",
-        "6dd82"
-    ],
-    "__logout__": [
-        "Ausloggen",
-        "0323d"
-    ],
-    "__no__": [
-        "Nein",
-        "bafd7"
-    ],
-    "__ok__": [
-        "OK",
-        "e0aa0"
-    ],
-    "__save__": [
-        "Speichern",
-        "c9cc8"
-    ],
-    "__save_edited__": [
-        "Ge\u00e4nderten Eintrag speichern",
-        "9e11d"
-    ],
-    "__save_new__": [
-        "Neuer Eintrag gespeichert",
-        "39c4b"
-    ],
-    "__saved__": [
-        "Daten wurden gespeichert",
-        "cfc9a"
-    ],
-    "__stop_edit__": [
-        "Bearbeitung abbrechen",
-        "12c11"
-    ],
-    "__stop_edit_tooltip__": [
-        "Verwirft alle \u00c4nderungen in diesem Formular und \u00f6ffnet einen neuen Eintrag",
-        "784f4"
-    ],
-    "__sure__": [
-        "Bist du sicher?",
-        "729a5"
-    ],
-    "__user_role_admin__": [
-        "Administrator - Darf alles",
-        "979c8"
-    ],
-    "__user_role_dev__": [
-        "Entwickler",
-        "672ca"
-    ],
-    "__yes__": [
         "Ja",
         "93cba"
     ]

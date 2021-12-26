@@ -308,7 +308,7 @@ class Table implements JsonSerializable
             );
             $cell = new TableCell();
             $cell->icon = "clear";
-            $cell->iconTooltip = "__delete_entry__";
+            $cell->iconTooltip = "__framelix_deleteentry__";
             $cell->iconAction = "delete-storable";
             $cell->iconAttributes = new HtmlAttributes();
             $cell->iconAttributes->set('data-url', $deleteUrl);

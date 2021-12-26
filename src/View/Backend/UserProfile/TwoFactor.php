@@ -227,7 +227,7 @@ class TwoFactor extends View
     {
         if (!Session::get(__CLASS__ . "-pw-verified")) {
             $form = $this->getPasswordVerifyForm();
-            $form->addSubmitButton('verify', '__goahead__', 'lock_open');
+            $form->addSubmitButton('verify', '__framelix_goahead__', 'lock_open');
             $form->show();
             return;
         }

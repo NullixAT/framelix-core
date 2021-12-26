@@ -110,7 +110,7 @@ class Email extends View
             <?php
         }
         $form = $this->getForm();
-        $form->addSubmitButton('save', '__save__', 'save');
+        $form->addSubmitButton('save', '__framelix_save__', 'save');
         $form->show();
     }
 

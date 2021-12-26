@@ -350,7 +350,7 @@ class Lang
             if (Config::get('langDebugMode')) {
                 self::$debugMissingLangKeys[$key] = $key;
             }
-            if ($key === "__browser_unsupported__" && $lang === "en") {
+            if ($key === "__framelix_browser_unsupported__" && $lang === "en") {
                 var_dump(self::$values);
             }
             return $key;

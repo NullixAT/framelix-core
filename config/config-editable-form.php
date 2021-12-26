@@ -185,9 +185,9 @@ ModuleConfig::addForm($form, '__framelix_configuration_module_emailtext_pagetitl
             \Framelix\Framelix\Network\Request::getPost('emailTo')
         );
         if ($sendResult) {
-            \Framelix\Framelix\Html\Toast::success('__config_emailtest_success__');
+            \Framelix\Framelix\Html\Toast::success('__framelix_config_emailtest_success__');
         } else {
-            \Framelix\Framelix\Html\Toast::success('__config_emailtest_error__');
+            \Framelix\Framelix\Html\Toast::success('__framelix_config_emailtest_error__');
         }
     } catch (Throwable $e) {
         \Framelix\Framelix\Html\Toast::error($e->getMessage());
@@ -215,7 +215,7 @@ $form->addField($field);
 $field = new \Framelix\Framelix\Form\Field\Html();
 $field->name = "systemEventLogInfo";
 $field->label = '';
-$field->labelDescription = '__config_systemeventlog_labeldesc__';
+$field->labelDescription = '__framelix_config_systemeventlog_labeldesc__';
 $form->addField($field);
 
 for ($i = 1; $i <= 5; $i++) {

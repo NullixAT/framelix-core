@@ -71,7 +71,7 @@ class ModuleConfigTab extends View
             <?php
             return;
         }
-        $this->form->addSubmitButton('save', '__save__', 'save');
+        $this->form->addSubmitButton('save', '__framelix_save__', 'save');
         $this->form->show();
     }
 }

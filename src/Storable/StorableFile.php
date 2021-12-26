@@ -131,7 +131,7 @@ abstract class StorableFile extends Storable
         if (!$downloadUrl) {
             return $this->getRawTextString();
         }
-        return '<a href="' . $downloadUrl . '" title="__download_file__">' . $this->getRawTextString() . '</a>';
+        return '<a href="' . $downloadUrl . '" title="__framelix_downloadfile__">' . $this->getRawTextString() . '</a>';
     }
 
     /**

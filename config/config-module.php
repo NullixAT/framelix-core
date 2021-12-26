@@ -214,8 +214,8 @@ if (!defined("FRAMELIX_MODULE")) {
             }
         },
         "userRoles": {
-            "admin": "__user_role_admin__",
-            "dev": "__user_role_dev__",
+            "admin": "__framelix_user_role_admin__",
+            "dev": "__framelix_user_role_dev__",
             "usermanagement": "__framelix_edituser_sidebar_title__",
             "configuration": "__framelix_view_backend_config_index__",
             "logs": "__framelix_view_backend_logs__"

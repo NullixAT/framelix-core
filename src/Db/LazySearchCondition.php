@@ -133,11 +133,11 @@ class LazySearchCondition
                     }
                     if ($userSearchQueryPartForColumn === "1" || strtolower(
                             $userSearchQueryPartForColumn
-                        ) === strtolower(Lang::get('__yes__'))) {
+                        ) === strtolower(Lang::get('__framelix_yes__'))) {
                         $userSearchQueryPartForColumn = "1";
                     } elseif ($userSearchQueryPartForColumn === "0" || strtolower(
                             $userSearchQueryPartForColumn
-                        ) === strtolower(Lang::get('__no__'))) {
+                        ) === strtolower(Lang::get('__framelix_no__'))) {
                         $userSearchQueryPartForColumn = "0";
                     } else {
                         // skip of the query is not a valid bool value

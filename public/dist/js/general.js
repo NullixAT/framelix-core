@@ -1083,7 +1083,7 @@ class FramelixModal {
   static alert(content) {
     const html = $(`<div style="text-align: center;">`);
     html.append(FramelixLang.get(content));
-    const modal = FramelixModal.show(html, '<button class="framelix-button" data-icon-left="check">' + FramelixLang.get('__ok__') + '</button>');
+    const modal = FramelixModal.show(html, '<button class="framelix-button" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>');
     const buttons = modal.bottomContainer.find('button');
     buttons.on('click', function () {
       modal.close();
@@ -1113,8 +1113,8 @@ class FramelixModal {
     let bottomContainer = $('<div>');
     bottomContainer.append(input);
     bottomContainer.append('<br/><br/>');
-    bottomContainer.append('<button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check">' + FramelixLang.get('__ok__') + '</button>');
-    bottomContainer.append('&nbsp;<button class="framelix-button" data-icon-left="clear">' + FramelixLang.get('__cancel__') + '</button>');
+    bottomContainer.append('<button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>');
+    bottomContainer.append('&nbsp;<button class="framelix-button" data-icon-left="clear">' + FramelixLang.get('__framelix_cancel__') + '</button>');
     input.on('keydown', function (ev) {
       if (ev.key === 'Enter') {
         bottomContainer.find('.framelix-button[data-success=\'1\']').trigger('click');
@@ -1142,9 +1142,9 @@ class FramelixModal {
     const html = $(`<div style="text-align: center;"></div>`);
     html.html(FramelixLang.get(content));
     const bottom = $(`
-      <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check">${FramelixLang.get('__ok__')}</button>
+      <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check">${FramelixLang.get('__framelix_ok__')}</button>
       &nbsp;
-      <button class="framelix-button" data-icon-left="clear">${FramelixLang.get('__cancel__')}</button>
+      <button class="framelix-button" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
     `);
     const modal = FramelixModal.show(html, bottom);
     const buttons = modal.bottomContainer.find('button');
@@ -3570,7 +3570,7 @@ class FramelixTable {
 
       switch (action) {
         case 'delete-storable':
-          if ((await FramelixModal.confirm('__sure__').closed).confirmed) {
+          if ((await FramelixModal.confirm('__framelix_sure__').closed).confirmed) {
             const result = await FramelixApi.callPhpMethod($(this).attr('data-url'));
 
             if (result !== true) {

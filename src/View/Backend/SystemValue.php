@@ -68,7 +68,7 @@ abstract class SystemValue extends View
             }
             $form->setStorableValues($this->storableIntern);
             $form->storeWithFiles($this->storableIntern);
-            Toast::success('__saved__');
+            Toast::success('__framelix_saved__');
             Url::getBrowserUrl()->removeParameterByValue($this->storableIntern)->redirect();
         }
 

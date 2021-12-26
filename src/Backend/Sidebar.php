@@ -62,7 +62,7 @@ abstract class Sidebar
 
                 $field = new Toggle();
                 $field->name = "darkMode";
-                $field->label = Lang::get('__dark_mode__') . ' <span class="material-icons">dark_mode</span>';
+                $field->label = Lang::get('__framelix_darkmode__') . ' <span class="material-icons">dark_mode</span>';
                 $field->show();
                 ?>
                 <script>
@@ -246,7 +246,7 @@ abstract class Sidebar
                 )->email . '</div>',
                 "person"
             );
-            $this->addLink(View\Backend\Logout::class, "__logout__", "logout");
+            $this->addLink(View\Backend\Logout::class, "__framelix_logout__", "logout");
             $this->showHtmlForLinkData();
         }
         echo '</div>';

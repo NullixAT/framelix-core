@@ -55,7 +55,7 @@ class Roles extends View
                 Response::showFormValidationErrorResponse('__framelix_user_edituser_validation_adminrequired__');
             }
             $this->storable->store();
-            Toast::success('__saved__');
+            Toast::success('__framelix_saved__');
             Url::getBrowserUrl()->setParameter('id', $this->storable)->redirect();
         }
         $this->showContentBasedOnRequestType();
@@ -67,7 +67,7 @@ class Roles extends View
     public function showContent(): void
     {
         $form = $this->getForm();
-        $form->addSubmitButton('save', '__saved__', 'save');
+        $form->addSubmitButton('save', '__framelix_saved__', 'save');
         $form->show();
     }
 

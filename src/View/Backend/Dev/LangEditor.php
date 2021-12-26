@@ -74,7 +74,7 @@ class LangEditor extends View
                     JsonUtils::writeToFile($path, $values, true);
                 }
             }
-            Toast::success('__saved__');
+            Toast::success('__framelix_saved__');
             Response::showFormAsyncSubmitResponse();
         }
         $this->showContentBasedOnRequestType();
@@ -87,7 +87,7 @@ class LangEditor extends View
     {
         if ($this->tabId && str_starts_with($this->tabId, "lang-")) {
             $form = $this->getForm(substr($this->tabId, 5));
-            $form->addSubmitButton('save', '__save__', 'save');
+            $form->addSubmitButton('save', '__framelix_save__', 'save');
             $form->show();
         } else {
             $tabs = new Tabs();

@@ -126,7 +126,7 @@ class Fido2 extends View
                 $form->validate();
                 $form->setStorableValues($this->storable);
                 $this->storable->store();
-                Toast::success('__saved__');
+                Toast::success('__framelix_saved__');
                 Url::getBrowserUrl()->redirect();
             }
         } elseif (Form::isFormSubmitted('pw-verify')) {
@@ -152,7 +152,7 @@ class Fido2 extends View
         }
         if (!Session::get(__CLASS__ . "-pw-verified")) {
             $form = $this->getPasswordVerifyForm();
-            $form->addSubmitButton('verify', '__goahead__', 'lock_open');
+            $form->addSubmitButton('verify', '__framelix_goahead__', 'lock_open');
             $form->show();
             return;
         }

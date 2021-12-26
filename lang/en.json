@@ -1,196 +1,4 @@
 {
-    "__browser_unsupported__": [
-        "Your browser is not supported anymore. Please update to a current version of Chrome, Edge, Firefox, Safari or any other brand."
-    ],
-    "__cancel__": [
-        "Cancel"
-    ],
-    "__config_applicationhost_label__": [
-        "Domain"
-    ],
-    "__config_applicationhost_label_desc__": [
-        "The domain name under which this application runs. The setting affect all generated urls.<br\/>Use the placeholder {host} if you want to use the current server domain instead of a fixed one.<br\/>This allow you to have a multi-domain hosting."
-    ],
-    "__config_applicationhttps_label__": [
-        "Https enabled"
-    ],
-    "__config_applicationhttps_label_desc__": [
-        "This application runs with https. The setting affect all generated urls. They will include https:\/\/ or http:\/\/, depending on this setting."
-    ],
-    "__config_applicationurlbasepath_label__": [
-        "Base Path"
-    ],
-    "__config_applicationurlbasepath_label_desc__": [
-        "When your app run in a subfolder of your document root folder, then put the url path in here. Example: \/subfolder"
-    ],
-    "__config_captchakeys_recaptchav2_privatekey_label__": [
-        "Recaptcha V2 secret key"
-    ],
-    "__config_captchakeys_recaptchav2_privatekey_label_desc__": [
-        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
-    ],
-    "__config_captchakeys_recaptchav2_publickey_label__": [
-        "Recaptcha V2 public key"
-    ],
-    "__config_captchakeys_recaptchav2_publickey_label_desc__": [
-        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
-    ],
-    "__config_captchakeys_recaptchav3_privatekey_label__": [
-        "Recaptcha V3 secret key"
-    ],
-    "__config_captchakeys_recaptchav3_privatekey_label_desc__": [
-        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
-    ],
-    "__config_captchakeys_recaptchav3_publickey_label__": [
-        "Recaptcha V3 public key"
-    ],
-    "__config_captchakeys_recaptchav3_publickey_label_desc__": [
-        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
-    ],
-    "__config_captchatype_label__": [
-        "Type of captcha solving"
-    ],
-    "__config_captchatype_label_desc__": [
-        "You can choose between different captcha solving types. If you choose none, captcha solving is disabled everywhere."
-    ],
-    "__config_emailbody_label__": [
-        "Body\/Content"
-    ],
-    "__config_emailbodytemplate_label__": [
-        "Body template"
-    ],
-    "__config_emailbodytemplate_label_desc__": [
-        "Give your e-mail a layout. This textarea accept html.{body} is the actual content placeholder to be inserted by the application"
-    ],
-    "__config_emaildefaultfrom_label__": [
-        "Default FROM sender e-mail"
-    ],
-    "__config_emailoverriderecipient_label__": [
-        "Route every e-mail to this e-mail"
-    ],
-    "__config_emailoverriderecipient_label_desc__": [
-        "This does effectively route EVERY outgoing e-mail to this given e-mail.<br\/>That should only be set for local development environments or debugging purposes."
-    ],
-    "__config_emailtest_error__": [
-        "E-Mail send error"
-    ],
-    "__config_emailtest_success__": [
-        "E-Mail successfully sended"
-    ],
-    "__config_emailtitle_label__": [
-        "Subject\/Title"
-    ],
-    "__config_emailtitletemplate_label__": [
-        "Title template"
-    ],
-    "__config_emailtitletemplate_label_desc__": [
-        "For example if you always want to prepend\/append some text<br\/>Example: \"{title} - Fixed text\"<br\/>{title} is the title placeholder to be inserted by the application"
-    ],
-    "__config_emailto_label__": [
-        "E-Mail recipient"
-    ],
-    "__config_errorlogdisk_label__": [
-        "Log errors to disk"
-    ],
-    "__config_errorlogdisk_label_desc__": [
-        "The error can later be viewed in developer options -> Logs<br\/>This is recommended.<br\/>Attention: This logs can contain very sensible data. Read above extended log option."
-    ],
-    "__config_errorlogemail_label__": [
-        "Error log to e-email"
-    ],
-    "__config_errorlogemail_label_desc__": [
-        "Send an error to the given e-mail address.<br\/>This is recommended.<br\/>After changing this, you will get a test error e-mail to this address.<br\/>Attention: This logs can contain very sensible data. Read above extended log option."
-    ],
-    "__config_errorlogextended_label__": [
-        "Extended error logging"
-    ],
-    "__config_errorlogextended_label_desc__": [
-        "If true, then log all data that is know to the system.<br\/>Include current request, server data, user session, and more.<br\/>Attention: This contains very sensible data and affect all log options bellow"
-    ],
-    "__config_errorlogsyslog_label__": [
-        "Log errors to syslog"
-    ],
-    "__config_errorlogsyslog_label_desc__": [
-        "Log error to your systems syslog.<br\/>Attention: This logs can contain very sensible data. Read above extended log option."
-    ],
-    "__config_languagedefault_label__": [
-        "Default language"
-    ],
-    "__config_languagedefaultuser_label__": [
-        "Detect default language automatically based on user preference"
-    ],
-    "__config_languagedefaultuser_label_desc__": [
-        "If activated, the system will try to detect the default language based on users browser preferences. If no supported language is found, then it will use the systems default language."
-    ],
-    "__config_languagefallback_label__": [
-        "Fallback language"
-    ],
-    "__config_languagefallback_label_desc__": [
-        "If a language key with the default language is not found, or the key is untranslated, then it will use the translation value from this fallback."
-    ],
-    "__config_languagemultiple_label__": [
-        "Multilanguage"
-    ],
-    "__config_languagemultiple_label_desc__": [
-        "This will allow the user to choose between supported languages.<br\/>This setting is for the backend and also maybe for frontend pages, depending on the implementation of the application.<br\/>Attention: Once you have a running application and you disable multilanguage, ALL existing URLs are invalid, because the language is not contained in the URL anymore. Effectively making all existing google entries, bookmarks, etc... invalid. Never do disable this in production when it was activated before."
-    ],
-    "__config_languagessupported_label__": [
-        "Supported languages"
-    ],
-    "__config_languagessupported_label_desc__": [
-        "The user can choose between these languages.<br\/>Attention: Once you have a running application and you remove a supported language, all URLs containing the now deleted language are invalid and throw a not found error for the user. This will remove all those URLs from google for example. It is recommended to never remove a language, only adding is safe."
-    ],
-    "__config_logincaptcha_label__": [
-        "Login forms does require a solved captcha"
-    ],
-    "__config_logincaptcha_label_desc__": [
-        "Attention: Verify the backend login in a second incognito tab before you logout here.In case you have a problem with the keys bellow, you not will be able to login again.<br\/>You then must manually unset the flag in config-editable.php on the command-line."
-    ],
-    "__config_mailsendtype_label__": [
-        "Mail Send Architecture"
-    ],
-    "__config_smtphost_label__": [
-        "SMTP Hostname"
-    ],
-    "__config_smtppassword_label__": [
-        "SMTP Password"
-    ],
-    "__config_smtpport_label__": [
-        "SMTP Port"
-    ],
-    "__config_smtpsecure_label__": [
-        "SMTP Encryption"
-    ],
-    "__config_smtpusername_label__": [
-        "SMTP Username"
-    ],
-    "__config_systemeventlog_1_label__": [
-        "Log every action that create a new database entry"
-    ],
-    "__config_systemeventlog_2_label__": [
-        "Log every action that modify a database entry"
-    ],
-    "__config_systemeventlog_3_label__": [
-        "Log every action that delete a database entry"
-    ],
-    "__config_systemeventlog_4_label__": [
-        "Log every failed login try"
-    ],
-    "__config_systemeventlog_5_label__": [
-        "Log every successfull login"
-    ],
-    "__config_systemeventlog_labeldesc__": [
-        "The following logs are system info logs which are independent of above options. This logs can be viewed in the logs menu."
-    ],
-    "__dark_mode__": [
-        "Dark Mode"
-    ],
-    "__delete_entry__": [
-        "Delete this entry"
-    ],
-    "__download_file__": [
-        "Download file"
-    ],
     "__framelix_appupdate_confirm__": [
         "I confirm this action"
     ],
@@ -227,11 +35,194 @@
     "__framelix_backupreestore_restored__": [
         "Configuration restored"
     ],
+    "__framelix_browser_unsupported__": [
+        "Your browser is not supported anymore. Please update to a current version of Chrome, Edge, Firefox, Safari or any other brand."
+    ],
+    "__framelix_cancel__": [
+        "Cancel"
+    ],
     "__framelix_close__": [
         "Close"
     ],
+    "__framelix_config_applicationhost_label__": [
+        "Domain"
+    ],
+    "__framelix_config_applicationhost_label_desc__": [
+        "The domain name under which this application runs. The setting affect all generated urls.<br\/>Use the placeholder {host} if you want to use the current server domain instead of a fixed one.<br\/>This allow you to have a multi-domain hosting."
+    ],
+    "__framelix_config_applicationhttps_label__": [
+        "Https enabled"
+    ],
+    "__framelix_config_applicationhttps_label_desc__": [
+        "This application runs with https. The setting affect all generated urls. They will include https:\/\/ or http:\/\/, depending on this setting."
+    ],
+    "__framelix_config_applicationurlbasepath_label__": [
+        "Base Path"
+    ],
+    "__framelix_config_applicationurlbasepath_label_desc__": [
+        "When your app run in a subfolder of your document root folder, then put the url path in here. Example: \/subfolder"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_privatekey_label__": [
+        "Recaptcha V2 secret key"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_privatekey_label_desc__": [
+        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_publickey_label__": [
+        "Recaptcha V2 public key"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_publickey_label_desc__": [
+        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_privatekey_label__": [
+        "Recaptcha V3 secret key"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_privatekey_label_desc__": [
+        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_publickey_label__": [
+        "Recaptcha V3 public key"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_publickey_label_desc__": [
+        "This is used to generate captchas for logins and other forms that require captcha solving.<br\/>See https:\/\/www.google.com\/recaptcha\/about\/"
+    ],
+    "__framelix_config_captchatype_label__": [
+        "Type of captcha solving"
+    ],
+    "__framelix_config_captchatype_label_desc__": [
+        "You can choose between different captcha solving types. If you choose none, captcha solving is disabled everywhere."
+    ],
+    "__framelix_config_emailbody_label__": [
+        "Body\/Content"
+    ],
+    "__framelix_config_emailbodytemplate_label__": [
+        "Body template"
+    ],
+    "__framelix_config_emailbodytemplate_label_desc__": [
+        "Give your e-mail a layout. This textarea accept html.{body} is the actual content placeholder to be inserted by the application"
+    ],
+    "__framelix_config_emaildefaultfrom_label__": [
+        "Default FROM sender e-mail"
+    ],
+    "__framelix_config_emailoverriderecipient_label__": [
+        "Route every e-mail to this e-mail"
+    ],
+    "__framelix_config_emailoverriderecipient_label_desc__": [
+        "This does effectively route EVERY outgoing e-mail to this given e-mail.<br\/>That should only be set for local development environments or debugging purposes."
+    ],
+    "__framelix_config_emailtest_error__": [
+        "E-Mail send error"
+    ],
+    "__framelix_config_emailtest_success__": [
+        "E-Mail successfully sended"
+    ],
+    "__framelix_config_emailtitle_label__": [
+        "Subject\/Title"
+    ],
+    "__framelix_config_emailtitletemplate_label__": [
+        "Title template"
+    ],
+    "__framelix_config_emailtitletemplate_label_desc__": [
+        "For example if you always want to prepend\/append some text<br\/>Example: \"{title} - Fixed text\"<br\/>{title} is the title placeholder to be inserted by the application"
+    ],
+    "__framelix_config_emailto_label__": [
+        "E-Mail recipient"
+    ],
+    "__framelix_config_errorlogdisk_label__": [
+        "Log errors to disk"
+    ],
+    "__framelix_config_errorlogdisk_label_desc__": [
+        "The error can later be viewed in developer options -> Logs<br\/>This is recommended.<br\/>Attention: This logs can contain very sensible data. Read above extended log option."
+    ],
+    "__framelix_config_errorlogemail_label__": [
+        "Error log to e-email"
+    ],
+    "__framelix_config_errorlogemail_label_desc__": [
+        "Send an error to the given e-mail address.<br\/>This is recommended.<br\/>After changing this, you will get a test error e-mail to this address.<br\/>Attention: This logs can contain very sensible data. Read above extended log option."
+    ],
+    "__framelix_config_errorlogextended_label__": [
+        "Extended error logging"
+    ],
+    "__framelix_config_errorlogextended_label_desc__": [
+        "If true, then log all data that is know to the system.<br\/>Include current request, server data, user session, and more.<br\/>Attention: This contains very sensible data and affect all log options bellow"
+    ],
+    "__framelix_config_errorlogsyslog_label__": [
+        "Log errors to syslog"
+    ],
+    "__framelix_config_errorlogsyslog_label_desc__": [
+        "Log error to your systems syslog.<br\/>Attention: This logs can contain very sensible data. Read above extended log option."
+    ],
+    "__framelix_config_languagedefault_label__": [
+        "Default language"
+    ],
+    "__framelix_config_languagedefaultuser_label__": [
+        "Detect default language automatically based on user preference"
+    ],
+    "__framelix_config_languagedefaultuser_label_desc__": [
+        "If activated, the system will try to detect the default language based on users browser preferences. If no supported language is found, then it will use the systems default language."
+    ],
+    "__framelix_config_languagefallback_label__": [
+        "Fallback language"
+    ],
+    "__framelix_config_languagefallback_label_desc__": [
+        "If a language key with the default language is not found, or the key is untranslated, then it will use the translation value from this fallback."
+    ],
+    "__framelix_config_languagemultiple_label__": [
+        "Multilanguage"
+    ],
+    "__framelix_config_languagemultiple_label_desc__": [
+        "This will allow the user to choose between supported languages.<br\/>This setting is for the backend and also maybe for frontend pages, depending on the implementation of the application.<br\/>Attention: Once you have a running application and you disable multilanguage, ALL existing URLs are invalid, because the language is not contained in the URL anymore. Effectively making all existing google entries, bookmarks, etc... invalid. Never do disable this in production when it was activated before."
+    ],
+    "__framelix_config_languagessupported_label__": [
+        "Supported languages"
+    ],
+    "__framelix_config_languagessupported_label_desc__": [
+        "The user can choose between these languages.<br\/>Attention: Once you have a running application and you remove a supported language, all URLs containing the now deleted language are invalid and throw a not found error for the user. This will remove all those URLs from google for example. It is recommended to never remove a language, only adding is safe."
+    ],
+    "__framelix_config_logincaptcha_label__": [
+        "Login forms does require a solved captcha"
+    ],
+    "__framelix_config_logincaptcha_label_desc__": [
+        "Attention: Verify the backend login in a second incognito tab before you logout here.In case you have a problem with the keys bellow, you not will be able to login again.<br\/>You then must manually unset the flag in config-editable.php on the command-line."
+    ],
+    "__framelix_config_mailsendtype_label__": [
+        "Mail Send Architecture"
+    ],
     "__framelix_config_missing_forms_file__": [
         "This module doesn't have a config\/config-editable-form.php file"
+    ],
+    "__framelix_config_smtphost_label__": [
+        "SMTP Hostname"
+    ],
+    "__framelix_config_smtppassword_label__": [
+        "SMTP Password"
+    ],
+    "__framelix_config_smtpport_label__": [
+        "SMTP Port"
+    ],
+    "__framelix_config_smtpsecure_label__": [
+        "SMTP Encryption"
+    ],
+    "__framelix_config_smtpusername_label__": [
+        "SMTP Username"
+    ],
+    "__framelix_config_systemeventlog_1_label__": [
+        "Log every action that create a new database entry"
+    ],
+    "__framelix_config_systemeventlog_2_label__": [
+        "Log every action that modify a database entry"
+    ],
+    "__framelix_config_systemeventlog_3_label__": [
+        "Log every action that delete a database entry"
+    ],
+    "__framelix_config_systemeventlog_4_label__": [
+        "Log every failed login try"
+    ],
+    "__framelix_config_systemeventlog_5_label__": [
+        "Log every successfull login"
+    ],
+    "__framelix_config_systemeventlog_labeldesc__": [
+        "The following logs are system info logs which are independent of above options. This logs can be viewed in the logs menu."
     ],
     "__framelix_configuration_module_captcha_pagetitle__": [
         "Captcha"
@@ -268,6 +259,9 @@
     ],
     "__framelix_configuration_warning__": [
         "Attention: Any change to this configuration values will immediately be applied. Make sure you always have a backup of your configuration file.<br\/>Also make sure you have access to the command-line to edit the config-editable.php file, in case you you kill the application by misconfiguration."
+    ],
+    "__framelix_darkmode__": [
+        "Dark Mode"
     ],
     "__framelix_date_quarter__": [
         "Quarter"
@@ -314,8 +308,14 @@
     "__framelix_dayshort_7__": [
         "Sun"
     ],
+    "__framelix_deleteentry__": [
+        "Delete this entry"
+    ],
     "__framelix_developer_options__": [
         "Developer options"
+    ],
+    "__framelix_downloadfile__": [
+        "Download file"
     ],
     "__framelix_edituser_sidebar_title__": [
         "Usermanagement"
@@ -449,6 +449,9 @@
     "__framelix_form_validation_twofactor__": [
         "The entered code is not valid"
     ],
+    "__framelix_goahead__": [
+        "Go ahead"
+    ],
     "__framelix_https_required__": [
         "This feature is only available on secure applications that support https\/ssl. Your application administrator have to enable https with a valid SSL certificate in order to make this feature work."
     ],
@@ -463,6 +466,9 @@
     ],
     "__framelix_login_submit__": [
         "Login now"
+    ],
+    "__framelix_logout__": [
+        "Logout"
     ],
     "__framelix_meta_searchandtable_entries__": [
         "Entries"
@@ -557,6 +563,9 @@
     "__framelix_no__": [
         "No"
     ],
+    "__framelix_ok__": [
+        "OK"
+    ],
     "__framelix_password__": [
         "Password"
     ],
@@ -631,6 +640,18 @@
     ],
     "__framelix_quick_search_value__": [
         "Value to search for"
+    ],
+    "__framelix_save__": [
+        "Save"
+    ],
+    "__framelix_save_edited__": [
+        "Save edited entry"
+    ],
+    "__framelix_save_new__": [
+        "Save as new entry"
+    ],
+    "__framelix_saved__": [
+        "Data has been saved"
     ],
     "__framelix_setup_applicationurl_desc__": [
         "Your application's public root URL"
@@ -716,11 +737,20 @@
     "__framelix_stay_logged_in__": [
         "Stay logged-in for 60 days"
     ],
+    "__framelix_stop_edit__": [
+        "Cancel editing"
+    ],
+    "__framelix_stop_edit_tooltip__": [
+        "Will revert all unsaved data and redirect you to create a new entry"
+    ],
     "__framelix_storable_systemeventlog_info_label__": [
         "Info"
     ],
     "__framelix_storable_userwebauthn_devicename_label__": [
         "Device Name"
+    ],
+    "__framelix_sure__": [
+        "Are you sure?"
     ],
     "__framelix_systemeventlog_1__": [
         "Entry #{id} created: {info}"
@@ -793,6 +823,12 @@
     ],
     "__framelix_user_flag_locked_desc__": [
         "If activated, the user is instantly locked and cannot login anymore."
+    ],
+    "__framelix_user_role_admin__": [
+        "Administrator - Is allowed to do everything"
+    ],
+    "__framelix_user_role_dev__": [
+        "Developer"
     ],
     "__framelix_view_backend_appupdate__": [
         "App Update"
@@ -1053,48 +1089,6 @@
         "This view is loading... Please wait..."
     ],
     "__framelix_yes__": [
-        "Yes"
-    ],
-    "__goahead__": [
-        "Go ahead"
-    ],
-    "__logout__": [
-        "Logout"
-    ],
-    "__no__": [
-        "No"
-    ],
-    "__ok__": [
-        "OK"
-    ],
-    "__save__": [
-        "Save"
-    ],
-    "__save_edited__": [
-        "Save edited entry"
-    ],
-    "__save_new__": [
-        "Save as new entry"
-    ],
-    "__saved__": [
-        "Data has been saved"
-    ],
-    "__stop_edit__": [
-        "Cancel editing"
-    ],
-    "__stop_edit_tooltip__": [
-        "Will revert all unsaved data and redirect you to create a new entry"
-    ],
-    "__sure__": [
-        "Are you sure?"
-    ],
-    "__user_role_admin__": [
-        "Administrator - Is allowed to do everything"
-    ],
-    "__user_role_dev__": [
-        "Developer"
-    ],
-    "__yes__": [
         "Yes"
     ]
 }

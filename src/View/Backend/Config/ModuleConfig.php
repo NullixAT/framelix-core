@@ -77,7 +77,7 @@ class ModuleConfig extends View
         }
         Config::writetConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
         Config::loadModule(FRAMELIX_MODULE);
-        Toast::success('__saved__');
+        Toast::success('__framelix_saved__');
     }
 
     /**
@@ -97,7 +97,7 @@ class ModuleConfig extends View
                 $langKey = strtolower($field->name);
                 $langKey = str_replace("][", "_", $langKey);
                 $langKey = preg_replace("~\[(.*?)\]~i", "_$1", $langKey);
-                $langKey = "__config_{$langKey}_";
+                $langKey = "__framelix_config_{$langKey}_";
                 $field->label = $field->label ?? $langKey . "label__";
                 $field->labelDescription = $field->labelDescription ?? $langKey . "label_desc__";
                 if (!Lang::keyExist($field->labelDescription)) {
