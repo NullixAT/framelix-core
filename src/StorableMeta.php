@@ -2,13 +2,13 @@
 
 namespace Framelix\Framelix;
 
-use Exception;
 use Framelix\Framelix\Db\LazySearchCondition;
 use Framelix\Framelix\Form\Form;
 use Framelix\Framelix\Html\QuickSearch;
 use Framelix\Framelix\Html\Table;
 use Framelix\Framelix\Html\Tabs;
 use Framelix\Framelix\Network\JsCall;
+use Framelix\Framelix\Network\Response;
 use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Storable\StorableExtended;
 use Framelix\Framelix\Storable\SystemValue;
@@ -23,7 +23,6 @@ use JsonSerializable;
 use function base64_decode;
 use function base64_encode;
 use function get_class;
-use function header;
 use function is_array;
 use function mb_strtolower;
 use function strlen;
@@ -108,7 +107,10 @@ abstract class StorableMeta implements JsonSerializable
                     $sort = 0;
                     foreach ($objects as $object) {
                         if (!Storable::getStorableSchemaProperty($object, "sort")) {
-                            throw new Exception('Missing "sort" property on ' . get_class($object));
+                            throw new Exception(
+                                'Missing "sort" property on ' . get_class($object),
+                                ErrorCode::STORABLE_SORT_CONDITION
+                            );
                         }
                         $object->{"sort"} = $sort++;
                         if ($object instanceof StorableExtended) {
@@ -125,7 +127,9 @@ abstract class StorableMeta implements JsonSerializable
                 if (strlen($query)) {
                     if (User::hasRole('dev')) {
                         $condition = $meta->getQuickSearchCondition($jsCall->parameters['options'] ?? null);
-                        header("x-debug-query: " . $condition->getPreparedCondition($meta->storable->getDb(), $query));
+                        Response::header(
+                            "x-debug-query: " . $condition->getPreparedCondition($meta->storable->getDb(), $query)
+                        );
                     }
                     $objects = $meta->getQuickSearchResult($query, $jsCall->parameters['options'] ?? null);
                     if ($objects) {
@@ -405,7 +409,8 @@ abstract class StorableMeta implements JsonSerializable
                 throw new Exception(
                     'Passed invalid storable with type ' . get_class($object) . ' to meta, expected ' . get_class(
                         $this->storable
-                    )
+                    ),
+                    ErrorCode::STORABLEMETA_NOSTORABLE
                 );
             }
             $this->storable = $object;

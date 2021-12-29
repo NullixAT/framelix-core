@@ -386,16 +386,11 @@ class FramelixForm {
   /**
    * Set submit status
    * @param {boolean} flag
-   * @param {string=} message
    */
 
 
-  setSubmitStatus(flag, message) {
+  setSubmitStatus(flag) {
     this.container.toggleClass('framelix-form-submitting', flag);
-
-    if (flag) {
-      this.submitStatusContainer.find('.framelix-form-submit-status-message').html(message || '');
-    }
   }
   /**
    * Show validation message
@@ -411,7 +406,7 @@ class FramelixForm {
     if (this.validationPopup && FramelixDom.isInDom(this.validationPopup.content)) {
       this.validationPopup.content.append($(`<div>`).append(message));
     } else {
-      this.validationPopup = FramelixPopup.showPopup(this.submitStatusContainer, message, {
+      this.validationPopup = FramelixPopup.show(this.submitStatusContainer, message, {
         closeMethods: 'click',
         color: 'error',
         placement: 'bottom-start',
@@ -449,7 +444,7 @@ class FramelixForm {
     for (let fieldName in this.fields) {
       const field = this.fields[fieldName];
 
-      if (!field.visibilityCondition || !Framelix.hasObjectKeys(field.visibilityCondition.properties.data)) {
+      if (!field.visibilityCondition || !FramelixObjectUtils.hasKeys(field.visibilityCondition.properties.data)) {
         field.container.toggleClass('hidden', false);
       } else {
         fieldsWithConditionFlat.push(field);
@@ -521,7 +516,7 @@ class FramelixForm {
           case 'lowerThan':
           case 'lowerThanEqual':
             if (typeof conditionFieldValue === 'object') {
-              conditionFieldValue = Framelix.countObjectKeys(conditionFieldValue);
+              conditionFieldValue = FramelixObjectUtils.countKeys(conditionFieldValue);
             } else {
               conditionFieldValue = parseFloat(conditionFieldValue);
             }
@@ -540,7 +535,7 @@ class FramelixForm {
 
           case 'empty':
           case 'notEmpty':
-            isVisible = conditionFieldValue === null || conditionFieldValue === '' || typeof conditionFieldValue === 'object' && !Framelix.countObjectKeys(conditionFieldValue);
+            isVisible = conditionFieldValue === null || conditionFieldValue === '' || typeof conditionFieldValue === 'object' && !FramelixObjectUtils.countKeys(conditionFieldValue);
 
             if (conditionRow.type === 'notEmpty') {
               isVisible = !isVisible;
@@ -678,7 +673,7 @@ class FramelixForm {
       });
     }
 
-    this.submitStatusContainer = $(`<div class="framelix-form-submit-status"><div class="framelix-loading"></div> <div class="framelix-form-submit-status-message"></div></div>`);
+    this.submitStatusContainer = $(`<div class="framelix-form-submit-status"></div>`);
     this.container.append(this.submitStatusContainer);
     this.container.css('display', '');
     if (this.validationMessage !== null) this.showValidationMessage(this.validationMessage);
@@ -780,7 +775,7 @@ class FramelixForm {
     }
 
     if (!submitUrl) submitUrl = location.href;
-    this.submitRequest = FramelixRequest.request('post', submitUrl, null, formData, this.submitStatusContainer.find('.framelix-form-submit-status-message'));
+    this.submitRequest = FramelixRequest.request('post', submitUrl, null, formData, this.submitStatusContainer);
     const request = self.submitRequest;
     self.submitRequest = null;
     await request.finished;
@@ -1157,7 +1152,7 @@ class FramelixFormField {
     if (this.required && !(this instanceof FramelixFormFieldHtml) && !(this instanceof FramelixFormFieldHidden)) {
       const value = this.getValue();
 
-      if (value === null || value === undefined || typeof value === 'string' && !value.length || typeof value === 'object' && !Framelix.hasObjectKeys(value)) {
+      if (value === null || value === undefined || typeof value === 'string' && !value.length || typeof value === 'object' && !FramelixObjectUtils.hasKeys(value)) {
         return FramelixLang.get('__framelix_form_validation_required__');
       }
     }
@@ -1192,7 +1187,7 @@ class FramelixFormField {
     if (this.validationPopup && FramelixDom.isInDom(this.validationPopup.content)) {
       this.validationPopup.content.append($(`<div>`).append(message));
     } else {
-      this.validationPopup = FramelixPopup.showPopup(container, message, {
+      this.validationPopup = FramelixPopup.show(container, message, {
         closeMethods: 'click',
         color: 'error',
         placement: 'bottom-start',
@@ -1682,14 +1677,14 @@ class FramelixFormFieldSelect extends FramelixFormField {
       popupOptionsContainer.append(optionElement);
     }
 
-    this.optionsPopup = FramelixPopup.showPopup(this.field, popupContent, {
+    this.optionsPopup = FramelixPopup.show(this.field, popupContent, {
       placement: 'bottom-start',
       closeMethods: 'click-outside,focusout-popup',
       appendTo: this.field,
       padding: '',
       offset: [0, 0]
     });
-    this.optionsPopup.onDestroy(function () {
+    this.optionsPopup.destroyed.then(function () {
       let values = [];
       popupContentInner.find('input:checked').each(function () {
         values.push(this.value);
@@ -2298,7 +2293,7 @@ class FramelixFormFieldFile extends FramelixFormField {
       this.removeFile(filename, false);
     }
 
-    if (Framelix.hasObjectKeys(value)) {
+    if (FramelixObjectUtils.hasKeys(value)) {
       for (let i in value) this.addFile(value[i], false);
     }
 
@@ -2331,7 +2326,7 @@ class FramelixFormFieldFile extends FramelixFormField {
     if (!this.isVisible()) return true;
     const parentValidation = await super.validate();
     if (parentValidation !== true) return parentValidation;
-    const value = Framelix.countObjectKeys(this.getValue());
+    const value = FramelixObjectUtils.countKeys(this.getValue());
 
     if (this.minSelectedFiles !== null) {
       if (value < this.minSelectedFiles) {
@@ -2497,7 +2492,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
     let addableHtml = `<button class="framelix-button framelix-button-color framelix-form-field-grid-add" title="__framelix_form_grid_add__" type="button"><span class="material-icons">add</span></button>`;
     if (this.disabled || !this.addable) addableHtml = null;
 
-    if (!Framelix.hasObjectKeys(value)) {
+    if (!FramelixObjectUtils.hasKeys(value)) {
       this.fieldsRows = {};
       this.field.empty();
 
@@ -2514,7 +2509,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
                 <tr><th class="hidden"></th></tr>
             </thead>
             <tbody></tbody>
-            <tfoot><tr><td colspan="${Framelix.countObjectKeys(this.fields) + 1}"></td></tr></tfoot>
+            <tfoot><tr><td colspan="${FramelixObjectUtils.countKeys(this.fields) + 1}"></td></tr></tfoot>
         </table>`);
         const trHeader = table.find('thead tr');
 
@@ -2733,7 +2728,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
     }
 
     if (!success) return validationMessages;
-    const value = Framelix.countObjectKeys(this.getValue());
+    const value = FramelixObjectUtils.countKeys(this.getValue());
 
     if (this.minRows !== null) {
       if (value < this.minRows) {
@@ -2780,7 +2775,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
         value = {};
       }
 
-      let count = Framelix.countObjectKeys(value);
+      let count = FramelixObjectUtils.countKeys(value);
 
       while (value['_' + count]) {
         count++;
@@ -3150,14 +3145,14 @@ class FramelixFormFieldSearch extends FramelixFormField {
           const currentValue = self.getValue();
 
           if (!self.resultPopup) {
-            self.resultPopup = FramelixPopup.showPopup(searchInput, `<div class="framelix-form-field-search-popup framelix-form-field-input" data-multiple="${self.multiple ? '1' : '0'}"></div>`, {
+            self.resultPopup = FramelixPopup.show(searchInput, `<div class="framelix-form-field-search-popup framelix-form-field-input" data-multiple="${self.multiple ? '1' : '0'}"></div>`, {
               closeMethods: 'click-outside,focusout-popup',
               placement: 'bottom-start',
               appendTo: searchInputContainer,
               padding: '',
               offset: [0, 0]
             });
-            self.resultPopup.onDestroy(function () {
+            self.resultPopup.destroyed.then(function () {
               if (self.resultPopup.popperEl) {
                 let existingOptions = {};
                 selectOptionsContainer.find('input').each(function () {
@@ -3208,7 +3203,8 @@ class FramelixFormFieldSearch extends FramelixFormField {
           } else {
             if (options.keys) {
               for (let i = 0; i < options.keys.length; i++) {
-                content.append(self.getOptionHtml(options.keys[i], options.values[i], Framelix.equalsContains(options.keys[i], currentValue)));
+                const value = self.stringifyValue(options.keys[i]);
+                content.append(self.getOptionHtml(value, options.values[i], value === currentValue || FramelixObjectUtils.hasValue(currentValue, value)));
               }
             }
           }

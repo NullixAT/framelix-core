@@ -178,21 +178,7 @@ class FramelixToast {
   }
 
   /**
-   * Update queue count
-   * @private
-   */
-  static updateQueueCount () {
-    let queueCount = FramelixToast.queue.length
-    FramelixToast.container.attr('data-count', queueCount)
-    FramelixToast.countContainer.text('+' + queueCount)
-    FramelixToast.closeButton
-      .attr('title', FramelixLang.get(queueCount > 0 ? '__framelix_toast_next__' : '__framelix_close__'))
-      .attr('data-icon-left', queueCount > 0 ? 'navigate_next' : 'clear')
-  }
-
-  /**
    * Hide all toasts
-   * @private
    */
   static hideAll () {
     FramelixToast.queue = []
@@ -203,6 +189,19 @@ class FramelixToast {
         FramelixToast.container.addClass('hidden')
       }, 200)
     }, 10)
+  }
+
+  /**
+   * Update queue count
+   * @private
+   */
+  static updateQueueCount () {
+    let queueCount = FramelixToast.queue.length
+    FramelixToast.container.attr('data-count', queueCount)
+    FramelixToast.countContainer.text('+' + queueCount)
+    FramelixToast.closeButton
+      .attr('title', FramelixLang.get(queueCount > 0 ? '__framelix_toast_next__' : '__framelix_close__'))
+      .attr('data-icon-left', queueCount > 0 ? 'navigate_next' : 'clear')
   }
 }
 

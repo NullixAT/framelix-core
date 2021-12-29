@@ -2,8 +2,9 @@
 
 namespace Framelix\Framelix\Storable;
 
-use Exception;
 use Framelix\Framelix\Db\StorableSchema;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Network\UploadedFile;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\RandomGenerator;
@@ -41,7 +42,7 @@ abstract class StorableFile extends Storable
      * The system does create more folders in this folder, to separate files, based on $maxFilesPerFolder setting
      * @var string|null
      */
-    protected ?string $folder = null;
+    public ?string $folder = null;
 
     /**
      * Max files in a single subfolder
@@ -76,6 +77,9 @@ abstract class StorableFile extends Storable
      */
     public function getDownloadUrl(): ?Url
     {
+        if (!$this->id) {
+            return null;
+        }
         return View::getUrl(View\Api::class, ['requestMethod' => 'downloadFile'])->setParameter(
             'id',
             $this
@@ -142,16 +146,28 @@ abstract class StorableFile extends Storable
     public function store(UploadedFile|string|null $file = null): void
     {
         if ($file instanceof UploadedFile && !file_exists($file->path)) {
-            throw new Exception("Couldn't store StorableFile because uploaded file does not exist");
+            throw new Exception(
+                "Couldn't store StorableFile because uploaded file does not exist",
+                ErrorCode::STORABLEFILE_FILE_NOTEXIST
+            );
         }
         if (!is_dir($this->folder)) {
-            throw new Exception("Couldn't store StorableFile because folder to store in is not a directory");
+            throw new Exception(
+                "Couldn't store StorableFile because folder to store in is not a directory",
+                ErrorCode::STORABLEFILE_FOLDER_NOTEXIST
+            );
+        }
+        if ($file === null && !$this->id) {
+            throw new Exception(
+                "Couldn't store StorableFile because no file is given",
+                ErrorCode::STORABLEFILE_FILE_MISSING
+            );
         }
         if ($file instanceof UploadedFile && !$this->filename) {
             $this->filename = $file->name;
         }
         if (!$this->filename) {
-            throw new Exception("You need to set a filename");
+            throw new Exception("You need to set a filename", ErrorCode::STORABLEFILE_FILENAME_MISSING);
         }
         $lastPoint = strrpos($this->filename, ".");
         $this->filename = substr($this->filename, -190);
@@ -192,10 +208,16 @@ abstract class StorableFile extends Storable
         if ($file instanceof UploadedFile) {
             if (!file_exists($path)) {
                 if (!rename($file->path, $path)) {
-                    throw new Exception("Couldn't move file to destination folder");
+                    // @codeCoverageIgnoreStart
+                    throw new Exception(
+                        "Couldn't move file to destination folder", ErrorCode::STORABLEFILE_COPY_FAILURE
+                    );
+                    // @codeCoverageIgnoreEnd
                 }
             } elseif (!copy($file->path, $path)) {
-                throw new Exception("Couldn't copy file to destination folder");
+                // @codeCoverageIgnoreStart
+                throw new Exception("Couldn't copy file to destination folder", ErrorCode::STORABLEFILE_COPY_FAILURE);
+                // @codeCoverageIgnoreEnd
             }
             if (file_exists($file->path)) {
                 unlink($file->path);
@@ -221,6 +243,4 @@ abstract class StorableFile extends Storable
             unlink($path);
         }
     }
-
-
 }

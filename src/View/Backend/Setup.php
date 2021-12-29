@@ -2,16 +2,18 @@
 
 namespace Framelix\Framelix\View\Backend;
 
-use Exception;
 use Framelix\Framelix\Config;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Form\Field\Email;
 use Framelix\Framelix\Form\Field\Html;
 use Framelix\Framelix\Form\Field\Number;
 use Framelix\Framelix\Form\Field\Password;
 use Framelix\Framelix\Form\Field\Text;
 use Framelix\Framelix\Form\Form;
+use Framelix\Framelix\Framelix;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Network\Response;
@@ -58,7 +60,7 @@ class Setup extends View
         if (file_exists(FileUtils::getModuleRootPath(FRAMELIX_MODULE . "/config/config-editable.php"))) {
             http_response_code(500);
             echo "This application is already setup";
-            exit;
+            Framelix::stop();
         }
         require __DIR__ . "/../../../public/check-requirements.php";
         $this->layout = self::LAYOUT_SMALL_CENTERED;
@@ -77,7 +79,8 @@ class Setup extends View
                         FRAMELIX_MIN_PHP_VERSION
                     ) < 0) {
                     throw new Exception(
-                        "PHP Executable must point to a php command line which has at least version " . FRAMELIX_MIN_PHP_VERSION
+                        "PHP Executable must point to a php command line which has at least version " . FRAMELIX_MIN_PHP_VERSION,
+                        ErrorCode::CORE_MINPHPVERSION
                     );
                 }
                 Config::set('database[default]', [

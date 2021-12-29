@@ -3,6 +3,7 @@
 namespace Framelix\Framelix;
 
 use Framelix\Framelix\Network\Request;
+use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\View\Backend\Setup;
 
@@ -13,6 +14,7 @@ use function file_exists;
 use function implode;
 use function ini_set;
 use function mb_internal_encoding;
+use function ob_get_level;
 use function register_shutdown_function;
 use function set_error_handler;
 use function set_exception_handler;
@@ -48,7 +50,9 @@ class Framelix
         // disable zlib, should be handled by webserver
         ini_set("zlib.output_compression", 0);
 
+        require_once __DIR__ . "/Utils/Buffer.php";
         require_once __DIR__ . "/Utils/FileUtils.php";
+        Buffer::$startBufferIndex = ob_get_level();
 
         // autoloader for all framework classes
         spl_autoload_register(function (string $className) {
@@ -65,12 +69,6 @@ class Framelix
                 require $path;
                 return true;
             }
-            // for test classes
-            $path = $rootPath . "/tests/" . implode("/", $exp) . ".php";
-            if (file_exists($path)) {
-                require $path;
-                return true;
-            }
             return false;
         });
 
@@ -78,7 +76,7 @@ class Framelix
         self::addPs4Autoloader('RobThree\\Auth', __DIR__ . "/../vendor/twofactorauth/lib");
 
         // exception handling
-        $errorClass = Error::class;
+        $errorClass = ErrorHandler::class;
         set_error_handler([$errorClass, "onError"], E_ALL);
         set_exception_handler([$errorClass, "onException"]);
         register_shutdown_function([$errorClass, "onShutdown"]);
@@ -158,5 +156,16 @@ class Framelix
                 }
             }
         });
+    }
+
+    /**
+     * Stop script execution
+     * This exception does not log any error, it just stops script execution in current scope
+     * It is preferred over die()/exit() as it allows unit tests to finalize
+     * @return never
+     */
+    public static function stop(): never
+    {
+        throw new StopException();
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Framelix\Framelix\Html;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Url;
 
 use function htmlentities;
@@ -26,7 +27,10 @@ class HtmlUtils
         } elseif (str_ends_with($url->urlData['path'], ".js")) {
             return '<script src="' . $url . '"></script>';
         } else {
-            throw new Exception("Cannot generate include tag for  $url - Unsupported extension");
+            throw new Exception(
+                "Cannot generate include tag for  $url - Unsupported extension",
+                ErrorCode::HTMLUTILS_INCLUDE_INVALID_EXTENSION
+            );
         }
     }
 

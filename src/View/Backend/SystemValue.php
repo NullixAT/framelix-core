@@ -2,8 +2,9 @@
 
 namespace Framelix\Framelix\View\Backend;
 
-use Exception;
 use Framelix\Framelix\Db\Mysql;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Form\Form;
 use Framelix\Framelix\Html\Tabs;
 use Framelix\Framelix\Html\Toast;
@@ -42,11 +43,17 @@ abstract class SystemValue extends View
         $metaPropertyType = $reflection->getProperty('meta')?->getType();
 
         if (!$storablePropertyType || !$storablePropertyType->getName()) {
-            throw new Exception("You must define a protected property 'storable' with a system value type");
+            throw new Exception(
+                "You must define a protected property 'storable' with a system value type",
+                ErrorCode::SYSTEMVALUE_PROPERTY_MISSING
+            );
         }
 
         if (!$metaPropertyType || !$metaPropertyType->getName()) {
-            throw new Exception("You must define a protected property 'meta' with a storable meta system value type");
+            throw new Exception(
+                "You must define a protected property 'meta' with a storable meta system value type",
+                ErrorCode::SYSTEMVALUE_PROPERTY_MISSING
+            );
         }
 
         $this->storableIntern = call_user_func_array(

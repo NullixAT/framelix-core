@@ -270,26 +270,26 @@ class TwoFactor extends View
               switch ($(this).attr('data-action')) {
                 case 'enable':
                   await FramelixDom.includeCompiledFile('Framelix', 'js', 'qrcodejs', 'QRCode')
-                  let name = (await FramelixModal.prompt('__framelix_view_backend_userprofile_2fa_enable_name__', '<?=FRAMELIX_MODULE?>').closed).promptResult
-                  Framelix.showProgressBar(-1)
-                  FramelixModal.show(await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
+                  let name = await FramelixModal.prompt('__framelix_view_backend_userprofile_2fa_enable_name__', '<?=FRAMELIX_MODULE?>').promptResult
+                  Framelix.showProgressBar(1)
+                  await FramelixModal.callPhpMethod('<?=JsCall::getCallUrl(
                       __CLASS__,
                       'enable'
-                  )?>', { 'name': name }))
+                  )?>', { 'name': name })
                   Framelix.showProgressBar()
                   break
                 case 'test':
-                  FramelixModal.show(await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
+                  await FramelixModal.callPhpMethod('<?=JsCall::getCallUrl(
                       __CLASS__,
                       'test'
-                  )?>'))
+                  )?>')
                   break
                 case 'disable':
-                  if ((await FramelixModal.confirm('__framelix_view_backend_userprofile_2fa_disable_warning__').closed).confirmed) {
-                    FramelixModal.show(await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
+                  if (await FramelixModal.confirm('__framelix_view_backend_userprofile_2fa_disable_warning__').confirmed) {
+                    await FramelixModal.callPhpMethod('<?=JsCall::getCallUrl(
                         __CLASS__,
                         'disable'
-                    )?>'))
+                    )?>')
                   }
                   break
                 case 'getcodes':
@@ -299,7 +299,7 @@ class TwoFactor extends View
                   )?>')
                   break
                 case 'regenerate':
-                  if ((await FramelixModal.confirm('__framelix_view_backend_userprofile_2fa_regenerate_codes_warning__').closed).confirmed) {
+                  if (await FramelixModal.confirm('__framelix_view_backend_userprofile_2fa_regenerate_codes_warning__').confirmed) {
                     await FramelixApi.callPhpMethod('<?=JsCall::getCallUrl(
                         __CLASS__,
                         'regenerate'

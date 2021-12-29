@@ -58,6 +58,7 @@ abstract class View extends LayoutView
         Compiler::compile("Framelix");
         $this->includeCompiledFilesForModule("Framelix");
         $this->includeCompiledFile("Framelix", "scss", "backend");
+        $this->includeCompiledFile("Framelix", "scss", "backend-fonts");
         $this->includeCompiledFile("Framelix", "js", "backend");
         Compiler::compile(FRAMELIX_MODULE);
         $this->includeCompiledFilesForModule(FRAMELIX_MODULE);

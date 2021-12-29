@@ -51,6 +51,6 @@ abstract class SystemValue extends StorableExtended
     {
         $storableClassName = get_class($this);
         $viewClassName = str_replace("\\Storable\\SystemValue\\", "\\View\\Backend\\SystemValue\\", $storableClassName);
-        return View::getUrl($viewClassName)->setParameter('id', $this);
+        return View::getUrl($viewClassName)?->setParameter('id', $this);
     }
 }

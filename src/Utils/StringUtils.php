@@ -19,7 +19,7 @@ class StringUtils
      * NULL values will be ignored/empty string
      * Boolean will be translated yes/no
      * Float will be converted with NumberUtils
-     * Objects will use getHtmlString|__toString
+     * Objects will use specific convert method or __toString
      * Array will be flattened and values will be concated with $arrayConcatChar
      * @param mixed $anyValue
      * @param string $arrayConcatChar If array is given, concat with this character
@@ -52,7 +52,7 @@ class StringUtils
             if ($anyValue - (int)$anyValue != 0) {
                 return NumberUtils::format($anyValue, 2);
             }
-            return (int)$anyValue;
+            return (string)(int)$anyValue;
         }
         if (is_bool($anyValue)) {
             return Lang::get($anyValue ? "__framelix_yes__" : "__framelix_no__");
@@ -91,6 +91,6 @@ class StringUtils
         }
         $string = str_replace($s, $r, $string);
         $string = preg_replace("~[^a-z0-9\. \-_]~i", "-", $string);
-        return preg_replace("~-{2,99}~i", "", $string);
+        return preg_replace("~-{2,}~i", "-", $string);
     }
 }

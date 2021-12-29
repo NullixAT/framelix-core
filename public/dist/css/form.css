@@ -394,15 +394,10 @@ input[type='checkbox'] {
     margin-right: 10px; }
 
 .framelix-form-submit-status {
-  min-height: 40px;
-  display: flex;
-  align-items: center;
+  margin-top: 5px;
+  min-height: 20px;
   opacity: 0;
   transition: .3s; }
-
-.framelix-form-submit-status-message {
-  margin-left: 15px;
-  flex: 1 1 auto; }
 
 .framelix-form-submitting .framelix-form-buttons button[data-type='submit'] {
   opacity: 0.7; }

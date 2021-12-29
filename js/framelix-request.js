@@ -48,7 +48,7 @@ class FramelixRequest {
       } else {
         urlPath += '&'
       }
-      urlPath += Framelix.objectToUrlencodedString(urlParams)
+      urlPath += FramelixObjectUtils.toUrlencodedString(urlParams)
     }
 
     let body = postData

@@ -218,7 +218,7 @@ class LangEditor extends View
         if (isset($fieldTranslated)) {
             $percent = ceil((100 / $totalKeys * $translated));
             $fieldTranslated->labelDescription = "$percent%  - $translated of $totalKeys translated";
-            $fieldTranslated->defaultValue = '<div class="framelix-progress"><span class="framelix-progress-bar" style="width:' . $percent . '%; background: ' . ($percent >= 100 ? 'var(--color-success-bg-strong)' : 'var(--color-warning-bg-strong)') . '"></span></div>';
+            $fieldTranslated->defaultValue = '<progress value="' . ($percent / 100) . '" style="width: 100%"></progress>';
         }
 
         return $form;

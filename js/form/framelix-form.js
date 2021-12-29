@@ -362,13 +362,9 @@ class FramelixForm {
   /**
    * Set submit status
    * @param {boolean} flag
-   * @param {string=} message
    */
-  setSubmitStatus (flag, message) {
+  setSubmitStatus (flag) {
     this.container.toggleClass('framelix-form-submitting', flag)
-    if (flag) {
-      this.submitStatusContainer.find('.framelix-form-submit-status-message').html(message || '')
-    }
   }
 
   /**
@@ -382,7 +378,7 @@ class FramelixForm {
     if (this.validationPopup && FramelixDom.isInDom(this.validationPopup.content)) {
       this.validationPopup.content.append($(`<div>`).append(message))
     } else {
-      this.validationPopup = FramelixPopup.showPopup(this.submitStatusContainer, message, {
+      this.validationPopup = FramelixPopup.show(this.submitStatusContainer, message, {
         closeMethods: 'click',
         color: 'error',
         placement: 'bottom-start',
@@ -412,7 +408,7 @@ class FramelixForm {
     let fieldsWithConditionFlat = []
     for (let fieldName in this.fields) {
       const field = this.fields[fieldName]
-      if (!field.visibilityCondition || !Framelix.hasObjectKeys(field.visibilityCondition.properties.data)) {
+      if (!field.visibilityCondition || !FramelixObjectUtils.hasKeys(field.visibilityCondition.properties.data)) {
         field.container.toggleClass('hidden', false)
       } else {
         fieldsWithConditionFlat.push(field)
@@ -472,7 +468,7 @@ class FramelixForm {
           case 'lowerThan':
           case 'lowerThanEqual':
             if (typeof conditionFieldValue === 'object') {
-              conditionFieldValue = Framelix.countObjectKeys(conditionFieldValue)
+              conditionFieldValue = FramelixObjectUtils.countKeys(conditionFieldValue)
             } else {
               conditionFieldValue = parseFloat(conditionFieldValue)
             }
@@ -488,7 +484,7 @@ class FramelixForm {
             break
           case 'empty':
           case 'notEmpty':
-            isVisible = conditionFieldValue === null || conditionFieldValue === '' || (typeof conditionFieldValue === 'object' && !Framelix.countObjectKeys(conditionFieldValue))
+            isVisible = conditionFieldValue === null || conditionFieldValue === '' || (typeof conditionFieldValue === 'object' && !FramelixObjectUtils.countKeys(conditionFieldValue))
             if (conditionRow.type === 'notEmpty') {
               isVisible = !isVisible
             }
@@ -610,7 +606,7 @@ class FramelixForm {
         }
       })
     }
-    this.submitStatusContainer = $(`<div class="framelix-form-submit-status"><div class="framelix-loading"></div> <div class="framelix-form-submit-status-message"></div></div>`)
+    this.submitStatusContainer = $(`<div class="framelix-form-submit-status"></div>`)
     this.container.append(this.submitStatusContainer)
     this.container.css('display', '')
     if (this.validationMessage !== null) this.showValidationMessage(this.validationMessage)
@@ -698,7 +694,7 @@ class FramelixForm {
       }
     }
     if (!submitUrl) submitUrl = location.href
-    this.submitRequest = FramelixRequest.request('post', submitUrl, null, formData, this.submitStatusContainer.find('.framelix-form-submit-status-message'))
+    this.submitRequest = FramelixRequest.request('post', submitUrl, null, formData, this.submitStatusContainer)
     const request = self.submitRequest
     self.submitRequest = null
     await request.finished

@@ -30,6 +30,10 @@
   transition: .5s;
   transform: translateY(200%) perspective(700px) rotateX(-180deg);
 
+  &:focus-visible {
+    outline: 0;
+  }
+
   &.framelix-modal-visible {
     transform: translateY(0) perspective(700px) rotateX(0deg);
   }

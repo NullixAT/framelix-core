@@ -19,7 +19,6 @@ use function str_replace;
 use function str_starts_with;
 use function substr;
 use function unlink;
-use function var_dump;
 
 /**
  * Language and translations
@@ -229,13 +228,6 @@ class Lang
     public static ?string $lang = null;
 
     /**
-     * Debugging for missing lang keys
-     * Enable config flag langDebugMode if you want this to be filled
-     * @var array
-     */
-    public static array $debugMissingLangKeys = [];
-
-    /**
      * All lang values
      * @var string[][]
      */
@@ -347,12 +339,6 @@ class Lang
             return $key;
         }
         if (!self::keyExist($key, $lang)) {
-            if (Config::get('langDebugMode')) {
-                self::$debugMissingLangKeys[$key] = $key;
-            }
-            if ($key === "__framelix_browser_unsupported__" && $lang === "en") {
-                var_dump(self::$values);
-            }
             return $key;
         }
         $langDefault = $lang ?? self::$lang ?? Config::get('languageDefault');

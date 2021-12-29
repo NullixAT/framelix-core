@@ -28,9 +28,12 @@ class UserVerificationToken extends StorableExtended
     public static function create(User $user, int $category, mixed $additionalData = null): self
     {
         $token = RandomGenerator::getRandomString(32, 64);
+        // a dupe is most likely to never happen, but add a catch for that
+        // @codeCoverageIgnoreStart
         while (self::getForToken($token)) {
             $token = RandomGenerator::getRandomString(32, 64);
         }
+        // @codeCoverageIgnoreEnd
         $instance = new self();
         $instance->token = $token;
         $instance->user = $user;

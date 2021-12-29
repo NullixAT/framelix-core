@@ -2,12 +2,12 @@
 
 namespace Framelix\Framelix\Db;
 
-use Framelix\Framelix\ObjectTranformable;
+use Framelix\Framelix\ObjectTransformable;
 
 /**
  * Storable property interface to convert a property from/to database
  */
-interface StorablePropertyInterface extends ObjectTranformable
+interface StorablePropertyInterface extends ObjectTransformable
 {
     /**
      * Setup the property database schema definition to this storable property itself

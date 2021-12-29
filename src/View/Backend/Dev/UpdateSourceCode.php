@@ -2,7 +2,6 @@
 
 namespace Framelix\Framelix\View\Backend\Dev;
 
-use Framelix\Framelix\Config;
 use Framelix\Framelix\Form\Field\Html;
 use Framelix\Framelix\Form\Field\Toggle;
 use Framelix\Framelix\Form\Form;

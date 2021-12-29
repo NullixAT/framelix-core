@@ -385,7 +385,7 @@ class FramelixTable {
     let tableHtml = ''
     if (this.prependHtml) tableHtml = this.prependHtml
     tableHtml += `<table id="${this.id}">`
-    let canDragSort = this.dragSort && Framelix.hasObjectKeys(this.rows.tbody, 2)
+    let canDragSort = this.dragSort && FramelixObjectUtils.hasKeys(this.rows.tbody, 2)
 
     let removeEmptyCells = {}
     for (let i in this.columnFlags) {
@@ -459,9 +459,9 @@ class FramelixTable {
           } else {
             cellValue = rowGroup === 'thead' ? FramelixLang.get(cellValue) : cellValue
           }
-          if (this.sortable && rowGroup === 'thead') {
+          if (this.sortable && rowGroup === 'thead' && !cellAttributes.get('data-flag-ignoresort')) {
             cellAttributes.set('tabindex', '0')
-            cellValue += `<div class="framelix-table-header-sort-info"><div class="framelix-table-header-sort-info-number"></div><div class="framelix-table-header-sort-info-text"></div></div>`
+            cellValue = `<div class="framelix-table-header-sort-info"><div class="framelix-table-header-sort-info-number"></div><div class="framelix-table-header-sort-info-text"></div></div>${cellValue}`
           }
           if (rowGroup === 'thead') cellValue = `<div class="framelix-table-cell-header">${cellValue}</div>`
           if (typeof cellValue !== 'string') cellValue = cellValue.toString()
@@ -557,7 +557,7 @@ class FramelixTable {
       const action = $(this).attr('data-action')
       switch (action) {
         case 'delete-storable':
-          if ((await FramelixModal.confirm('__framelix_sure__').closed).confirmed) {
+          if (await FramelixModal.confirm('__framelix_sure__').confirmed) {
             const result = await FramelixApi.callPhpMethod($(this).attr('data-url'))
             if (result !== true) {
               FramelixToast.error(result)

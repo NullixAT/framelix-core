@@ -2,9 +2,9 @@
 
 namespace Framelix\Framelix\Network;
 
+use Framelix\Framelix\Framelix;
 use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Storable\StorableFile;
-use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\JsonUtils;
 
 use function basename;
@@ -12,6 +12,7 @@ use function call_user_func_array;
 use function file_exists;
 use function filesize;
 use function header;
+use function headers_sent;
 use function http_response_code;
 use function nl2br;
 use function readfile;
@@ -23,6 +24,21 @@ use function substr;
  */
 class Response
 {
+    /**
+     * Send http header, but only if it is possible (no headers are sent)
+     * @param string $header
+     * @return void
+     */
+    public static function header(string $header): void
+    {
+        // @codeCoverageIgnoreStart
+        if (headers_sent()) {
+            return;
+        }
+        // @codeCoverageIgnoreEnd
+        header($header);
+    }
+
     /**
      * Initialize a file download for the browser
      * @param string|StorableFile $fileOrData If starting with @, the parameter will be threaded as string rather than file
@@ -37,14 +53,13 @@ class Response
         ?string $filetype = "application/octet-stream",
         ?callable $afterDownload = null
     ): never {
-        Buffer::clear();
         if ($fileOrData instanceof StorableFile) {
             $filename = $fileOrData->filename;
             $isFile = true;
             $fileOrData = $fileOrData->getPath();
             if (!$fileOrData) {
-                echo "File does not exist on disk";
-                die();
+                http_response_code(404);
+                Framelix::stop();
             }
         } else {
             $isFile = !str_starts_with($fileOrData, "@");
@@ -54,19 +69,19 @@ class Response
         }
         if ($isFile && !file_exists($fileOrData)) {
             http_response_code(404);
-            die();
+            Framelix::stop();
         }
-        header('Content-Description: File Transfer');
-        header('Content-Type: ' . $filetype);
-        header(
+        self::header('Content-Description: File Transfer');
+        self::header('Content-Type: ' . $filetype);
+        self::header(
             'Content-Disposition: attachment; filename="' . basename(
                 $isFile && !$filename ? basename($fileOrData) : $filename ?? "download.txt"
             ) . '"'
         );
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate');
-        header('Pragma: public');
-        header('Content-Length: ' . ($isFile ? filesize($fileOrData) : strlen($fileOrData)));
+        self::header('Expires: 0');
+        self::header('Cache-Control: must-revalidate');
+        self::header('Pragma: public');
+        self::header('Content-Length: ' . ($isFile ? filesize($fileOrData) : strlen($fileOrData)));
         if ($isFile) {
             readfile($fileOrData);
         } else {
@@ -75,7 +90,7 @@ class Response
         if ($afterDownload) {
             call_user_func_array($afterDownload, []);
         }
-        die();
+        Framelix::stop();
     }
 
     /**
@@ -88,12 +103,13 @@ class Response
     public static function showFormAsyncSubmitResponse(?string $modalMessage = null, bool $reloadTab = false): never
     {
         http_response_code(200);
-        header('x-form-async-response: 1');
+        self::header('x-form-async-response: 1');
         JsonUtils::output([
             'modalMessage' => $modalMessage,
             'reloadTab' => $reloadTab,
             'toastMessages' => Toast::getQueueMessages(true)
         ]);
+        Framelix::stop();
     }
 
     /**
@@ -105,7 +121,6 @@ class Response
     {
         http_response_code(406);
         JsonUtils::output(nl2br($messages));
+        Framelix::stop();
     }
-
-
 }

@@ -4,7 +4,7 @@ namespace Framelix\Framelix\Form\Field;
 
 use Framelix\Framelix\Form\Field;
 use Framelix\Framelix\Lang;
-use Framelix\Framelix\ObjectTranformable;
+use Framelix\Framelix\ObjectTransformable;
 use Framelix\Framelix\Storable\Storable;
 
 use function count;
@@ -101,7 +101,7 @@ class Select extends Field
     {
         $optionKey = $this->indexOfOptionValue($value);
         if ($optionKey === -1) {
-            if ($label instanceof ObjectTranformable) {
+            if ($label instanceof ObjectTransformable) {
                 $label = $label->getHtmlString();
             }
             $this->options[] = [$value, $label];

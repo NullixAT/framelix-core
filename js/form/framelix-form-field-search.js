@@ -123,7 +123,7 @@ class FramelixFormFieldSearch extends FramelixFormField {
         if (query.length) {
           const currentValue = self.getValue()
           if (!self.resultPopup) {
-            self.resultPopup = FramelixPopup.showPopup(
+            self.resultPopup = FramelixPopup.show(
               searchInput,
               `<div class="framelix-form-field-search-popup framelix-form-field-input" data-multiple="${self.multiple ? '1' : '0'}"></div>`,
               {
@@ -134,7 +134,7 @@ class FramelixFormFieldSearch extends FramelixFormField {
                 offset: [0, 0]
               }
             )
-            self.resultPopup.onDestroy(function () {
+            self.resultPopup.destroyed.then(function () {
               if (self.resultPopup.popperEl) {
                 let existingOptions = {}
                 selectOptionsContainer.find('input').each(function () {
@@ -174,7 +174,8 @@ class FramelixFormFieldSearch extends FramelixFormField {
           } else {
             if (options.keys) {
               for (let i = 0; i < options.keys.length; i++) {
-                content.append(self.getOptionHtml(options.keys[i], options.values[i], Framelix.equalsContains(options.keys[i], currentValue)))
+                const value = self.stringifyValue(options.keys[i])
+                content.append(self.getOptionHtml(value, options.values[i], value === currentValue || FramelixObjectUtils.hasValue(currentValue, value)))
               }
             }
           }

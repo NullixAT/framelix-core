@@ -40,15 +40,6 @@ class FileUtils
     }
 
     /**
-     * Get path to the approot folder - The folder where "modules" live in
-     * @return string
-     */
-    public static function getAppRootPath(): string
-    {
-        return self::normalizePath(dirname(__DIR__, 4));
-    }
-
-    /**
      * Get path to modules root folder
      * @param string $module
      * @return string
@@ -60,7 +51,7 @@ class FileUtils
 
     /**
      * Get relative path to given base path
-     * By defaults its the project roo, the folder where the folder "modules" is in
+     * By defaults its the project root, the folder where the folder "modules" is in
      * @param string $file
      * @param string $base
      * @return string

@@ -2,14 +2,15 @@
 
 namespace Framelix\Framelix;
 
-use Exception;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
+use JetBrains\PhpStorm\ExpectedValues;
 
 use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
+use function gettype;
 use function is_array;
 use function str_replace;
 use function str_starts_with;
@@ -55,14 +56,36 @@ class Config
     /**
      * Get config value
      * @param string $key
-     * @param bool $throwException If true, then throw exception if key doesn't exist
+     * @param string|null $requiredType If set, then given config key value must be of this type
+     *   * = any value but not null
      * @return mixed
      */
-    public static function get(string $key, bool $throwException = false): mixed
-    {
+    public static function get(
+        string $key,
+        #[ExpectedValues(['*', 'bool', 'int', 'float', 'string', 'array'])]
+        ?string $requiredType = null
+    ): mixed {
         $value = ArrayUtils::getValue(self::$data, $key);
-        if ($value === null && $throwException) {
-            throw new Exception("Missing config key '$key'");
+        if ($requiredType && $value === null) {
+            throw new Exception("Config key '$key' could not be null", ErrorCode::CONFIG_VALUE_INVALID_TYPE);
+        }
+        if ($value !== null) {
+            $valueType = gettype($value);
+            if ($valueType === 'boolean') {
+                $valueType = 'bool';
+            }
+            if ($valueType === 'double') {
+                $valueType = 'float';
+            }
+            if ($valueType === 'integer') {
+                $valueType = 'int';
+            }
+            if ($requiredType && $requiredType !== "*" && $valueType !== $requiredType) {
+                throw new Exception(
+                    "Config key '$key' must be of type '$requiredType' but is '$valueType'",
+                    ErrorCode::CONFIG_VALUE_INVALID_TYPE
+                );
+            }
         }
         return $value;
     }

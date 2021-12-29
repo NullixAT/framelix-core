@@ -2,7 +2,6 @@
 
 namespace Framelix\Framelix;
 
-use Exception;
 use Framelix\Framelix\Html\HtmlUtils;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Storable\User;
@@ -23,7 +22,6 @@ use function explode;
 use function file_exists;
 use function filemtime;
 use function get_class;
-use function header;
 use function http_response_code;
 use function implode;
 use function is_array;
@@ -125,7 +123,8 @@ abstract class View implements JsonSerializable
     {
         if (__CLASS__ !== static::class) {
             throw new Exception(
-                "getTranslatedPageTitle only can be called on " . __CLASS__ . ", not on a child. This prevent unintentional class loads"
+                "getTranslatedPageTitle only can be called on " . __CLASS__ . ", not on a child. This prevent unintentional class loads",
+                ErrorCode::TOPLEVEL_CALL_ONLY
             );
         }
 
@@ -151,7 +150,8 @@ abstract class View implements JsonSerializable
     {
         if (__CLASS__ !== static::class) {
             throw new Exception(
-                "getUrl only can be called on " . __CLASS__ . ", not on a child. This prevent unintentional class loads"
+                "getUrl only can be called on " . __CLASS__ . ", not on a child. This prevent unintentional class loads",
+                ErrorCode::TOPLEVEL_CALL_ONLY
             );
         }
         if (!isset(self::$availableViews[$viewClass])) {
@@ -160,7 +160,7 @@ abstract class View implements JsonSerializable
         $metadata = self::getMetadataForView($viewClass);
         $urlPath = $metadata['customUrl'] ?? $metadata['url'] ?? null;
         if (!$urlPath) {
-            throw new Exception("No url mapped to view $viewClass");
+            throw new Exception("No url mapped to view $viewClass", ErrorCode::VIEW_NOURL);
         }
         // replace regex parameters
         if (str_starts_with($urlPath, "~")) {
@@ -181,18 +181,14 @@ abstract class View implements JsonSerializable
     }
 
     /**
-     * Load view for current url
-     * @param bool $redirectIfLanguageIsInvalid If app is multilanguage and language is missing/invalid in url, redirect to same page with correct lang included
-     * @param bool $setActiveLanguageFromUrl Does set the current active language to the detected language from url
+     * Find matching view for given url
+     * @param Url $url
+     * @return View|null
      */
-    public static function loadViewForCurrentUrl(
-        bool $redirectIfLanguageIsInvalid = true,
-        bool $setActiveLanguageFromUrl = true
-    ): void {
-        $url = Url::create();
+    public static function findViewForUrl(Url $url): ?View
+    {
         $applicationUrl = Url::getApplicationUrl();
         $relativeUrl = rtrim($url->getRelativePath($applicationUrl), "/");
-        $foundLanguage = null;
         if (Config::get('languageMultiple')) {
             $supportedLanguages = Config::get('languagesSupported');
             if ($supportedLanguages) {
@@ -212,8 +208,7 @@ abstract class View implements JsonSerializable
             $metadata = ArrayUtils::merge($metadata, self::getMetadata($module));
         }
         if (!isset($metadata['views'])) {
-            http_response_code(404);
-            return;
+            return null;
         }
         $matchedViews = [];
         foreach (self::$availableViews as $class => $row) {
@@ -239,40 +234,65 @@ abstract class View implements JsonSerializable
             ArrayUtils::sort($matchedViews, "depth", [SORT_ASC]);
             $matchedView = reset($matchedViews);
             $viewClass = $matchedView['class'];
-            $viewMetadata = $metadata['views'][$viewClass];
-            if (Config::get('languageMultiple') && $viewMetadata['multilanguage']) {
-                if ($redirectIfLanguageIsInvalid && !$foundLanguage) {
-                    $applicationUrl->appendPath("/" . Lang::$lang . "/");
-                    $applicationUrl->appendPath($relativeUrl);
-                    $applicationUrl->redirect();
-                }
-                if ($setActiveLanguageFromUrl && $foundLanguage) {
-                    Lang::$lang = $foundLanguage;
-                }
-            }
             /** @var View $view */
             $view = new $viewClass();
             $view->customUrlParameters = $matchedView['parameters'] ?? null;
-            self::$activeView = $view;
-            if ($tabId = Request::getHeader('HTTP_X_TAB_ID')) {
-                self::$activeView->tabId = $tabId;
-            }
-            $accessRole = self::replaceAccessRoleParameters($view->accessRole, $url);
-            if (!User::hasRole($accessRole)) {
-                self::$activeView->showAccessDenied();
-            } else {
-                Buffer::start();
-                $view->onRequest();
-                if (Request::isAsync()) {
-                    header("content-type: application/json");
-                    echo JsonUtils::encode(['content' => Buffer::getAll()]);
-                } else {
-                    Buffer::flush();
-                }
-            }
+            return $view;
+        }
+        return null;
+    }
+
+    /**
+     * Load view for current url
+     * @param bool $redirectIfLanguageIsInvalid If app is multilanguage and language is missing/invalid in url, redirect to same page with correct lang included
+     * @param bool $setActiveLanguageFromUrl Does set the current active language to the detected language from url
+     */
+    public static function loadViewForCurrentUrl(
+        bool $redirectIfLanguageIsInvalid = true,
+        bool $setActiveLanguageFromUrl = true
+    ): void {
+        $url = Url::create();
+        $view = self::findViewForUrl($url);
+        if (!$view) {
+            http_response_code(404);
             return;
         }
-        http_response_code(404);
+        $applicationUrl = Url::getApplicationUrl();
+        $relativeUrl = rtrim($url->getRelativePath($applicationUrl), "/");
+        $foundLanguage = null;
+        if (Config::get('languageMultiple')) {
+            $supportedLanguages = Config::get('languagesSupported');
+            if ($supportedLanguages) {
+                $foundLanguage = $url->getLanguage();
+            }
+        }
+        $viewMetadata = self::getMetadataForView($view);
+        if (Config::get('languageMultiple') && $viewMetadata['multilanguage']) {
+            if ($redirectIfLanguageIsInvalid && !$foundLanguage) {
+                $applicationUrl->appendPath("/" . Lang::$lang . "/");
+                $applicationUrl->appendPath($relativeUrl);
+                $applicationUrl->redirect();
+            }
+            if ($setActiveLanguageFromUrl && $foundLanguage) {
+                Lang::$lang = $foundLanguage;
+            }
+        }
+        self::$activeView = $view;
+        if ($tabId = Request::getHeader('HTTP_X_TAB_ID')) {
+            self::$activeView->tabId = $tabId;
+        }
+        $accessRole = self::replaceAccessRoleParameters($view->accessRole, $url);
+        if (!User::hasRole($accessRole)) {
+            self::$activeView->showAccessDenied();
+        } else {
+            Buffer::start();
+            $view->onRequest();
+            if (Request::isAsync()) {
+                JsonUtils::output(['content' => Buffer::getAll()]);
+            } else {
+                Buffer::flush();
+            }
+        }
     }
 
     /**
@@ -407,7 +427,10 @@ abstract class View implements JsonSerializable
 
                 $defaultProps = $reflection->getDefaultProperties();
                 if (($defaultProps['accessRole'] ?? null) === null) {
-                    throw new Exception("Property $viewClass->'accessRole' must be set, use \"*\" to allow everybody");
+                    throw new Exception(
+                        "Property $viewClass->'accessRole' must be set, use \"*\" to allow everybody",
+                        ErrorCode::VIEW_ACCESSROLE_MISSING
+                    );
                 }
                 $pageTitle = $defaultProps['pageTitle'] ?? '';
                 $url = "/" . strtolower(implode("/", $exp));
@@ -481,7 +504,7 @@ abstract class View implements JsonSerializable
     {
         Buffer::clear();
         echo Lang::get($message);
-        die();
+        Framelix::stop();
     }
 
     /**
@@ -492,8 +515,8 @@ abstract class View implements JsonSerializable
     public function onException(array $logData): never
     {
         Buffer::clear();
-        Error::showErrorFromExceptionLog($logData);
-        die();
+        ErrorHandler::showErrorFromExceptionLog($logData);
+        Framelix::stop();
     }
 
     /**

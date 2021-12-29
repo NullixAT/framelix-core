@@ -2,8 +2,8 @@
 
 namespace Framelix\Framelix;
 
-use Exception;
 use Framelix\Framelix\Network\Request;
+use Framelix\Framelix\Network\Response;
 use Framelix\Framelix\Storable\UserToken;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\CryptoUtils;
@@ -11,7 +11,6 @@ use Framelix\Framelix\Utils\FileUtils;
 use JsonSerializable;
 
 use function file_exists;
-use function header;
 use function http_build_query;
 use function http_response_code;
 use function is_array;
@@ -119,7 +118,7 @@ class Url implements JsonSerializable
      */
     public static function getApplicationUrl(): self
     {
-        $url = Config::get('applicationHttps') ? "https://" : "http";
+        $url = Config::get('applicationHttps') ? "https://" : "http://";
         $url .= str_replace("{host}", $_SERVER['HTTP_HOST'], Config::get('applicationHost'));
         $url .= "/" . trim("/" . Config::get('applicationUrlBasePath'), "/");
         return self::create($url);
@@ -372,12 +371,12 @@ class Url implements JsonSerializable
     public function redirect(int $code = 302): never
     {
         if (Request::isAsync()) {
-            header("x-redirect: " . $this->getUrlAsString());
+            Response::header("x-redirect: " . $this->getUrlAsString());
         } else {
             http_response_code($code);
-            header("location: " . $this->getUrlAsString());
+            Response::header("location: " . $this->getUrlAsString());
         }
-        die();
+        Framelix::stop();
     }
 
     /**
@@ -521,7 +520,7 @@ class Url implements JsonSerializable
             return $this;
         }
         if (str_starts_with($hash, "#")) {
-            throw new Exception("Hash must not begin with #");
+            throw new Exception("Hash must not begin with #", ErrorCode::URL_HASH);
         }
         $this->urlData['fragment'] = $hash;
         return $this;
@@ -561,7 +560,7 @@ class Url implements JsonSerializable
         $sign = (string)$this->getParameter('__s');
         if (!$sign) {
             if ($throwError) {
-                throw new Exception("URL has no signature");
+                throw new Exception("URL has no signature", ErrorCode::URL_MISSING_SIGNATURE);
             }
             return false;
         }
@@ -579,12 +578,12 @@ class Url implements JsonSerializable
         }
         $result = CryptoUtils::compareHash($this, $sign);
         if (!$result && $throwError) {
-            throw new Exception("URL not correctly signed");
+            throw new Exception("URL not correctly signed", ErrorCode::URL_INCORRECT_SIGNATURE);
         }
-        if ($result && $expires !== null && $expires < time()) {
+        if ($result && $expires < time()) {
             $result = false;
             if ($throwError) {
-                throw new Exception("URL has expired");
+                throw new Exception("URL has expired", ErrorCode::URL_EXPIRED_SIGNATURE);
             }
         }
         $this->urlData['queryParameters'] = $originalData;

@@ -44,13 +44,13 @@ class ColorUtils
 
     /**
      * HSL to RGB
-     * @param $h
-     * @param $s
-     * @param $l
+     * @param float|int $h Between 0-360
+     * @param float|int $s Between 0-1
+     * @param float|int $l Between 0-1
      * @return array
      */
     #[ArrayShape(["int", "int", "int"])]
-    public static function hslToRgb($h, $s, $l): array
+    public static function hslToRgb(float|int $h, float|int $s, float|int $l): array
     {
         $c = (1 - abs(2 * $l - 1)) * $s;
         $x = $c * (1 - abs(fmod(($h / 60), 2) - 1));
@@ -86,7 +86,7 @@ class ColorUtils
         $g = ($g + $m) * 255;
         $b = ($b + $m) * 255;
 
-        return [round($r), round($g), round($b)];
+        return [(int)round($r), (int)round($g), (int)round($b)];
     }
 
     /**
@@ -96,7 +96,7 @@ class ColorUtils
      * @param int $b
      * @return array
      */
-    #[ArrayShape(["float 0-360", "float 0-1", "float 0-1"])]
+    #[ArrayShape(["int 0-360", "float 0-1", "float 0-1"])]
     public static function rgbToHsl(int $r, int $g, int $b): array
     {
         $r /= 255;
@@ -131,8 +131,11 @@ class ColorUtils
                     break;
             }
         }
-
-        return [round($h, 3), round($s, 3), round($l, 3)];
+        return [
+            (int)round($h),
+            round($s, 3),
+            round($l, 3)
+        ];
     }
 
     /**

@@ -29,7 +29,7 @@ class CryptoUtils
         }
         return hash(
             $algo,
-            $data . Config::get("salts[$saltId]", true)
+            $data . Config::get("salts[$saltId]", 'string')
         );
     }
 

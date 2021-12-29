@@ -2,7 +2,7 @@
 
 namespace Framelix\Framelix\View\Backend\Logs;
 
-use Framelix\Framelix\Error;
+use Framelix\Framelix\ErrorHandler;
 use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\Request;
@@ -35,7 +35,7 @@ class ErrorLogs extends View
     public function onRequest(): void
     {
         if (Request::getGet('clear')) {
-            $files = FileUtils::getFiles(FileUtils::getAppRootPath() . "/logs", sortOrder: SCANDIR_SORT_DESCENDING);
+            $files = FileUtils::getFiles(FRAMELIX_APP_ROOT . "/logs", sortOrder: SCANDIR_SORT_DESCENDING);
             $delete = false;
             $count = 0;
             foreach ($files as $file) {
@@ -59,7 +59,7 @@ class ErrorLogs extends View
     public function showContent(): void
     {
         $files = FileUtils::getFiles(
-            FileUtils::getAppRootPath() . "/logs",
+            FRAMELIX_APP_ROOT . "/logs",
             "~\.php$~",
             sortOrder: SCANDIR_SORT_DESCENDING
         );
@@ -79,7 +79,7 @@ class ErrorLogs extends View
             Buffer::start();
             require $file;
             $contents = Buffer::get();
-            Error::showErrorFromExceptionLog(JsonUtils::decode($contents), true);
+            ErrorHandler::showErrorFromExceptionLog(JsonUtils::decode($contents), true);
         }
     }
 }

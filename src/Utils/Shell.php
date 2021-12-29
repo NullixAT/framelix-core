@@ -58,7 +58,7 @@ class Shell
         if ($aliases) {
             foreach ($aliases as $alias => $path) {
                 if (str_starts_with($cmd, $alias . " ")) {
-                    $cmd = $path . " " . substr($cmd, strlen($alias));
+                    $cmd = $path . " " . substr($cmd, strlen($alias) + 1);
                 }
             }
         }

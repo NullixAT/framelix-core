@@ -73,7 +73,7 @@ abstract class StorableExtended extends Storable
     }
 
     /**
-     * Clone self without an id
+     * Clone self without an id and without create/update times
      * @return static
      */
     public function clone(): static

@@ -2,7 +2,8 @@
 
 namespace Framelix\Framelix\Utils;
 
-use function header;
+use Framelix\Framelix\Network\Response;
+
 use function json_encode;
 
 use const JSON_PRETTY_PRINT;
@@ -35,15 +36,13 @@ class JsonUtils
     }
 
     /**
-     * Output given data, set correct content type and stop code execution
+     * Output given data and set correct content type
      * @param mixed $data
-     * @return never
      */
-    public static function output(mixed $data): never
+    public static function output(mixed $data): void
     {
-        header("content-type: application/json");
+        Response::header("content-type: application/json");
         echo self::encode($data);
-        die();
     }
 
     /**

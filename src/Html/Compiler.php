@@ -2,8 +2,9 @@
 
 namespace Framelix\Framelix\Html;
 
-use Exception;
 use Framelix\Framelix\Config;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
@@ -58,7 +59,7 @@ class Compiler
     {
         $file = self::getDistFilePath($module, $type, $groupId);
         if (!file_exists($file)) {
-            throw new Exception("DistFile $module->$type->$groupId not exist");
+            throw new Exception("DistFile $module->$type->$groupId not exist", ErrorCode::COMPILER_DISTFILE_NOTEXIST);
         }
         return Url::getUrlToFile($file);
     }
@@ -102,7 +103,8 @@ class Compiler
             throw new Exception(
                 "Missing required NodeJs modules for compiler. Please run `npm install` in " . realpath(
                     __DIR__ . "/../.."
-                )
+                ),
+                ErrorCode::COMPILER_BABEL_MISSING
             );
         }
         $compilerData = Config::get("compiler[$module]");
@@ -198,7 +200,10 @@ class Compiler
                 exec($cmd, $output, $status);
                 // on error, throw error
                 if ($status) {
-                    throw new Exception(implode("\n", $output));
+                    throw new Exception(
+                        implode("\n", $output),
+                        ErrorCode::COMPILER_COMPILE_ERROR
+                    );
                 }
                 Toast::success(basename($distFilePath) . " compiled successfully");
             }

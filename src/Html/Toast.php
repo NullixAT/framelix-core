@@ -31,7 +31,7 @@ class Toast
      */
     public static function hasInfo(): bool
     {
-        return self::hasType('info');
+        return self::hasMessageType('info');
     }
 
     /**
@@ -50,7 +50,7 @@ class Toast
      */
     public static function hasSuccess(): bool
     {
-        return self::hasType('success');
+        return self::hasMessageType('success');
     }
 
     /**
@@ -69,7 +69,7 @@ class Toast
      */
     public static function hasWarning(): bool
     {
-        return self::hasType('warning');
+        return self::hasMessageType('warning');
     }
 
     /**
@@ -88,7 +88,7 @@ class Toast
      */
     public static function hasError(): bool
     {
-        return self::hasType('error');
+        return self::hasMessageType('error');
     }
 
     /**
@@ -110,7 +110,7 @@ class Toast
      * @param string $messageType
      * @return bool
      */
-    private static function hasType(string $messageType): bool
+    public static function hasMessageType(string $messageType): bool
     {
         foreach (self::$messages as $row) {
             if ($row['type'] === $messageType) {

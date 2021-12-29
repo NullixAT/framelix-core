@@ -28,75 +28,6 @@ class FramelixLang {
   static langFallback = 'en'
 
   /**
-   * Missing lang keys
-   * @type {Object|null}
-   */
-  static debugMissingLangKeys = null
-
-  /**
-   * Missing lang keys api url
-   * @type {string|null}
-   */
-  static debugMissingLangKeysApiUrl = null
-
-  /**
-   * Reset all missing lang keys (backend and frontend)
-   * @return {Promise}
-   */
-  static async resetMissingLangKeys () {
-    FramelixLocalStorage.remove('langDebugLogRememberList')
-    if (FramelixLang.debugMissingLangKeysApiUrl) {
-      await FramelixApi.callPhpMethod(FramelixLang.debugMissingLangKeysApiUrl, { 'action': 'reset' })
-    }
-    FramelixLang.debugMissingLangKeys = null
-  }
-
-  /**
-   * Start logging missing lang keys accross requests (frontend only)
-   */
-  static startlogMissingLangKeys () {
-    FramelixLocalStorage.set('langDebugLogRemember', true)
-  }
-
-  /**
-   * Start logging missing lang keys accross requests (frontend only)
-   */
-  static stoplogMissingLangKeys () {
-    FramelixLocalStorage.set('langDebugLogRemember', false)
-  }
-
-  /**
-   * Log all missing lang keys into console (backend and frontend)
-   * @param {boolean=} asPrefilledLangKeyArray If true, log a string the key be copy pasted into a lang.json file
-   * @return {Promise}
-   */
-  static async logMissingLangKeys (asPrefilledLangKeyArray) {
-    if (FramelixLocalStorage.get('langDebugLogRemember')) {
-      FramelixLang.debugMissingLangKeys = FramelixLocalStorage.get('langDebugLogRememberList')
-    }
-    if (FramelixLang.debugMissingLangKeysApiUrl) {
-      let result = await FramelixApi.callPhpMethod(FramelixLang.debugMissingLangKeysApiUrl, { 'action': 'get' })
-      if (result) {
-        if (!FramelixLang.debugMissingLangKeys) FramelixLang.debugMissingLangKeys = {}
-        for (let i = 0; i < result.length; i++) {
-          FramelixLang.debugMissingLangKeys[result[i]] = result[i]
-        }
-      }
-    }
-    let keys = Object.values(FramelixLang.debugMissingLangKeys ||{})
-    keys.sort()
-    if (asPrefilledLangKeyArray) {
-      let str = ''
-      for (let key in keys) {
-        str += '    "' + keys[key] + '" : [""],' + '\n'
-      }
-      console.log(str)
-    } else {
-      console.log(keys)
-    }
-  }
-
-  /**
    * Get translated language key
    * @param {string} key
    * @param {Object=} parameters
@@ -117,14 +48,6 @@ class FramelixLang {
       value = FramelixLang.values[langFallback][key]
     }
     if (value === null) {
-      if (FramelixLocalStorage.get('langDebugLogRemember')) {
-        FramelixLang.debugMissingLangKeys = FramelixLocalStorage.get('langDebugLogRememberList')
-      }
-      if (!FramelixLang.debugMissingLangKeys) FramelixLang.debugMissingLangKeys = {}
-      FramelixLang.debugMissingLangKeys[key] = key
-      if (FramelixLocalStorage.get('langDebugLogRemember')) {
-        FramelixLocalStorage.set('langDebugLogRememberList', FramelixLang.debugMissingLangKeys)
-      }
       return key
     }
     if (parameters) {

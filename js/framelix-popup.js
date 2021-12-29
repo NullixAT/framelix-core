@@ -108,6 +108,19 @@ class FramelixPopup {
   padding = '5px 10px'
 
   /**
+   * Internal promise resolver
+   * @type {Object<string, function>|null}
+   * @private
+   */
+  resolvers
+
+  /**
+   * The promise that is resolved when the window is destroyed(closed)
+   * @type {Promise<FramelixModal>}
+   */
+  destroyed
+
+  /**
    * The internal id
    * @type {string}
    * @private
@@ -143,7 +156,7 @@ class FramelixPopup {
       if (!text.trim().length) {
         return
       }
-      const instance = FramelixPopup.showPopup(this, text, {
+      const instance = FramelixPopup.show(this, text, {
         closeMethods: 'mouseleave-target',
         color: 'dark',
         group: 'tooltip',
@@ -177,7 +190,7 @@ class FramelixPopup {
     })
     // listen to dom changes to auto hide popups when the target element isn't visible in the dom anymore
     FramelixDom.addChangeListener('framelix-popup', function () {
-      if (!Framelix.hasObjectKeys(FramelixPopup.instances)) return
+      if (!FramelixObjectUtils.hasKeys(FramelixPopup.instances)) return
       for (let id in FramelixPopup.instances) {
         const instance = FramelixPopup.instances[id]
         if (!instance.popperEl) continue
@@ -201,13 +214,13 @@ class FramelixPopup {
    * @param {FramelixPopup|Object=} options Options are all existing properties of this class, see defaults in class declaration
    * @return {FramelixPopup}
    */
-  static showPopup (target, content, options) {
-
-    if (target instanceof cash) {
-      target = target[0]
-    }
-
+  static show (target, content, options) {
+    if (target instanceof cash) target = target[0]
     const instance = new FramelixPopup(options)
+    instance.resolvers = {}
+    instance.destroyed = new Promise(function (resolve) {
+      instance.resolvers['destroyed'] = resolve
+    })
     if (instance.offsetByMouseEvent) {
       const rect = target.getBoundingClientRect()
       const elCenter = rect.left + rect.width / 2
@@ -339,28 +352,15 @@ class FramelixPopup {
    * Destroy self
    */
   destroy () {
-    // already removed from dom
-    if (!this.popperEl) {
-      delete FramelixPopup.instances[this.id]
-      return
-    }
-    for (let i = 0; i < this.listeners.destroy.length; i++) {
-      this.listeners.destroy[i]()
-    }
-    this.listeners.destroy = []
+    // already destroyed
+    if (!this.resolvers) return
+    for (let key in this.resolvers) this.resolvers[key]()
+    this.resolvers = null
     delete FramelixPopup.instances[this.id]
     this.popperEl.remove()
     this.popperInstance.destroy()
     this.popperEl = null
     this.popperInstance = null
-  }
-
-  /**
-   * A callback when this popup gets destroyed
-   * @param {function} handler
-   */
-  onDestroy (handler) {
-    this.listeners.destroy.push(handler)
   }
 }
 

@@ -9,7 +9,6 @@ use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 
 use function array_keys;
-use function array_merge;
 use function array_reverse;
 use function array_values;
 use function implode;
@@ -29,13 +28,6 @@ class MysqlStorableSchemeBuilder
     public const DEFAULT_ENGINE = 'InnoDB';
 
     /**
-     * Include test storables
-     * Only used for tests
-     * @var bool
-     */
-    public bool $includeTestStorables = false;
-
-    /**
      * Constructor
      * @param Mysql $db
      */
@@ -53,14 +45,8 @@ class MysqlStorableSchemeBuilder
         if ($this->getSafeQueries()) {
             return [];
         }
-        $queries = $this->getQueries();
-        foreach ($queries as $key => $row) {
-            if (str_starts_with($row['type'], "create")) {
-                unset($queries[$key]);
-            }
-        }
         // re-index
-        return array_values($queries);
+        return array_values($this->getQueries());
     }
 
     /**
@@ -124,11 +110,12 @@ class MysqlStorableSchemeBuilder
                 }
                 $storableSchemaProperty->unsigned = $unsignedPos !== false;
                 $storableSchemaProperty->autoIncrement = str_contains($row["Extra"], "auto_increment");
+                $storableSchemaProperty->dbComment = $row['Comment'] ?: null;
             }
             $rows = $this->db->fetchAssoc("SHOW INDEXES FROM `$existingTable`");
             foreach ($rows as $row) {
                 // just store that we have an index with this name, doesnt matter which because we skip if index already exist
-                $storableSchema->addIndex($row["Key_name"], 'doesntmatter');
+                $storableSchema->addIndex($row["Key_name"], 'index');
             }
         }
 
@@ -169,12 +156,6 @@ class MysqlStorableSchemeBuilder
         foreach (Config::$loadedModules as $module) {
             $moduleFolder = FileUtils::getModuleRootPath($module);
             $storableFiles = FileUtils::getFiles("$moduleFolder/src/Storable", "~\.php$~", true);
-            if ($this->includeTestStorables) {
-                $storableFiles = array_merge(
-                    $storableFiles,
-                    FileUtils::getFiles("$moduleFolder/tests/Storable", "~\.php$~", true)
-                );
-            }
             foreach ($storableFiles as $storableFile) {
                 $storableClass = ClassUtils::getClassNameForFile($storableFile);
                 $storableSchema = Storable::getStorableSchema($storableClass);
@@ -350,9 +331,8 @@ class MysqlStorableSchemeBuilder
             $queryColumnParts[] = "UNSIGNED";
         }
         $queryColumnParts[] = ($storableSchemaProperty->allowNull ? 'NULL' : 'NOT NULL');
-        if ($storableSchemaProperty->autoIncrement) {
-            $queryColumnParts[] = "AUTO_INCREMENT";
-        }
+        // here would be auto_increment but we do not need to support alerting tables with auto_increment
+        // there is only one table with AI which is always created by default
         if ($storableSchemaProperty->dbComment) {
             $queryColumnParts[] = "COMMENT " . $this->db->escapeValue($storableSchemaProperty->dbComment);
         }
@@ -371,9 +351,7 @@ class MysqlStorableSchemeBuilder
     private function getQueryForAddTableIndex(string $indexName, array $options): string
     {
         $queryIndexParts = ["ADD"];
-        if ($options['type'] === 'primary') {
-            $queryIndexParts[] = "PRIMARY KEY";
-        } elseif ($options['type'] === 'index') {
+        if ($options['type'] === 'index') {
             $queryIndexParts[] = "INDEX";
         } elseif ($options['type'] === 'unique') {
             $queryIndexParts[] = "UNIQUE INDEX";

@@ -2,8 +2,9 @@
 
 namespace Framelix\Framelix\Form\Field;
 
-use Exception;
 use Framelix\Framelix\Config;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Form\Field;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\JsCall;
@@ -107,7 +108,7 @@ class Captcha extends Field
     public function jsonSerialize(): array
     {
         if (!$this->type) {
-            throw new Exception("Missing 'type' for " . __CLASS__);
+            throw new Exception("Missing 'type' for " . __CLASS__, ErrorCode::FORM_CAPTCHA_TYPE_MISSING);
         }
         $data = parent::jsonSerialize();
         $keys = [
@@ -117,7 +118,7 @@ class Captcha extends Field
         foreach ($keys as $key) {
             $data['properties']['publicKeys'][$key] = Config::get(
                 'captchaKeys[' . $key . '][publicKey]',
-                $key === $this->type
+                $key === $this->type ? '*' : null
             );
         }
         $data['properties']['signedUrlVerifyToken'] = JsCall::getCallUrl(

@@ -2,9 +2,10 @@
 
 namespace Framelix\Framelix\Db;
 
-use Exception;
 use Framelix\Framelix\Config;
-use Framelix\Framelix\ObjectTranformable;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
+use Framelix\Framelix\ObjectTransformable;
 use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Utils\ArrayUtils;
 use mysqli;
@@ -109,7 +110,7 @@ class Mysql
     public function escapeValue(mixed $value): string|int|float
     {
         if (is_object($value)) {
-            if ($value instanceof ObjectTranformable) {
+            if ($value instanceof ObjectTransformable) {
                 $value = $value->getDbValue();
             } else {
                 $value = (string)$value;
@@ -134,7 +135,7 @@ class Mysql
         if (is_string($value)) {
             return '"' . mysqli_real_escape_string($this->mysqli, $value) . '"';
         }
-        throw new Exception("Unsupported value for database parameters");
+        throw new Exception("Unsupported value for database parameters", ErrorCode::MYSQL_UNSUPPORTED_DB_PARAMETER);
     }
 
     /**
@@ -146,9 +147,9 @@ class Mysql
         if ($this->mysqli) {
             return;
         }
+        $configKey = 'database[' . $this->id . ']';
+        $databaseConfig = Config::get($configKey, 'array');
         try {
-            $configKey = 'database[' . $this->id . ']';
-            $databaseConfig = Config::get($configKey, true);
             $driver = new mysqli_driver();
             $driver->report_mode = MYSQLI_REPORT_STRICT;
             $this->connectionConfig = [
@@ -168,7 +169,7 @@ class Mysql
                 $this->connectionConfig['socket'] ?: null
             );
         } catch (mysqli_sql_exception $e) {
-            throw new Exception($e->getMessage());
+            throw new Exception($e->getMessage(), ErrorCode::MYSQL_CONNECT_ERROR);
         }
         $this->mysqli->set_charset($databaseConfig['charset'] ?? 'utf8mb4');
     }
@@ -258,7 +259,7 @@ class Mysql
             if (Config::isDevMode()) {
                 $errorMessage .= " in query: " . $query;
             }
-            throw new Exception($errorMessage);
+            throw new Exception($errorMessage, ErrorCode::MYSQL_QUERY_ERROR);
         }
         $this->executedQueriesCount++;
         if (self::$logExecutedQueries) {
@@ -341,7 +342,10 @@ class Mysql
         while ($row = $result->fetch_assoc()) {
             if (is_string($valueAsArrayIndex)) {
                 if (!isset($row[$valueAsArrayIndex])) {
-                    throw new Exception("Field '$valueAsArrayIndex' does not exist in SQL Result or is null");
+                    throw new Exception(
+                        "Field '$valueAsArrayIndex' does not exist in SQL Result or is null",
+                        ErrorCode::MYSQL_FETCH_ASSOC_INDEX_MISSING
+                    );
                 }
                 $fetch[$row[$valueAsArrayIndex]] = $row;
             } else {

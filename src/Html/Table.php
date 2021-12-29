@@ -2,11 +2,12 @@
 
 namespace Framelix\Framelix\Html;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Network\Request;
-use Framelix\Framelix\ObjectTranformable;
+use Framelix\Framelix\ObjectTransformable;
 use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Time;
 use Framelix\Framelix\Url;
@@ -434,7 +435,10 @@ class Table implements JsonSerializable
         if ($this->footerSumColumns) {
             foreach ($this->footerSumColumns as $columnName) {
                 if (!in_array($columnName, $this->columnOrder)) {
-                    throw new Exception('Cell "' . $columnName . '" for footerSumColumns does not exist');
+                    throw new Exception(
+                        'Cell "' . $columnName . '" for footerSumColumns does not exist',
+                        ErrorCode::TABLE_FOOTERSUM_COLUMN_NOTEXIST
+                    );
                 }
             }
         }
@@ -473,7 +477,7 @@ class Table implements JsonSerializable
                         $value = NumberUtils::format($value, $storableSchemaProperty?->decimals);
                     }
                     $sortValue = $rowValues['sortValues'][$columnName] ?? null;
-                    if ($value instanceof ObjectTranformable) {
+                    if ($value instanceof ObjectTransformable) {
                         $sortValue = $value->getSortableValue();
                     } elseif (is_int($value) || is_float($value) || is_bool($value)) {
                         $sortValue = is_bool($sortValue) ? (int)$sortValue : $sortValue;

@@ -10,7 +10,6 @@ use function str_contains;
 use function str_ends_with;
 use function str_starts_with;
 use function substr;
-use function var_dump;
 
 use const FRAMELIX_APP_ROOT;
 

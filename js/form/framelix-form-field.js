@@ -266,7 +266,7 @@ class FramelixFormField {
     if (!this.isVisible()) return true
     if (this.required && !(this instanceof FramelixFormFieldHtml) && !(this instanceof FramelixFormFieldHidden)) {
       const value = this.getValue()
-      if (value === null || value === undefined || (typeof value === 'string' && !value.length) || (typeof value === 'object' && !Framelix.hasObjectKeys(value))) {
+      if (value === null || value === undefined || (typeof value === 'string' && !value.length) || (typeof value === 'object' && !FramelixObjectUtils.hasKeys(value))) {
         return FramelixLang.get('__framelix_form_validation_required__')
       }
     }
@@ -287,8 +287,8 @@ class FramelixFormField {
     this.validationMessage = message
 
     let container = null
-    this.container.find('[tabindex],input,select,textarea').each(function (){
-      if(FramelixDom.isVisible(this)){
+    this.container.find('[tabindex],input,select,textarea').each(function () {
+      if (FramelixDom.isVisible(this)) {
         container = this
         return false
       }
@@ -298,7 +298,7 @@ class FramelixFormField {
     if (this.validationPopup && FramelixDom.isInDom(this.validationPopup.content)) {
       this.validationPopup.content.append($(`<div>`).append(message))
     } else {
-      this.validationPopup = FramelixPopup.showPopup(container, message, {
+      this.validationPopup = FramelixPopup.show(container, message, {
         closeMethods: 'click',
         color: 'error',
         placement: 'bottom-start',

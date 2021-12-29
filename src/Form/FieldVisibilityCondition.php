@@ -2,7 +2,8 @@
 
 namespace Framelix\Framelix\Form;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use JsonSerializable;
 
 use function in_array;
@@ -230,7 +231,8 @@ class FieldVisibilityCondition implements JsonSerializable
         for ($i = 0; $i < count($this->data); $i++) {
             if ($i > 0 && $i % 2 !== 0 && !in_array($this->data[$i]['type'], ['and', 'or'])) {
                 throw new Exception(
-                    __CLASS__ . " -> You need an and/or compare operation after an " . ($this->data[$i - 1]['type']) . " condition"
+                    __CLASS__ . " -> You need an and/or compare operation after an " . ($this->data[$i - 1]['type']) . " condition",
+                    ErrorCode::FORM_VISIBILITYCONDITION
                 );
             }
         }

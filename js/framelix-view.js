@@ -87,7 +87,7 @@ class FramelixView {
       } else {
         url += '&'
       }
-      url += Framelix.objectToUrlencodedString(this.urlParameters)
+      url += FramelixObjectUtils.toUrlencodedString(this.urlParameters)
     }
     return url
   }

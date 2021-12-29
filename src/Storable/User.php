@@ -38,7 +38,7 @@ class User extends StorableExtended
      */
     public static function get(bool $originalUser = false)
     {
-        $key = "getuser-" . $originalUser;
+        $key = "getuser-" . (int)$originalUser;
         if (ArrayUtils::keyExists(self::$cache, $key)) {
             return self::$cache[$key];
         }
@@ -52,12 +52,17 @@ class User extends StorableExtended
 
     /**
      * Set current logged-in user
+     * Is required when some api require a user and set it to a system user
      * @param User|null $user
      */
     public static function setCurrentUser(?User $user): void
     {
-        $key = "getuser";
-        self::$cache[$key] = $user;
+        if ($user === null) {
+            unset(self::$cache["getuser-0"], self::$cache["getuser-1"]);
+            return;
+        }
+        self::$cache["getuser-0"] = $user;
+        self::$cache["getuser-1"] = $user;
     }
 
     /**
@@ -185,7 +190,7 @@ class User extends StorableExtended
      */
     public function getHtmlString(): string
     {
-        return $this->email;
+        return $this->email ?? '';
     }
 
     /**
@@ -194,6 +199,6 @@ class User extends StorableExtended
      */
     public function getRawTextString(): string
     {
-        return $this->email;
+        return $this->email ?? '';
     }
 }

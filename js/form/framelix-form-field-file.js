@@ -67,7 +67,7 @@ class FramelixFormFieldFile extends FramelixFormField {
     for (let filename in this.files) {
       this.removeFile(filename, false)
     }
-    if (Framelix.hasObjectKeys(value)) {
+    if (FramelixObjectUtils.hasKeys(value)) {
       for (let i in value) this.addFile(value[i], false)
     }
     this.triggerChange(this.inputFile, isUserChange)
@@ -97,7 +97,7 @@ class FramelixFormFieldFile extends FramelixFormField {
     const parentValidation = await super.validate()
     if (parentValidation !== true) return parentValidation
 
-    const value = Framelix.countObjectKeys(this.getValue())
+    const value = FramelixObjectUtils.countKeys(this.getValue())
     if (this.minSelectedFiles !== null) {
       if (value < this.minSelectedFiles) {
         return FramelixLang.get('__framelix_form_validation_minselectedfiles__', { 'number': this.minSelectedFiles })

@@ -34,9 +34,12 @@ class UserToken extends StorableExtended
     public static function create(User $user): self
     {
         $token = RandomGenerator::getRandomString(32, 64);
+        // a dupe is most likely to never happen, but add a catch for that
+        // @codeCoverageIgnoreStart
         while (self::getForToken($token)) {
             $token = RandomGenerator::getRandomString(32, 64);
         }
+        // @codeCoverageIgnoreEnd
         $instance = new self();
         $instance->token = $token;
         $instance->user = $user;
@@ -51,6 +54,7 @@ class UserToken extends StorableExtended
      */
     public static function setCookieValue(?string $token, ?int $lifetime = null): void
     {
+        unset(self::$cache['getByCookie']);
         Cookie::set(
             str_replace("{module}", FRAMELIX_MODULE, Config::get('userTokenCookieName')),
             $token,
@@ -74,7 +78,7 @@ class UserToken extends StorableExtended
      */
     public static function getByCookie(): ?self
     {
-        $cacheKey = __METHOD__;
+        $cacheKey = "getByCookie";
         if (array_key_exists($cacheKey, self::$cache)) {
             return self::$cache[$cacheKey];
         }

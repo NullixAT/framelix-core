@@ -54,7 +54,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
   setValue (value, isUserChange = false) {
     let addableHtml = `<button class="framelix-button framelix-button-color framelix-form-field-grid-add" title="__framelix_form_grid_add__" type="button"><span class="material-icons">add</span></button>`
     if (this.disabled || !this.addable) addableHtml = null
-    if (!Framelix.hasObjectKeys(value)) {
+    if (!FramelixObjectUtils.hasKeys(value)) {
       this.fieldsRows = {}
       this.field.empty()
       if (addableHtml) {
@@ -69,7 +69,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
                 <tr><th class="hidden"></th></tr>
             </thead>
             <tbody></tbody>
-            <tfoot><tr><td colspan="${Framelix.countObjectKeys(this.fields) + 1}"></td></tr></tfoot>
+            <tfoot><tr><td colspan="${FramelixObjectUtils.countKeys(this.fields) + 1}"></td></tr></tfoot>
         </table>`)
         const trHeader = table.find('thead tr')
 
@@ -248,7 +248,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
     }
     if (!success) return validationMessages
 
-    const value = Framelix.countObjectKeys(this.getValue())
+    const value = FramelixObjectUtils.countKeys(this.getValue())
     if (this.minRows !== null) {
       if (value < this.minRows) {
         return FramelixLang.get('__framelix_form_validation_mingridrows__', { 'number': this.minRows })
@@ -283,7 +283,7 @@ class FramelixFormFieldGrid extends FramelixFormField {
       if (value === null) {
         value = {}
       }
-      let count = Framelix.countObjectKeys(value)
+      let count = FramelixObjectUtils.countKeys(value)
       while (value['_' + count]) {
         count++
       }

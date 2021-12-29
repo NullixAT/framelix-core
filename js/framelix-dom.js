@@ -67,7 +67,6 @@ class FramelixDom {
     })
   }
 
-
   /**
    * Checks if the given element is currently in the dom
    * Doesn't matter if visible or invisible

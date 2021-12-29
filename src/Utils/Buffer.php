@@ -8,9 +8,17 @@ use function ob_get_level;
 
 /**
  * Output buffer handling
+ * This allow output buffering without affecting prev existing buffers
  */
 class Buffer
 {
+    /**
+     * Store reference to buffer index when framelix script execution starts
+     * This is required for unit tests, as they have already buffers opened before framelix comes
+     * @var int
+     */
+    public static int $startBufferIndex = 0;
+
     /**
      * Start a new output buffer
      */
@@ -20,21 +28,21 @@ class Buffer
     }
 
     /**
-     * Clear current output buffer
+     * Clear complete output buffer
      */
     public static function clear(): void
     {
-        while (ob_get_level()) {
+        while (ob_get_level() >= self::$startBufferIndex) {
             ob_end_clean();
         }
     }
 
     /**
-     * Flush current output buffer
+     * Flush complete output buffer
      */
     public static function flush(): void
     {
-        while (ob_get_level()) {
+        while (ob_get_level() >= self::$startBufferIndex) {
             ob_end_flush();
         }
     }
@@ -45,7 +53,7 @@ class Buffer
      */
     public static function get(): string
     {
-        if (ob_get_level()) {
+        if (ob_get_level() >= self::$startBufferIndex) {
             $outputBuffer = ob_get_contents();
             ob_end_clean();
             return $outputBuffer;
@@ -60,7 +68,7 @@ class Buffer
     public static function getAll(): string
     {
         $outputBuffer = "";
-        while (ob_get_level()) {
+        while (ob_get_level() >= self::$startBufferIndex) {
             $outputBuffer .= ob_get_contents();
             ob_end_clean();
         }

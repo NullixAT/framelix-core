@@ -2,12 +2,13 @@
 
 namespace Framelix\Framelix\Storable;
 
-use Exception;
 use Framelix\Framelix\Config;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\StorableSchema;
 use Framelix\Framelix\Db\StorableSchemaProperty;
-use Framelix\Framelix\ObjectTranformable;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
+use Framelix\Framelix\ObjectTransformable;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\JsonUtils;
@@ -16,6 +17,7 @@ use ReflectionClass;
 
 use function array_pop;
 use function array_reverse;
+use function array_unique;
 use function array_values;
 use function call_user_func_array;
 use function class_exists;
@@ -33,15 +35,15 @@ use function is_string;
 use function preg_match_all;
 use function preg_quote;
 use function preg_replace;
-use function str_starts_with;
 use function substr;
 
 /**
  * Base Storable
  * @property int|null $id
  */
-abstract class Storable implements JsonSerializable, ObjectTranformable
+abstract class Storable implements JsonSerializable, ObjectTransformable
 {
+
     /**
      * Deactivating the prefetch behaviour globally if you need to here
      * @var bool
@@ -159,6 +161,7 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
      * @param string|null $condition
      * @param array|null $parameters
      * @param array|string|null $sort
+     * @param int|null $offset $offset
      * @param string|null $connectionId Database connection id to use
      * @return static|null
      */
@@ -166,9 +169,10 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
         ?string $condition = null,
         ?array $parameters = null,
         array|string|null $sort = null,
+        ?int $offset = null,
         ?string $connectionId = null
     ): ?static {
-        $arr = static::getByCondition($condition, $parameters, $sort, 1, connectionId: $connectionId);
+        $arr = static::getByCondition($condition, $parameters, $sort, 1, $offset, $connectionId);
         if ($arr) {
             return reset($arr);
         }
@@ -300,7 +304,10 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
             $query .= "ORDER BY ";
             foreach ($sort as $sortProperty) {
                 if ($sortProperty[0] !== "-" && $sortProperty[0] !== "+") {
-                    throw new Exception("Sort properties must begin with -/+ to indicate sort direction");
+                    throw new Exception(
+                        "Sort properties must begin with -/+ to indicate sort direction",
+                        ErrorCode::STORABLE_SORT_DIRECTION_MISSING
+                    );
                 }
                 $query .= "`" . substr($sortProperty, 1) . "` " . ($sortProperty[0] === "+" ? "ASC" : "DESC") . ", ";
             }
@@ -331,6 +338,7 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                 $storables[$storable->id] = $storable;
             } else {
                 $storable = new static();
+                $storable->connectionId = $db->id;
                 foreach ($row as $key => $value) {
                     $storable->propertyCache['dbvalue'][$key] = $value;
                     $storables[$storable->id] = $storable;
@@ -437,8 +445,9 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                     'id' => (int)$row['id'],
                     'parents' => []
                 ];
-                $parents = JsonUtils::decode($row['storableClassParents']);
-                self::$schemaTableCache[$connectionId][$row['storableClass']]['parents'] = $parents;
+                self::$schemaTableCache[$connectionId][$row['storableClass']]['parents'] = JsonUtils::decode(
+                    $row['storableClassParents']
+                );
             }
         }
     }
@@ -466,9 +475,14 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
         }
         $arr = [];
         foreach ($childClasses as $childClass) {
+            // @codeCoverageIgnoreStart
+            // this is rare case where hierarchy may be changed but db schema table is not yet updated
+            // this is expected to never happen in production nor in development
+            // after updating code that affect database, always a databaseupdate is required
             if (!class_exists($childClass)) {
                 continue;
             }
+            // @codeCoverageIgnoreEnd
             $arr = ArrayUtils::merge($arr, call_user_func_array([$childClass, $method], $parameters));
         }
         return $arr;
@@ -487,7 +501,7 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
      */
     public function __clone(): void
     {
-        throw new Exception('Native clone isnt supported - Use ->clone() on the storable');
+        throw new Exception('Native clone isnt supported - Use ->clone() on the storable', ErrorCode::NATIVE_CLONE);
     }
 
     /**
@@ -506,9 +520,16 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
      */
     public function __get(string $name): mixed
     {
+        $label = "Property " . get_class($this) . "->$name";
         $storableSchemaProperty = Storable::getStorableSchemaProperty($this, $name);
-        // no db property or a complete new storable does not have anything set yet
-        if (!$storableSchemaProperty || !$this->propertyCache) {
+        if (!$storableSchemaProperty) {
+            throw new Exception(
+                "$label not exist in storable ",
+                ErrorCode::STORABLE_PROPERTY_NOTEXIST
+            );
+        }
+        // a complete new storable does not have anything set yet
+        if (!$this->propertyCache) {
             return null;
         }
         if (ArrayUtils::keyExists($this->propertyCache, "phpvalue[$name]")) {
@@ -521,11 +542,9 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
             )) {
             $db = $this->getDb();
             $this->propertyCache["dbvalue"][$name] = $db->fetchOne(
-                "
-                SELECT `$storableSchemaProperty->name`
+                "SELECT `$storableSchemaProperty->name`
                 FROM `" . $this::class . "`
-                WHERE id = $this
-            "
+                WHERE id = $this"
             );
         }
         $realValue = $this->getConvertedDbValue($name, $this->propertyCache["dbvalue"][$name] ?? null);
@@ -542,21 +561,38 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
     {
         $storableSchemaProperty = Storable::getStorableSchemaProperty($this, $name);
         $label = "Property " . get_class($this) . "->$name";
+        // native property support
         if (!$storableSchemaProperty) {
-            $this->{$name} = $value;
-            return;
+            throw new Exception(
+                "$label not exist in storable ",
+                ErrorCode::STORABLE_PROPERTY_NOTEXIST
+            );
         }
         // check for correct types
         if ($value !== null) {
             if ($storableSchemaProperty->storableClass && !($value instanceof $storableSchemaProperty->storableClass)) {
-                throw new Exception("$label need to be an instance of " . $storableSchemaProperty->storableClass);
+                throw new Exception(
+                    "$label need to be an instance of " . $storableSchemaProperty->storableClass,
+                    ErrorCode::NOT_INSTANCEOF
+                );
             }
             if ($storableSchemaProperty->storableInterface && !($value instanceof $storableSchemaProperty->storableInterface)) {
-                throw new Exception("$label need to be an instance of " . $storableSchemaProperty->storableInterface);
+                throw new Exception(
+                    "$label need to be an instance of " . $storableSchemaProperty->storableInterface,
+                    ErrorCode::NOT_INSTANCEOF
+                );
             }
             if ($storableSchemaProperty->arrayType || $storableSchemaProperty->arrayStorableClass || $storableSchemaProperty->arrayStorableInterface) {
                 if (!is_array($value)) {
-                    throw new Exception("$label needs to be an array");
+                    throw new Exception("$label needs to be an array", ErrorCode::NOT_TYPEOF);
+                }
+                // a storable class array must be unique in values
+                $valueUnique = array_unique($value);
+                if ($storableSchemaProperty->arrayStorableClass && count($valueUnique) !== count($value)) {
+                    throw new Exception(
+                        "$label have duplicate values in array of storable references",
+                        ErrorCode::STORABLE_ARRAY_DUPE_REFERENCES
+                    );
                 }
                 foreach ($value as $key => $arrayValue) {
                     $arrayLabel = $label . "[$key]";
@@ -564,12 +600,16 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                         switch ($storableSchemaProperty->arrayType) {
                             case "bool":
                                 if (!is_bool($arrayValue)) {
-                                    throw new Exception("$arrayLabel need to be a boolean value");
+                                    throw new Exception(
+                                        "$arrayLabel need to be a boolean value", ErrorCode::NOT_TYPEOF
+                                    );
                                 }
                                 break;
                             case "int":
                                 if (!is_int($arrayValue)) {
-                                    throw new Exception("$arrayLabel need to be a integer value");
+                                    throw new Exception(
+                                        "$arrayLabel need to be a integer value", ErrorCode::NOT_TYPEOF
+                                    );
                                 }
                                 break;
                             case "float":
@@ -579,7 +619,7 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                                 break;
                             case "string":
                                 if (!is_string($arrayValue)) {
-                                    throw new Exception("$arrayLabel need to be a string value");
+                                    throw new Exception("$arrayLabel need to be a string value", ErrorCode::NOT_TYPEOF);
                                 }
                                 break;
                         }
@@ -587,14 +627,16 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                     if ($storableSchemaProperty->arrayStorableClass) {
                         if (!($arrayValue instanceof $storableSchemaProperty->arrayStorableClass)) {
                             throw new Exception(
-                                "$arrayLabel needs to be instance of $storableSchemaProperty->arrayStorableClass"
+                                "$arrayLabel needs to be instance of $storableSchemaProperty->arrayStorableClass",
+                                ErrorCode::NOT_INSTANCEOF
                             );
                         }
                     }
                     if ($storableSchemaProperty->arrayStorableInterface) {
                         if (!($arrayValue instanceof $storableSchemaProperty->arrayStorableInterface)) {
                             throw new Exception(
-                                "$arrayLabel needs to be instance of $storableSchemaProperty->arrayStorableClass"
+                                "$arrayLabel needs to be instance of $storableSchemaProperty->arrayStorableClass",
+                                ErrorCode::NOT_INSTANCEOF
                             );
                         }
                     }
@@ -603,22 +645,22 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                 switch ($storableSchemaProperty->internalType) {
                     case "bool":
                         if (!is_bool($value)) {
-                            throw new Exception("$label need to be a boolean value");
+                            throw new Exception("$label need to be a boolean value", ErrorCode::NOT_TYPEOF);
                         }
                         break;
                     case "int":
                         if (!is_int($value)) {
-                            throw new Exception("$label need to be a integer value");
+                            throw new Exception("$label need to be a integer value", ErrorCode::NOT_TYPEOF);
                         }
                         break;
                     case "float":
                         if (!is_float($value)) {
-                            throw new Exception("$label need to be a float value");
+                            throw new Exception("$label need to be a float value", ErrorCode::NOT_TYPEOF);
                         }
                         break;
                     case "string":
                         if (!is_string($value)) {
-                            throw new Exception("$label need to be a string value");
+                            throw new Exception("$label need to be a string value", ErrorCode::NOT_TYPEOF);
                         }
                         break;
                 }
@@ -626,26 +668,6 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
         }
         $this->propertyCache['phpvalue'][$name] = $value;
         $this->propertyCache['modified'][$name] = true;
-    }
-
-    /**
-     * Set a properties key
-     * This can only be used for json database properties
-     * If it is no json property, it silently does nothing
-     * @param string $propertyName
-     * @param string|array $key Can be any key name accepted by ArrayUtils::setValue
-     * @param mixed $value
-     * @return void
-     */
-    public function setPropertyKeyValue(string $propertyName, string|array $key, mixed $value): void
-    {
-        $storableSchemaProperty = Storable::getStorableSchemaProperty($this, $propertyName);
-        if (!$storableSchemaProperty || $storableSchemaProperty->internalType !== 'mixed') {
-            return;
-        }
-        $arr = $this->{$propertyName};
-        ArrayUtils::setValue($arr, $key, $value);
-        $this->{$propertyName} = $arr;
     }
 
     /**
@@ -712,17 +734,16 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
         if ($storableSchemaProperty->arrayStorableInterface) {
             $arr = [];
             foreach ($phpValue as $value) {
-                if ($value instanceof ObjectTranformable) {
+                if ($value instanceof ObjectTransformable) {
                     $arr[] = $value->getDbValue();
                 }
             }
             return JsonUtils::encode($arr);
         }
         if ($storableSchemaProperty->storableInterface) {
-            if ($phpValue instanceof ObjectTranformable) {
+            if ($phpValue instanceof ObjectTransformable) {
                 return $phpValue->getDbValue();
             }
-            return null;
         }
         return match ($storableSchemaProperty->internalType) {
             "bool" => $phpValue ? '1' : '0',
@@ -759,7 +780,10 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
             $finalDatabaseValue = $this->getNewDbValueForProperty($propertyName);
             // optional check
             if (!$storableSchemaProperty->optional && $finalDatabaseValue === null && $propertyName !== 'id') {
-                throw new Exception("Property " . get_class($this) . "->$propertyName is null and not optional");
+                throw new Exception(
+                    "Property " . get_class($this) . "->$propertyName is null and not optional",
+                    ErrorCode::NOT_OPTIONAL
+                );
             }
 
             $storeValues[$propertyName] = $finalDatabaseValue;
@@ -807,20 +831,22 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
     public function delete(bool $force = false): void
     {
         if (!$this->id) {
-            throw new Exception("Cannot delete new storable that is not yet saved in database");
+            throw new Exception(
+                "Cannot delete new storable that is not yet saved in database",
+                ErrorCode::STORABLE_NEW_DELETE
+            );
         }
         if (!$force && !$this->isDeletable()) {
-            throw new Exception("Storable #" . $this . " (" . $this->getRawTextString() . ") is not deletable");
+            throw new Exception(
+                "Storable #" . $this . " (" . $this->getRawTextString() . ") is not deletable",
+                ErrorCode::STORABLE_NOT_DELETABLE
+            );
         }
         $db = $this->getDb();
         $storableSchema = Storable::getStorableSchema($this);
         $db->delete($storableSchema->tableName, "id = " . $this->id);
         $db->delete(StorableSchema::ID_TABLE, "id = " . $this->id);
-        foreach ($this->propertyCache as $key => $value) {
-            if (str_starts_with($key, "dbvalue-")) {
-                unset($this->propertyCache[$key]);
-            }
-        }
+        unset($this->propertyCache['dbvalue']);
         $id = $this->id;
         $textString = $this->getRawTextString();
         $this->id = null;
@@ -946,6 +972,10 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                     $count = 0;
                     $cachedJsonValues = [];
                     foreach ($cachedStorables as $cachedStorable) {
+                        // if this was already in a previous prefetch cycle
+                        if (ArrayUtils::keyExists($cachedStorable->propertyCache, "phpvalue[$propertyName]")) {
+                            continue;
+                        }
                         $referenceJsonStr = $cachedStorable->getOriginalDbValueForProperty($propertyName);
                         $cachedJsonValues[$cachedStorable->id] = null;
                         if ($referenceJsonStr) {
@@ -953,9 +983,9 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                             $cachedJsonValues[$cachedStorable->id] = $referenceJsonData;
                             foreach ($referenceJsonData as $referenceId) {
                                 $fetchReferenceIds[$referenceId] = $referenceId;
-                                $count++;
                             }
-                            if ($count > $storableSchemaProperty->prefetchLimit) {
+                            $count++;
+                            if ($count >= $storableSchemaProperty->prefetchLimit) {
                                 break;
                             }
                         }
@@ -966,12 +996,16 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                         [$fetchReferenceIds, $referenceStorableConnectionId]
                     );
                     foreach ($cachedStorables as $cachedStorable) {
+                        // not qualified for prefetch (limit reached, so skip)
+                        if (!ArrayUtils::keyExists($cachedJsonValues, $cachedStorable->id)) {
+                            continue;
+                        }
                         $referenceJsonData = $cachedJsonValues[$cachedStorable->id];
                         $newValue = [];
                         if ($referenceJsonData) {
-                            foreach ($referenceJsonData as $referenceKey => $referenceId) {
+                            foreach ($referenceJsonData as $referenceId) {
                                 if (isset($referenceStorables[$referenceId])) {
-                                    $newValue[$referenceKey] = $referenceStorables[$referenceId];
+                                    $newValue[$referenceId] = $referenceStorables[$referenceId];
                                 }
                             }
                         }
@@ -1004,10 +1038,14 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                     $count = 0;
                     foreach ($cachedStorables as $cachedStorable) {
                         $referenceId = $cachedStorable->getOriginalDbValueForProperty($propertyName);
+                        // if this was already in a previous prefetch cycle
+                        if (ArrayUtils::keyExists($cachedStorable->propertyCache, "phpvalue[$propertyName]")) {
+                            continue;
+                        }
                         if ($referenceId) {
                             $fetchReferenceIds[$referenceId] = $referenceId;
                             $count++;
-                            if ($count > $storableSchemaProperty->prefetchLimit) {
+                            if ($count >= $storableSchemaProperty->prefetchLimit) {
                                 break;
                             }
                         }
@@ -1018,7 +1056,7 @@ abstract class Storable implements JsonSerializable, ObjectTranformable
                     );
                     foreach ($cachedStorables as $cachedStorable) {
                         $referenceId = $cachedStorable->getOriginalDbValueForProperty($propertyName);
-                        if ($referenceId) {
+                        if ($referenceId && isset($fetchReferenceIds[$referenceId])) {
                             $cachedStorable->propertyCache['phpvalue'][$propertyName] = $referenceStorables[$referenceId] ?? null;
                         }
                     }

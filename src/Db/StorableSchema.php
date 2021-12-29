@@ -2,11 +2,12 @@
 
 namespace Framelix\Framelix\Db;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\PhpDocParser;
-use JsonSerializable;
+use JetBrains\PhpStorm\ExpectedValues;
 use ReflectionClass;
 
 use function array_combine;
@@ -23,16 +24,10 @@ use function substr;
 /**
  * Storable schema
  */
-class StorableSchema implements JsonSerializable
+class StorableSchema
 {
     public const ID_TABLE = "framelix__id";
     public const SCHEMA_TABLE = "framelix__schema";
-
-    /**
-     * Internal cache
-     * @var array
-     */
-    private static array $cache = [];
 
     /**
      * The parent storable schemas
@@ -96,22 +91,8 @@ class StorableSchema implements JsonSerializable
      */
     public function parseClassData(): void
     {
-        $cacheKey = "properties-" . $this->className;
-        if (isset(self::$cache[$cacheKey])) {
-            /** @var StorableSchema $clonedStorableSchema */
-            $clonedStorableSchema = self::$cache[$cacheKey];
-            foreach ($clonedStorableSchema as $key => $value) {
-                $this->{$key} = $value;
-            }
-            foreach ($this->properties as $propertyName => $storableSchemaProperty) {
-                $this->properties[$propertyName] = clone $storableSchemaProperty;
-            }
-            return;
-        }
-        self::$cache[$cacheKey] = $this;
         $reflectionClass = new ReflectionClass($this->className);
         $this->abstract = $reflectionClass->isAbstract();
-        $className = $reflectionClass->getName();
         $uses = [];
         $file = fopen($reflectionClass->getFileName(), "r");
         while ($line = fgets($file)) {
@@ -128,7 +109,10 @@ class StorableSchema implements JsonSerializable
         $parsedComment = PhpDocParser::parseVariableDescriptions($reflectionClass->getDocComment(), 'property');
         foreach ($parsedComment as $propertyName => $commentData) {
             if ($commentData['type'] === null) {
-                throw new Exception("No valid @property annotation (Missing type) in " . $className);
+                throw new Exception(
+                    "No valid @property annotation (Missing type) in " . $reflectionClass->getName(),
+                    ErrorCode::STORABLESCHEMA_INVALID_PROPERTY_TYPE
+                );
             }
             $possibleClassNames = [];
             $types = explode("|", trim($commentData['type']));
@@ -146,7 +130,7 @@ class StorableSchema implements JsonSerializable
             // typed array
             if ($typeIsArray) {
                 $type = substr($type, 0, -2);
-                $storableSchemaProperty->arrayType = substr($type, 0, -2);
+                $storableSchemaProperty->arrayType = $type;
             }
             if (!in_array($type, ["bool", "int", "float", "double", "string", "mixed"])) {
                 $possibleClassNames[] = $namespace . "\\" . $type;
@@ -177,19 +161,11 @@ class StorableSchema implements JsonSerializable
                         "\\",
                         "/",
                         FileUtils::getModuleRootPath($expl[1]) . "/src/" . $relativeClassName . ".php"
-                    ),
-                    str_replace(
-                        "\\",
-                        "/",
-                        FileUtils::getModuleRootPath($expl[1]) . "/tests/" . $relativeClassName . ".php"
                     )
                 ];
                 foreach ($classFiles as $classFile) {
                     if (file_exists($classFile)) {
-                        $isStorable = str_contains($classFile, "/src/Storable/") || str_contains(
-                                $classFile,
-                                "/tests/Storable/"
-                            );
+                        $isStorable = str_contains($classFile, "/src/Storable/");
                         $type = $possibleClassName;
                         if ($storableSchemaProperty->arrayType) {
                             // typed storable array or typed storable interface array
@@ -236,8 +212,10 @@ class StorableSchema implements JsonSerializable
                     $storableSchemaProperty->length = 11;
                 }
                 if ($type === 'double') {
-                    // double is considered deprecated in php
-                    throw new Exception("Double is an unsupported database type use float instead");
+                    throw new Exception(
+                        "Double is considered deprecated in php - Use float instead",
+                        ErrorCode::STORABLESCHEMA_INVALID_DOUBLE
+                    );
                 }
                 if ($type === 'float') {
                     // float in PHP will be double in mysql for higher precision
@@ -276,11 +254,15 @@ class StorableSchema implements JsonSerializable
     /**
      * Add an index
      * @param string $indexName If $properties is not set, then the name must equal property name
-     * @param string $type primary, unique, index, fulltext
+     * @param string $type
      * @param array|null $properties If not set than use $indexName as the only property to add
      */
-    public function addIndex(string $indexName, string $type, ?array $properties = null): void
-    {
+    public function addIndex(
+        string $indexName,
+        #[ExpectedValues(["unique", "index", "fulltext"])]
+        string $type,
+        ?array $properties = null
+    ): void {
         if (!$properties) {
             $properties = [$indexName];
         }
@@ -288,13 +270,5 @@ class StorableSchema implements JsonSerializable
             'type' => strtolower($type),
             'properties' => $properties
         ];
-    }
-
-    /**
-     * Json serialize
-     */
-    public function jsonSerialize(): array
-    {
-        return (array)$this;
     }
 }

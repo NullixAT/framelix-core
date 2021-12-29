@@ -3,6 +3,8 @@
 namespace Framelix\Framelix\Form\Field;
 
 use Framelix\Framelix\Db\LazySearchCondition;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Storable\Storable;
@@ -10,7 +12,6 @@ use Framelix\Framelix\StorableMeta;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\ClassUtils;
-use PHPMailer\PHPMailer\Exception;
 
 use function get_class;
 use function is_array;
@@ -62,9 +63,7 @@ class Search extends Select
                         foreach ($properties as $property) {
                             $storableMetaProperty = Storable::getStorableSchemaProperty($storableClass, $property);
                             if (!$storableMetaProperty) {
-                                throw new Exception(
-                                    'Property "' . $property . '" does not exist in "' . $storableClass . '"'
-                                );
+                                continue;
                             }
                             $lazySearchCondition->addColumn(
                                 "`t0`.`$storableMetaProperty->name`",
@@ -196,7 +195,7 @@ class Search extends Select
     public function jsonSerialize(): array
     {
         if (!$this->searchMethod) {
-            throw new \Exception('Missing search method for ' . get_class($this));
+            throw new Exception('Missing search method for ' . get_class($this), ErrorCode::FORM_SEARCH_METHOD_MISSING);
         }
         $properties = parent::jsonSerialize();
         $properties['properties']['signedUrlSearch'] = JsCall::getCallUrl(

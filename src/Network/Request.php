@@ -17,9 +17,10 @@ class Request
 {
     /**
      * Request body data
+     * Public to simulate in unit tests
      * @var array
      */
-    private static mixed $requestBodyData = [];
+    public static mixed $requestBodyData = [];
 
     /**
      * Get client ip
@@ -27,7 +28,7 @@ class Request
      */
     public static function getClientIp(): string
     {
-        $ip = $_SERVER[Config::get('clientIpKey')] ?? "0.0.0.0";
+        $ip = Config::get('clientIpFixed') ?? $_SERVER[Config::get('clientIpKey')] ?? "0.0.0.0";
         // sanitize ip as it can be manipulated by the client if custom header is used
         return substr(preg_replace("~[^0-9\.]~", "", $ip), 0, 15);
     }
@@ -39,6 +40,9 @@ class Request
      */
     public static function getBody(mixed $key = null): mixed
     {
+        // this cannot be unit tested as php://input is read only
+        // so we simulate $requestBodyData in unit tests
+        // @codeCoverageIgnoreStart
         if (!ArrayUtils::keyExists(self::$requestBodyData, "data")) {
             self::$requestBodyData['data'] = null;
             if (Request::getHeader('content_type') !== 'application/json') {
@@ -46,6 +50,7 @@ class Request
             }
             self::$requestBodyData['data'] = JsonUtils::readFromFile("php://input");
         }
+        // @codeCoverageIgnoreEnd
         if ($key === null) {
             return self::$requestBodyData['data'];
         }

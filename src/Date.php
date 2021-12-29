@@ -2,7 +2,6 @@
 
 namespace Framelix\Framelix;
 
-use Exception;
 use Framelix\Framelix\Db\StorablePropertyInterface;
 use Framelix\Framelix\Db\StorableSchemaProperty;
 
@@ -251,6 +250,9 @@ class Date implements StorablePropertyInterface
      */
     public function __clone(): void
     {
-        throw new Exception('Native clone isnt supported - Use ->clone() on the storable');
+        throw new Exception(
+            'Native clone isnt supported - Use ->clone() on the storable',
+            ErrorCode::NATIVE_CLONE
+        );
     }
 }

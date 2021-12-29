@@ -21,9 +21,6 @@ class Cookie
      */
     public static function get(string $name, bool $isSigned = true): ?string
     {
-        if (Request::isCli()) {
-            return null;
-        }
         $value = $_COOKIE[$name] ?? null;
         if ($value !== null && $isSigned) {
             $hash = self::get($name . "__s", false);
@@ -46,9 +43,6 @@ class Cookie
      */
     public static function set(string $name, ?string $value, bool $sign = true, ?int $lifetime = null): void
     {
-        if (Request::isCli()) {
-            return;
-        }
         if ($value === null) {
             $value = "";
             $cookieLifetime = 1;
@@ -57,13 +51,17 @@ class Cookie
             $cookieLifetime = $lifetime !== null ? time() + $lifetime : 0;
             $_COOKIE[$name] = $value;
         }
-        setcookie($name, (string)$value, [
-            'expires' => $cookieLifetime,
-            'path' => '/',
-            'domain' => '',
-            'secure' => true,
-            'httponly' => true
-        ]);
+        // @codeCoverageIgnoreStart
+        if (!Request::isCli()) {
+            setcookie($name, (string)$value, [
+                'expires' => $cookieLifetime,
+                'path' => '/',
+                'domain' => '',
+                'secure' => true,
+                'httponly' => true
+            ]);
+        }
+        // @codeCoverageIgnoreEnd
         if ($sign && $value !== null) {
             self::set($name . "__s", CryptoUtils::hash($name . $value), false, $lifetime);
         }

@@ -2,8 +2,9 @@
 
 namespace Framelix\Framelix\Utils;
 
-use Exception;
 use Framelix\Framelix\Config;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Storable\User;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -14,6 +15,12 @@ use function str_replace;
 use function substr;
 use function uniqid;
 
+/**
+ * Email sending
+ *
+ * Currently we don't know how to properly unit test this, so ignored test for now
+ * @codeCoverageIgnore
+ */
 class Email
 {
     /**
@@ -49,7 +56,7 @@ class Email
     ): bool {
         $mailer = self::getPhpMailer();
         if (!$mailer) {
-            throw new Exception('E-Mail is not configured correctly');
+            throw new Exception('E-Mail is not configured correctly', ErrorCode::EMAIL_CONFIG_MISSING);
         }
         $mailer->Subject = str_replace(
             ['{title}'],
@@ -121,9 +128,8 @@ class Email
      */
     public static function getPhpMailer(): ?PHPMailer
     {
-        $folder = FileUtils::getModuleRootPath("Framelix") . "/vendor/phpmailer";
-        require_once("$folder/PHPMailer.php");
-        require_once("$folder/Exception.php");
+        require_once(__DIR__ . "/../../vendor/phpmailer/PHPMailer.php");
+        require_once(__DIR__ . "/../../vendor/phpmailer/Exception.php");
         $mail = new PHPMailer(true);
         $mail->CharSet = 'UTF-8';
         switch (Config::get('mailSendType')) {
@@ -135,7 +141,7 @@ class Email
                 if (!$smtp) {
                     return null;
                 }
-                require_once("$folder/SMTP.php");
+                require_once(__DIR__ . "/../../vendor/phpmailer/SMTP.php");
                 $mail->isSMTP();
                 $mail->Host = Config::get('smtpHost');
                 $mail->Port = Config::get('smtpPort');
@@ -162,7 +168,7 @@ class Email
     }
 
     /**
-     * Sanitize a single email an remove invalid chars
+     * Sanitize a single email and remove invalid chars
      * @param mixed $email
      * @return string
      */

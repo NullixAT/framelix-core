@@ -2,7 +2,8 @@
 
 namespace Framelix\Framelix\Form\Field;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Form\Field;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Utils\ArrayUtils;
@@ -61,7 +62,7 @@ class Grid extends Field
     public function addField(Field $field): void
     {
         if ($field instanceof self) {
-            throw new Exception("Cannot put a Grid field into a Grid field");
+            throw new Exception("Cannot put a Grid field into a Grid field", ErrorCode::FORM_GRID_NESTED_NOT_ALLOWED);
         }
         if ($field->label === null && $this->label !== null && str_starts_with(
                 $this->label,

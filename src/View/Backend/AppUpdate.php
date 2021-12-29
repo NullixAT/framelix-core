@@ -25,7 +25,6 @@ use ZipArchive;
 
 use function file_exists;
 use function file_put_contents;
-use function htmlentities;
 use function set_time_limit;
 use function strlen;
 use function substr;

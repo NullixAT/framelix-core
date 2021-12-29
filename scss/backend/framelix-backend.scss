@@ -1,5 +1,5 @@
 :root {
-  --font: "Ubuntu", "Arial", sans-serif;
+  --font: var(--framelix-backend-font);
   --font-size: 16px;
   --line-height: 1.4;
   --sidebar-width: 300px;

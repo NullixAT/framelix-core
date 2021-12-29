@@ -2,7 +2,8 @@
 
 namespace Framelix\Framelix\Utils;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 
 use function array_key_exists;
 use function array_keys;
@@ -80,7 +81,10 @@ class ArrayUtils
                 $sortFlag = $sortOptions[$keyIndex] ?? null;
             }
             if ($sortFlag === null) {
-                throw new Exception("Sort flag for array key '$keyIndex' is not set");
+                throw new Exception(
+                    "Sort flag for array key '$keyIndex' is not set",
+                    ErrorCode::ARRAYUTILS_SORT_FLAG_MISSING
+                );
             }
             if (!is_array($sortFlag)) {
                 $sortFlag = [$sortFlag];
@@ -184,9 +188,9 @@ class ArrayUtils
             if (is_array($workingValue) && array_key_exists($levelKey, $workingValue)) {
                 $workingValue = $workingValue[$levelKey];
             } elseif (is_object($workingValue) && method_exists($workingValue, $levelKey)) {
-                $workingValue = call_user_func_array([$workingValue, $levelKey], $params);
+                $workingValue = call_user_func_array([$workingValue, $levelKey], $params ?? []);
             } elseif (is_object($workingValue)) {
-                $workingValue = $workingValue->{$levelKey};
+                $workingValue = $workingValue->{$levelKey} ?? null;
             } else {
                 return null;
             }

@@ -498,9 +498,9 @@ class FramelixHtmlAttributes {
 
 
   assignToElement(el) {
-    if (Framelix.hasObjectKeys(this.data.styles)) el.css(this.data.styles);
-    if (Framelix.hasObjectKeys(this.data.classes)) el.addClass(this.data.classes);
-    if (Framelix.hasObjectKeys(this.data.other)) el.attr(this.data.other);
+    if (FramelixObjectUtils.hasKeys(this.data.styles)) el.css(this.data.styles);
+    if (FramelixObjectUtils.hasKeys(this.data.classes)) el.addClass(this.data.classes);
+    if (FramelixObjectUtils.hasKeys(this.data.other)) el.attr(this.data.other);
   }
   /**
    * To string
@@ -535,7 +535,7 @@ class FramelixHtmlAttributes {
     }
 
     if (this.data['other']) {
-      out = Framelix.mergeObjects(out, this.data['other']);
+      out = FramelixObjectUtils.merge(out, this.data['other']);
     }
 
     let str = [];
@@ -771,96 +771,12 @@ class FramelixLang {
    */
 
   /**
-   * Missing lang keys
-   * @type {Object|null}
-   */
-
-  /**
-   * Missing lang keys api url
-   * @type {string|null}
-   */
-
-  /**
-   * Reset all missing lang keys (backend and frontend)
-   * @return {Promise}
-   */
-  static async resetMissingLangKeys() {
-    FramelixLocalStorage.remove('langDebugLogRememberList');
-
-    if (FramelixLang.debugMissingLangKeysApiUrl) {
-      await FramelixApi.callPhpMethod(FramelixLang.debugMissingLangKeysApiUrl, {
-        'action': 'reset'
-      });
-    }
-
-    FramelixLang.debugMissingLangKeys = null;
-  }
-  /**
-   * Start logging missing lang keys accross requests (frontend only)
-   */
-
-
-  static startlogMissingLangKeys() {
-    FramelixLocalStorage.set('langDebugLogRemember', true);
-  }
-  /**
-   * Start logging missing lang keys accross requests (frontend only)
-   */
-
-
-  static stoplogMissingLangKeys() {
-    FramelixLocalStorage.set('langDebugLogRemember', false);
-  }
-  /**
-   * Log all missing lang keys into console (backend and frontend)
-   * @param {boolean=} asPrefilledLangKeyArray If true, log a string the key be copy pasted into a lang.json file
-   * @return {Promise}
-   */
-
-
-  static async logMissingLangKeys(asPrefilledLangKeyArray) {
-    if (FramelixLocalStorage.get('langDebugLogRemember')) {
-      FramelixLang.debugMissingLangKeys = FramelixLocalStorage.get('langDebugLogRememberList');
-    }
-
-    if (FramelixLang.debugMissingLangKeysApiUrl) {
-      let result = await FramelixApi.callPhpMethod(FramelixLang.debugMissingLangKeysApiUrl, {
-        'action': 'get'
-      });
-
-      if (result) {
-        if (!FramelixLang.debugMissingLangKeys) FramelixLang.debugMissingLangKeys = {};
-
-        for (let i = 0; i < result.length; i++) {
-          FramelixLang.debugMissingLangKeys[result[i]] = result[i];
-        }
-      }
-    }
-
-    let keys = Object.values(FramelixLang.debugMissingLangKeys || {});
-    keys.sort();
-
-    if (asPrefilledLangKeyArray) {
-      let str = '';
-
-      for (let key in keys) {
-        str += '    "' + keys[key] + '" : [""],' + '\n';
-      }
-
-      console.log(str);
-    } else {
-      console.log(keys);
-    }
-  }
-  /**
    * Get translated language key
    * @param {string} key
    * @param {Object=} parameters
    * @param {string=} lang
    * @return {*}
    */
-
-
   static get(key, parameters, lang) {
     if (!key || typeof key !== 'string' || !key.startsWith('__')) {
       return key;
@@ -879,17 +795,6 @@ class FramelixLang {
     }
 
     if (value === null) {
-      if (FramelixLocalStorage.get('langDebugLogRemember')) {
-        FramelixLang.debugMissingLangKeys = FramelixLocalStorage.get('langDebugLogRememberList');
-      }
-
-      if (!FramelixLang.debugMissingLangKeys) FramelixLang.debugMissingLangKeys = {};
-      FramelixLang.debugMissingLangKeys[key] = key;
-
-      if (FramelixLocalStorage.get('langDebugLogRemember')) {
-        FramelixLocalStorage.set('langDebugLogRememberList', FramelixLang.debugMissingLangKeys);
-      }
-
       return key;
     }
 
@@ -965,10 +870,6 @@ _defineProperty(FramelixLang, "lang", 'en');
 
 _defineProperty(FramelixLang, "langFallback", 'en');
 
-_defineProperty(FramelixLang, "debugMissingLangKeys", null);
-
-_defineProperty(FramelixLang, "debugMissingLangKeysApiUrl", null);
-
 class FramelixModal {
   /**
    * The container containing all modals
@@ -1012,13 +913,8 @@ class FramelixModal {
    */
 
   /**
-   * The promise that is resolved when the window is closed
+   * The promise that is resolved when the window is destroyed(closed)
    * @type {Promise<FramelixModal>}
-   */
-
-  /**
-   * Is true when close() is called but not already really closed
-   * @type {boolean}
    */
 
   /**
@@ -1028,17 +924,17 @@ class FramelixModal {
 
   /**
    * If confirm window was confirmed
-   * @type {boolean}
+   * @type {Promise<boolean>}
    */
 
   /**
    * Prompt result
-   * @type {string|null}
+   * @type {Promise<string|null>}
    */
 
   /**
-   * Promise resolver
-   * @type {function}
+   * Internal promise resolver
+   * @type {Object<string, function>|null}
    * @private
    */
 
@@ -1051,10 +947,7 @@ class FramelixModal {
 
     for (let i = 0; i < FramelixModal.instances.length; i++) {
       const instance = FramelixModal.instances[i];
-
-      if (instance.container && !instance.isClosing) {
-        promises.push(instance.close());
-      }
+      promises.push(instance.destroy());
     }
 
     return Promise.all(promises);
@@ -1086,7 +979,7 @@ class FramelixModal {
     const modal = FramelixModal.show(html, '<button class="framelix-button" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>');
     const buttons = modal.bottomContainer.find('button');
     buttons.on('click', function () {
-      modal.close();
+      modal.destroy();
     });
     setTimeout(function () {
       buttons.trigger('focus');
@@ -1123,8 +1016,12 @@ class FramelixModal {
     const modal = FramelixModal.show(html, bottomContainer);
     const buttons = modal.bottomContainer.find('button');
     buttons.on('click', function () {
-      modal.promptResult = $(this).attr('data-success') === '1' ? input.val() : null;
-      modal.close();
+      if (modal.resolvers['prompt']) {
+        modal.resolvers['prompt']($(this).attr('data-success') === '1' ? input.val() : null);
+        delete modal.resolvers['prompt'];
+      }
+
+      modal.destroy();
     });
     setTimeout(function () {
       input.trigger('focus');
@@ -1149,8 +1046,12 @@ class FramelixModal {
     const modal = FramelixModal.show(html, bottom);
     const buttons = modal.bottomContainer.find('button');
     buttons.on('click', function () {
-      modal.confirmed = $(this).attr('data-success') === '1';
-      modal.close();
+      if (modal.resolvers['confirmed']) {
+        modal.resolvers['confirmed']($(this).attr('data-success') === '1');
+        delete modal.resolvers['confirmed'];
+      }
+
+      modal.destroy();
     });
     setTimeout(function () {
       buttons.first().trigger('focus');
@@ -1207,8 +1108,15 @@ class FramelixModal {
 
   static show(bodyContent, bottomContent, maximized = false) {
     const instance = new FramelixModal();
-    instance.closed = new Promise(function (resolve) {
-      instance._closedResolve = resolve;
+    instance.resolvers = {};
+    instance.confirmed = new Promise(function (resolve) {
+      instance.resolvers['confirmed'] = resolve;
+    });
+    instance.promptResult = new Promise(function (resolve) {
+      instance.resolvers['prompt'] = resolve;
+    });
+    instance.destroyed = new Promise(function (resolve) {
+      instance.resolvers['destroyed'] = resolve;
     });
     instance.backdrop = $(`<div class="framelix-modal-backdrop"></div>`);
     FramelixModal.modalsContainer.children('.framelix-modal').addClass('framelix-blur');
@@ -1220,7 +1128,7 @@ class FramelixModal {
     instance.bottomContainer = instance.container.find('.framelix-modal-content-bottom');
     instance.apiResponse = null;
     instance.closeButton.on('click', function () {
-      instance.close();
+      instance.destroy();
     });
     $('body').css({
       'overflow': 'hidden'
@@ -1260,17 +1168,15 @@ class FramelixModal {
 
     _defineProperty(this, "closeButton", void 0);
 
-    _defineProperty(this, "closed", void 0);
-
-    _defineProperty(this, "isClosing", false);
+    _defineProperty(this, "destroyed", void 0);
 
     _defineProperty(this, "apiResponse", null);
 
-    _defineProperty(this, "confirmed", false);
+    _defineProperty(this, "confirmed", void 0);
 
-    _defineProperty(this, "promptResult", null);
+    _defineProperty(this, "promptResult", void 0);
 
-    _defineProperty(this, "_closedResolve", void 0);
+    _defineProperty(this, "resolvers", void 0);
 
     FramelixModal.instances.push(this);
     this.container = $(`<div tabindex="0" class="framelix-modal" role="dialog">
@@ -1287,15 +1193,18 @@ class FramelixModal {
     this.container.attr('data-instance-id', FramelixModal.instances.length - 1);
   }
   /**
-   * Close modal
-   * @return {Promise} Resolved when modal is completely closed and content is unloaded
+   * Destroy modal
+   * @return {Promise} Resolved when modal is destroyed(closed) but elements are still accessable
    */
 
 
-  async close() {
-    // already closed
-    if (!this.container || this.isClosing) return;
-    this.isClosing = true;
+  async destroy() {
+    // already destroyed
+    if (!this.resolvers) return;
+
+    for (let key in this.resolvers) this.resolvers[key]();
+
+    this.resolvers = null;
     const childs = FramelixModal.modalsContainer.children('.framelix-modal-visible').not(this.container);
     this.container.removeClass('framelix-modal-visible');
     this.backdrop.removeClass('framelix-modal-backdrop-visible');
@@ -1313,13 +1222,12 @@ class FramelixModal {
       });
     }
 
-    if (this._closedResolve) this._closedResolve(this);
-    this._closedResolve = null;
+    if (this._destroyResolve) this._destroyResolve(this);
+    this._destroyResolve = null;
     this.container.remove();
     this.backdrop.remove();
     this.container = null;
     this.backdrop = null;
-    this.isClosing = false;
   }
 
 }
@@ -1474,6 +1382,129 @@ class FramelixNumberUtils {
 
 }
 /**
+ * Framelix object utils
+ */
+
+
+class FramelixObjectUtils {
+  /**
+   * Merge all objects together and return a new merged object
+   * Existing keys will be overriden (last depth)
+   * @param {Object|null} objects
+   * @return {Object}
+   */
+  static merge(...objects) {
+    let ret = {};
+
+    for (let i = 0; i < objects.length; i++) {
+      const obj = objects[i];
+      if (typeof obj !== 'object' || obj === null) continue;
+
+      for (let key in obj) {
+        const v = obj[key];
+
+        if (typeof v === 'object' && v !== null) {
+          ret[key] = FramelixObjectUtils.merge(ret[key], v);
+        } else if (v !== undefined) {
+          ret[key] = v;
+        }
+      }
+    }
+
+    return ret;
+  }
+  /**
+   * Check if object contains given value as property value or array value
+   * @param {Array|Object|*} obj
+   * @param {*} value
+   * @return {boolean}
+   */
+
+
+  static hasValue(obj, value) {
+    if (obj === null || obj === undefined || typeof obj !== 'object') return false;
+
+    if (Array.isArray(obj)) {
+      return obj.indexOf(value) > -1;
+    }
+
+    for (let i in obj) {
+      if (obj[i] === value) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  /**
+   * Check if object has at least given number of keys
+   * @param {Array|Object|*} obj
+   * @param {number} minKeys Must have at least given number of keys
+   * @return {boolean}
+   */
+
+
+  static hasKeys(obj, minKeys = 1) {
+    if (obj === null || obj === undefined || typeof obj !== 'object') return false;
+    let count = 0;
+
+    for (let i in obj) {
+      if (++count >= minKeys) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+  /**
+   * Count objects keys
+   * @param {Array|Object|*} obj
+   * @return {number}
+   */
+
+
+  static countKeys(obj) {
+    if (obj === null || obj === undefined || typeof obj !== 'object') {
+      return 0;
+    }
+
+    let count = 0;
+
+    for (let i in obj) count++;
+
+    return count;
+  }
+  /**
+   * Write object key/values into a urlencoded string
+   * @param {Object} obj
+   * @param {string=} keyPrefix
+   * @return {string}
+   */
+
+
+  static toUrlencodedString(obj, keyPrefix) {
+    if (typeof obj !== 'object') {
+      return '';
+    }
+
+    let str = '';
+
+    for (let i in obj) {
+      if (obj[i] === null || obj[i] === undefined) continue;
+      let key = typeof keyPrefix === 'undefined' ? i : keyPrefix + '[' + i + ']';
+
+      if (typeof obj[i] === 'object') {
+        str += FramelixObjectUtils.toUrlencodedString(obj[i], key) + '&';
+      } else {
+        str += encodeURIComponent(key) + '=' + encodeURIComponent(obj[i]) + '&';
+      }
+    }
+
+    return str.substring(0, str.length - 1);
+  }
+
+}
+/**
  * Inline popups
  */
 
@@ -1569,6 +1600,17 @@ class FramelixPopup {
    */
 
   /**
+   * Internal promise resolver
+   * @type {Object<string, function>|null}
+   * @private
+   */
+
+  /**
+   * The promise that is resolved when the window is destroyed(closed)
+   * @type {Promise<FramelixModal>}
+   */
+
+  /**
    * The internal id
    * @type {string}
    * @private
@@ -1605,7 +1647,7 @@ class FramelixPopup {
         return;
       }
 
-      const instance = FramelixPopup.showPopup(this, text, {
+      const instance = FramelixPopup.show(this, text, {
         closeMethods: 'mouseleave-target',
         color: 'dark',
         group: 'tooltip',
@@ -1642,7 +1684,7 @@ class FramelixPopup {
     }); // listen to dom changes to auto hide popups when the target element isn't visible in the dom anymore
 
     FramelixDom.addChangeListener('framelix-popup', function () {
-      if (!Framelix.hasObjectKeys(FramelixPopup.instances)) return;
+      if (!FramelixObjectUtils.hasKeys(FramelixPopup.instances)) return;
 
       for (let id in FramelixPopup.instances) {
         const instance = FramelixPopup.instances[id];
@@ -1670,12 +1712,13 @@ class FramelixPopup {
    */
 
 
-  static showPopup(target, content, options) {
-    if (target instanceof cash) {
-      target = target[0];
-    }
-
+  static show(target, content, options) {
+    if (target instanceof cash) target = target[0];
     const instance = new FramelixPopup(options);
+    instance.resolvers = {};
+    instance.destroyed = new Promise(function (resolve) {
+      instance.resolvers['destroyed'] = resolve;
+    });
 
     if (instance.offsetByMouseEvent) {
       const rect = target.getBoundingClientRect();
@@ -1838,6 +1881,10 @@ class FramelixPopup {
 
     _defineProperty(this, "padding", '5px 10px');
 
+    _defineProperty(this, "resolvers", void 0);
+
+    _defineProperty(this, "destroyed", void 0);
+
     _defineProperty(this, "id", void 0);
 
     _defineProperty(this, "listeners", {
@@ -1862,31 +1909,17 @@ class FramelixPopup {
 
 
   destroy() {
-    // already removed from dom
-    if (!this.popperEl) {
-      delete FramelixPopup.instances[this.id];
-      return;
-    }
+    // already destroyed
+    if (!this.resolvers) return;
 
-    for (let i = 0; i < this.listeners.destroy.length; i++) {
-      this.listeners.destroy[i]();
-    }
+    for (let key in this.resolvers) this.resolvers[key]();
 
-    this.listeners.destroy = [];
+    this.resolvers = null;
     delete FramelixPopup.instances[this.id];
     this.popperEl.remove();
     this.popperInstance.destroy();
     this.popperEl = null;
     this.popperInstance = null;
-  }
-  /**
-   * A callback when this popup gets destroyed
-   * @param {function} handler
-   */
-
-
-  onDestroy(handler) {
-    this.listeners.destroy.push(handler);
   }
 
 }
@@ -2114,14 +2147,14 @@ class FramelixQuickSearch {
     this.container.html(`
       <div class="framelix-quick-search-input">
         <button class="framelix-button framelix-button-trans framelix-quick-search-help" title="__framelix_quick_search_help__" type="button" data-icon-left="info"></button>
-        ${Framelix.hasObjectKeys(this.columns) ? '<button class="framelix-button framelix-button-trans framelix-quick-search-settings" title="__framelix_quick_search_settings__" type="button" data-icon-left="settings"></button>' : ''}
+        ${FramelixObjectUtils.hasKeys(this.columns) ? '<button class="framelix-button framelix-button-trans framelix-quick-search-settings" title="__framelix_quick_search_settings__" type="button" data-icon-left="settings"></button>' : ''}
       </div>
       <div class="framelix-quick-search-options hidden"></div>
       <div class="framelix-quick-search-result"></div>
     `);
     let otherForms = $('form');
 
-    if (Framelix.hasObjectKeys(this.optionFields)) {
+    if (FramelixObjectUtils.hasKeys(this.optionFields)) {
       const optionsContainer = this.container.find('.framelix-quick-search-options');
       optionsContainer.removeClass('hidden');
       const form = new FramelixForm();
@@ -2227,9 +2260,9 @@ class FramelixQuickSearch {
         }
       });
       container.on('click', 'button[data-action=\'close\']', function () {
-        modal.close();
+        modal.destroy();
       });
-      modal.closed.then(function () {
+      modal.destroyed.then(function () {
         self.searchField.trigger('focus');
         self.search();
       });
@@ -2382,7 +2415,7 @@ class FramelixRequest {
         urlPath += '&';
       }
 
-      urlPath += Framelix.objectToUrlencodedString(urlParams);
+      urlPath += FramelixObjectUtils.toUrlencodedString(urlParams);
     }
 
     let body = postData;
@@ -2739,7 +2772,7 @@ class FramelixStorableMeta {
       const btn = $(`<button class="framelix-button framelix-storablemete-savesort framelix-button-primary" data-icon-left="save">${FramelixLang.get('__framelix_table_savesort__')}</button>`);
       table.container.append(btn);
       btn.on('click', async function () {
-        Framelix.showProgressBar(-1);
+        Framelix.showProgressBar(1);
         btn.addClass('framelix-pulse').attr('disabled', true);
         let ids = [];
         table.table.children('tbody').children().each(function () {
@@ -3375,7 +3408,7 @@ class FramelixTable {
     let tableHtml = '';
     if (this.prependHtml) tableHtml = this.prependHtml;
     tableHtml += `<table id="${this.id}">`;
-    let canDragSort = this.dragSort && Framelix.hasObjectKeys(this.rows.tbody, 2);
+    let canDragSort = this.dragSort && FramelixObjectUtils.hasKeys(this.rows.tbody, 2);
     let removeEmptyCells = {};
 
     for (let i in this.columnFlags) {
@@ -3463,9 +3496,9 @@ class FramelixTable {
             cellValue = rowGroup === 'thead' ? FramelixLang.get(cellValue) : cellValue;
           }
 
-          if (this.sortable && rowGroup === 'thead') {
+          if (this.sortable && rowGroup === 'thead' && !cellAttributes.get('data-flag-ignoresort')) {
             cellAttributes.set('tabindex', '0');
-            cellValue += `<div class="framelix-table-header-sort-info"><div class="framelix-table-header-sort-info-number"></div><div class="framelix-table-header-sort-info-text"></div></div>`;
+            cellValue = `<div class="framelix-table-header-sort-info"><div class="framelix-table-header-sort-info-number"></div><div class="framelix-table-header-sort-info-text"></div></div>${cellValue}`;
           }
 
           if (rowGroup === 'thead') cellValue = `<div class="framelix-table-cell-header">${cellValue}</div>`;
@@ -3570,7 +3603,7 @@ class FramelixTable {
 
       switch (action) {
         case 'delete-storable':
-          if ((await FramelixModal.confirm('__framelix_sure__').closed).confirmed) {
+          if (await FramelixModal.confirm('__framelix_sure__').confirmed) {
             const result = await FramelixApi.callPhpMethod($(this).attr('data-url'));
 
             if (result !== true) {
@@ -4197,20 +4230,7 @@ class FramelixToast {
     }, delay);
   }
   /**
-   * Update queue count
-   * @private
-   */
-
-
-  static updateQueueCount() {
-    let queueCount = FramelixToast.queue.length;
-    FramelixToast.container.attr('data-count', queueCount);
-    FramelixToast.countContainer.text('+' + queueCount);
-    FramelixToast.closeButton.attr('title', FramelixLang.get(queueCount > 0 ? '__framelix_toast_next__' : '__framelix_close__')).attr('data-icon-left', queueCount > 0 ? 'navigate_next' : 'clear');
-  }
-  /**
    * Hide all toasts
-   * @private
    */
 
 
@@ -4223,6 +4243,18 @@ class FramelixToast {
         FramelixToast.container.addClass('hidden');
       }, 200);
     }, 10);
+  }
+  /**
+   * Update queue count
+   * @private
+   */
+
+
+  static updateQueueCount() {
+    let queueCount = FramelixToast.queue.length;
+    FramelixToast.container.attr('data-count', queueCount);
+    FramelixToast.countContainer.text('+' + queueCount);
+    FramelixToast.closeButton.attr('title', FramelixLang.get(queueCount > 0 ? '__framelix_toast_next__' : '__framelix_close__')).attr('data-icon-left', queueCount > 0 ? 'navigate_next' : 'clear');
   }
 
 }
@@ -4346,7 +4378,7 @@ class FramelixView {
         url += '&';
       }
 
-      url += Framelix.objectToUrlencodedString(this.urlParameters);
+      url += FramelixObjectUtils.toUrlencodedString(this.urlParameters);
     }
 
     return url;
@@ -4464,6 +4496,40 @@ class Framelix {
     $('h1').html(title);
   }
   /**
+   * Animate any number/set of numbers linear to animate over given duration
+   * @param {Object|number} valuesFrom Map of values or single value
+   * @param {Object|number} valuesTo Map of values or single value
+   * @param {number} duration The duration in ms
+   * @param {function} stepCallback Callback on each step with current values
+   */
+
+
+  static animate(valuesFrom, valuesTo, duration, stepCallback) {
+    const startTime = new Date().getTime();
+    const iv = setInterval(function () {
+      const currentPosition = new Date().getTime() - startTime;
+      let timeDelta = 1 / duration * currentPosition;
+      if (timeDelta < 0) timeDelta = 0;
+      if (timeDelta >= 1) timeDelta = 1;
+
+      if (typeof valuesFrom === 'number') {
+        stepCallback(valuesFrom + (valuesTo - valuesFrom) * timeDelta);
+      } else if (typeof valuesFrom === 'object') {
+        let values = {};
+
+        for (let i in valuesFrom) {
+          values[i] = valuesFrom[i] + (valuesTo[i] - valuesFrom[i]) * timeDelta;
+        }
+
+        stepCallback(values);
+      }
+
+      if (currentPosition >= duration || !duration) {
+        clearInterval(iv);
+      }
+    }, 1000 / 60);
+  }
+  /**
    * Scroll container to given target
    * @param {HTMLElement|Cash|number} target If is number, then scroll to this exact position
    * @param {HTMLElement|Cash|null} container If null, then it is the document itself
@@ -4492,9 +4558,9 @@ class Framelix {
       return;
     }
 
-    container.animate({
-      scrollTop: newTop
-    }, duration);
+    Framelix.animate(container[0].scrollTop, newTop, duration, function (newScroll) {
+      container[0].scrollTop = newScroll;
+    });
   }
   /**
    * Synchronize scrolling between those 2 elements
@@ -4554,7 +4620,7 @@ class Framelix {
   }
   /**
    * Show progress bar in container or top of page
-   * @param {number|null} status -1 for pulsating infinite animation, between 0-1 then this is percentage, if null than hide
+   * @param {number|null} status between 0-1 then this is percentage, if null than hide
    * @param {Cash=} container If not set, than show at top of the page
    */
 
@@ -4574,146 +4640,20 @@ class Framelix {
     }
 
     if (!progressBar.length) {
-      progressBar = $(`<div class="framelix-progress framelix-pulse" data-type="${type}"><span class="framelix-progress-bar"></span></div>`);
+      progressBar = $(`<div class="framelix-progress" data-type="${type}"><span class="framelix-progress-bar"><span class="framelix-progress-bar-inner"></span></span></div>`);
       container.append(progressBar);
+      Framelix.wait(1).then(function () {
+        progressBar.addClass('framelix-progress-show');
+      });
     }
 
-    if (status === -1) {
-      status = 1;
-    }
-
+    if (status < 0) status = 0;
+    if (status > 1) status = 1;
     status = Math.min(1, Math.max(0, status));
 
     if (progressBar.attr('data-status') !== status.toString()) {
       progressBar.children().css('width', status * 100 + '%').attr('data-status', status);
     }
-  }
-  /**
-   * Merge all objects together and return a new merged object
-   * Existing keys will be overriden (last depth)
-   * @param {Object|null} objects
-   * @return {Object}
-   */
-
-
-  static mergeObjects(...objects) {
-    let ret = {};
-
-    for (let i = 0; i < objects.length; i++) {
-      const obj = objects[i];
-      if (typeof obj !== 'object' || obj === null) continue;
-
-      for (let key in obj) {
-        const v = obj[key];
-
-        if (typeof v === 'object' && v !== null) {
-          ret[key] = Framelix.mergeObjects(ret[key], v);
-        } else if (v !== undefined) {
-          ret[key] = v;
-        }
-      }
-    }
-
-    return ret;
-  }
-  /**
-   * Check if object has at least one key
-   * @param {Array|Object|*} obj
-   * @param {number} minKeys Must have at least given number of keys
-   * @return {boolean}
-   */
-
-
-  static hasObjectKeys(obj, minKeys = 1) {
-    if (obj === null || obj === undefined || typeof obj !== 'object') return false;
-    let count = 0;
-
-    for (let i in obj) {
-      if (++count >= minKeys) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-  /**
-   * Count objects keys
-   * @param {Array|Object|*} obj
-   * @return {number}
-   */
-
-
-  static countObjectKeys(obj) {
-    if (obj === null || obj === undefined || typeof obj !== 'object') {
-      return 0;
-    }
-
-    let count = 0;
-
-    for (let i in obj) count++;
-
-    return count;
-  }
-  /**
-   * Does compare value against compareTo
-   * If compareTo is an array/object, then it checks if value is in array/object
-   * If compareTo is any other value, it will compare strict with ===
-   * @param {*} value
-   * @param {Object|Array|*} compareTo
-   * @param {boolean} stringifyValue Before comparing, convert value to a real string
-   * @returns {boolean}
-   */
-
-
-  static equalsContains(value, compareTo, stringifyValue = true) {
-    if (value === undefined) value = null;
-    if (compareTo === undefined) compareTo = null;
-    if (value === null && compareTo !== null || value !== null && compareTo === null) return false;
-    if (stringifyValue) value = FramelixStringUtils.stringify(value);
-
-    if (compareTo === null) {
-      return compareTo === value;
-    }
-
-    if (Array.isArray(compareTo)) {
-      return compareTo.indexOf(value) > -1;
-    } else if (typeof compareTo === 'object') {
-      for (let i in compareTo) {
-        if (compareTo[i] === value) return true;
-      }
-
-      return false;
-    }
-
-    return value === compareTo;
-  }
-  /**
-   * Write object key/values into a urlencoded string
-   * @param {Object} obj
-   * @param {string=} keyPrefix
-   * @return {string}
-   */
-
-
-  static objectToUrlencodedString(obj, keyPrefix) {
-    if (typeof obj !== 'object') {
-      return '';
-    }
-
-    let str = '';
-
-    for (let i in obj) {
-      if (obj[i] === null || obj[i] === undefined) continue;
-      let key = typeof keyPrefix === 'undefined' ? i : keyPrefix + '[' + i + ']';
-
-      if (typeof obj[i] === 'object') {
-        str += FramelixRequest.objectToUrlencodedString(obj[i], key) + '&';
-      } else {
-        str += encodeURIComponent(key) + '=' + encodeURIComponent(obj[i]) + '&';
-      }
-    }
-
-    return str.substring(0, str.length - 1);
   }
   /**
    * Wait for given milliseconds

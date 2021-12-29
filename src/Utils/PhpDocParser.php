@@ -6,6 +6,7 @@ use function array_merge;
 use function array_pop;
 use function array_shift;
 use function explode;
+use function max;
 use function preg_match;
 use function str_replace;
 use function str_starts_with;
@@ -86,7 +87,7 @@ class PhpDocParser
                 if ($pos === false) {
                     $pos = null;
                 }
-                $annotationType = strtolower(substr($line, 1, $pos - 1));
+                $annotationType = strtolower(substr($line, 1, max($pos - 1, 0)));
                 if ($pos !== null) {
                     $line = substr($line, $pos + 1);
                 }

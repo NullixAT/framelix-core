@@ -3,6 +3,8 @@
 namespace Framelix\Framelix\Backend;
 
 use Framelix\Framelix\Config;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Form\Field\Select;
 use Framelix\Framelix\Form\Field\Toggle;
 use Framelix\Framelix\Lang;
@@ -15,11 +17,9 @@ use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\View;
-use PHPMailer\PHPMailer\Exception;
 
 use function get_class;
 use function in_array;
-use function is_array;
 use function is_string;
 use function str_starts_with;
 
@@ -153,9 +153,12 @@ abstract class Sidebar
     public function showGlobalContextSelects(string $contextKey, array $options, mixed $selectedValue): void
     {
         echo '<div class="framelix-sidebar-context-select">';
-        $keepKeys = Config::get('urlGlobalContextParameterKeys', true);
-        if (!is_array($keepKeys) || !in_array($contextKey, $keepKeys)) {
-            throw new Exception("Missing key '$contextKey' in config->urlGlobalContextParameterKeys");
+        $keepKeys = Config::get('urlGlobalContextParameterKeys', 'array');
+        if (!in_array($contextKey, $keepKeys)) {
+            throw new Exception(
+                "Missing key '$contextKey' in config->urlGlobalContextParameterKeys",
+                ErrorCode::BACKEND_GLOBALCONTEXT_MISSINGKEY
+            );
         }
         $field = new Select();
         $field->name = "contextSelect[$contextKey]";

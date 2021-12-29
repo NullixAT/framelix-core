@@ -196,13 +196,13 @@ class FramelixQuickSearch {
     this.container.html(`
       <div class="framelix-quick-search-input">
         <button class="framelix-button framelix-button-trans framelix-quick-search-help" title="__framelix_quick_search_help__" type="button" data-icon-left="info"></button>
-        ${Framelix.hasObjectKeys(this.columns) ? '<button class="framelix-button framelix-button-trans framelix-quick-search-settings" title="__framelix_quick_search_settings__" type="button" data-icon-left="settings"></button>' : ''}
+        ${FramelixObjectUtils.hasKeys(this.columns) ? '<button class="framelix-button framelix-button-trans framelix-quick-search-settings" title="__framelix_quick_search_settings__" type="button" data-icon-left="settings"></button>' : ''}
       </div>
       <div class="framelix-quick-search-options hidden"></div>
       <div class="framelix-quick-search-result"></div>
     `)
     let otherForms = $('form')
-    if (Framelix.hasObjectKeys(this.optionFields)) {
+    if (FramelixObjectUtils.hasKeys(this.optionFields)) {
       const optionsContainer = this.container.find('.framelix-quick-search-options')
       optionsContainer.removeClass('hidden')
       const form = new FramelixForm()
@@ -306,9 +306,9 @@ class FramelixQuickSearch {
         }
       })
       container.on('click', 'button[data-action=\'close\']', function () {
-        modal.close()
+        modal.destroy()
       })
-      modal.closed.then(function () {
+      modal.destroyed.then(function () {
         self.searchField.trigger('focus')
         self.search()
       })

@@ -2,7 +2,8 @@
 
 namespace Framelix\Framelix\Network;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\View;
 use ReflectionClass;
@@ -18,6 +19,8 @@ use function trim;
 
 /**
  * Js Call with data passed to javascript FramelixApi.callPhpMethod
+ * Example PHP Method:
+ * public static function onJsCall(JsCall $jsCall): void {}
  */
 class JsCall
 {
@@ -91,14 +94,14 @@ class JsCall
             }
         }
         if (!$reflectionMethod) {
-            throw new Exception('Invalid php method');
+            throw new Exception('Invalid php method', ErrorCode::API_INVALID_METHOD);
         }
         Buffer::start();
         $reflectionMethod->invoke(null, $this);
         $output = Buffer::get();
         if (strlen(trim($output)) > 0) {
             if (isset($this->result)) {
-                throw new Exception("Cannot mix buffer output and \$jsCall->result");
+                throw new Exception("Cannot mix buffer output and \$jsCall->result", ErrorCode::API_MIXED_OUTPUT);
             }
             return $output;
         }

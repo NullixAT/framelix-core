@@ -34,9 +34,9 @@ class FramelixHtmlAttributes {
    * @param  {Cash} el
    */
   assignToElement (el) {
-    if (Framelix.hasObjectKeys(this.data.styles)) el.css(this.data.styles)
-    if (Framelix.hasObjectKeys(this.data.classes)) el.addClass(this.data.classes)
-    if (Framelix.hasObjectKeys(this.data.other)) el.attr(this.data.other)
+    if (FramelixObjectUtils.hasKeys(this.data.styles)) el.css(this.data.styles)
+    if (FramelixObjectUtils.hasKeys(this.data.classes)) el.addClass(this.data.classes)
+    if (FramelixObjectUtils.hasKeys(this.data.other)) el.attr(this.data.other)
   }
 
   /**
@@ -63,7 +63,7 @@ class FramelixHtmlAttributes {
       if (out['class'] === '') delete out['class']
     }
     if (this.data['other']) {
-      out = Framelix.mergeObjects(out, this.data['other'])
+      out = FramelixObjectUtils.merge(out, this.data['other'])
     }
     let str = []
     for (let key in out) {

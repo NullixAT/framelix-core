@@ -14,10 +14,14 @@ class Session
      */
     public static function destroy(): void
     {
-        if (!session_id()) {
-            session_start();
+        // @codeCoverageIgnoreStart
+        if (!Request::isCli()) {
+            if (!session_id()) {
+                session_start();
+            }
+            session_destroy();
         }
-        session_destroy();
+        // @codeCoverageIgnoreEnd
         $_SESSION = [];
     }
 
@@ -28,9 +32,13 @@ class Session
      */
     public static function get(string $name): mixed
     {
-        if (!session_id()) {
-            session_start();
+        // @codeCoverageIgnoreStart
+        if (!Request::isCli()) {
+            if (!session_id()) {
+                session_start();
+            }
         }
+        // @codeCoverageIgnoreEnd
         return $_SESSION[$name] ?? null;
     }
 
@@ -41,9 +49,13 @@ class Session
      */
     public static function set(string $name, mixed $value): void
     {
-        if (!session_id()) {
-            session_start();
+        // @codeCoverageIgnoreStart
+        if (!Request::isCli()) {
+            if (!session_id()) {
+                session_start();
+            }
         }
+        // @codeCoverageIgnoreEnd
         if ($value === null) {
             unset($_SESSION[$name]);
         } else {

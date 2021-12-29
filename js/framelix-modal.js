@@ -53,16 +53,10 @@ class FramelixModal {
   closeButton
 
   /**
-   * The promise that is resolved when the window is closed
+   * The promise that is resolved when the window is destroyed(closed)
    * @type {Promise<FramelixModal>}
    */
-  closed
-
-  /**
-   * Is true when close() is called but not already really closed
-   * @type {boolean}
-   */
-  isClosing = false
+  destroyed
 
   /**
    * The promise that hold the last apiResponse when callPhpMethod/apiRequest is used to show a modal
@@ -72,22 +66,22 @@ class FramelixModal {
 
   /**
    * If confirm window was confirmed
-   * @type {boolean}
+   * @type {Promise<boolean>}
    */
-  confirmed = false
+  confirmed
 
   /**
    * Prompt result
-   * @type {string|null}
+   * @type {Promise<string|null>}
    */
-  promptResult = null
+  promptResult
 
   /**
-   * Promise resolver
-   * @type {function}
+   * Internal promise resolver
+   * @type {Object<string, function>|null}
    * @private
    */
-  _closedResolve
+  resolvers
 
   /**
    * Hide all modals at once
@@ -97,9 +91,7 @@ class FramelixModal {
     let promises = []
     for (let i = 0; i < FramelixModal.instances.length; i++) {
       const instance = FramelixModal.instances[i]
-      if (instance.container && !instance.isClosing) {
-        promises.push(instance.close())
-      }
+      promises.push(instance.destroy())
     }
     return Promise.all(promises)
   }
@@ -129,7 +121,7 @@ class FramelixModal {
     const modal = FramelixModal.show(html, '<button class="framelix-button" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>')
     const buttons = modal.bottomContainer.find('button')
     buttons.on('click', function () {
-      modal.close()
+      modal.destroy()
     })
     setTimeout(function () {
       buttons.trigger('focus')
@@ -166,8 +158,11 @@ class FramelixModal {
     const modal = FramelixModal.show(html, bottomContainer)
     const buttons = modal.bottomContainer.find('button')
     buttons.on('click', function () {
-      modal.promptResult = $(this).attr('data-success') === '1' ? input.val() : null
-      modal.close()
+      if (modal.resolvers['prompt']) {
+        modal.resolvers['prompt']($(this).attr('data-success') === '1' ? input.val() : null)
+        delete modal.resolvers['prompt']
+      }
+      modal.destroy()
     })
     setTimeout(function () {
       input.trigger('focus')
@@ -191,8 +186,11 @@ class FramelixModal {
     const modal = FramelixModal.show(html, bottom)
     const buttons = modal.bottomContainer.find('button')
     buttons.on('click', function () {
-      modal.confirmed = $(this).attr('data-success') === '1'
-      modal.close()
+      if (modal.resolvers['confirmed']) {
+        modal.resolvers['confirmed']($(this).attr('data-success') === '1')
+        delete modal.resolvers['confirmed']
+      }
+      modal.destroy()
     })
     setTimeout(function () {
       buttons.first().trigger('focus')
@@ -244,8 +242,15 @@ class FramelixModal {
    */
   static show (bodyContent, bottomContent, maximized = false) {
     const instance = new FramelixModal()
-    instance.closed = new Promise(function (resolve) {
-      instance._closedResolve = resolve
+    instance.resolvers = {}
+    instance.confirmed = new Promise(function (resolve) {
+      instance.resolvers['confirmed'] = resolve
+    })
+    instance.promptResult = new Promise(function (resolve) {
+      instance.resolvers['prompt'] = resolve
+    })
+    instance.destroyed = new Promise(function (resolve) {
+      instance.resolvers['destroyed'] = resolve
     })
     instance.backdrop = $(`<div class="framelix-modal-backdrop"></div>`)
     FramelixModal.modalsContainer.children('.framelix-modal').addClass('framelix-blur')
@@ -257,7 +262,7 @@ class FramelixModal {
     instance.bottomContainer = instance.container.find('.framelix-modal-content-bottom')
     instance.apiResponse = null
     instance.closeButton.on('click', function () {
-      instance.close()
+      instance.destroy()
     })
     $('body').css({
       'overflow': 'hidden'
@@ -299,13 +304,14 @@ class FramelixModal {
   }
 
   /**
-   * Close modal
-   * @return {Promise} Resolved when modal is completely closed and content is unloaded
+   * Destroy modal
+   * @return {Promise} Resolved when modal is destroyed(closed) but elements are still accessable
    */
-  async close () {
-    // already closed
-    if (!this.container || this.isClosing) return
-    this.isClosing = true
+  async destroy () {
+    // already destroyed
+    if (!this.resolvers) return
+    for (let key in this.resolvers) this.resolvers[key]()
+    this.resolvers = null
     const childs = FramelixModal.modalsContainer.children('.framelix-modal-visible').not(this.container)
     this.container.removeClass('framelix-modal-visible')
     this.backdrop.removeClass('framelix-modal-backdrop-visible')
@@ -319,13 +325,12 @@ class FramelixModal {
         'overflow': ''
       })
     }
-    if (this._closedResolve) this._closedResolve(this)
-    this._closedResolve = null
+    if (this._destroyResolve) this._destroyResolve(this)
+    this._destroyResolve = null
     this.container.remove()
     this.backdrop.remove()
     this.container = null
     this.backdrop = null
-    this.isClosing = false
   }
 }
 

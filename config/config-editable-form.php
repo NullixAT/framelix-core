@@ -235,7 +235,7 @@ ModuleConfig::addForm($form, '__framelix_configuration_module_logging_pagetitle_
             try {
                 throw new Exception("This is a test error");
             } catch (Throwable $e) {
-                \Framelix\Framelix\Error::sendErrorLogEmail(\Framelix\Framelix\Error::throwableToJson($e));
+                \Framelix\Framelix\ErrorHandler::sendErrorLogEmail(\Framelix\Framelix\ErrorHandler::throwableToJson($e));
             }
         }
     });

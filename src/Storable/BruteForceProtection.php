@@ -35,26 +35,33 @@ class BruteForceProtection extends Storable
     /**
      * Reset status for current ip and id
      * @param string $id
+     * @param string|null $connectionId Database connection id to use
      * @return void
      */
-    public static function reset(string $id): void
-    {
+    public static function reset(
+        string $id,
+        ?string $connectionId = null
+    ): void {
         $idHash = self::getIdHash($id);
-        $entry = self::getByConditionOne('idHash = {0}', [$idHash]);
+        $entry = self::getByConditionOne('idHash = {0}', [$idHash], connectionId: $connectionId);
         $entry?->delete();
     }
 
     /**
      * Count up for current ip and given id
      * @param string $id
+     * @param string|null $connectionId Database connection id to use
      * @return void
      */
-    public static function countUp(string $id): void
-    {
+    public static function countUp(
+        string $id,
+        ?string $connectionId = null
+    ): void {
         $idHash = self::getIdHash($id);
-        $entry = self::getByConditionOne('idHash = {0}', [$idHash]);
+        $entry = self::getByConditionOne('idHash = {0}', [$idHash], connectionId: $connectionId);
         if (!$entry) {
             $entry = new self();
+            $entry->connectionId = $connectionId;
             $entry->idHash = $idHash;
             $entry->count = 0;
         }
@@ -69,15 +76,17 @@ class BruteForceProtection extends Storable
      * @param bool $addToast If true, it will add an error toast which defined how long the user must wait
      * @param int $blockCountTreshold When count reaches this treshold, it will return false when lastlog was not long enough ago
      * @param int $waitSecondsPerCount A client must wait $waitSecondsPerCount*countsOverTreshold seconds since the last log to make this function return true
+     * @param string|null $connectionId Database connection id to use
      * @return bool Return false when is not blocked
      */
     public static function isBlocked(
         string $id,
         bool $addToast = true,
         int $blockCountTreshold = 60,
-        int $waitSecondsPerCount = 60
+        int $waitSecondsPerCount = 60,
+        ?string $connectionId = null
     ): bool {
-        $until = self::getBlockReleaseTime($id, $blockCountTreshold, $waitSecondsPerCount);
+        $until = self::getBlockReleaseTime($id, $blockCountTreshold, $waitSecondsPerCount, $connectionId);
         if (!$until) {
             return false;
         }
@@ -98,15 +107,17 @@ class BruteForceProtection extends Storable
      * @param string $id
      * @param int $blockCountTreshold When count exceed this treshold, it will return a time when lastlog was not long enough ago
      * @param int $waitSecondsPerCount A client must wait $waitSecondsPerCount*countsOverTreshold seconds since the last log to make this function return true
+     * @param string|null $connectionId Database connection id to use
      * @return DateTime|null
      */
     public static function getBlockReleaseTime(
         string $id,
         int $blockCountTreshold = 60,
-        int $waitSecondsPerCount = 60
+        int $waitSecondsPerCount = 60,
+        ?string $connectionId = null
     ): ?DateTime {
         $idHash = self::getIdHash($id);
-        $entry = self::getByConditionOne('idHash = {0}', [$idHash]);
+        $entry = self::getByConditionOne('idHash = {0}', [$idHash], connectionId: $connectionId);
         if (!$entry) {
             return null;
         }

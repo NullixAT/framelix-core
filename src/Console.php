@@ -145,7 +145,10 @@ class Console
                     $info = "[ERR] Job $cronClass::run() error: " . $e->getMessage();
                     self::red("$info\n");
                 }
-                SystemEventLog::create(SystemEventLog::CATEGORY_CRON, null, [$info]);
+                $logCategory = SystemEventLog::CATEGORY_CRON;
+                if (Config::get('systemEventLog[' . $logCategory . ']')) {
+                    SystemEventLog::create($logCategory, null, [$info]);
+                }
             } else {
                 self::yellow("[SKIP] $module as no cron handler is installed\n");
             }
@@ -399,18 +402,18 @@ class Console
         if (!$arr) {
             if ($requiredParameterType) {
                 echo "Missing required parameter '--$name'";
-                die();
+                Framelix::stop();
             }
             return null;
         }
         $param = $arr[0];
         if ($requiredParameterType === 'string' && !is_string($param)) {
             echo "Parameter '--$name' needs to be a string instead of boolean flag";
-            die();
+            Framelix::stop();
         }
         if ($requiredParameterType === 'bool' && !is_bool($param)) {
             echo "Parameter '--$name' needs to be a bool flag instead of string value";
-            die();
+            Framelix::stop();
         }
         return $param;
     }

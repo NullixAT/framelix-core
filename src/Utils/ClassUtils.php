@@ -2,11 +2,14 @@
 
 namespace Framelix\Framelix\Utils;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 
 use function class_exists;
+use function explode;
 use function file_exists;
 use function get_class;
+use function implode;
 use function is_object;
 use function is_string;
 use function preg_replace;
@@ -18,6 +21,8 @@ use function strpos;
 use function strrpos;
 use function strtolower;
 use function substr;
+
+use const FRAMELIX_APP_ROOT;
 
 /**
  * Class utilities for frequent tasks
@@ -86,8 +91,31 @@ class ClassUtils
             if (!$className) {
                 $className = "[Classname not set]";
             }
-            throw new Exception("$className is no valid class name");
+            throw new Exception("$className is no valid class name", ErrorCode::CLASSUTILS_CLASSNAME_INVALID);
         }
+    }
+
+    /**
+     * Get file name for given class name
+     * Only works for framework classes that are inside a src
+     * This is a performant way without reflection and loading the class into memory
+     * Used for simple checks - It does not check if actual className matches the file contents
+     * @param string $className
+     * @return string|null Null if it is no valid framework class or file not exist
+     */
+    public static function getFilePathForClassName(string $className): ?string
+    {
+        if (!str_starts_with($className, "Framelix\\") && !str_starts_with($className, "\\Framelix\\")) {
+            return null;
+        }
+        $exp = explode("\\", ltrim($className, "\\"));
+        unset($exp[0]);
+        $path = FRAMELIX_APP_ROOT . "/modules/" . $exp[1];
+        unset($exp[1]);
+        if (file_exists($path . "/src/" . implode("/", $exp) . ".php")) {
+            return $path . "/src/" . implode("/", $exp) . ".php";
+        }
+        return null;
     }
 
     /**
@@ -103,10 +131,9 @@ class ClassUtils
         }
         $file = realpath($file);
         $file = str_replace("/", "\\", $file);
-        $relativePath = substr($file, strlen(FileUtils::getAppRootPath() . "/modules"));
+        $relativePath = substr($file, strlen(FRAMELIX_APP_ROOT . "/modules"));
         $className = "Framelix" . str_replace([
                 "\\" . "src" . "\\",
-                "\\" . "tests" . "\\"
             ], "\\", $relativePath);
         return substr($className, 0, -4);
     }

@@ -1,4 +1,5 @@
 <?php
+
 // prevent loading directly in the browser without framelix context
 if (!defined("FRAMELIX_MODULE")) {
     die();
@@ -82,18 +83,6 @@ if (!defined("FRAMELIX_MODULE")) {
                             {
                                 "type": "folder",
                                 "path": "vendor/sortablejs"
-                            }
-                        ],
-                        "options": {
-                            "noCompile": true,
-                            "noInclude": true
-                        }
-                    },
-                    "apexcharts": {
-                        "files": [
-                            {
-                                "type": "folder",
-                                "path": "vendor/apexcharts"
                             }
                         ],
                         "options": {
@@ -203,7 +192,21 @@ if (!defined("FRAMELIX_MODULE")) {
                             {
                                 "type": "folder",
                                 "path": "scss/backend",
-                                "recursive": true
+                                "recursive": true,
+                                "ignoreFilenames": [
+                                    "framelix-backend-fonts.scss"
+                                ]
+                            }
+                        ],
+                        "options": {
+                            "noInclude": true
+                        }
+                    },
+                    "backend-fonts": {
+                        "files": [
+                            {
+                                "type": "file",
+                                "path": "scss/backend/framelix-backend-fonts.scss"
                             }
                         ],
                         "options": {
@@ -225,11 +228,12 @@ if (!defined("FRAMELIX_MODULE")) {
         "loginCaptcha": false,
         "devMode": false,
         "systemEventLog": {
-            "1": true,
-            "2": true,
-            "3": true,
+            "1": false,
+            "2": false,
+            "3": false,
             "4": true,
-            "5": true
+            "5": true,
+            "6": true
         }
     }
 </script>

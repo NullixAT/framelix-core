@@ -240,14 +240,14 @@ class FramelixFormFieldSelect extends FramelixFormField {
       optionsElementsIndexed[optionValue] = optionElement
       popupOptionsContainer.append(optionElement)
     }
-    this.optionsPopup = FramelixPopup.showPopup(this.field, popupContent, {
+    this.optionsPopup = FramelixPopup.show(this.field, popupContent, {
       placement: 'bottom-start',
       closeMethods: 'click-outside,focusout-popup',
       appendTo: this.field,
       padding: '',
       offset: [0, 0]
     })
-    this.optionsPopup.onDestroy(function () {
+    this.optionsPopup.destroyed.then(function () {
       let values = []
       popupContentInner.find('input:checked').each(function () {
         values.push(this.value)
@@ -271,7 +271,7 @@ class FramelixFormFieldSelect extends FramelixFormField {
     })
     setTimeout(function () {
       let input = popupContentInner.find('input:checked').first()
-      if(!input.length){
+      if (!input.length) {
         input = popupContentInner.find('input').first()
       }
       input.trigger('focus')

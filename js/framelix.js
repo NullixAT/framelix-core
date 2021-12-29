@@ -67,6 +67,35 @@ class Framelix {
   }
 
   /**
+   * Animate any number/set of numbers linear to animate over given duration
+   * @param {Object|number} valuesFrom Map of values or single value
+   * @param {Object|number} valuesTo Map of values or single value
+   * @param {number} duration The duration in ms
+   * @param {function} stepCallback Callback on each step with current values
+   */
+  static animate (valuesFrom, valuesTo, duration, stepCallback) {
+    const startTime = new Date().getTime()
+    const iv = setInterval(function () {
+      const currentPosition = new Date().getTime() - startTime
+      let timeDelta = 1 / duration * currentPosition
+      if (timeDelta < 0) timeDelta = 0
+      if (timeDelta >= 1) timeDelta = 1
+      if (typeof valuesFrom === 'number') {
+        stepCallback(valuesFrom + (valuesTo - valuesFrom) * timeDelta)
+      } else if (typeof valuesFrom === 'object') {
+        let values = {}
+        for (let i in valuesFrom) {
+          values[i] = valuesFrom[i] + (valuesTo[i] - valuesFrom[i]) * timeDelta
+        }
+        stepCallback(values)
+      }
+      if (currentPosition >= duration || !duration) {
+        clearInterval(iv)
+      }
+    }, 1000 / 60)
+  }
+
+  /**
    * Scroll container to given target
    * @param {HTMLElement|Cash|number} target If is number, then scroll to this exact position
    * @param {HTMLElement|Cash|null} container If null, then it is the document itself
@@ -90,9 +119,9 @@ class Framelix {
       container.scrollTop(newTop)
       return
     }
-    container.animate({
-      scrollTop: newTop
-    }, duration)
+    Framelix.animate(container[0].scrollTop, newTop, duration, function (newScroll) {
+      container[0].scrollTop = newScroll
+    })
   }
 
   /**
@@ -147,7 +176,7 @@ class Framelix {
 
   /**
    * Show progress bar in container or top of page
-   * @param {number|null} status -1 for pulsating infinite animation, between 0-1 then this is percentage, if null than hide
+   * @param {number|null} status between 0-1 then this is percentage, if null than hide
    * @param {Cash=} container If not set, than show at top of the page
    */
   static showProgressBar (status, container) {
@@ -161,121 +190,18 @@ class Framelix {
       return
     }
     if (!progressBar.length) {
-      progressBar = $(`<div class="framelix-progress framelix-pulse" data-type="${type}"><span class="framelix-progress-bar"></span></div>`)
+      progressBar = $(`<div class="framelix-progress" data-type="${type}"><span class="framelix-progress-bar"><span class="framelix-progress-bar-inner"></span></span></div>`)
       container.append(progressBar)
+      Framelix.wait(1).then(function (){
+        progressBar.addClass('framelix-progress-show')
+      })
     }
-    if (status === -1) {
-      status = 1
-    }
+    if (status < 0) status = 0
+    if (status > 1) status = 1
     status = Math.min(1, Math.max(0, status))
     if (progressBar.attr('data-status') !== status.toString()) {
       progressBar.children().css('width', status * 100 + '%').attr('data-status', status)
     }
-  }
-
-  /**
-   * Merge all objects together and return a new merged object
-   * Existing keys will be overriden (last depth)
-   * @param {Object|null} objects
-   * @return {Object}
-   */
-  static mergeObjects (...objects) {
-    let ret = {}
-    for (let i = 0; i < objects.length; i++) {
-      const obj = objects[i]
-      if (typeof obj !== 'object' || obj === null) continue
-      for (let key in obj) {
-        const v = obj[key]
-        if (typeof v === 'object' && v !== null) {
-          ret[key] = Framelix.mergeObjects(ret[key], v)
-        } else if (v !== undefined) {
-          ret[key] = v
-        }
-      }
-    }
-    return ret
-  }
-
-  /**
-   * Check if object has at least one key
-   * @param {Array|Object|*} obj
-   * @param {number} minKeys Must have at least given number of keys
-   * @return {boolean}
-   */
-  static hasObjectKeys (obj, minKeys = 1) {
-    if (obj === null || obj === undefined || typeof obj !== 'object') return false
-    let count = 0
-    for (let i in obj) {
-      if (++count >= minKeys) {
-        return true
-      }
-    }
-    return false
-  }
-
-  /**
-   * Count objects keys
-   * @param {Array|Object|*} obj
-   * @return {number}
-   */
-  static countObjectKeys (obj) {
-    if (obj === null || obj === undefined || typeof obj !== 'object') {
-      return 0
-    }
-    let count = 0
-    for (let i in obj) count++
-    return count
-  }
-
-  /**
-   * Does compare value against compareTo
-   * If compareTo is an array/object, then it checks if value is in array/object
-   * If compareTo is any other value, it will compare strict with ===
-   * @param {*} value
-   * @param {Object|Array|*} compareTo
-   * @param {boolean} stringifyValue Before comparing, convert value to a real string
-   * @returns {boolean}
-   */
-  static equalsContains (value, compareTo, stringifyValue = true) {
-    if (value === undefined) value = null
-    if (compareTo === undefined) compareTo = null
-    if (value === null && compareTo !== null || value !== null && compareTo === null) return false
-    if (stringifyValue) value = FramelixStringUtils.stringify(value)
-    if (compareTo === null) {
-      return compareTo === value
-    }
-    if (Array.isArray(compareTo)) {
-      return compareTo.indexOf(value) > -1
-    } else if (typeof compareTo === 'object') {
-      for (let i in compareTo) {
-        if (compareTo[i] === value) return true
-      }
-      return false
-    }
-    return value === compareTo
-  }
-
-  /**
-   * Write object key/values into a urlencoded string
-   * @param {Object} obj
-   * @param {string=} keyPrefix
-   * @return {string}
-   */
-  static objectToUrlencodedString (obj, keyPrefix) {
-    if (typeof obj !== 'object') {
-      return ''
-    }
-    let str = ''
-    for (let i in obj) {
-      if (obj[i] === null || obj[i] === undefined) continue
-      let key = typeof keyPrefix === 'undefined' ? i : keyPrefix + '[' + i + ']'
-      if (typeof obj[i] === 'object') {
-        str += FramelixRequest.objectToUrlencodedString(obj[i], key) + '&'
-      } else {
-        str += encodeURIComponent(key) + '=' + encodeURIComponent(obj[i]) + '&'
-      }
-    }
-    return str.substring(0, str.length - 1)
   }
 
   /**

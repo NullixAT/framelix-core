@@ -2,7 +2,8 @@
 
 namespace Framelix\Framelix\Utils;
 
-use Exception;
+use Framelix\Framelix\ErrorCode;
+use Framelix\Framelix\Exception;
 use ZipArchive;
 
 use function file_exists;
@@ -27,9 +28,9 @@ class Zip
         int $compressionLevel = ZipArchive::CM_DEFAULT
     ): void {
         $zipArchive = new ZipArchive();
-        $openResult = $zipArchive->open($zipPath, ZIPARCHIVE::CREATE | ZIPARCHIVE::OVERWRITE);
+        $openResult = $zipArchive->open($zipPath, ZipArchive::CREATE | ZipArchive::OVERWRITE);
         if ($openResult !== true) {
-            throw new Exception("Cannot open ZIP File '$zipPath' ($openResult)");
+            throw new Exception("Cannot open ZIP File '$zipPath' ($openResult)", ErrorCode::ZIP_OPEN);
         }
         $index = 0;
         foreach ($files as $relativeName => $fullPath) {
@@ -59,21 +60,21 @@ class Zip
     public static function unzip(string $zipPath, string $outputDirectory, bool $skipNotEmptyDirectory = false): void
     {
         if (!is_file($zipPath)) {
-            throw new Exception("'$zipPath' is no file");
+            throw new Exception("'$zipPath' is no file", ErrorCode::ZIP_UNZIP_NOFILE);
         }
         if (!is_dir($outputDirectory)) {
-            throw new Exception("'$outputDirectory' is no directory");
+            throw new Exception("'$outputDirectory' is no directory", ErrorCode::ZIP_UNZIP_NODIRECTORY);
         }
         if (!$skipNotEmptyDirectory) {
             $files = scandir($outputDirectory);
             if (count($files) > 2) {
-                throw new Exception("'$outputDirectory' is not empty");
+                throw new Exception("'$outputDirectory' is not empty", ErrorCode::ZIP_UNZIP_NOTEMPTY);
             }
         }
         $zipArchive = new ZipArchive();
         $openResult = $zipArchive->open($zipPath, ZipArchive::RDONLY);
         if ($openResult !== true) {
-            throw new Exception("Cannot open ZIP File '$zipPath' ($openResult)");
+            throw new Exception("Cannot open ZIP File '$zipPath' ($openResult)", ErrorCode::ZIP_OPEN);
         }
         $zipArchive->extractTo($outputDirectory);
         $zipArchive->close();

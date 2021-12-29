@@ -14,7 +14,7 @@ class FramelixStorableMeta {
       const btn = $(`<button class="framelix-button framelix-storablemete-savesort framelix-button-primary" data-icon-left="save">${FramelixLang.get('__framelix_table_savesort__')}</button>`)
       table.container.append(btn)
       btn.on('click', async function () {
-        Framelix.showProgressBar(-1)
+        Framelix.showProgressBar(1)
         btn.addClass('framelix-pulse').attr('disabled', true)
         let ids = []
         table.table.children('tbody').children().each(function () {

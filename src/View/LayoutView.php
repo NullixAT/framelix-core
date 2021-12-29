@@ -3,12 +3,12 @@
 namespace Framelix\Framelix\View;
 
 use Framelix\Framelix\Config;
-use Framelix\Framelix\Error;
+use Framelix\Framelix\ErrorHandler;
+use Framelix\Framelix\Framelix;
 use Framelix\Framelix\Html\Compiler;
 use Framelix\Framelix\Html\HtmlUtils;
 use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Lang;
-use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\Buffer;
@@ -139,11 +139,6 @@ abstract class LayoutView extends View
               FramelixConfig.applicationUrl = <?=JsonUtils::encode(Url::getApplicationUrl())?>;
               FramelixConfig.modulePublicUrl = <?=JsonUtils::encode(Url::getModulePublicFolderUrl(FRAMELIX_MODULE))?>;
               FramelixConfig.compiledFileUrls = <?=JsonUtils::encode($distUrls)?>;
-              FramelixLang.debugMissingLangKeysApiUrl = <?=JsonUtils::encode(
-                  Config::get(
-                      'langDebugMode'
-                  ) ? JsCall::getCallUrl(Lang::class, 'missing-keys') : null
-              )?>;
               FramelixLang.lang = <?=JsonUtils::encode(Lang::$lang)?>;
               FramelixLang.langFallback = <?=JsonUtils::encode(Config::get('languageFallback') ?? 'en')?>;
               FramelixLang.supportedLanguages = <?=JsonUtils::encode(Lang::getSupportedLanguages())?>;
@@ -200,7 +195,7 @@ abstract class LayoutView extends View
             <?php
         };
         $this->showContentBasedOnRequestType();
-        die();
+        Framelix::stop();
     }
 
     /**
@@ -212,10 +207,10 @@ abstract class LayoutView extends View
     {
         Buffer::clear();
         $this->contentCallable = function () use ($logData) {
-            Error::showErrorFromExceptionLog($logData);
+            ErrorHandler::showErrorFromExceptionLog($logData);
         };
         $this->showContentBasedOnRequestType();
-        die();
+        Framelix::stop();
     }
 
     /**

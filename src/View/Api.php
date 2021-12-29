@@ -2,19 +2,17 @@
 
 namespace Framelix\Framelix\View;
 
+use Framelix\Framelix\Framelix;
 use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Network\Response;
-use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Storable\StorableFile;
 use Framelix\Framelix\Storable\User;
 use Framelix\Framelix\Url;
-use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\View;
 use ReflectionClass;
 
-use function header;
 use function http_response_code;
 use function strtolower;
 
@@ -99,10 +97,8 @@ class Api extends View
      */
     public function success(mixed $result = null): never
     {
-        header("content-type: application/json");
-        echo JsonUtils::encode($result);
-        Buffer::flush();
-        die();
+        JsonUtils::output($result);
+        Framelix::stop();
     }
 
     /**
@@ -113,7 +109,7 @@ class Api extends View
     public function error(?string $result = null): never
     {
         http_response_code(500);
-        echo $result;
-        die();
+        JsonUtils::output($result);
+        Framelix::stop();
     }
 }
