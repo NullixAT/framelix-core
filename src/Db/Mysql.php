@@ -12,7 +12,9 @@ use mysqli;
 use mysqli_driver;
 use mysqli_result;
 use mysqli_sql_exception;
+use Throwable;
 
+use function count;
 use function implode;
 use function is_array;
 use function is_bool;
@@ -20,13 +22,18 @@ use function is_float;
 use function is_int;
 use function is_object;
 use function is_string;
+use function mb_substr;
 use function mysqli_affected_rows;
 use function mysqli_error;
 use function mysqli_insert_id;
 use function mysqli_query;
 use function mysqli_real_escape_string;
 use function preg_match_all;
+use function reset;
 use function str_replace;
+
+use const MYSQLI_NUM;
+use const MYSQLI_REPORT_STRICT;
 
 /**
  * Mysql database handling
@@ -253,7 +260,15 @@ class Mysql
      */
     public function queryRaw(string $query): bool|mysqli_result
     {
-        $this->lastResult = mysqli_query($this->mysqli, $query);
+        try {
+            $this->lastResult = mysqli_query($this->mysqli, $query);
+        } catch (Throwable $e) {
+            $errorMessage = "Mysql Error: " . $e->getMessage();
+            if (Config::isDevMode()) {
+                $errorMessage .= " in query: " . $query;
+            }
+            throw new Exception($errorMessage, ErrorCode::MYSQL_QUERY_ERROR);
+        }
         if (!$this->lastResult) {
             $errorMessage = "Mysql Error: " . mysqli_error($this->mysqli);
             if (Config::isDevMode()) {

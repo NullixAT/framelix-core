@@ -19,8 +19,10 @@ use function array_pop;
 use function array_reverse;
 use function array_unique;
 use function array_values;
+use function call_user_func;
 use function call_user_func_array;
 use function class_exists;
+use function count;
 use function explode;
 use function get_class;
 use function implode;
@@ -35,7 +37,9 @@ use function is_string;
 use function preg_match_all;
 use function preg_quote;
 use function preg_replace;
+use function reset;
 use function substr;
+use function trim;
 
 /**
  * Base Storable
@@ -280,9 +284,7 @@ abstract class Storable implements JsonSerializable, ObjectTransformable
                             $query .= "LEFT JOIN `$partStorableSchema->tableName` as `$aliasTableName` ";
                             $query .= "ON ";
                             if ($partStorableSchemaProperty->arrayStorableClass) {
-                                $query .= " JSON_CONTAINS(`$prevAliasTableName`.`$partStorableSchemaProperty->name`, `$aliasTableName`.`id`, " . $db->escapeValue(
-                                        "\$"
-                                    ) . ")";
+                                $query .= " JSON_CONTAINS(CAST(`$prevAliasTableName`.`$partStorableSchemaProperty->name` as CHAR), CAST(`$aliasTableName`.`id` as CHAR), '\$')";
                             } else {
                                 $query .= " `$aliasTableName`.`id` = `$prevAliasTableName`.`$partStorableSchemaProperty->name`";
                             }
