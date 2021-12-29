@@ -15,6 +15,7 @@ use function array_key_exists;
 use function array_shift;
 use function array_values;
 use function copy;
+use function count;
 use function file_exists;
 use function hash_file;
 use function implode;
@@ -83,13 +84,9 @@ class Console
     public static function updateDatabaseSafe(): void
     {
         $builder = new MysqlStorableSchemeBuilder(Mysql::get());
-        $count = 0;
         $queries = $builder->getSafeQueries();
-        foreach ($queries as $row) {
-            $builder->db->query($row['query']);
-            $count++;
-        }
-        echo $count . " safe queries has been executed\n";
+        $builder->executeQueries($queries);
+        echo count($queries) . " safe queries has been executed\n";
     }
 
     /**
@@ -99,13 +96,9 @@ class Console
     public static function updateDatabaseUnsafe(): void
     {
         $builder = new MysqlStorableSchemeBuilder(Mysql::get());
-        $count = 0;
         $queries = $builder->getUnsafeQueries();
-        foreach ($queries as $row) {
-            $builder->db->query($row['query']);
-            $count++;
-        }
-        echo $count . " unsafe queries has been executed\n";
+        $builder->executeQueries($queries);
+        echo count($queries) . " unsafe queries has been executed\n";
     }
 
     /**
@@ -114,14 +107,7 @@ class Console
      */
     public static function checkAppUpdates(): void
     {
-        $builder = new MysqlStorableSchemeBuilder(Mysql::get());
-        $count = 0;
-        $queries = $builder->getUnsafeQueries();
-        foreach ($queries as $row) {
-            $builder->db->query($row['query']);
-            $count++;
-        }
-        echo $count . " unsafe queries has been executed\n";
+        // todo integrate
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Framelix\Framelix\Db;
 
 use Framelix\Framelix\Config;
+use Framelix\Framelix\Exception;
 use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\FileUtils;
@@ -11,12 +12,17 @@ use Framelix\Framelix\Utils\JsonUtils;
 use function array_keys;
 use function array_reverse;
 use function array_values;
+use function explode;
 use function implode;
 use function is_int;
+use function str_contains;
 use function str_ends_with;
 use function str_starts_with;
+use function strpos;
 use function strtolower;
 use function strtoupper;
+use function substr;
+use function trim;
 
 /**
  * Mysql scheme builder for storables
@@ -33,6 +39,25 @@ class MysqlStorableSchemeBuilder
      */
     public function __construct(public Mysql $db)
     {
+    }
+
+    /**
+     * Execute given builder queries
+     * @param array $queries
+     * @return void
+     */
+    public function executeQueries(array $queries): void
+    {
+        foreach ($queries as $row) {
+            if ($row['ignoreErrors'] ?? null) {
+                try {
+                    $this->db->queryRaw($row['query']);
+                } catch (Exception) {
+                }
+            } else {
+                $this->db->queryRaw($row['query']);
+            }
+        }
     }
 
     /**
@@ -91,13 +116,13 @@ class MysqlStorableSchemeBuilder
             foreach ($rows as $row) {
                 $storableSchemaProperty = $storableSchema->createProperty($row['Field']);
                 $type = $row["Type"];
-                $unsignedPos = mb_strpos($type, "unsigned");
+                $unsignedPos = strpos($type, "unsigned");
                 if ($unsignedPos !== false) {
-                    $type = substr($type, 0, mb_strpos($type, "unsigned"));
+                    $type = substr($type, 0, strpos($type, "unsigned"));
                 }
                 $typeExp = explode("(", trim($type, "()"));
                 $length = isset($typeExp[1]) ? explode(",", $typeExp[1]) : [];
-                $type = $typeExp[0];
+                $type = trim($typeExp[0]);
                 $storableSchemaProperty->databaseType = $type;
                 if (isset($length[0])) {
                     $storableSchemaProperty->length = (int)$length[0];
@@ -172,7 +197,7 @@ class MysqlStorableSchemeBuilder
             if (isset($existingTables[$tableName])) {
                 continue;
             }
-            $query = "CREATE TABLE `$storableSchema->tableName` (`id` BIGINT(18) UNSIGNED NOT NULL";
+            $query = "CREATE TABLE `$storableSchema->tableName` (`id` BIGINT UNSIGNED NOT NULL";
             if ($storableSchema->properties['id']->autoIncrement) {
                 $query .= " AUTO_INCREMENT";
             }
@@ -274,7 +299,8 @@ class MysqlStorableSchemeBuilder
                 if (!isset($requiredStorableSchemas[$tableName]->properties[$propertyName])) {
                     $queries[] = [
                         "type" => 'drop-column',
-                        "query" => "ALTER TABLE `$tableName` DROP COLUMN IF EXISTS `$propertyName`"
+                        "query" => "ALTER TABLE `$tableName` DROP COLUMN `$propertyName`",
+                        "ignoreErrors" => true,
                     ];
                 }
             }
@@ -286,7 +312,8 @@ class MysqlStorableSchemeBuilder
                 if (!isset($requiredStorableSchemas[$tableName]->indexes[$indexName])) {
                     $queries[] = [
                         "type" => 'drop-index',
-                        "query" => "ALTER TABLE `$tableName` DROP INDEX IF EXISTS `$indexName`"
+                        "query" => "ALTER TABLE `$tableName` DROP INDEX `$indexName`",
+                        "ignoreErrors" => true
                     ];
                 }
             }
@@ -317,9 +344,9 @@ class MysqlStorableSchemeBuilder
             $databaseType === "FLOAT"
             || $databaseType === "DOUBLE"
             || $databaseType === "DECIMAL"
+            || $databaseType === "TINYINT"
             || str_ends_with($databaseType, "CHAR")
-            || str_ends_with($databaseType, "BINARY")
-            || str_ends_with($databaseType, "INT");
+            || str_ends_with($databaseType, "BINARY");
         if ($lengthAllowed && is_int($storableSchemaProperty->length)) {
             if (is_int($storableSchemaProperty->decimals)) {
                 $queryColumnParts[] = "($storableSchemaProperty->length, $storableSchemaProperty->decimals)";
