@@ -376,7 +376,7 @@ class Url implements JsonSerializable
             http_response_code($code);
             Response::header("location: " . $this->getUrlAsString());
         }
-        Framelix::stop();
+        exit;
     }
 
     /**
