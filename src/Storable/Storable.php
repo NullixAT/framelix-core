@@ -280,7 +280,9 @@ abstract class Storable implements JsonSerializable, ObjectTransformable
                             $query .= "LEFT JOIN `$partStorableSchema->tableName` as `$aliasTableName` ";
                             $query .= "ON ";
                             if ($partStorableSchemaProperty->arrayStorableClass) {
-                                $query .= " JSON_CONTAINS(`$prevAliasTableName`.`$partStorableSchemaProperty->name`, `$aliasTableName`.`id`, \"\$\")";
+                                $query .= " JSON_CONTAINS(`$prevAliasTableName`.`$partStorableSchemaProperty->name`, `$aliasTableName`.`id`, " . $db->escapeValue(
+                                        "\$"
+                                    ) . ")";
                             } else {
                                 $query .= " `$aliasTableName`.`id` = `$prevAliasTableName`.`$partStorableSchemaProperty->name`";
                             }
