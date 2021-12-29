@@ -290,7 +290,7 @@ abstract class View implements JsonSerializable
             if (Request::isAsync()) {
                 JsonUtils::output(['content' => Buffer::getAll()]);
             } else {
-                Buffer::flush();
+                echo Buffer::getAll();
             }
         }
     }

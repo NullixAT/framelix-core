@@ -32,7 +32,7 @@ class Buffer
      */
     public static function clear(): void
     {
-        while (ob_get_level() >= self::$startBufferIndex) {
+        while (ob_get_level() > self::$startBufferIndex) {
             ob_end_clean();
         }
     }
@@ -42,7 +42,7 @@ class Buffer
      */
     public static function flush(): void
     {
-        while (ob_get_level() >= self::$startBufferIndex) {
+        while (ob_get_level() > self::$startBufferIndex) {
             ob_end_flush();
         }
     }
@@ -53,7 +53,7 @@ class Buffer
      */
     public static function get(): string
     {
-        if (ob_get_level() >= self::$startBufferIndex) {
+        if (ob_get_level() > self::$startBufferIndex) {
             $outputBuffer = ob_get_contents();
             ob_end_clean();
             return $outputBuffer;
@@ -68,7 +68,7 @@ class Buffer
     public static function getAll(): string
     {
         $outputBuffer = "";
-        while (ob_get_level() >= self::$startBufferIndex) {
+        while (ob_get_level() > self::$startBufferIndex) {
             $outputBuffer .= ob_get_contents();
             ob_end_clean();
         }

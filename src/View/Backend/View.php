@@ -126,7 +126,7 @@ abstract class View extends LayoutView
         <?
         echo '</div>';
         echo '</body></html>';
-        Buffer::flush();
+        echo Buffer::getAll();
     }
 
     /**
