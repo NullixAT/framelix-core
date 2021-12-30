@@ -112,6 +112,7 @@ abstract class StorableMeta implements JsonSerializable
                                 ErrorCode::STORABLE_SORT_CONDITION
                             );
                         }
+                        /** @phpstan-ignore-next-line */
                         $object->{"sort"} = $sort++;
                         if ($object instanceof StorableExtended) {
                             $object->preserveUpdateUserAndTime();

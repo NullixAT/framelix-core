@@ -41,7 +41,7 @@ class Framelix
     {
         // report all errors, everything, we not accept any error
         error_reporting(E_ALL);
-        ini_set("display_errors", 1);
+        ini_set("display_errors", '1');
         // default 60 seconds run time and 128M memory, suitable for most default app calls
         set_time_limit(60);
         ini_set("memory_limit", "128M");
@@ -49,16 +49,16 @@ class Framelix
         ini_set("default_charset", "utf-8");
         mb_internal_encoding("UTF-8");
         // disable zlib, should be handled by webserver
-        ini_set("zlib.output_compression", 0);
+        ini_set("zlib.output_compression", '0');
 
         require_once __DIR__ . "/Utils/Buffer.php";
         require_once __DIR__ . "/Utils/FileUtils.php";
         Buffer::$startBufferIndex = ob_get_level();
 
         // autoloader for all framework classes
-        spl_autoload_register(function (string $className) {
+        spl_autoload_register(function (string $className): void {
             if (!str_starts_with($className, "Framelix\\")) {
-                return false;
+                return;
             }
             $exp = explode("\\", $className);
             $module = $exp[1];
@@ -68,9 +68,8 @@ class Framelix
             $path = $rootPath . "/src/" . implode("/", $exp) . ".php";
             if (file_exists($path)) {
                 require $path;
-                return true;
+                return;
             }
-            return false;
         });
 
         // vendor autoloads
@@ -130,7 +129,7 @@ class Framelix
      * @param string $folder
      * @codeCoverageIgnore
      */
-    public static function addPs4Autoloader(string $namespace, string $folder)
+    public static function addPs4Autoloader(string $namespace, string $folder): void
     {
         spl_autoload_register(function ($class) use ($namespace, $folder) {
             $destinations = [

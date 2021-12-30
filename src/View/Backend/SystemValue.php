@@ -39,8 +39,8 @@ abstract class SystemValue extends View
     public function onRequest(): void
     {
         $reflection = new ReflectionClass($this);
-        $storablePropertyType = $reflection->getProperty('storable')?->getType();
-        $metaPropertyType = $reflection->getProperty('meta')?->getType();
+        $storablePropertyType = $reflection->getProperty('storable')->getType() ?? null;
+        $metaPropertyType = $reflection->getProperty('meta')->getType()?? null;
 
         if (!$storablePropertyType || !$storablePropertyType->getName()) {
             throw new Exception(

@@ -227,7 +227,7 @@ class Date implements StorablePropertyInterface
 
     /**
      * Clone self and return the clone
-     * @return $this
+     * @return self
      */
     public function clone(): self
     {

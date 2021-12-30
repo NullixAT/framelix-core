@@ -367,7 +367,7 @@ class Lang
 
     /**
      * Get all values for all supported languages
-     * @return string[]
+     * @return string[][]
      */
     public static function getValuesForSupportedLanguages(): array
     {

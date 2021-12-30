@@ -66,6 +66,7 @@ abstract class View extends LayoutView
         $sidebarContent = null;
         if ($sidebarClass) {
             /** @var Sidebar $sidebarView */
+            /** @phpstan-ignore-next-line */
             $sidebarView = new $sidebarClass();
             Buffer::start();
             $sidebarView->showDefaultSidebarStart();

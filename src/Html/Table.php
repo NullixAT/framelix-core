@@ -387,7 +387,7 @@ class Table implements JsonSerializable
         mixed $cellName,
         HtmlAttributes $attributes,
         string $group = "tbody"
-    ) {
+    ): void {
         $this->rows[$group][$rowKey]['cellAttributes'][$cellName] = $attributes;
     }
 
@@ -473,7 +473,7 @@ class Table implements JsonSerializable
                             $footerSums[$columnName]['value'] += $value->seconds;
                         }
                     }
-                    if (is_float($value) && $storableSchemaProperty?->decimals > 0) {
+                    if (is_float($value) && ($storableSchemaProperty->decimals ?? 0) > 0) {
                         $value = NumberUtils::format($value, $storableSchemaProperty?->decimals);
                     }
                     $sortValue = $rowValues['sortValues'][$columnName] ?? null;

@@ -67,10 +67,10 @@ class Compiler
 
     /**
      * Get dist metadata for module
-     * @param $module
+     * @param string $module
      * @return array|null
      */
-    public static function getDistMetadata($module): ?array
+    public static function getDistMetadata(string $module): ?array
     {
         if (array_key_exists($module, self::$cache)) {
             return self::$cache[$module];

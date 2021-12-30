@@ -38,12 +38,12 @@ class Zip
             if (is_dir($fullPath)) {
                 if ($zipArchive->getFromName($relativeName) === false) {
                     $zipArchive->addEmptyDir($relativeName);
-                    $zipArchive->setCommentIndex($index, $compressionLevel);
+                    $zipArchive->setCommentIndex((string)$index, $compressionLevel);
                     $index++;
                 }
             } elseif (file_exists($fullPath)) {
                 $zipArchive->addFile($fullPath, $relativeName);
-                $zipArchive->setCommentIndex($index, $compressionLevel);
+                $zipArchive->setCommentIndex((string)$index, $compressionLevel);
                 $index++;
             }
         }

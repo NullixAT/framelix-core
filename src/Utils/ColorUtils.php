@@ -31,9 +31,9 @@ class ColorUtils
             return ($rgb[0] * 0.299 + $rgb[1] * 0.587 + $rgb[2] * 0.114) > 186 ? '#000000' : '#ffffff';
         }
         // invert color components
-        $r = base_convert((255 - $rgb[0]), 10, 16);
-        $g = base_convert((255 - $rgb[1]), 10, 16);
-        $b = base_convert((255 - $rgb[2]), 10, 16);
+        $r = base_convert((string)(255 - $rgb[0]), 10, 16);
+        $g = base_convert((string)(255 - $rgb[1]), 10, 16);
+        $b = base_convert((string)(255 - $rgb[2]), 10, 16);
         return '#' . str_pad($r, 2, "0", STR_PAD_LEFT) . str_pad($g, 2, "0", STR_PAD_LEFT) . str_pad(
                 $b,
                 2,
@@ -147,7 +147,7 @@ class ColorUtils
      */
     public static function rgbToHex(int $r, int $g, int $b): string
     {
-        return '#' . substr(base_convert(((1 << 24) + ($r << 16) + ($g << 8) + $b), 10, 16), 1);
+        return '#' . substr(base_convert((string)((1 << 24) + ($r << 16) + ($g << 8) + $b), 10, 16), 1);
     }
 
     /**

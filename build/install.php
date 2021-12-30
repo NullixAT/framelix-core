@@ -6,6 +6,7 @@ if (!file_exists(__DIR__ . "/check-requirements.php")) {
     echo "Missing check requirements file";
     exit;
 }
+/** @noinspection PhpIncludeInspection */
 require __DIR__ . "/check-requirements.php";
 
 $currentFiles = count(scandir(__DIR__));

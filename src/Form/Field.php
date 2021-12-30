@@ -129,14 +129,16 @@ abstract class Field implements JsonSerializable
 
     /**
      * Custom Converter
-     * @var callable(mixed, mixed)|null
+     * Receives 2 parameters
+     * @var callable|null
      */
     protected $converter;
 
     /**
      * Custom validator
      * Must return true on success and string on error
-     * @var callable(mixed, mixed)|null
+     * Receives 2 parameters
+     * @var callable|null
      */
     protected $validator;
 
@@ -398,7 +400,7 @@ abstract class Field implements JsonSerializable
                             foreach ($submittedValue as $submittedValueEntry) {
                                 $isVisible = $row['type'] === 'equal' ? $submittedValueEntry === $requiredValueEntry : preg_match(
                                     "~" . preg_quote($submittedValueEntry) . "~i",
-                                    $requiredValue
+                                    $requiredValueEntry
                                 );
                                 if ($isVisible) {
                                     continue 4;
@@ -408,7 +410,7 @@ abstract class Field implements JsonSerializable
                             foreach ($submittedValue as $submittedValueEntry) {
                                 $isVisible = $row['type'] === 'notEqual' ? $submittedValueEntry !== $requiredValueEntry : !preg_match(
                                     "~" . preg_quote($submittedValueEntry) . "~i",
-                                    $requiredValue
+                                    $requiredValueEntry
                                 );
                                 if (!$isVisible) {
                                     continue 4;

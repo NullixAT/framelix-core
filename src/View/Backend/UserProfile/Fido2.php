@@ -58,7 +58,7 @@ class Fido2 extends View
                 $webAuthn = self::getWebAuthnInstance();
                 $user = User::get();
                 $createArgs = $webAuthn->getCreateArgs(
-                    $user->id,
+                    (string)$user->id,
                     $user->email,
                     $user->email
                 );

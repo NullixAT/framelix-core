@@ -124,15 +124,15 @@ class HtmlAttributes implements JsonSerializable
     /**
      * set an attribute
      * @param string $key
-     * @param string|null $value Null will delete the attribute
+     * @param string|int|null $value Null will delete the attribute
      */
-    public function set(string $key, ?string $value): void
+    public function set(string $key, string|int|null $value): void
     {
         if ($value === null) {
             unset($this->data['other'][$key]);
             return;
         }
-        $this->data['other'][$key] = $value;
+        $this->data['other'][$key] = (string)$value;
     }
 
     /**

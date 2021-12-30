@@ -64,19 +64,19 @@ class StorableMetaProperty implements JsonSerializable
 
     /**
      * The labels for all contexts
-     * @var string[]|null
+     * @var string[]
      */
     private array $labels = [];
 
     /**
      * The label descriptions for all contexts
-     * @var string[]|null
+     * @var mixed[][]
      */
     private array $labelDescriptions = [];
 
     /**
      * Context visibilities
-     * @var int[]
+     * @var bool[]
      */
     private array $visibilities = [
         StorableMeta::CONTEXT_TABLE => true,

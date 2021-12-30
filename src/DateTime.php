@@ -184,7 +184,7 @@ class DateTime extends \DateTime implements StorablePropertyInterface
      */
     public function getQuarter(): int
     {
-        return ceil($this->getMonth() / 3);
+        return (int)ceil($this->getMonth() / 3);
     }
 
     /**

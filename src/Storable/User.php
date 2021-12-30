@@ -35,8 +35,9 @@ class User extends StorableExtended
     /**
      * Get current logged-in user
      * @param bool $originalUser If simulated user is active, then return original instead of simulated user
+     * @return self|null
      */
-    public static function get(bool $originalUser = false)
+    public static function get(bool $originalUser = false): ?self
     {
         $key = "getuser-" . (int)$originalUser;
         if (ArrayUtils::keyExists(self::$cache, $key)) {
@@ -67,7 +68,7 @@ class User extends StorableExtended
 
     /**
      * Check if given user has any of the given roles
-     * @param string|string[] $roles
+     * @param mixed $roles
      * @param User|false|null $user On false, automatically use the user returned by User::get()
      * @return bool
      */

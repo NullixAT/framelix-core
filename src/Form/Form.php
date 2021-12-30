@@ -314,8 +314,8 @@ class Form implements JsonSerializable
      * In the end, it automatically adds new storables when user enters a new row, it modifies existing storable when user modify a row, it deletes storables when user deletes a row
      * @param string $fieldName The fieldName that need to be a grid, if field is no grid, this action does nothing
      * @param Storable $baseStorable The base storable to clone from
-     * @param callable<Storable>|null $rowStore Override the default store behaviour for each row - Use this to set more custom properties and calling store() yourself on each row
-     * @param callable<Storable>|null $rowDelete Override the default delete behaviour for each row - You must manually call delete() for the passed storable
+     * @param callable|null $rowStore Override the default store behaviour for each row - Use this to set more custom properties and calling store() yourself on each row
+     * @param callable|null $rowDelete Override the default delete behaviour for each row - You must manually call delete() for the passed storable
      */
     public function modifyStorablesBasedOnGridValues(
         string $fieldName,
@@ -351,7 +351,7 @@ class Form implements JsonSerializable
         $deletedKeys = $grid->getSubmittedDeletedKeys();
         if ($deletedKeys) {
             foreach ($deletedKeys as $id) {
-                /** @var Storable $storable */
+                /** @var Storable|null $storable */
                 $storable = $grid->defaultValue[$id] ?? null;
                 if (!$storable) {
                     continue;
@@ -439,7 +439,7 @@ class Form implements JsonSerializable
                             $storable->{$storableSchemaProperty->name} = $existingValues;
                         } else {
                             // non array, override file
-                            /** @var StorableFile $existingValue */
+                            /** @var StorableFile|null $existingValue */
                             $existingValue = $storable->{$storableSchemaProperty->name};
                             if ($existingValue) {
                                 $existingValue->filename = $files[0]->name;

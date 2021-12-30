@@ -310,9 +310,9 @@ class Mysql
     {
         $fetch = $this->fetchArray($query, $parameters);
         if ($fetch && isset($fetch[0][1])) {
-            return ArrayUtils::map($fetch, 0, 1);
+            return ArrayUtils::map($fetch, '0', '1');
         }
-        return ArrayUtils::map($fetch, 0);
+        return ArrayUtils::map($fetch, '0');
     }
 
     /**

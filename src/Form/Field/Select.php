@@ -68,7 +68,7 @@ class Select extends Field
 
     /**
      * Add options by using given storables as key/label
-     * @param Storable[]|null
+     * @param Storable[]|null $storables
      */
     public function addOptionsByStorables(?array $storables): void
     {
@@ -94,17 +94,17 @@ class Select extends Field
 
     /**
      * Add an option
-     * @param string $value
+     * @param string|int $value
      * @param mixed $label
      */
-    public function addOption(string $value, mixed $label): void
+    public function addOption(string|int $value, mixed $label): void
     {
         $optionKey = $this->indexOfOptionValue($value);
         if ($optionKey === -1) {
             if ($label instanceof ObjectTransformable) {
                 $label = $label->getHtmlString();
             }
-            $this->options[] = [$value, $label];
+            $this->options[] = [(string)$value, $label];
         }
     }
 

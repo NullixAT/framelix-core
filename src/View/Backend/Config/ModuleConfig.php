@@ -27,7 +27,7 @@ class ModuleConfig extends View
 {
     /**
      * The forms
-     * @var Form[]
+     * @var array
      */
     public static array $forms = [];
 

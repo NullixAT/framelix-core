@@ -462,7 +462,7 @@ abstract class Storable implements JsonSerializable, ObjectTransformable
      * @param string $abstractClass
      * @param string $method The internal method to call for each class (getByCondition, getById, ...)
      * @param mixed ...$parameters All parameters to pass by
-     * @return Storable[]
+     * @return static[]
      */
     private static function fetchAbstractClassChilds(
         string $connectionId,

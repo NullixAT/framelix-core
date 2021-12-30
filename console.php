@@ -2,6 +2,9 @@
 <?php
 // this script provide some console scripts
 
+use Framelix\Framelix\Config;
+use Framelix\Framelix\Utils\PhpDocParser;
+
 if (php_sapi_name() !== 'cli' || !isset($_SERVER['argv'][0])) {
     echo "This script can only be called from command-line";
     exit;
@@ -41,7 +44,7 @@ define("FRAMELIX_MODULE", $activeModule);
 require __DIR__ . "/public/index.php";
 
 // fetch all available jobs
-foreach (\Framelix\Framelix\Config::$loadedModules as $module) {
+foreach (Config::$loadedModules as $module) {
     $consoleClass = "\\Framelix\\$module\\Console";
     if (!class_exists($consoleClass)) {
         continue;
@@ -55,7 +58,7 @@ foreach (\Framelix\Framelix\Config::$loadedModules as $module) {
             continue;
         }
         $name = $method->getName();
-        $parsedComment = \Framelix\Framelix\Utils\PhpDocParser::parse($method->getDocComment());
+        $parsedComment = PhpDocParser::parse($method->getDocComment());
         $description = trim(implode("\n", $parsedComment['description']));
         if (isset($actions[$name])) {
             echo "Warning: Console Job $name already exist and $module try to override it\n";

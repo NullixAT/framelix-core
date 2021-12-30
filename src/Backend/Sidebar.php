@@ -270,7 +270,7 @@ abstract class Sidebar
      */
     public function showHtmlForLinkData(bool $sortByLabel = false): void
     {
-        $linkData = $linkDataParam ?? $this->linkData;
+        $linkData = $this->linkData;
         $this->linkData = [];
         $type = $linkData['type'];
         // check if a link is currently the active URL/view in browser

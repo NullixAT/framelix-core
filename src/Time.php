@@ -94,18 +94,18 @@ class Time implements StorablePropertyInterface
     /**
      * Convert hours to time string
      * @param float $hours
-     * @param bool includeSeconds
+     * @param bool $includeSeconds
      * @return string
      */
     public static function hoursToTimeString(float $hours, bool $includeSeconds = false): string
     {
-        return self::secondsToTimeString(round($hours * 3600), $includeSeconds);
+        return self::secondsToTimeString((int)round($hours * 3600), $includeSeconds);
     }
 
     /**
      * Convert seconds to time string
-     * @param int seconds
-     * @param bool includeSeconds
+     * @param int $seconds
+     * @param bool $includeSeconds
      * @return string
      */
     public static function secondsToTimeString(int $seconds, bool $includeSeconds = false): string
@@ -113,11 +113,9 @@ class Time implements StorablePropertyInterface
         $hours = floor($seconds / 3600);
         $minutes = floor($seconds / 60 % 60);
         $restSeconds = floor($seconds % 60);
-        return str_pad($hours, 2, '0') . ':' . str_pad(
-                $minutes,
-                2,
-                '0'
-            ) . ($includeSeconds ? ':' . str_pad($restSeconds, 2, '0') : '');
+        return str_pad((string)$hours, 2, '0') . ':'
+            . str_pad((string)$minutes, 2, '0')
+            . ($includeSeconds ? ':' . str_pad((string)$restSeconds, 2, '0') : '');
     }
 
     /**
@@ -126,7 +124,7 @@ class Time implements StorablePropertyInterface
      */
     public function __toString(): string
     {
-        return $this->getDbValue();
+        return (string)$this->getDbValue();
     }
 
     /**

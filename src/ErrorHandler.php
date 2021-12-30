@@ -65,13 +65,13 @@ class ErrorHandler
     public static function throwableToJson(Throwable $e): array
     {
         if (Config::get('errorLogExtended')) {
-            $server = $_SERVER ?? [];
+            $server = $_SERVER;
             ksort($server);
-            $post = $_POST ?? [];
+            $post = $_POST;
             ksort($post);
             $session = $_SESSION ?? [];
             ksort($session);
-            $cookie = $_COOKIE ?? [];
+            $cookie = $_COOKIE;
             ksort($cookie);
         } else {
             $server = 'Available with extended log only';

@@ -23,7 +23,7 @@ class SystemEventLog extends StorableExtended
      * @param string|null $message
      * @param mixed|null $params
      * @param string|null $connectionId
-     * @return static
+     * @return self
      */
     public static function create(
         int $category,
