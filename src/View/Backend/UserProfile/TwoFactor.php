@@ -74,7 +74,7 @@ class TwoFactor extends View
                     <div class="framelix-spacer-x2"></div>
                     <div><?= Lang::get('__framelix_view_backend_userprofile_2fa_enable_enter__') ?></div>
                     <div class="framelix-spacer-x2"></div>
-                    <?
+                    <?php
                     $form = self::getEnableForm();
                     $form->show();
                     ?>
@@ -100,7 +100,7 @@ class TwoFactor extends View
             case 'test':
                 ?>
                 <div style="text-align: center">
-                    <?
+                    <?php
                     $form = self::getTestForm();
                     $form->show();
                     ?>
@@ -114,10 +114,8 @@ class TwoFactor extends View
                 $user->store();
                 Toast::success('__framelix_view_backend_userprofile_2fa_disabled__');
                 Url::getBrowserUrl()->redirect();
-                break;
             case 'getcodes':
                 Response::download("@" . implode("\n", Session::get('2fa-backup-codes')), "backup-codes.txt");
-                break;
             case 'regenerate':
                 $codes = [];
                 for ($i = 1; $i <= 10; $i++) {
@@ -131,7 +129,6 @@ class TwoFactor extends View
                 $user->twoFactorBackupCodes = $codes;
                 $user->store();
                 Response::download("@" . implode("\n", $codes), "backup-codes.txt");
-                break;
         }
     }
 

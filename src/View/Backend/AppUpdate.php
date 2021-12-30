@@ -86,7 +86,7 @@ class AppUpdate extends View
                         $insert .= "`$key`, ";
                     }
                     $insert = substr($insert, 0, -2) . ") VALUES (";
-                    foreach ($row as $key => $value) {
+                    foreach ($row as $value) {
                         $insert .= $db->escapeValue($value) . ", ";
                     }
                     $insert = substr($insert, 0, -2) . ");\n";

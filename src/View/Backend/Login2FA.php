@@ -76,7 +76,6 @@ class Login2FA extends View
             BruteForceProtection::reset('backend-login');
             (Request::getGet('redirect') ? Url::create(Request::getGet('redirect')) : Url::getApplicationUrl(
             ))->redirect();
-            return;
         }
 
         $this->layout = self::LAYOUT_SMALL_CENTERED;

@@ -117,7 +117,7 @@ class UpdateSourceCode extends View
             }
           })()
         </script>
-        <?
+        <?php
     }
 
     /**

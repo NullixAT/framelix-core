@@ -109,21 +109,19 @@ abstract class View extends LayoutView
             <button class="framelix-button framelix-sidebar-toggle">
                 <span class="material-icons">menu</span>
             </button>
-            <?
+            <?php
         }
         ?>
         <div class="framelix-content">
             <div class="framelix-content-inner">
                 <h1 class="framelix-page-title"><?= $this->getPageTitle(false) ?></h1>
-                <?
-                echo $pageContent
-                ?>
+                <?= $pageContent ?>
             </div>
         </div>
         <script>
           Framelix.initLate()
         </script>
-        <?
+        <?php
         echo '</div>';
         echo '</body></html>';
         echo Buffer::getAll();

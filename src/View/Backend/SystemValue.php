@@ -111,7 +111,7 @@ abstract class SystemValue extends View
                 if ($counts) {
                     ?>
                     <div class="framelix-spacer-x2"></div>
-                    <?
+                    <?php
                     $tabs = new Tabs();
                     $tabs->addTab(
                         'active',

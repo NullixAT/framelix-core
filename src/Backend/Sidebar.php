@@ -180,7 +180,7 @@ abstract class Sidebar
             <div class="framelix-sidebar-logo">
                 <img src="<?= $logoUrl ?>" alt="App Logo">
             </div>
-            <?
+            <?php
             echo '<div class="framelix-sidebar-entries">';
         }
         if (UserToken::getByCookie()->simulatedUser ?? null) {
@@ -194,7 +194,7 @@ abstract class Sidebar
                     ) ?>"><?= Lang::get('__framelix_simulateuser_cancel__') ?></a>
                 </div>
             </div>
-            <?
+            <?php
         }
     }
 
@@ -330,7 +330,7 @@ abstract class Sidebar
                     ) ?></span>
             </button>
             <div class="framelix-sidebar-collapsable-container">
-            <?
+            <?php
         }
         if ($sortByLabel) {
             ArrayUtils::sort($linkData['links'], "label", [SORT_ASC]);
@@ -351,12 +351,12 @@ abstract class Sidebar
                 <span class="<?= $type !== 'group' ? 'framelix-sidebar-main-icon' : '' ?> material-icons"><?= $row['icon'] ?></span>
                 <div class="framelix-sidebar-label"><?= $row['badgeText'] !== null ? '<span class="framelix-sidebar-badge">' . $row['badgeText'] . '</span>' : '' ?><?= $row['label'] ?></div>
             </a>
-            <?
+            <?php
         }
         if ($type === 'group') {
             ?>
             </div></div>
-            <?
+            <?php
         }
         echo '</div>';
     }

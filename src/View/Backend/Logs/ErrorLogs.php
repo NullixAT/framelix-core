@@ -66,15 +66,14 @@ class ErrorLogs extends View
         if (!$files) {
             ?>
             <p class="framelix-alert"><?= Lang::get('__framelix_view_backend_logs_nologs__') ?></p>
-            <?
+            <?php
             return;
         }
         $firstFile = basename(reset($files));
-        reset($files);
         ?>
         <a href="<?= Url::create()->setParameter('clear', $firstFile) ?>"
            class="framelix-button"><?= Lang::get('__framelix_view_backend_logs_clear__') ?></a>
-        <?
+        <?php
         foreach ($files as $file) {
             Buffer::start();
             require $file;

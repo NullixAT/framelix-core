@@ -2,7 +2,6 @@
 
 namespace Framelix\Framelix;
 
-use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
@@ -11,15 +10,12 @@ use function array_unique;
 use function basename;
 use function explode;
 use function file_exists;
-use function file_get_contents;
 use function in_array;
 use function preg_match;
 use function preg_match_all;
 use function str_replace;
 use function str_starts_with;
 use function substr;
-use function unlink;
-use function var_dump;
 
 /**
  * Language and translations

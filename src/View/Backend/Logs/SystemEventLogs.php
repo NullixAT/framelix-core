@@ -44,7 +44,7 @@ class SystemEventLogs extends View
         if (!$logs) {
             ?>
             <p class="framelix-alert"><?= Lang::get('__framelix_view_backend_logs_nologs__') ?></p>
-            <?
+            <?php
             return;
         }
         $lastLog = reset($logs);
@@ -52,7 +52,7 @@ class SystemEventLogs extends View
         <a href="<?= Url::create()->setParameter('clear', $lastLog) ?>"
            class="framelix-button"><?= Lang::get('__framelix_view_backend_logs_clear__') ?></a>
         <div class="framelix-spacer"></div>
-        <?
+        <?php
         $meta = new \Framelix\Framelix\StorableMeta\SystemEventLog(new SystemEventLog());
         $meta->showSearchAndTableInTabs(SystemEventLog::getByCondition());
     }

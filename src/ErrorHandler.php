@@ -206,7 +206,8 @@ class ErrorHandler
      */
     public static function sendErrorLogEmail(array $logData): void
     {
-        if ($email = Config::get('errorLogEmail') && Email::isAvailable()) {
+        $email = Config::get('errorLogEmail');
+        if ($email && Email::isAvailable()) {
             $body = '<h2 style="color:red">' . htmlentities($logData['message']) . '</h2>';
             $body .= '<pre>' . htmlentities(implode("\n", $logData['traceSimple'])) . '</pre>';
             $body .= '<pre>' . htmlentities(JsonUtils::encode($logData['additionalData'] ?? null, true)) . '</pre>';

@@ -128,9 +128,7 @@ abstract class LayoutView extends View
                 }
               })()
             </script>
-            <?
-            echo HtmlUtils::getIncludeTagForUrl(Compiler::getDistUrl("Framelix", "js", "general-early"));
-            ?>
+            <?= HtmlUtils::getIncludeTagForUrl(Compiler::getDistUrl("Framelix", "js", "general-early")); ?>
             <script>
               FramelixDeviceDetection.init()
             </script>

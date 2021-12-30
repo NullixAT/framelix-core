@@ -113,7 +113,7 @@ class Fido2 extends View
     public function onRequest(): void
     {
         $this->storable = UserWebAuthn::getByIdOrNew(Request::getGet('editWebAuthn'));
-        if ($this->storable && $this->storable->user !== User::get()) {
+        if ($this->storable->user !== User::get()) {
             $this->storable = new UserWebAuthn();
         }
         if (!$this->storable->id) {
