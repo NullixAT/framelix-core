@@ -26,6 +26,7 @@ use function syslog;
 use function time;
 use function urlencode;
 
+use const DIRECTORY_SEPARATOR;
 use const E_COMPILE_ERROR;
 use const E_COMPILE_WARNING;
 use const E_CORE_ERROR;
@@ -44,6 +45,7 @@ class ErrorHandler
      * On shutdown
      * Called when system is shutting down, the real last script to run
      * Checks for errors and display them
+     * @codeCoverageIgnore
      */
     public static function onShutdown(): void
     {
@@ -111,7 +113,7 @@ class ErrorHandler
                 'title' => htmlentities($logData['message']) . ' in ' . $logData['file'] . '(' . $logData['line'] . ')',
                 'trace' => implode('</pre><pre class="framelix-erorr-log-trace">', $logData['traceSimple'])
             ];
-            $root = FRAMELIX_APP_ROOT;
+            $root = str_replace("/", DIRECTORY_SEPARATOR, FRAMELIX_APP_ROOT);
             foreach ($html as $key => $value) {
                 preg_match_all(
                     "~(" . preg_quote($root, "~") . "[^\s]+)([(:]| on line )([0-9]+)\)*~i",
@@ -192,6 +194,7 @@ class ErrorHandler
     /**
      * Save error log into syslog
      * @param array $logData
+     * @codeCoverageIgnore
      */
     public static function logErrorInSyslog(array $logData): void
     {
@@ -203,6 +206,7 @@ class ErrorHandler
     /**
      * Send error log email
      * @param array $logData
+     * @codeCoverageIgnore
      */
     public static function sendErrorLogEmail(array $logData): void
     {
@@ -223,6 +227,7 @@ class ErrorHandler
      * On exception
      * Is called when an exception occurs
      * @param Throwable $e
+     * @codeCoverageIgnore
      */
     public static function onException(Throwable $e): void
     {
@@ -271,6 +276,7 @@ class ErrorHandler
      * @param mixed $errline
      * @return bool
      * @noinspection PhpUnusedParameterInspection
+     * @codeCoverageIgnore
      */
     public static function onError(mixed $errno, mixed $errstr, mixed $errfile, mixed $errline): bool
     {
