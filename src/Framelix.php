@@ -44,7 +44,6 @@ class Framelix
         ini_set("display_errors", '1');
         // default 60 seconds run time and 128M memory, suitable for most default app calls
         set_time_limit(60);
-        ini_set("memory_limit", "128M");
         // everything is utf8
         ini_set("default_charset", "utf-8");
         mb_internal_encoding("UTF-8");
@@ -83,6 +82,12 @@ class Framelix
 
         Config::loadModule("Framelix");
         Config::loadModule(FRAMELIX_MODULE);
+
+        if (!Request::isCli()) {
+            // set memory limit to 128M as it is enough for almost every use case
+            // increase it where it is required
+            ini_set("memory_limit", "128M");
+        }
 
         // setup required, skip everything and init with minimal data
         if (!Request::isCli() && !file_exists(

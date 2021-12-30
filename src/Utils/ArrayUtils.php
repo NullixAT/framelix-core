@@ -118,10 +118,10 @@ class ArrayUtils
 
     /**
      * Split a key string into array parts for each depts
-     * @param string|string[] $key example: foo[bar][depth][deeper]
+     * @param string|string[]|int|int[] $key example: foo[bar][depth][deeper]
      * @return array example: ["foo", "bar", "depth", "deeper"]
      */
-    public static function splitKeyString(array|string $key): array
+    public static function splitKeyString(array|string|int $key): array
     {
         if (is_array($key)) {
             return $key;
@@ -132,10 +132,10 @@ class ArrayUtils
     /**
      * Checks if a given key exists, even if it is null
      * @param mixed $array The array to check against
-     * @param string|string[] $key Could be a key/method in any depth, example: foo[bar][depth][deeper] or ['foo', 'bar', 'depth', 'deeper']
-     * @return mixed
+     * @param string|string[]|int|int[] $key Could be a key/method in any depth, example: foo[bar][depth][deeper] or ['foo', 'bar', 'depth', 'deeper']
+     * @return bool
      */
-    public static function keyExists(mixed $array, array|string $key): bool
+    public static function keyExists(mixed $array, array|string|int $key): bool
     {
         if (!is_array($array)) {
             return false;
@@ -200,12 +200,12 @@ class ArrayUtils
 
     /**
      * Get an array of values with given key from any possible array
-     * @param mixed $array Map values from this array
-     * @param string|string[] $keyForValue Could be a key/method in any depth, example: foo[bar][depth][deeper] or ['foo', 'bar', 'depth', 'deeper']
-     * @param string|string[] $keyForIndex Could be a key/method in any depth, example: foo[bar][depth][deeper] or ['foo', 'bar', 'depth', 'deeper']
+     * @param array|null $array Map values from this array
+     * @param mixed $keyForValue Could be a key/method in any depth, example: foo[bar][depth][deeper] or ['foo', 'bar', 'depth', 'deeper']
+     * @param mixed $keyForIndex Could be a key/method in any depth, example: foo[bar][depth][deeper] or ['foo', 'bar', 'depth', 'deeper']
      * @return array
      */
-    public static function map(?array $array, array|string $keyForValue, array|string|null $keyForIndex = null): array
+    public static function map(?array $array, mixed $keyForValue, mixed $keyForIndex = null): array
     {
         $out = [];
         if (!is_array($array)) {
