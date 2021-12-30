@@ -19,6 +19,7 @@ use function str_replace;
 use function str_starts_with;
 use function substr;
 use function unlink;
+use function var_dump;
 
 /**
  * Language and translations
@@ -231,7 +232,7 @@ class Lang
      * All lang values
      * @var string[][]
      */
-    private static array $values = [];
+    public static array $values = [];
 
     /**
      * All loaded modules and languages for them
@@ -244,32 +245,6 @@ class Lang
      * @var array|null
      */
     private static ?array $supportedLanguages = null;
-
-    /**
-     * On js call
-     * @param JsCall $jsCall
-     */
-    public static function onJsCall(JsCall $jsCall): void
-    {
-        $missingKeysFile = FileUtils::getModuleRootPath("Framelix") . "/tmp/missing-lang-keys.txt";
-        switch ($jsCall->action) {
-            case 'missing-keys':
-                switch ($jsCall->parameters['action'] ?? null) {
-                    case 'get':
-                        if (file_exists($missingKeysFile)) {
-                            $jsCall->result = explode("\n", file_get_contents($missingKeysFile));
-                        }
-                        break;
-                    case 'reset':
-                        if (file_exists($missingKeysFile)) {
-                            unlink($missingKeysFile);
-                        }
-                        $jsCall->result = true;
-                        break;
-                }
-                break;
-        }
-    }
 
     /**
      * Get all languages that are supported by at least one module
@@ -335,6 +310,9 @@ class Lang
      */
     public static function get(string $key, ?array $parameters = null, ?string $lang = null): string
     {
+        if (!$key) {
+            return $key;
+        }
         if (!str_starts_with($key, "__")) {
             return $key;
         }
@@ -364,15 +342,15 @@ class Lang
                         $parameterValue = $parameters[$parameterName];
                         if ($conditionSplit[3] === "*") {
                             $replaceWith = $outputValue;
-                        } elseif ($compareOperator === "=" && $compareNumber === $parameterValue) {
+                        } elseif ($compareOperator === "=" && $compareNumber === (int)$parameterValue) {
                             $replaceWith = $outputValue;
-                        } elseif ($compareOperator === "<" && $compareNumber < $parameterValue) {
+                        } elseif ($compareOperator === "<" && $parameterValue < $compareNumber) {
                             $replaceWith = $outputValue;
-                        } elseif ($compareOperator === ">" && $compareNumber > $parameterValue) {
+                        } elseif ($compareOperator === ">" && $parameterValue > $compareNumber) {
                             $replaceWith = $outputValue;
-                        } elseif ($compareOperator === "<=" && $compareNumber <= $parameterValue) {
+                        } elseif ($compareOperator === "<=" && $parameterValue <= $compareNumber) {
                             $replaceWith = $outputValue;
-                        } elseif ($compareOperator === ">=" && $compareNumber >= $parameterValue) {
+                        } elseif ($compareOperator === ">=" && $parameterValue >= $compareNumber) {
                             $replaceWith = $outputValue;
                         }
                         if ($replaceWith !== null) {

@@ -9,7 +9,6 @@ use Framelix\Framelix\ObjectTransformable;
 use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Utils\ArrayUtils;
 use mysqli;
-use mysqli_driver;
 use mysqli_result;
 use mysqli_sql_exception;
 use Throwable;
@@ -24,16 +23,16 @@ use function is_object;
 use function is_string;
 use function mb_substr;
 use function mysqli_affected_rows;
-use function mysqli_error;
 use function mysqli_insert_id;
 use function mysqli_query;
 use function mysqli_real_escape_string;
+use function mysqli_report;
 use function preg_match_all;
 use function reset;
 use function str_replace;
 
 use const MYSQLI_NUM;
-use const MYSQLI_REPORT_STRICT;
+use const MYSQLI_REPORT_ALL;
 
 /**
  * Mysql database handling
@@ -157,8 +156,7 @@ class Mysql
         $configKey = 'database[' . $this->id . ']';
         $databaseConfig = Config::get($configKey, 'array');
         try {
-            $driver = new mysqli_driver();
-            $driver->report_mode = MYSQLI_REPORT_STRICT;
+            mysqli_report(MYSQLI_REPORT_ALL & ~MYSQLI_REPORT_INDEX);
             $this->connectionConfig = [
                 "host" => $databaseConfig['host'] ?? "localhost",
                 "username" => $databaseConfig['username'],
@@ -262,15 +260,17 @@ class Mysql
     {
         try {
             $this->lastResult = mysqli_query($this->mysqli, $query);
+            // this code was unable to reproduce in unit tests
+            // every mysql error should throw an exception
+            // if it does not but result is still false, we throw by hand
+            // maybe its a legacy behaviour of some mysql drivers
+            // @codeCoverageIgnoreStart
+            if (!$this->lastResult) {
+                throw new Exception("No Mysql Result");
+            }
+            // @codeCoverageIgnoreEnd
         } catch (Throwable $e) {
             $errorMessage = "Mysql Error: " . $e->getMessage();
-            if (Config::isDevMode()) {
-                $errorMessage .= " in query: " . $query;
-            }
-            throw new Exception($errorMessage, ErrorCode::MYSQL_QUERY_ERROR);
-        }
-        if (!$this->lastResult) {
-            $errorMessage = "Mysql Error: " . mysqli_error($this->mysqli);
             if (Config::isDevMode()) {
                 $errorMessage .= " in query: " . $query;
             }

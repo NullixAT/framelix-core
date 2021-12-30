@@ -7,11 +7,11 @@ use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
 use Framelix\Framelix\Form\Field\Html;
 use Framelix\Framelix\Form\Field\Toggle;
 use Framelix\Framelix\Form\Form;
-use Framelix\Framelix\Html\HtmlUtils;
 use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Url;
+use Framelix\Framelix\Utils\HtmlUtils;
 use Framelix\Framelix\Utils\Shell;
 use Framelix\Framelix\View\Backend\View;
 

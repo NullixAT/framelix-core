@@ -1,6 +1,6 @@
 <?php
 
-namespace Framelix\Framelix\Html;
+namespace Framelix\Framelix\Utils;
 
 use Framelix\Framelix\ErrorCode;
 use Framelix\Framelix\Exception;

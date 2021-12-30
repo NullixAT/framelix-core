@@ -35,6 +35,7 @@ class Framelix
 {
     /**
      * Initializes the framework
+     * @codeCoverageIgnore
      */
     public static function init(): void
     {
@@ -127,6 +128,7 @@ class Framelix
      * Add ps4 autoloader
      * @param string $namespace
      * @param string $folder
+     * @codeCoverageIgnore
      */
     public static function addPs4Autoloader(string $namespace, string $folder)
     {

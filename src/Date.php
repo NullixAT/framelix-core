@@ -69,7 +69,7 @@ class Date implements StorablePropertyInterface
      * Compare given dates
      * @param mixed $dateA
      * @param mixed $dateB
-     * @return string Return = for equal, < for lower, > for greater
+     * @return string Return = for equal, < for A as lower than B, > for A as greather than B
      */
     public static function compare(mixed $dateA, mixed $dateB): string
     {

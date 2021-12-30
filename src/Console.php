@@ -38,6 +38,10 @@ use const FRAMELIX_MODULE;
 
 /**
  * Console runner
+ *
+ * As this do very complicated tasks ignore coverage for now
+ * @todo At least tests for zip package installation should be added soon
+ * @codeCoverageIgnore
  */
 class Console
 {

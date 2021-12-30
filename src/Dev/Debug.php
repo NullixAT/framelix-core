@@ -6,6 +6,7 @@ use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 
+use function is_bool;
 use function var_dump;
 
 /**
@@ -16,11 +17,11 @@ class Debug
     /**
      * Dump data
      * @param mixed $data
-     * @param bool $renderAsHtml If true then display content as formatted html and do console log in browser
+     * @param bool|null $renderAsHtml Force or unforce HTML debug format with console log
      */
-    public static function dump(mixed $data, bool $renderAsHtml = true): void
+    public static function dump(mixed $data, ?bool $renderAsHtml = null): void
     {
-        if (!$renderAsHtml || Request::isCli()) {
+        if (is_bool($renderAsHtml) && !$renderAsHtml || $renderAsHtml === null && Request::isCli()) {
             var_dump($data);
             return;
         }

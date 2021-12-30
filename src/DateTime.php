@@ -75,9 +75,9 @@ class DateTime extends \DateTime implements StorablePropertyInterface
     /**
      * Create an instance from the original database value
      * @param mixed $dbValue
-     * @return self
+     * @return self|null
      */
-    public static function createFromDbValue(mixed $dbValue): self
+    public static function createFromDbValue(mixed $dbValue): ?self
     {
         $phpValue = self::create($dbValue . " UTC");
         $phpValue?->setTimezone(new DateTimeZone(date_default_timezone_get()));
@@ -410,11 +410,11 @@ class DateTime extends \DateTime implements StorablePropertyInterface
 
     /**
      * Get a value that can be used in sort functions
-     * @return string
+     * @return int
      */
-    public function getSortableValue(): string
+    public function getSortableValue(): int
     {
-        return $this->format("Y-m-d H:i:s");
+        return (int)$this->format("YmdHis");
     }
 
     /**

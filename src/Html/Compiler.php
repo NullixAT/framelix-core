@@ -8,13 +8,13 @@ use Framelix\Framelix\Exception;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
+use Framelix\Framelix\Utils\Shell;
 
 use function array_combine;
 use function array_key_exists;
 use function array_values;
 use function base64_encode;
 use function basename;
-use function escapeshellarg;
 use function file_exists;
 use function filemtime;
 use function implode;
@@ -31,9 +31,10 @@ class Compiler
 {
     /**
      * Internal cache
+     * Not modify it, it is public just for unit tests
      * @var array
      */
-    private static array $cache = [];
+    public static array $cache = [];
 
     /**
      * Get dist url for given parameters
@@ -84,22 +85,32 @@ class Compiler
     }
 
     /**
+     * Checks if the required nodejs compiler scripts are installed
+     * @return bool
+     */
+    public static function isCompilerAvailable(): bool
+    {
+        return is_dir(__DIR__ . "/../../node_modules/@babel");
+    }
+
+    /**
      * Compile js and scss files for given module
      * @param string $module
+     * @return string[]|null Return array of compiled dist file paths
      */
-    public static function compile(string $module): void
+    public static function compile(string $module): ?array
     {
-        // already compiled, skip
-        if (isset(self::$cache['compiled-' . $module])) {
-            return;
-        }
-        self::$cache['compiled-' . $module] = true;
         // cannot compile in production
         if (!Config::isDevMode()) {
-            return;
+            return null;
         }
+        // already compiled, skip
+        if (isset(self::$cache['compiled-' . $module])) {
+            return null;
+        }
+        self::$cache['compiled-' . $module] = true;
         // cannot compile when required node module is missing
-        if (!is_dir(__DIR__ . "/../../node_modules/@babel")) {
+        if (!self::isCompilerAvailable()) {
             throw new Exception(
                 "Missing required NodeJs modules for compiler. Please run `npm install` in " . realpath(
                     __DIR__ . "/../.."
@@ -109,7 +120,7 @@ class Compiler
         }
         $compilerData = Config::get("compiler[$module]");
         if (!$compilerData) {
-            return;
+            return null;
         }
         // meta file will store previous compiler data
         // if anything changes, then we need to force an update
@@ -121,6 +132,7 @@ class Compiler
         if (!file_exists($metaFilePath) || JsonUtils::readFromFile($metaFilePath) !== $compilerData) {
             $forceUpdate = true;
         }
+        $returnDistFiles = [];
         foreach ($compilerData as $type => $groups) {
             foreach ($groups as $groupId => $groupData) {
                 $files = [];
@@ -191,20 +203,21 @@ class Compiler
                     'files' => $compileFiles,
                     'options' => $groupData['options'] ?? []
                 ];
-                $cmd = "2>&1 node " . escapeshellarg(
-                        FileUtils::getModuleRootPath("Framelix") . "/nodejs/compiler.js"
-                    ) . " " . escapeshellarg(base64_encode(JsonUtils::encode($cmdParams)));
-                $output = [];
-                $status = 0;
-                // execute compiler script
-                exec($cmd, $output, $status);
-                // on error, throw error
-                if ($status) {
+                $shell = Shell::prepare("node {*}",
+                    [
+                        FileUtils::getModuleRootPath("Framelix") . "/nodejs/compiler.js",
+                        base64_encode(JsonUtils::encode($cmdParams))
+                    ]
+                );
+                $shell->execute();
+                if ($shell->status) {
                     throw new Exception(
-                        implode("\n", $output),
+                        implode("\n", $shell->output),
                         ErrorCode::COMPILER_COMPILE_ERROR
                     );
                 }
+                $returnDistFiles[] = $distFilePath;
+                touch($distFilePath);
                 Toast::success(basename($distFilePath) . " compiled successfully");
             }
         }
@@ -215,5 +228,6 @@ class Compiler
         // write compiler data to meta file
         JsonUtils::writeToFile($metaFilePath, $compilerData);
         self::$cache[$module] = $compilerData;
+        return $returnDistFiles;
     }
 }

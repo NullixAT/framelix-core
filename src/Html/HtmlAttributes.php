@@ -172,8 +172,8 @@ class HtmlAttributes implements JsonSerializable
      */
     private function quotify(string $str): string
     {
-        $singleQuote = str_contains("'", $str);
-        $doubleQuote = str_contains('"', $str);
+        $singleQuote = str_contains($str, "'");
+        $doubleQuote = str_contains($str, '"');
         // just remove single quotes of both double and single exist
         // this prevents HTML errors
         if ($singleQuote && $doubleQuote) {

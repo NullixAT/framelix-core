@@ -2,13 +2,13 @@
 
 namespace Framelix\Framelix;
 
-use Framelix\Framelix\Html\HtmlUtils;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Storable\User;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\FileUtils;
+use Framelix\Framelix\Utils\HtmlUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\StringUtils;
 use JsonSerializable;
