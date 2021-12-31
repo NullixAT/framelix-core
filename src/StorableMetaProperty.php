@@ -10,7 +10,6 @@ use Framelix\Framelix\Storable\Storable;
 use Framelix\Framelix\Storable\StorableFile;
 use Framelix\Framelix\Storable\SystemValue;
 use Framelix\Framelix\Utils\ArrayUtils;
-use JsonSerializable;
 
 use function is_array;
 use function is_object;
@@ -22,7 +21,7 @@ use function substr;
 /**
  * Storable meta property
  */
-class StorableMetaProperty implements JsonSerializable
+class StorableMetaProperty
 {
     /**
      * The parent meta name
@@ -314,13 +313,5 @@ class StorableMetaProperty implements JsonSerializable
     {
         $nameParts = ArrayUtils::splitKeyString($this->name);
         return Storable::getStorableSchemaProperty($this->meta->storable, $nameParts[0]);
-    }
-
-    /**
-     * Json serialize
-     */
-    public function jsonSerialize(): array
-    {
-        return (array)$this;
     }
 }

@@ -10,6 +10,8 @@ use function floor;
 use function is_string;
 use function str_pad;
 
+use const STR_PAD_LEFT;
+
 /**
  * Time utilities for frequent tasks
  */
@@ -113,9 +115,10 @@ class Time implements StorablePropertyInterface
         $hours = floor($seconds / 3600);
         $minutes = floor($seconds / 60 % 60);
         $restSeconds = floor($seconds % 60);
-        return str_pad((string)$hours, 2, '0') . ':'
-            . str_pad((string)$minutes, 2, '0')
-            . ($includeSeconds ? ':' . str_pad((string)$restSeconds, 2, '0') : '');
+        return str_pad((string)$hours, 2, '0', STR_PAD_LEFT)
+            . ':'
+            . str_pad((string)$minutes, 2, '0', STR_PAD_LEFT)
+            . ($includeSeconds ? ':' . str_pad((string)$restSeconds, 2, '0', STR_PAD_LEFT) : '');
     }
 
     /**

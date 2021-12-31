@@ -304,10 +304,8 @@ abstract class StorableMeta implements JsonSerializable
         $property->setVisibility(null, false);
         $property->setVisibility(self::CONTEXT_TABLE, true);
         $property->valueCallable = function () {
-            if ($this->storable instanceof StorableExtended) {
-                return $this->storable->getModifiedTimestampTableCell();
-            }
-            return null;
+            return $this->storable instanceof StorableExtended
+                ? $this->storable->getModifiedTimestampTableCell() : null;
         };
         return $property;
     }
