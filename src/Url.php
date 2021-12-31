@@ -14,11 +14,9 @@ use function file_exists;
 use function http_build_query;
 use function http_response_code;
 use function is_array;
-use function ltrim;
 use function parse_str;
 use function parse_url;
 use function realpath;
-use function rtrim;
 use function str_ends_with;
 use function str_replace;
 use function str_starts_with;
@@ -70,8 +68,10 @@ class Url implements JsonSerializable
         /** @phpstan-ignore-next-line */
         if (FRAMELIX_ENTRY_POINT_FOLDER === FRAMELIX_APP_ROOT) {
             // if entry point is in app root folder instead of public folder of module
+            // @codeCoverageIgnoreStart
             $relativePath = FileUtils::getRelativePathToBase($path, FRAMELIX_APP_ROOT);
             $url->appendPath($relativePath);
+            // @codeCoverageIgnoreEnd
         } else {
             $pathModule = FileUtils::getModuleForPath($path);
             $pathModuleRoot = FileUtils::getModuleRootPath($pathModule) . "/public";
@@ -102,14 +102,13 @@ class Url implements JsonSerializable
     {
         $path = FileUtils::getModuleRootPath($module) . "/public";
         $url = Url::getApplicationUrl();
+        $relativePath = '';
+        // @codeCoverageIgnoreStart
         /** @phpstan-ignore-next-line */
         if (FRAMELIX_ENTRY_POINT_FOLDER === FRAMELIX_APP_ROOT) {
             $relativePath = FileUtils::getRelativePathToBase($path, FRAMELIX_APP_ROOT);
-        } else {
-            $pathModule = FileUtils::getModuleForPath($path);
-            $pathModuleRoot = FileUtils::getModuleRootPath($pathModule) . "/public";
-            $relativePath = FileUtils::getRelativePathToBase($path, $pathModuleRoot);
         }
+        // @codeCoverageIgnoreEnd
         $url->appendPath($relativePath);
         return $url;
     }
@@ -120,7 +119,8 @@ class Url implements JsonSerializable
      */
     public static function getApplicationUrl(): self
     {
-        $url = Config::get('applicationHttps') ? "https://" : "http://";
+        $url = Config::get('applicationHttps') ? "https" : "http";
+        $url .= '://';
         $url .= str_replace("{host}", $_SERVER['HTTP_HOST'], Config::get('applicationHost'));
         $url .= "/" . trim("/" . Config::get('applicationUrlBasePath'), "/");
         return self::create($url);
@@ -128,6 +128,7 @@ class Url implements JsonSerializable
 
     /**
      * Create current browser url
+     * Return the same as ::create if no browser url header exist
      * Helpful in nested async requests when context is required
      * @return Url
      */
@@ -176,8 +177,8 @@ class Url implements JsonSerializable
             $url .= $this->urlData['scheme'] . "://";
         }
         $hostPrefix = null;
-        if ($this->urlData['username'] ?? null) {
-            $url .= $this->urlData['username'];
+        if ($this->urlData['user'] ?? null) {
+            $url .= $this->urlData['user'];
             $hostPrefix = "@";
         }
         if ($this->urlData['pass'] ?? null) {
@@ -218,14 +219,32 @@ class Url implements JsonSerializable
     }
 
     /**
+     * Get scheme (http/https)
+     * @return string|null
+     */
+    public function getScheme(): ?string
+    {
+        return $this->urlData['scheme'] ?? null;
+    }
+
+    /**
      * Set username
      * @param string|null $str
      * @return self
      */
     public function setUsername(?string $str): self
     {
-        $this->urlData['username'] = $str;
+        $this->urlData['user'] = $str;
         return $this;
+    }
+
+    /**
+     * Get username
+     * @return string|null
+     */
+    public function getUsername(): ?string
+    {
+        return $this->urlData['user'] ?? null;
     }
 
     /**
@@ -240,6 +259,15 @@ class Url implements JsonSerializable
     }
 
     /**
+     * Get password
+     * @return string|null
+     */
+    public function getPassword(): ?string
+    {
+        return $this->urlData['pass'] ?? null;
+    }
+
+    /**
      * Set host
      * @param string $str
      * @return self
@@ -251,6 +279,15 @@ class Url implements JsonSerializable
     }
 
     /**
+     * Get host
+     * @return string|null
+     */
+    public function getHost(): ?string
+    {
+        return $this->urlData['host'] ?? null;
+    }
+
+    /**
      * Set port
      * @param int|null $port
      * @return self
@@ -258,6 +295,40 @@ class Url implements JsonSerializable
     public function setPort(?int $port): self
     {
         $this->urlData['port'] = $port;
+        return $this;
+    }
+
+    /**
+     * Get port
+     * @return int|null
+     */
+    public function getPort(): ?int
+    {
+        return isset($this->urlData['port']) ? (int)$this->urlData['port'] : null;
+    }
+
+    /**
+     * Set port
+     * @param string $path
+     * @return self
+     */
+    public function setPath(string $path): self
+    {
+        $this->urlData['path'] = $path;
+        return $this;
+    }
+
+    /**
+     * Append given path to existing path
+     * @param string $path
+     * @return self
+     */
+    public function appendPath(string $path): self
+    {
+        if (!$path || $path === "/") {
+            return $this;
+        }
+        $this->urlData['path'] = rtrim($this->getPath(), "/") . "/" . ltrim($path, "/");
         return $this;
     }
 
@@ -281,121 +352,6 @@ class Url implements JsonSerializable
             $str .= "?" . http_build_query($this->urlData['queryParameters']);
         }
         return $str;
-    }
-
-    /**
-     * Set path
-     * @param string $path
-     * @return self
-     */
-    public function setPath(string $path): self
-    {
-        $this->urlData['path'] = $path;
-        return $this;
-    }
-
-    /**
-     * Append given path to existing path
-     * @param string $path
-     * @return self
-     */
-    public function appendPath(string $path): self
-    {
-        if (!$path || $path === "/") {
-            return $this;
-        }
-        $this->urlData['path'] = rtrim($this->urlData['path'] ?? '', '/') . "/" . ltrim($path, "/");
-        return $this;
-    }
-
-    /**
-     * Update this instance data with data from given url
-     * @param string $url
-     * @param bool $clearData If true, then delete all other urldata from this instance if not exist in $url
-     * @return self
-     */
-    public function update(string $url, bool $clearData = false): self
-    {
-        $urlData = parse_url($url);
-        $urlData['path'] = $urlData['path'] ?? '';
-        if (isset($urlData['query'])) {
-            parse_str($urlData['query'], $urlData['queryParameters']);
-        }
-        if ($clearData) {
-            $this->urlData = $urlData;
-        } else {
-            $this->urlData = ArrayUtils::merge($this->urlData, $urlData);
-        }
-        return $this;
-    }
-
-    /**
-     * Get language from current url if exist and app is configured to have multiple languages
-     * @return string|null
-     */
-    public function getLanguage(): ?string
-    {
-        if (Config::get('languageMultiple')) {
-            $supportedLanguages = Config::get('languagesSupported');
-            if ($supportedLanguages) {
-                $relativeUrl = $this->getRelativePath(self::getApplicationUrl());
-                foreach ($supportedLanguages as $language) {
-                    if (str_starts_with($relativeUrl, "/$language/") || $relativeUrl === "/$language") {
-                        return $language;
-                    }
-                }
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Replace current url language with the new language
-     * @param string $newLanguage
-     */
-    public function replaceLanguage(string $newLanguage): void
-    {
-        $foundLanguage = $this->getLanguage();
-        $applicationUrl = self::getApplicationUrl();
-        $relativeUrl = $this->getRelativePath($applicationUrl);
-        if ($foundLanguage) {
-            $relativeUrl = substr($relativeUrl, strlen($foundLanguage) + 1);
-        }
-        $this->update($applicationUrl->getRelativePath() . "/$newLanguage" . $relativeUrl);
-    }
-
-    /**
-     * Get relative path to other url
-     * @param Url|null $otherUrl If not set, get full relative path of current url
-     * @return string
-     */
-    public function getRelativePath(?self $otherUrl = null): string
-    {
-        $startFrom = 0;
-        if ($otherUrl) {
-            $applicationUrl = Url::getApplicationUrl();
-            $startFrom = strlen($applicationUrl->urlData['path']);
-            if (str_ends_with($applicationUrl->urlData['path'], "/")) {
-                $startFrom--;
-            }
-        }
-        return substr($this->urlData['path'], $startFrom);
-    }
-
-    /**
-     * Redirect
-     * @param int $code
-     * @return never
-     */
-    public function redirect(int $code = 302): never
-    {
-        if (Request::isAsync()) {
-            Response::header("x-redirect: " . $this->getUrlAsString());
-        } else {
-            http_response_code($code);
-            Response::header("location: " . $this->getUrlAsString());
-        }
-        exit;
     }
 
     /**
@@ -538,11 +494,110 @@ class Url implements JsonSerializable
             unset($this->urlData['fragment']);
             return $this;
         }
-        if (str_starts_with($hash, "#")) {
-            throw new Exception("Hash must not begin with #", ErrorCode::URL_HASH);
-        }
         $this->urlData['fragment'] = $hash;
         return $this;
+    }
+
+    /**
+     * Get hash
+     * @return string|null
+     */
+    public function getHash(): ?string
+    {
+        return $this->urlData['fragment'] ?? null;
+    }
+
+    /**
+     * Update this instance data with data from given url
+     * @param string $url
+     * @param bool $clearData If true, then delete all other urldata from this instance if not exist in $url
+     * @return self
+     */
+    public function update(string $url, bool $clearData = false): self
+    {
+        $urlData = parse_url($url);
+        $urlData['path'] = $urlData['path'] ?? '';
+        if (isset($urlData['query'])) {
+            parse_str($urlData['query'], $urlData['queryParameters']);
+        }
+        if ($clearData) {
+            $this->urlData = $urlData;
+        } else {
+            $this->urlData = ArrayUtils::merge($this->urlData, $urlData);
+        }
+        return $this;
+    }
+
+    /**
+     * Get language from current url if exist and app is configured to have multiple languages
+     * @return string|null
+     */
+    public function getLanguage(): ?string
+    {
+        $lang = null;
+        if (Config::get('languageMultiple')) {
+            $supportedLanguages = Config::get('languagesSupported');
+            if ($supportedLanguages) {
+                $relativeUrl = $this->getRelativePath(self::getApplicationUrl());
+                foreach ($supportedLanguages as $language) {
+                    if (str_starts_with($relativeUrl, "/$language/") || $relativeUrl === "/$language") {
+                        $lang = $language;
+                        break;
+                    }
+                }
+            }
+        }
+        return $lang;
+    }
+
+    /**
+     * Replace current url language with the new language
+     * @param string $newLanguage
+     */
+    public function replaceLanguage(string $newLanguage): void
+    {
+        $foundLanguage = $this->getLanguage();
+        $applicationUrl = self::getApplicationUrl();
+        $relativeUrl = $this->getRelativePath($applicationUrl);
+        if ($foundLanguage) {
+            $relativeUrl = substr($relativeUrl, strlen($foundLanguage) + 1);
+        }
+        $this->setPath($applicationUrl->appendPath("/$newLanguage" . $relativeUrl)->getPath());
+    }
+
+    /**
+     * Get relative path to other url
+     * @param Url|null $otherUrl If not set, get full relative path of current url
+     * @return string
+     */
+    public function getRelativePath(?self $otherUrl = null): string
+    {
+        $startFrom = 0;
+        if ($otherUrl) {
+            $applicationUrl = Url::getApplicationUrl();
+            $startFrom = strlen($applicationUrl->urlData['path']);
+            if (str_ends_with($applicationUrl->urlData['path'], "/")) {
+                $startFrom--;
+            }
+        }
+        return substr($this->urlData['path'], $startFrom);
+    }
+
+    /**
+     * Redirect
+     * @param int $code
+     * @return never
+     * @codeCoverageIgnore
+     */
+    public function redirect(int $code = 302): never
+    {
+        if (Request::isAsync()) {
+            Response::header("x-redirect: " . $this->getUrlAsString());
+        } else {
+            http_response_code($code);
+            Response::header("location: " . $this->getUrlAsString());
+        }
+        exit;
     }
 
     /**
