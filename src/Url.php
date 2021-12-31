@@ -190,12 +190,7 @@ class Url implements JsonSerializable
         if ($this->urlData['port'] ?? null) {
             $url .= ":" . $this->urlData['port'];
         }
-        if ($this->urlData['path'] ?? null) {
-            $url .= $this->urlData['path'];
-        }
-        if (is_array($this->urlData['queryParameters'] ?? null) && $this->urlData['queryParameters']) {
-            $url .= "?" . http_build_query($this->urlData['queryParameters']);
-        }
+        $url .= $this->getPathAndQueryString();
         if ($this->urlData['fragment'] ?? null) {
             $url .= "#" . $this->urlData['fragment'];
         }
@@ -238,7 +233,7 @@ class Url implements JsonSerializable
      * @param string|null $str
      * @return self
      */
-    public function getPassword(?string $str): self
+    public function setPassword(?string $str): self
     {
         $this->urlData['pass'] = $str;
         return $this;
@@ -264,6 +259,28 @@ class Url implements JsonSerializable
     {
         $this->urlData['port'] = $port;
         return $this;
+    }
+
+    /**
+     * Get path
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->urlData['path'] ?? '';
+    }
+
+    /**
+     * Get path and query string
+     * @return string
+     */
+    public function getPathAndQueryString(): string
+    {
+        $str = $this->getPath();
+        if (is_array($this->urlData['queryParameters'] ?? null) && $this->urlData['queryParameters']) {
+            $str .= "?" . http_build_query($this->urlData['queryParameters']);
+        }
+        return $str;
     }
 
     /**

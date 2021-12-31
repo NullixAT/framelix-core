@@ -276,7 +276,6 @@ class ErrorHandler
      * @param mixed $errline
      * @return bool
      * @noinspection PhpUnusedParameterInspection
-     * @codeCoverageIgnore
      */
     public static function onError(mixed $errno, mixed $errstr, mixed $errfile, mixed $errline): bool
     {

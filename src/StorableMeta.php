@@ -23,7 +23,9 @@ use JsonSerializable;
 use function base64_decode;
 use function base64_encode;
 use function get_class;
+use function gettype;
 use function is_array;
+use function is_object;
 use function mb_strtolower;
 use function strlen;
 use function trim;
@@ -199,6 +201,8 @@ abstract class StorableMeta implements JsonSerializable
 
     /**
      * Get the quick search lazy condition
+     * Don't add columns to the resulting condition, it will have not effect
+     * Add custom columns to $this->lazySearchConditionDefault
      * @param array|null $options Option values set by the user in the interface
      * @return LazySearchCondition
      */
@@ -407,12 +411,11 @@ abstract class StorableMeta implements JsonSerializable
         $originalStorable = $this->storable;
         foreach ($objects as $object) {
             if (!$object instanceof $this->storable) {
-                throw new Exception(
-                    'Passed invalid storable with type ' . get_class($object) . ' to meta, expected ' . get_class(
-                        $this->storable
-                    ),
-                    ErrorCode::STORABLEMETA_NOSTORABLE
-                );
+                $error = 'Passed invalid storable with type '
+                    /** @phpstan-ignore-next-line */
+                    . (is_object($object) ? get_class($object) : gettype($object))
+                    . ' to meta, expected ' . get_class($this->storable);
+                throw new Exception($error, ErrorCode::STORABLEMETA_NOSTORABLE);
             }
             $this->storable = $object;
             $rowValues = [];
