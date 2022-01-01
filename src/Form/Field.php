@@ -360,7 +360,11 @@ abstract class Field implements JsonSerializable
             }
         }
         if ($this->required) {
-            if ($value === null || (is_array($value) && !$value) || (is_string($value) && !strlen($value))) {
+            if ($value === null
+                || $value === false
+                || (is_array($value) && !$value)
+                || (is_string($value) && !strlen($value))
+            ) {
                 return Lang::get('__framelix_form_validation_required__');
             }
         }
