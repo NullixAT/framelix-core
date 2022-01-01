@@ -64,10 +64,10 @@ class Grid extends Field
         if ($field instanceof self) {
             throw new Exception("Cannot put a Grid field into a Grid field", ErrorCode::FORM_GRID_NESTED_NOT_ALLOWED);
         }
-        if ($field->label === null && $this->label !== null && str_starts_with(
-                $this->label,
-                "__"
-            ) && str_ends_with($this->label, "__")) {
+        if ($field->label === null
+            && $this->label !== null
+            && str_starts_with($this->label, "__")
+            && str_ends_with($this->label, "__")) {
             $field->label = substr($this->label, -2) . "_" . $field->name . "__";
         }
         $this->fields[$field->name] = $field;

@@ -208,6 +208,15 @@ class FieldVisibilityCondition implements JsonSerializable
     }
 
     /**
+     * Clear the condition (unset)
+     * @return void
+     */
+    public function clear(): void
+    {
+        $this->data = [];
+    }
+
+    /**
      * Get json data
      * @return array
      */

@@ -206,7 +206,6 @@ class Search extends Select
         if ($this->defaultValue) {
             $type = $this->searchMethod['type'];
             if ($type === 'storable' || $type === 'storablemeta') {
-                $properties['properties']['initialSelectedOptions'] = [];
                 $defaultValues = !is_array($this->defaultValue) ? [$this->defaultValue] : $this->defaultValue;
                 $list = [];
                 foreach ($defaultValues as $defaultValue) {
@@ -224,6 +223,9 @@ class Search extends Select
                     $this->searchMethod['callableMethod']
                 );
             }
+        }
+        if (!is_array($properties['properties']['initialSelectedOptions'] ?? null)) {
+            $properties['properties']['initialSelectedOptions'] = null;
         }
         if (isset($properties['properties']['initialSelectedOptions'])) {
             $properties['properties']['initialSelectedOptions'] = ArrayUtils::getArrayForJavascript(

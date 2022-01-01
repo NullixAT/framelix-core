@@ -11,6 +11,16 @@ use Framelix\Framelix\Utils\StringUtils;
 class Html extends Field
 {
     /**
+     * Validate
+     * A html field contains nothing to be submitted
+     * @return bool
+     */
+    public function validate(): bool
+    {
+        return true;
+    }
+
+    /**
      * Get submitted value
      * @return string|null
      */

@@ -373,11 +373,11 @@ abstract class Field implements JsonSerializable
      */
     public function isVisible(): bool
     {
-        if (!$this->visibilityCondition) {
+        if (!($this->visibilityCondition->data ?? null)) {
             return true;
         }
         $isVisible = false;
-        $submittedValues = $this->form->getSubmittedValues();
+        $submittedValues = $this->form?->getSubmittedValues();
         foreach ($this->visibilityCondition->data as $row) {
             if ($row['type'] === 'and' && !$isVisible || $row['type'] === 'or') {
                 return false;
