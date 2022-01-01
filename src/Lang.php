@@ -298,6 +298,18 @@ class Lang
     }
 
     /**
+     * Set a language key at runtime
+     * @param string $key
+     * @param string $value
+     * @param string|null $lang
+     * @return void
+     */
+    public static function set(string $key, string $value, string $lang = null): void
+    {
+        self::$values[$lang ?? self::$lang][$key] = $value;
+    }
+
+    /**
      * Get translated language key
      * @param string $key
      * @param array|null $parameters
@@ -416,7 +428,7 @@ class Lang
             if (file_exists($file)) {
                 $values = JsonUtils::readFromFile($file);
                 foreach ($values as $key => $value) {
-                    self::$values[$language][$key] = $value[0];
+                    self::set($key, $value[0], $language);
                 }
             }
         }

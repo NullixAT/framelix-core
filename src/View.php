@@ -115,12 +115,15 @@ abstract class View implements JsonSerializable
     /**
      * Get translated page title
      * @param string $viewClass
-     * @param bool $escape Does remove html tags and html escape the string
+     * @param bool $cleanHtmlEscaped Does remove html tags and html escape the string
      * @param string|null $override Override page title, used when come from a view instance
      * @return string
      */
-    public static function getTranslatedPageTitle(string $viewClass, bool $escape, ?string $override = null): string
-    {
+    public static function getTranslatedPageTitle(
+        string $viewClass,
+        bool $cleanHtmlEscaped,
+        ?string $override = null
+    ): string {
         if (__CLASS__ !== static::class) {
             throw new Exception(
                 "getTranslatedPageTitle only can be called on " . __CLASS__ . ", not on a child. This prevent unintentional class loads",
@@ -133,7 +136,7 @@ abstract class View implements JsonSerializable
         $meta = self::getMetadataForView($viewClass);
         $pageTitle = $override ?? $meta['pageTitle'] ?? null;
         $pageTitle = str_replace('{classLangKey}', ClassUtils::getLangKey($viewClass), $pageTitle);
-        if ($escape) {
+        if ($cleanHtmlEscaped) {
             return HtmlUtils::escape(strip_tags(Lang::get($pageTitle)));
         } else {
             return Lang::get($pageTitle);
@@ -158,10 +161,7 @@ abstract class View implements JsonSerializable
             return null;
         }
         $metadata = self::getMetadataForView($viewClass);
-        $urlPath = $metadata['customUrl'] ?? $metadata['url'] ?? null;
-        if (!$urlPath) {
-            throw new Exception("No url mapped to view $viewClass", ErrorCode::VIEW_NOURL);
-        }
+        $urlPath = $metadata['customUrl'] ?? $metadata['url'];
         // replace regex parameters
         if (str_starts_with($urlPath, "~")) {
             $urlPath = trim($urlPath, "~");
@@ -170,6 +170,8 @@ abstract class View implements JsonSerializable
                     $urlPath = preg_replace("~\(\?<$key>.*?\)~", $value, $urlPath);
                 }
             }
+            // remove any unsupported chars from regex url
+            $urlPath = preg_replace("~[^a-z0-9-_/+.,]~i", "", $urlPath);
         }
         $url = Url::getApplicationUrl();
         // check if multilanguage, append language in uri
@@ -198,36 +200,22 @@ abstract class View implements JsonSerializable
                 }
             }
         }
-        $modules = [];
-        foreach (self::$availableViews as $viewClass => $viewFile) {
-            $module = ClassUtils::getModuleForClass($viewClass);
-            $modules[$module] = $module;
-        }
-        $metadata = [];
-        foreach ($modules as $module) {
-            $metadata = ArrayUtils::merge($metadata, self::getMetadata($module));
-        }
-        if (!isset($metadata['views'])) {
-            return null;
-        }
         $matchedViews = [];
         foreach (self::$availableViews as $class => $row) {
-            if (isset($row['url'])) {
-                if (isset($row['customUrl'])) {
-                    if (str_starts_with($row['customUrl'], "~")) {
-                        if (preg_match($row['customUrl'], $relativeUrl, $match)) {
-                            $matchedViews[] = [
-                                "class" => $class,
-                                "depth" => $row['depth'],
-                                'parameters' => $match
-                            ];
-                        }
-                    } elseif ($row['customUrl'] === $relativeUrl) {
-                        $matchedViews[] = ["class" => $class, "depth" => $row['depth']];
+            if (isset($row['customUrl'])) {
+                if (str_starts_with($row['customUrl'], "~")) {
+                    if (preg_match($row['customUrl'], $relativeUrl, $match)) {
+                        $matchedViews[] = [
+                            "class" => $class,
+                            "depth" => $row['depth'],
+                            'parameters' => $match
+                        ];
                     }
-                } elseif ($row['url'] === $relativeUrl) {
+                } elseif ($row['customUrl'] === $relativeUrl) {
                     $matchedViews[] = ["class" => $class, "depth" => $row['depth']];
                 }
+            } elseif ($row['url'] === $relativeUrl) {
+                $matchedViews[] = ["class" => $class, "depth" => $row['depth']];
             }
         }
         if ($matchedViews) {
@@ -246,6 +234,7 @@ abstract class View implements JsonSerializable
      * Load view for current url
      * @param bool $redirectIfLanguageIsInvalid If app is multilanguage and language is missing/invalid in url, redirect to same page with correct lang included
      * @param bool $setActiveLanguageFromUrl Does set the current active language to the detected language from url
+     * @codeCoverageIgnore
      */
     public static function loadViewForCurrentUrl(
         bool $redirectIfLanguageIsInvalid = true,
@@ -336,7 +325,7 @@ abstract class View implements JsonSerializable
     }
 
     /**
-     *Replace access role parameters
+     * Replace access role parameters
      * @param mixed $accessRole
      * @param Url|null $url Url to replace parameters from
      * @return mixed
@@ -426,12 +415,15 @@ abstract class View implements JsonSerializable
                 }
 
                 $defaultProps = $reflection->getDefaultProperties();
+                // this is just a dev helper
+                // @codeCoverageIgnoreStart
                 if (($defaultProps['accessRole'] ?? null) === null) {
                     throw new Exception(
                         "Property $viewClass->'accessRole' must be set, use \"*\" to allow everybody",
                         ErrorCode::VIEW_ACCESSROLE_MISSING
                     );
                 }
+                // @codeCoverageIgnoreEnd
                 $pageTitle = $defaultProps['pageTitle'] ?? '';
                 $url = "/" . strtolower(implode("/", $exp));
                 $metadata['views'][$viewClass] = [
