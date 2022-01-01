@@ -383,8 +383,17 @@ abstract class Field implements JsonSerializable
         $isVisible = false;
         $submittedValues = $this->form?->getSubmittedValues();
         foreach ($this->visibilityCondition->data as $row) {
-            if ($row['type'] === 'and' && !$isVisible || $row['type'] === 'or') {
-                return false;
+            if ($row['type'] === 'or') {
+                if ($isVisible) {
+                    return true;
+                }
+                continue;
+            }
+            if ($row['type'] === 'and') {
+                if (!$isVisible) {
+                    return false;
+                }
+                continue;
             }
             $submittedValue = ArrayUtils::getValue($submittedValues, $row['field']);
             $requiredValue = $row['value'];
@@ -400,23 +409,32 @@ abstract class Field implements JsonSerializable
                         $requiredValue = [$requiredValue];
                     }
                     foreach ($requiredValue as $requiredValueEntry) {
+                        $requiredValueEntry = (string)$requiredValueEntry;
                         if ($row['type'] === 'equal' || $row['type'] === 'like') {
                             foreach ($submittedValue as $submittedValueEntry) {
-                                $isVisible = $row['type'] === 'equal' ? $submittedValueEntry === $requiredValueEntry : preg_match(
-                                    "~" . preg_quote($submittedValueEntry) . "~i",
-                                    $requiredValueEntry
-                                );
+                                if ($row['type'] === 'equal') {
+                                    $isVisible = $submittedValueEntry === $requiredValueEntry;
+                                } else {
+                                    $isVisible = !!preg_match(
+                                        "~" . preg_quote($requiredValueEntry) . "~i",
+                                        $submittedValueEntry
+                                    );
+                                }
                                 if ($isVisible) {
                                     continue 4;
                                 }
                             }
                         } else {
                             foreach ($submittedValue as $submittedValueEntry) {
-                                $isVisible = $row['type'] === 'notEqual' ? $submittedValueEntry !== $requiredValueEntry : !preg_match(
-                                    "~" . preg_quote($submittedValueEntry) . "~i",
-                                    $requiredValueEntry
-                                );
-                                if (!$isVisible) {
+                                if ($row['type'] === 'notEqual') {
+                                    $isVisible = $submittedValueEntry !== $requiredValueEntry;
+                                } else {
+                                    $isVisible = !preg_match(
+                                        "~" . preg_quote($requiredValueEntry) . "~i",
+                                        $submittedValueEntry
+                                    );
+                                }
+                                if ($isVisible) {
                                     continue 4;
                                 }
                             }
@@ -454,6 +472,16 @@ abstract class Field implements JsonSerializable
             }
         }
         return $isVisible;
+    }
+
+    /**
+     * Reset the cache for getConvertedSubmittedValue
+     * This is mostly requird for unit tests
+     * @return void
+     */
+    public function resetConvertedSubmittedValueCache(): void
+    {
+        $this->convertedSubmittedValueCache = [];
     }
 
     /**

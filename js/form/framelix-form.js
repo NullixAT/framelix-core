@@ -418,17 +418,19 @@ class FramelixForm {
       const field = fieldsWithConditionFlat[i]
       let conditionData = field.visibilityCondition
       let isVisible = false
-      let stopIfNextIsVisible = false
       conditionLoop: for (let j = 0; j < conditionData.properties.data.length; j++) {
         const conditionRow = conditionData.properties.data[j]
-        if (conditionRow.type === 'and') {
-          stopIfNextIsVisible = false
-        }
         if (conditionRow.type === 'or') {
-          stopIfNextIsVisible = true
+          if (isVisible) {
+            break
+          }
+          continue
         }
-        if (conditionRow.type === 'and' && !isVisible) {
-          break
+        if (conditionRow.type === 'and') {
+          if (!isVisible) {
+            break
+          }
+          continue
         }
         let conditionFieldValue = typeof formValuesFlatIndexed[conditionRow.field] === 'undefined' ? null : formValuesFlatIndexed[conditionRow.field]
         let requiredValue = conditionRow.value
@@ -489,9 +491,6 @@ class FramelixForm {
               isVisible = !isVisible
             }
             break
-        }
-        if (stopIfNextIsVisible && isVisible) {
-          break
         }
       }
       field.setVisibilityConditionHiddenStatus(isVisible)

@@ -310,7 +310,7 @@ class Form implements JsonSerializable
      * Create/Update storables based on submitted grid values for given field name
      * It does create new storables for each row based on $baseStorable
      * It does modify storables for each row that does exist in $defaultValue
-     * It does remove all storables that are set in $defaultValue and that are not set in submitted value (user has removed it)
+     * It does remove all storables that are set in $defaultValue and that are marked as deleted (user has removed it)
      * In the end, it automatically adds new storables when user enters a new row, it modifies existing storable when user modify a row, it deletes storables when user deletes a row
      * @param string $fieldName The fieldName that need to be a grid, if field is no grid, this action does nothing
      * @param Storable $baseStorable The base storable to clone from
