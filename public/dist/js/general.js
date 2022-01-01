@@ -772,12 +772,19 @@ class FramelixLang {
 
   /**
    * Get translated language key
-   * @param {string} key
+   * @param {string|array} key If array then array values represent all possible parameters from this function
+   *  0 => key
+   *  1 => parameters
+   *  2 => lang
    * @param {Object=} parameters
    * @param {string=} lang
    * @return {*}
    */
   static get(key, parameters, lang) {
+    if (Array.isArray(key)) {
+      return FramelixLang.get.apply(null, key);
+    }
+
     if (!key || typeof key !== 'string' || !key.startsWith('__')) {
       return key;
     }

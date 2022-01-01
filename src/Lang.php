@@ -11,6 +11,7 @@ use function basename;
 use function explode;
 use function file_exists;
 use function in_array;
+use function is_array;
 use function preg_match;
 use function preg_match_all;
 use function str_replace;
@@ -311,13 +312,19 @@ class Lang
 
     /**
      * Get translated language key
-     * @param string $key
+     * @param string|array $key If array then array values represent all possible parameters from this function
+     *  0 => $key
+     *  1 => $parameters
+     *  2 => $lang
      * @param array|null $parameters
      * @param string|null $lang
      * @return string
      */
-    public static function get(string $key, ?array $parameters = null, ?string $lang = null): string
+    public static function get(string|array $key, ?array $parameters = null, ?string $lang = null): string
     {
+        if (is_array($key)) {
+            return self::get(...$key);
+        }
         if (!$key) {
             return $key;
         }
