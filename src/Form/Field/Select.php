@@ -75,7 +75,7 @@ class Select extends Field
         if (is_array($storables)) {
             foreach ($storables as $storable) {
                 if ($storable instanceof Storable) {
-                    $this->addOption($storable->id, $storable->getHtmlString());
+                    $this->addOption((string)$storable->id, $storable->getHtmlString());
                 }
             }
         }
@@ -116,6 +116,15 @@ class Select extends Field
     {
         $optionKey = $this->indexOfOptionValue($value);
         unset($this->options[$optionKey]);
+    }
+
+    /**
+     * Get options
+     * @return string[][]
+     */
+    public function getOptions(): array
+    {
+        return $this->options;
     }
 
     /**
