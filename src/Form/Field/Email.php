@@ -41,10 +41,8 @@ class Email extends Text
         }
         $value = $this->getSubmittedValue();
         if (strlen($value) && is_string($value)) {
-            $regex = "~^[a-zA-Z0-9" . preg_quote(
-                    ".!#$%&’*+/=?^_`{|}~-",
-                    "~"
-                ) . "]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]{2,}~";
+            $regex = "~^[a-zA-Z0-9"
+                . preg_quote(".!#$%&’*+/=?^_`{|}~-", "~") . "]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]{2,}~";
             if (!preg_match($regex, $value)) {
                 return Lang::get('__framelix_form_validation_email__');
             }

@@ -42,6 +42,9 @@ class DateTime extends \DateTime implements StorablePropertyInterface
      */
     public static function anyToUnixtime(mixed $value): false|int
     {
+        if ($value instanceof \Framelix\Framelix\Date) {
+            return $value->dateTime->getTimestamp();
+        }
         if ($value instanceof self) {
             return $value->getTimestamp();
         }

@@ -52,9 +52,6 @@ class Date extends Text
             return $parentValidation;
         }
         $value = $this->getConvertedSubmittedValue();
-        if ($this->required && $value === null) {
-            return Lang::get('__framelix_form_validation_invaliddate__');
-        }
         if ($value && $this->minDate !== null && \Framelix\Framelix\Date::compare($value, $this->minDate) === "<") {
             return Lang::get('__framelix_form_validation_mindate__', ['date' => DateTime::anyToFormat($this->minDate)]);
         }

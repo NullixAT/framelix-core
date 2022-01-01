@@ -20,10 +20,10 @@ class Color extends Field
     public int|string|null $maxWidth = 130;
 
     /**
-     * Get submitted value
+     * Get converted submitted value
      * @return string|null
      */
-    public function getSubmittedValue(): ?string
+    protected function getDefaultConvertedSubmittedValue(): ?string
     {
         $value = parent::getSubmittedValue();
         if (is_string($value) && strlen($value) === 7) {

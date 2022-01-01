@@ -57,9 +57,6 @@ class DateTime extends Text
             return $parentValidation;
         }
         $value = $this->getDefaultConvertedSubmittedValue();
-        if ($this->required && $value === null) {
-            return Lang::get('__framelix_form_validation_invaliddate__');
-        }
         if ($value) {
             $valueMin = clone $value;
             $valueMin->setSeconds(0);
@@ -71,7 +68,7 @@ class DateTime extends Text
                     ['date' => $this->minDateTime->getRawTextString()]
                 );
             }
-            if ($this->minDateTime !== null & $valueMax > $this->maxDateTime) {
+            if ($this->maxDateTime !== null & $valueMax > $this->maxDateTime) {
                 return Lang::get(
                     '__framelix_form_validation_maxdate__',
                     ['date' => $this->maxDateTime->getRawTextString()]

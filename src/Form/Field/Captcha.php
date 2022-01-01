@@ -55,9 +55,8 @@ class Captcha extends Field
                             Config::get('captchaKeys[' . $type . '][privateKey]')
                         );
                         if ($type === self::TYPE_RECAPTCHA_V3) {
-                            $success = ($responseData['success'] ?? null) && ($responseData['score'] ?? 0) >= (Config::get(
-                                        'captchaScoreTreshold'
-                                    ) ?? 0.5);
+                            $treshold = (Config::get('captchaScoreTreshold') ?? 0.5);
+                            $success = ($responseData['success'] ?? null) && ($responseData['score'] ?? 0) >= $treshold;
                         } else {
                             $success = (bool)($responseData['success'] ?? null);
                         }

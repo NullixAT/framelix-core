@@ -123,8 +123,7 @@ abstract class Sidebar
         string $icon = "adjust",
         string $target = "_self",
         ?array $urlParameters = null,
-        ?array $viewUrlParameters = null
-        ,
+        ?array $viewUrlParameters = null,
         ?string $badgeText = null
     ): void {
         if (!$this->linkData) {
