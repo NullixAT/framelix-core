@@ -4,6 +4,7 @@ namespace Framelix\Framelix\Utils;
 
 use Framelix\Framelix\ErrorCode;
 use Framelix\Framelix\Exception;
+use Framelix\Framelix\Storable\Storable;
 
 use function array_key_exists;
 use function array_keys;
@@ -16,6 +17,7 @@ use function is_array;
 use function is_object;
 use function mb_strtolower;
 use function method_exists;
+use function property_exists;
 use function str_replace;
 
 /**
@@ -189,7 +191,13 @@ class ArrayUtils
                 $workingValue = $workingValue[$levelKey];
             } elseif (is_object($workingValue) && method_exists($workingValue, $levelKey)) {
                 $workingValue = call_user_func_array([$workingValue, $levelKey], $params ?? []);
-            } elseif (is_object($workingValue)) {
+            } elseif ($workingValue instanceof Storable) {
+                if (Storable::getStorableSchemaProperty($workingValue, $levelKey)) {
+                    $workingValue = $workingValue->{$levelKey};
+                } else {
+                    $workingValue = null;
+                }
+            } elseif (is_object($workingValue) && property_exists($workingValue, $levelKey)) {
                 $workingValue = $workingValue->{$levelKey} ?? null;
             } else {
                 return null;
