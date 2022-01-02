@@ -2,6 +2,9 @@
   "name": "framelix",
   "description": "A full featured PHP framework with built-in backend and data management capabilities.",
   "version": "1.1.2",
+  "scripts": {
+    "update-and-push-submodule": "git checkout main && git submodule update --remote && git pull && git commit -am ':pencil2: updated submodule' && git push"
+  },
   "devDependencies": {
     "@babel/core": "^7.14.8",
     "@babel/plugin-proposal-class-properties": "^7.14.5",
