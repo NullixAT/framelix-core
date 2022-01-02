@@ -76,6 +76,7 @@ class AppUpdate extends View
                             );
                             Buffer::start();
                             Console::installZipPackage($updateAppUpdateZipFile);
+                            unlink($updateAppUpdateZipFile);
                             $output = Buffer::get();
                             Session::set('appupdate-lastresult', $output);
                         }
