@@ -18,6 +18,7 @@ use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\View;
 
+use function file_exists;
 use function get_class;
 use function in_array;
 use function is_string;
@@ -231,7 +232,12 @@ abstract class Sidebar
         $this->addLink(View\Backend\Logs\SystemEventLogs::class);
         $this->showHtmlForLinkData();
 
-        $this->addLink(View\Backend\AppUpdate::class, icon: 'system_update');
+        $updateAppUpdateFile = __DIR__ . "/../../tmp/app-update.json";
+        $badgeText = null;
+        if (file_exists($updateAppUpdateFile)) {
+            $badgeText = 1;
+        }
+        $this->addLink(View\Backend\AppUpdate::class, icon: 'system_update', badgeText: $badgeText);
         $this->showHtmlForLinkData();
 
         $this->startGroup("__framelix_developer_options__", "developer_mode");

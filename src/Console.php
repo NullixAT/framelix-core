@@ -17,6 +17,7 @@ use function array_values;
 use function copy;
 use function count;
 use function file_exists;
+use function file_get_contents;
 use function hash_file;
 use function implode;
 use function in_array;
@@ -31,9 +32,16 @@ use function readline_add_history;
 use function realpath;
 use function rename;
 use function sleep;
+use function str_contains;
+use function str_ends_with;
 use function str_starts_with;
+use function stream_context_create;
+use function strpos;
+use function substr;
 use function unlink;
+use function version_compare;
 
+use const FRAMELIX_APP_ROOT;
 use const FRAMELIX_MODULE;
 
 /**
@@ -106,12 +114,63 @@ class Console
     }
 
     /**
-     * Check for app updates (Modules and App)
+     * Check for app updates
      * @return void
      */
     public static function checkAppUpdates(): void
     {
-        // todo integrate
+        $updateAppUpdateFile = FRAMELIX_APP_ROOT . "/modules/Framelix/tmp/app-update.json";
+        if (file_exists($updateAppUpdateFile)) {
+            unlink($updateAppUpdateFile);
+        }
+        $packageJsonFile = FRAMELIX_APP_ROOT . "/package.json";
+        if (file_exists($packageJsonFile)) {
+            try {
+                $packageJson = JsonUtils::readFromFile($packageJsonFile);
+                $currentVersion = $packageJson['version'];
+                $context = stream_context_create([
+                        'http' => [
+                            'method' => "GET",
+                            'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
+                        ]
+                    ]
+                );
+                if (isset($packageJson['repository']['url'])) {
+                    $url = $packageJson['repository']['url'];
+                    if (str_starts_with($url, "git+") || str_contains($url, "github.com")) {
+                        if (str_starts_with($url, "git+")) {
+                            $url = substr($url, 4);
+                        }
+                        if (str_ends_with($url, ".git")) {
+                            $url = substr($url, strpos($url, 'github.com/') + 11, -4);
+                            $releaseData = JsonUtils::decode(
+                                file_get_contents(
+                                    'https://api.github.com/repos/' . $url . '/releases',
+                                    false,
+                                    $context
+                                )
+                            );
+                            foreach ($releaseData as $row) {
+                                if ($row['draft']) {
+                                    continue;
+                                }
+                                if (version_compare($row['tag_name'], $currentVersion, '>')) {
+                                    $currentVersion = $row['tag_name'];
+                                    JsonUtils::writeToFile($updateAppUpdateFile, $row);
+                                }
+                            }
+                        }
+                    }
+                }
+                if ($currentVersion && $packageJson['version'] !== $currentVersion) {
+                    echo '[INFO] New version ' . $currentVersion . ' available' . "\n";
+                } else {
+                    echo '[INFO] Everything is up2date' . "\n";
+                }
+            } catch (Throwable $e) {
+                self::red('[ERROR] ' . $e->getMessage() . "\n");
+            }
+        }
     }
 
     /**

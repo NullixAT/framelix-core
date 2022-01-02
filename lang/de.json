@@ -1,4 +1,16 @@
 {
+    "__framelix_appupdate_autoupdate__": [
+        "Klicke hier um deine App zu aktualisieren",
+        "4f9b4"
+    ],
+    "__framelix_appupdate_changelog__": [
+        "Changelog",
+        "c4918"
+    ],
+    "__framelix_appupdate_check_update__": [
+        "Klicke hier um auf Updates zu pr\u00fcfen",
+        "4e5d3"
+    ],
     "__framelix_appupdate_confirm__": [
         "Ich best\u00e4tige diese Aktion",
         "44bac"
@@ -11,20 +23,32 @@
         "W\u00e4hle ein ZIP Paket",
         "faae2"
     ],
-    "__framelix_appupdate_updatetype_label__": [
-        "Update Methode",
-        "f361b"
+    "__framelix_appupdate_no_update_available__": [
+        "Kein Update verf\u00fcgbar. Deine App ist aktuell.",
+        "c92c5"
     ],
-    "__framelix_appupdate_updatetype_prerelease__": [
-        "Pre-Release Channel",
-        "b0104"
+    "__framelix_appupdate_tabs_appupdate__": [
+        "App Update",
+        "0ea14"
     ],
-    "__framelix_appupdate_updatetype_stable__": [
-        "Stable Channel",
-        "c6ae5"
+    "__framelix_appupdate_tabs_backup__": [
+        "Backup",
+        "3500b"
+    ],
+    "__framelix_appupdate_tabs_update_log__": [
+        "Update Log",
+        "cbc07"
+    ],
+    "__framelix_appupdate_tabs_upload__": [
+        "Ein Zip Paket hochladen",
+        "18a3d"
+    ],
+    "__framelix_appupdate_update_available__": [
+        "Es gibt eine neue App Version welche du mit einem Klick installieren kannst. Mach immer ein Backup vor dem Update.",
+        "d0718"
     ],
     "__framelix_appupdate_updatetype_upload__": [
-        "Upload ZIP",
+        "Ein Zip Paket hochladen",
         "dfa3b"
     ],
     "__framelix_backupreestore__": [
@@ -1130,10 +1154,6 @@
     "__framelix_view_backend_appupdate_do_update1__": [
         "Ausf\u00fchren",
         "40cd0"
-    ],
-    "__framelix_view_backend_appupdate_lastresult__": [
-        "Update Protokoll",
-        "fe61e"
     ],
     "__framelix_view_backend_config_backuprestore__": [
         "Backup\/Restore",

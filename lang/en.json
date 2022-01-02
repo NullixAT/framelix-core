@@ -1,4 +1,13 @@
 {
+    "__framelix_appupdate_autoupdate__": [
+        "Click here to update now"
+    ],
+    "__framelix_appupdate_changelog__": [
+        "Changelog"
+    ],
+    "__framelix_appupdate_check_update__": [
+        "Click here to check for updates online now"
+    ],
     "__framelix_appupdate_confirm__": [
         "I confirm this action"
     ],
@@ -8,14 +17,23 @@
     "__framelix_appupdate_file__": [
         "Choose a ZIP Package"
     ],
-    "__framelix_appupdate_updatetype_label__": [
-        "Update Method"
+    "__framelix_appupdate_no_update_available__": [
+        "There is no update available. Your app is already up 2 date."
     ],
-    "__framelix_appupdate_updatetype_prerelease__": [
-        "Pre-Release Channel"
+    "__framelix_appupdate_tabs_appupdate__": [
+        "App Update"
     ],
-    "__framelix_appupdate_updatetype_stable__": [
-        "Stable Channel"
+    "__framelix_appupdate_tabs_backup__": [
+        "Backup"
+    ],
+    "__framelix_appupdate_tabs_update_log__": [
+        "Update Log"
+    ],
+    "__framelix_appupdate_tabs_upload__": [
+        "Upload a ZIP package"
+    ],
+    "__framelix_appupdate_update_available__": [
+        "There is a new app update available which you can install with just a click. Always make a backup before updating."
     ],
     "__framelix_appupdate_updatetype_upload__": [
         "Upload ZIP"
@@ -847,9 +865,6 @@
     ],
     "__framelix_view_backend_appupdate_do_update1__": [
         "Execute"
-    ],
-    "__framelix_view_backend_appupdate_lastresult__": [
-        "Update Protocol"
     ],
     "__framelix_view_backend_config_backuprestore__": [
         "Backup\/Restore"
