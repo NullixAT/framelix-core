@@ -24,6 +24,7 @@ $arr = [
     "logs" => $root . "/logs",
     "modules" => $root . "/modules",
     ".htaccess" => $root . "/.htaccess",
+    "LICENSE" => $root . "/LICENSE",
     "index.php" => $root . "/index.php",
     "package.json" => $root . "/package.json"
 ];
