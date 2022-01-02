@@ -235,7 +235,7 @@ abstract class Sidebar
         $updateAppUpdateFile = __DIR__ . "/../../tmp/app-update.json";
         $badgeText = null;
         if (file_exists($updateAppUpdateFile)) {
-            $badgeText = 1;
+            $badgeText = '1';
         }
         $this->addLink(View\Backend\AppUpdate::class, icon: 'system_update', badgeText: $badgeText);
         $this->showHtmlForLinkData();
