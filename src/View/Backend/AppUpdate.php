@@ -77,6 +77,7 @@ class AppUpdate extends View
                                 file_get_contents($row['browser_download_url'], false, $context)
                             );
                             Buffer::start();
+                            Console::$htmlOutput = true;
                             Console::installZipPackage($updateAppUpdateZipFile);
                             unlink($updateAppUpdateZipFile);
                             unlink($updateAppUpdateFile);
@@ -227,9 +228,7 @@ class AppUpdate extends View
                 if (Session::get('appupdate-lastresult')) {
                     $tabs->addTab('update-log', '__framelix_appupdate_tabs_update_log__', new self());
                 }
-                if (file_exists($updateAppUpdateFile)) {
-                    $tabs->addTab('appupdate', '__framelix_appupdate_tabs_appupdate__', new self());
-                }
+                $tabs->addTab('appupdate', '__framelix_appupdate_tabs_appupdate__', new self());
                 $tabs->addTab('backup', '__framelix_appupdate_tabs_backup__', new self());
                 $tabs->addTab('upload', '__framelix_appupdate_tabs_upload__', new self());
                 $tabs->show();
