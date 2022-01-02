@@ -61,7 +61,9 @@ class BruteForceProtection extends Storable
         $entry = self::getByConditionOne('idHash = {0}', [$idHash], connectionId: $connectionId);
         if (!$entry) {
             $entry = new self();
-            $entry->connectionId = $connectionId;
+            if ($connectionId) {
+                $entry->connectionId = $connectionId;
+            }
             $entry->idHash = $idHash;
             $entry->count = 0;
         }
