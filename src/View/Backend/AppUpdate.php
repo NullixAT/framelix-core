@@ -35,6 +35,8 @@ use function strlen;
 use function substr;
 use function unlink;
 
+use function var_dump;
+
 use const FILE_APPEND;
 use const FRAMELIX_APP_ROOT;
 
@@ -72,11 +74,12 @@ class AppUpdate extends View
                             $updateAppUpdateZipFile = __DIR__ . "/../../../tmp/app-update.zip";
                             file_put_contents(
                                 $updateAppUpdateZipFile,
-                                file_get_contents($row['browser_download_url'], null, $context)
+                                file_get_contents($row['browser_download_url'], false, $context)
                             );
                             Buffer::start();
                             Console::installZipPackage($updateAppUpdateZipFile);
                             unlink($updateAppUpdateZipFile);
+                            unlink($updateAppUpdateFile);
                             $output = Buffer::get();
                             Session::set('appupdate-lastresult', $output);
                         }
