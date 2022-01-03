@@ -565,9 +565,12 @@ class FramelixForm {
       fieldRenderPromises.push(field.rendered)
     }
 
+    const bottomRow = $(`<div class="framelix-form-row framelix-form-row-bottom"></div>`)
+    this.container.append(bottomRow)
+
     if (Object.keys(this.buttons).length) {
-      const buttonsRow = $(`<div class="framelix-form-row framelix-form-buttons"></div>`)
-      this.container.append(buttonsRow)
+      const buttonsRow = $(`<div class="framelix-form-buttons"></div>`)
+      bottomRow.append(buttonsRow)
 
       for (let i in this.buttons) {
         const buttonData = this.buttons[i]
@@ -606,7 +609,7 @@ class FramelixForm {
       })
     }
     this.submitStatusContainer = $(`<div class="framelix-form-submit-status"></div>`)
-    this.container.append(this.submitStatusContainer)
+    bottomRow.append(this.submitStatusContainer)
     this.container.css('display', '')
     if (this.validationMessage !== null) this.showValidationMessage(this.validationMessage)
     this.form.on('focusin', function () {
@@ -651,7 +654,7 @@ class FramelixForm {
       if (this.form.attr('target') === '_blank') {
         setTimeout(function () {
           self.setSubmitStatus(false)
-          self.form.trigger(FramelixForm.EVENT_SUBMITTED)
+          self.form.trigger(FramelixForm.EVENT_SUBMITTED, { 'submitButtonName': submitButtonName })
         }, 1000)
       }
       return true
@@ -698,7 +701,7 @@ class FramelixForm {
     self.submitRequest = null
     await request.finished
     self.setSubmitStatus(false)
-    self.form.trigger(FramelixForm.EVENT_SUBMITTED)
+    self.form.trigger(FramelixForm.EVENT_SUBMITTED, { 'submitButtonName': submitButtonName })
     // validation errors
     if (request.submitRequest.status === 406) {
       let validationData = await request.getJson()

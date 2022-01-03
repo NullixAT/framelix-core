@@ -3,7 +3,8 @@
   border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
   margin-bottom: 5px;
   background: var(--color-subtle-bg);
-  color: var(--color-subtle-bg-text); }
+  color: var(--color-subtle-bg-text);
+  font-size: 92%; }
   .framelix-alert.framelix-alert-primary {
     background: var(--color-primary-bg-subtle);
     color: var(--color-primary-bg-subtle-text); }

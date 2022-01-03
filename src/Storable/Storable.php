@@ -850,7 +850,6 @@ abstract class Storable implements JsonSerializable, ObjectTransformable
         $storableSchema = Storable::getStorableSchema($this);
         $db->delete($storableSchema->tableName, "id = " . $this->id);
         $db->delete(StorableSchema::ID_TABLE, "id = " . $this->id);
-        unset($this->propertyCache['dbvalue']);
         $id = $this->id;
         $textString = $this->getRawTextString();
         $this->id = null;

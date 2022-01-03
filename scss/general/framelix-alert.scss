@@ -4,6 +4,7 @@
   margin-bottom: 5px;
   background: var(--color-subtle-bg);
   color: var(--color-subtle-bg-text);
+  font-size: 92%;
 
   &.framelix-alert-primary {
     background: var(--color-primary-bg-subtle);
@@ -22,7 +23,7 @@
 
   &.framelix-alert-error {
     background: var(--color-error-bg-subtle);
-    color:  var(--color-error-bg-subtle-text);
+    color: var(--color-error-bg-subtle-text);
   }
 
   &:not(.framelix-alert-no-icon) {

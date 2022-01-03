@@ -7,6 +7,8 @@ use Framelix\Framelix\Lang;
 use function call_user_func_array;
 use function method_exists;
 use function str_replace;
+use function strlen;
+use function substr;
 
 /**
  * String utilities for frequent tasks
@@ -92,5 +94,20 @@ class StringUtils
         $string = str_replace($s, $r, $string);
         $string = preg_replace("~[^a-z0-9\. \-_]~i", "-", $string);
         return preg_replace("~-{2,}~i", "-", $string);
+    }
+
+    /**
+     * Cut a string at specific length and add $truncateAffix if too long
+     * @param string $string
+     * @param int $length
+     * @param string $truncateAffix
+     * @return string
+     */
+    public static function cut(string $string, int $length, string $truncateAffix = "..."): string
+    {
+        if (strlen($string) > $length) {
+            return substr($string, 0, $length) . $truncateAffix;
+        }
+        return $string;
     }
 }
