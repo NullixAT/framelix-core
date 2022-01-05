@@ -155,6 +155,22 @@ class FramelixTabs {
   }
 
   /**
+   * Add a tab
+   * @param {string} id
+   * @param {string} label
+   * @param {string|function} content
+   * @param {string=} tabColor
+   */
+  addTab (id, label, content, tabColor) {
+    this.tabs[id] = {
+      'id': id,
+      'label': label,
+      'content': content,
+      'tabColor': tabColor
+    }
+  }
+
+  /**
    * Render the tabs into the container
    * @return {Promise<void>} Resolved when tabs are fully functional
    */
@@ -194,6 +210,8 @@ class FramelixTabs {
       if (row.content instanceof FramelixView) {
         content.html(row.content.container)
         row.content.render()
+      } else if (typeof row.content === 'function') {
+        content.html(await row.content())
       } else {
         content.html(row.content)
       }

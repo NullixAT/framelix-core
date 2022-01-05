@@ -6,8 +6,8 @@
   text-align: center;
   transform: translateY(200%);
   transition: .3s;
-  background: var(--color-strong-bg);
-  color: var(--color-strong-bg-text);
+  background: var(--color-toast-default-bg);
+  color: var(--color-toast-default-text);
 
   &.framelix-toast-visible {
     transform: translateY(0);
@@ -22,26 +22,9 @@
     transition: .3s;
     position: relative;
     padding: 10px;
+    border-radius: var(--border-radius);
 
-    &.framelix-toast-primary {
-      background: var(--color-primary-bg-strong);
-      color: var(--color-primary-bg-strong-text);
-    }
-
-    &.framelix-toast-success {
-      background: var(--color-success-bg-strong);
-      color: var(--color-success-bg-strong-text);
-    }
-
-    &.framelix-toast-warning {
-      background: var(--color-warning-bg-strong);
-      color: var(--color-warning-bg-strong-text);
-    }
-
-    &.framelix-toast-error {
-      background: var(--color-error-bg-strong);
-      color: var(--color-error-bg-strong-text);
-    }
+    @include insertColorSelectors("framelix-toast", "toast");
   }
 
   .framelix-toast-counter {
@@ -77,14 +60,6 @@
     overflow: auto;
     padding-left: 10px;
     margin-right: 10px;
-  }
-
-  .framelix-toast-close {
-    text-align: center;
-
-    button {
-      color: var(--color-strong-bg-text);
-    }
   }
 
   .framelix-toast-loader {

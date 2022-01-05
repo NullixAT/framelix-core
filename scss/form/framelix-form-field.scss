@@ -39,7 +39,6 @@
 
   .framelix-form-field-label-description {
     font-size: 0.9rem;
-    color: var(--color-strong-text);
     opacity: 0.8;
     margin-bottom: 3px;
   }
@@ -126,6 +125,7 @@ input[type='checkbox'] {
     font-family: "Material Icons", sans-serif;
     line-height: 1;
     display: block;
+    font-size: 12px;
   }
 
   &:checked {

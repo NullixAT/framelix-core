@@ -8,7 +8,6 @@ use Framelix\Framelix\Form\Field\Html;
 use Framelix\Framelix\Form\Field\Toggle;
 use Framelix\Framelix\Form\Form;
 use Framelix\Framelix\Html\Toast;
-use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\HtmlUtils;
@@ -35,18 +34,22 @@ class UpdateDatabase extends View
     public function onRequest(): void
     {
         if (Request::getPost('safeQueriesExecute') || Request::getPost('unsafeQueriesExecute')) {
-            $shell = Shell::prepare("php {*}", [
-                __DIR__ . "/../../../../console.php",
-                "updateDatabaseSafe"
-            ])->execute();
-            Toast::info(implode("<br/>", $shell->output));
-            if (Request::getPost('unsafeQueriesExecute')) {
+            if (Request::getPost('safeQueriesExecute')) {
+                $shell = Shell::prepare("php {*}", [
+                    __DIR__ . "/../../../../console.php",
+                    "updateDatabaseSafe"
+                ])->execute();
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
+                Toast::info(implode("<br/>", $shell->output));
+            }
+            if (Request::getPost('unsafeQueriesExecute')) {
                 $shell = Shell::prepare("php {*}", [
                     __DIR__ . "/../../../../console.php",
                     "updateDatabaseUnsafe"
                 ])->execute();
+                // wait 3 seconds to prevent opcache in default configs
+                sleep(3);
                 Toast::info(implode("<br/>", $shell->output));
             }
             Url::getBrowserUrl()->redirect();
@@ -120,15 +123,6 @@ class UpdateDatabase extends View
                 $form->addField($field);
             }
         }
-        if (!$unsafeQueries) {
-            $field = new Html();
-            $field->name = "fine";
-            $field->defaultValue = '<div class="framelix-alert framelix-alert-success">' . Lang::get(
-                    '__framelix_view_backend_dev_updatedatabase_noupdates__'
-                ) . '</div>';
-            $form->addField($field);
-        }
-
         return $form;
     }
 }

@@ -61,6 +61,24 @@ class File extends Field
     }
 
     /**
+     * Set allowing only images
+     * @return void
+     */
+    public function setOnlyImages(): void
+    {
+        $this->allowedFileTypes = '.jpg, .jpeg, .gif, .png, .webp';
+    }
+
+    /**
+     * Set allowing only videos
+     * @return void
+     */
+    public function setOnlyVideos(): void
+    {
+        $this->allowedFileTypes = '.mp4, .webm';
+    }
+
+    /**
      * Validate
      * Return error message on error or true on success
      * @return string|bool

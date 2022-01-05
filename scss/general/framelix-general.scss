@@ -135,12 +135,9 @@ datalist {
   height: 100%;
   width: calc(100% + 64px);
   position: absolute;
-  --colour1: #f1c40f;
-  --colour2: #2c3e50;
-  --speed: 1s;
   border-radius: var(--border-radius);
-  background-image: repeating-linear-gradient(45deg, var(--colour1) 0, var(--colour1) 16px, var(--colour2) 16px, var(--colour2) 32px);
-  animation: framelix-progress-bar var(--speed) linear infinite;
+  background-image: repeating-linear-gradient(45deg, var(--color-progressbar-1) 0, var(--color-progressbar-1) 16px, var(--color-progressbar-2) 16px, var(--color-progressbar-2) 32px);
+  animation: framelix-progress-bar 1s linear infinite;
 }
 
 @keyframes framelix-progress-bar {
@@ -155,35 +152,27 @@ datalist {
 .framelix-loading {
   display: inline-block;
   width: 30px;
-  height: 20px;
+  height: 16px;
   line-height: 0;
   user-select: none;
+  overflow: hidden;
+  position: relative;
+  transition: width .3s;
+  border-radius: var(--border-radius);
+  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .framelix-loading::after {
   content: "";
   display: block;
-  width: 5px;
-  height: 16px;
-  background: var(--color-primary-bg-subtle);
-  animation: framelix-loading 2s ease-in-out infinite;
+  height: 100%;
+  width: calc(100% + 64px);
+  position: absolute;
   border-radius: var(--border-radius);
-  position: relative;
-  top: 2px;
+  background-image: repeating-linear-gradient(45deg, var(--color-progressbar-1) 0, var(--color-progressbar-1) 16px, var(--color-progressbar-2) 16px, var(--color-progressbar-2) 32px);
+  animation: framelix-progress-bar 1s linear infinite;
 }
-
-@keyframes framelix-loading {
-  0%, 100% {
-    left: 0;
-    transform: rotate(0) translateX(0);
-  }
-  50% {
-    left: 20px;
-    transform: rotate(720deg);
-    background: var(--color-success-bg-strong);
-  }
-}
-
 
 .framelix-pulse {
   animation: framelix-pulse 1s linear infinite;

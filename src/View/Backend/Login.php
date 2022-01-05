@@ -9,6 +9,7 @@ use Framelix\Framelix\Form\Field\Html;
 use Framelix\Framelix\Form\Field\Password;
 use Framelix\Framelix\Form\Field\Toggle;
 use Framelix\Framelix\Form\Form;
+use Framelix\Framelix\Html\ColorName;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\JsCall;
 use Framelix\Framelix\Network\Request;
@@ -173,7 +174,7 @@ class Login extends View
     {
         $form = $this->getForm();
         $form->addSubmitButton('login', '__framelix_login_submit__', 'login');
-        $form->addButton('fido2', '__framelix_login_fido2__', buttonColor: 'primary');
+        $form->addButton('fido2', '__framelix_login_fido2__', buttonColor: ColorName::PRIMARY);
         $form->show();
         ?>
         <style>

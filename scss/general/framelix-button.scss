@@ -14,44 +14,23 @@
   font-size: 1rem;
   box-sizing: border-box;
   transition: box-shadow .2s;
-  background: var(--color-button-default);
+  background: var(--color-button-default-bg);
   color: var(--color-button-default-text);
   border: none;
 
   &:any-link {
     color: var(--color-button-default-text);
   }
-
-  &.framelix-button-subtle {
-    background: var(--color-subtle-bg);
-    color: var(--color-subtle-bg-text);
+  &:focus-visible{
+    outline: 2px solid invert;
   }
 
-  &.framelix-button-primary {
-    background: var(--color-primary-bg-strong);
-    color: var(--color-primary-bg-strong-text);
+  @include insertColorSelectors("framelix-button", "button");
+
+  &.framelix-button-trans:hover {
+    box-shadow: rgba(0, 0, 0, 0.7) 0 0 5px;
   }
 
-  &.framelix-button-success {
-    background: var(--color-success-bg-strong);
-    color: var(--color-success-bg-strong-text);
-  }
-
-  &.framelix-button-warning {
-    background: var(--color-warning-bg-strong);
-    color: var(--color-warning-bg-strong-text);
-  }
-
-  &.framelix-button-error {
-    background: var(--color-error-bg-strong);
-    color: var(--color-error-bg-strong-text);
-  }
-
-  &.framelix-button-trans {
-    background: transparent;
-    box-shadow: rgba(0, 0, 0, 0.3) 0 0 5px;
-    color: var(--color-page-text);
-  }
 
   &[data-icon-left]::before {
     font-family: "Material Icons";

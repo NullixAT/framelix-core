@@ -158,7 +158,7 @@ class FramelixRequest {
       return 2
     }
     if (this.submitRequest.status >= 400) {
-      FramelixModal.show(await this.getText())
+      FramelixModal.show({ bodyContent: await this.getText() })
       return 3
     }
     return 0

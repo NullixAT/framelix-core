@@ -15,8 +15,8 @@
     padding: 10px 25px;
 
     &[data-active='1'] {
-      background: var(--color-primary-bg-subtle);
-      color: var(--color-primary-bg-subtle-text);
+      background: var(--color-button-primary-bg);
+      color: var(--color-button-primary-text);
     }
 
     &:hover {

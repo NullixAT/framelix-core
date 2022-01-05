@@ -46,7 +46,7 @@ class Compiler
     public static function getDistFilePath(string $module, string $type, string $groupId): string
     {
         $extension = $type === 'js' ? 'js' : 'css';
-        return FileUtils::getModuleRootPath($module) . "/public/dist/$extension/$groupId.$extension";
+        return FileUtils::getModuleRootPath($module) . "/public/dist/$extension/$groupId.min.$extension";
     }
 
     /**
@@ -136,6 +136,12 @@ class Compiler
         foreach ($compilerData as $type => $groups) {
             foreach ($groups as $groupId => $groupData) {
                 $files = [];
+                if ($type === 'scss') {
+                    $bootstrapFile = $moduleRoot . "/scss/_compiler-bootstrap.scss";
+                    if (file_exists($bootstrapFile)) {
+                        $files[] = $bootstrapFile;
+                    }
+                }
                 $distFilePath = FileUtils::normalizePath(self::getDistFilePath($module, $type, $groupId));
                 foreach ($groupData['files'] as $row) {
                     if ($row['type'] === 'file') {

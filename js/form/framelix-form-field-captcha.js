@@ -63,6 +63,8 @@ class FramelixFormFieldCaptcha extends FramelixFormField {
     if (this.disabled) {
       return
     }
+    const messageContainer = $(`<div class="framelix-alert"><div class="framelix-loading"></div> ${FramelixLang.get('__framelix_form_validation_captcha_loading__')}</div>`)
+    this.field.append(messageContainer)
     const self = this
     if (this.type === FramelixFormFieldCaptcha.TYPE_RECAPTCHA_V2 || this.type === FramelixFormFieldCaptcha.TYPE_RECAPTCHA_V3) {
       await FramelixDom.includeResource('https://www.google.com/recaptcha/api.js?render=' + (this.publicKeys[FramelixFormFieldCaptcha.TYPE_RECAPTCHA_V3] || 'explicit'), function () {
@@ -97,7 +99,6 @@ class FramelixFormFieldCaptcha extends FramelixFormField {
     if (this.type === FramelixFormFieldCaptcha.TYPE_RECAPTCHA_V3) {
       grecaptcha.ready(async function () {
         let token = await grecaptcha.execute(self.publicKeys[self.type], { action: self.trackingAction })
-        self.field.html('<div class="framelix-form-field-captcha-verified"><span class="framelix-loading"></span> ' + FramelixLang.get('__framelix_form_validation_captcha_loading__') + '</div>')
         let apiResponse = await FramelixApi.callPhpMethod(self.signedUrlVerifyToken, {
           'token': token,
           'type': self.type
@@ -108,7 +109,8 @@ class FramelixFormFieldCaptcha extends FramelixFormField {
           self.render()
         } else {
           self.hideValidationMessage()
-          self.field.html('<div class="framelix-form-field-captcha-verified"><span class="material-icons">check</span> ' + FramelixLang.get('__framelix_form_validation_captcha_verified__') + '</div>')
+          messageContainer.attr('class', 'framelix-alert framelix-alert-success')
+          messageContainer.html(FramelixLang.get('__framelix_form_validation_captcha_verified__'))
           self.field.append($(`<input type="hidden" name="${self.name}">`).val(token + ':' + apiResponse.hash))
           self.triggerChange(self.field, false)
         }

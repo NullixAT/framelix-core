@@ -2,11 +2,13 @@
   border-radius: var(--border-radius);
   font-size: 0.9rem;
   z-index: 61;
-  background: var(--color-strong-bg);
-  color: var(--color-strong-bg-text);
-  box-shadow: rgba(0, 0, 0, 0.9) 0 0 5px;
-  --arrow-color: var(--color-strong-bg);
+  background: var(--color-popup-default-bg);
+  color: var(--color-popup-default-text);
+  box-shadow: rgba(0, 0, 0, 0.6) 0 0 10px;
+  --arrow-color: var(--color-popup-default-bg);
   --arrow-size: 7px;
+
+  @include insertColorSelectors("framelix-popup", "popup");
 
   .framelix-popup-inner {
     overflow: auto;
@@ -51,38 +53,23 @@
     right: calc(var(--arrow-size) * -1);
   }
 
-  &.framelix-popup-hex {
-    --arrow-color: transparent;
-    background: transparent;
-    color: transparent;
-  }
-
   &.framelix-popup-primary {
-    --arrow-color: var(--color-primary-bg-subtle);
-    background: var(--color-primary-bg-subtle);
-    color: var(--color-primary-bg-subtle-text);
+    --arrow-color: var(--color-popup-primary-bg);
   }
 
   &.framelix-popup-success {
-    --arrow-color: var(--color-success-bg-subtle);
-    background: var(--color-success-bg-subtle);
-    color: var(--color-success-bg-subtle-text);
+    --arrow-color: var(--color-popup-succes-bg);
   }
 
   &.framelix-popup-warning {
-    --arrow-color: var(--color-warning-bg-subtle);
-    background: var(--color-warning-bg-subtle);
-    color: var(--color-warning-bg-subtle-text);
+    --arrow-color: var(--color-popup-warning-bg);
   }
 
   &.framelix-popup-error {
-    --arrow-color: var(--color-error-bg-subtle);
-    background: var(--color-error-bg-subtle);
-    color: var(--color-error-bg-subtle-text);
+    --arrow-color: var(--color-popup-error-bg);
   }
 
   &.framelix-popup-trans {
-    background: transparent;
-    color: var(--color-page-text);
+    --arrow-color: transparent;
   }
 }

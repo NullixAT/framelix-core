@@ -7,7 +7,7 @@
   .framelix-form-field-captcha .framelix-form-field-captcha-verified .material-icons {
     font-size: 16px;
     margin-right: 10px;
-    color: var(--color-success-text); }
+    color: var(--color-success-hue); }
 
 .framelix-form-field-color .framelix-form-field-input {
   padding: 4px; }
@@ -73,8 +73,8 @@ html[data-color-scheme='dark'] .framelix-form-field-datetime ::-webkit-calendar-
 
 .dragging .framelix-form-field-file {
   border: 0;
-  background: var(--color-success-bg-subtle);
-  box-shadow: var(--color-success-bg) 0 0 10px inset, var(--color-success-bg) 0 0 10px;
+  background: hsla(var(--color-success-hue), 50%, 50%, 0.1);
+  box-shadow: hsl(var(--color-success-hue), 50%, 50%) 0 0 10px;
   padding-left: 20px;
   padding-right: 20px;
   transition: .2s; }
@@ -84,7 +84,7 @@ html[data-color-scheme='dark'] .framelix-form-field-datetime ::-webkit-calendar-
 
 .framelix-form-field-file .framelix-form-field-file-file {
   padding: 2px 5px;
-  background: var(--color-subtle-bg);
+  background: var(--color-alert-default-bg);
   border: 1px solid var(--color-border);
   border-radius: var(--border-radius);
   margin-bottom: 3px; }
@@ -206,7 +206,8 @@ html[data-color-scheme='dark'] .framelix-form-field-datetime ::-webkit-calendar-
   background: rgba(0, 0, 0, 0.1); }
 
 .framelix-form-field-select-popup > .framelix-form-field-input {
-  padding: 0; }
+  padding: 0;
+  border: 0; }
 
 .framelix-form-field-select-search {
   margin: 5px; }
@@ -256,7 +257,8 @@ html[data-color-scheme='dark'] .framelix-form-field-time ::-webkit-calendar-pick
     flex: 1 1 auto;
     margin: 0;
     height: auto;
-    width: auto; }
+    width: auto;
+    background-color: hsla(var(--color-primary-hue), 50%, 50%, 0.4); }
   .framelix-form-field-toggle .framelix-form-field-input[data-style='toggle'] input:not(:checked) {
     margin-right: calc(50% + 3px); }
   .framelix-form-field-toggle .framelix-form-field-input[data-style='toggle'] input:checked {
@@ -308,7 +310,6 @@ html[data-color-scheme='dark'] .framelix-form-field-time ::-webkit-calendar-pick
     cursor: help; }
   .framelix-form-field .framelix-form-field-label-description {
     font-size: 0.9rem;
-    color: var(--color-strong-text);
     opacity: 0.8;
     margin-bottom: 3px; }
   .framelix-form-field .framelix-form-field-container {
@@ -374,7 +375,8 @@ input[type='checkbox'] {
     content: "radio_button_unchecked";
     font-family: "Material Icons", sans-serif;
     line-height: 1;
-    display: block; }
+    display: block;
+    font-size: 12px; }
   input[type='radio']:checked,
   input[type='checkbox']:checked {
     background-color: var(--color-primary-bg-strong); }
@@ -388,16 +390,26 @@ input[type='checkbox'] {
   font-weight: bold;
   margin-bottom: 10px; }
 
-.framelix-form-buttons {
-  margin-top: 10px; }
-  .framelix-form-buttons button {
-    margin-right: 10px; }
+.framelix-form-row-bottom {
+  display: flex;
+  gap: 10px;
+  align-items: center; }
+  .framelix-form-row-bottom .framelix-form-buttons {
+    margin-top: 10px; }
+    .framelix-form-row-bottom .framelix-form-buttons button {
+      margin-right: 10px; }
+  .framelix-form-row-bottom .framelix-form-submit-status {
+    margin-top: 5px;
+    opacity: 0;
+    transition: .3s;
+    flex: 1 1 auto; }
 
-.framelix-form-submit-status {
-  margin-top: 5px;
-  min-height: 20px;
-  opacity: 0;
-  transition: .3s; }
+.framelix-form-sticky-form-buttons .framelix-form-row-bottom {
+  background: var(--color-page-bg);
+  padding: 10px;
+  position: sticky;
+  bottom: 0;
+  z-index: 1; }
 
 .framelix-form-submitting .framelix-form-buttons button[data-type='submit'] {
   opacity: 0.7; }

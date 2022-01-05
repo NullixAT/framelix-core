@@ -113,12 +113,6 @@ class FramelixForm {
   submitAsyncRaw = true
 
   /**
-   * If form is submitting, then this holds the request
-   * @type {FramelixRequest|null}
-   */
-  submitRequest = null
-
-  /**
    * Submit the form with enter key
    * @type {boolean}
    */
@@ -129,6 +123,12 @@ class FramelixForm {
    * @type {boolean}
    */
   autocomplete = false
+
+  /**
+   * Form buttons are sticked to the bottom of the screen and always visible
+   * @var {boolean}
+   */
+  stickyFormButtons = false
 
   /**
    * A function with custom validation rules
@@ -144,16 +144,22 @@ class FramelixForm {
   validationMessage = null
 
   /**
-   * The instance of the current validation popup message
-   * @type {FramelixPopup|null}
-   */
-  validationPopup = null
-
-  /**
    * A promise that is resolved when the form is completely rendered
    * @type {Promise}
    */
   rendered
+
+  /**
+   * Is the form currently in an ongoing submit request
+   * @type {boolean}
+   */
+  isSubmitting = false
+
+  /**
+   * If form is submitting, then this holds the last async submit request
+   * @type {FramelixRequest|null}
+   */
+  submitRequest = null
 
   /**
    * The resolve function to resolve the rendered promise
@@ -364,6 +370,7 @@ class FramelixForm {
    * @param {boolean} flag
    */
   setSubmitStatus (flag) {
+    this.isSubmitting = flag
     this.container.toggleClass('framelix-form-submitting', flag)
   }
 
@@ -375,17 +382,7 @@ class FramelixForm {
   showValidationMessage (message) {
     message = FramelixLang.get(message)
     this.validationMessage = message
-    if (this.validationPopup && FramelixDom.isInDom(this.validationPopup.content)) {
-      this.validationPopup.content.append($(`<div>`).append(message))
-    } else {
-      this.validationPopup = FramelixPopup.show(this.submitStatusContainer, message, {
-        closeMethods: 'click',
-        color: 'error',
-        placement: 'bottom-start',
-        group: 'form-validation',
-        stickInViewport: true
-      })
-    }
+    FramelixToast.error(message)
   }
 
   /**
@@ -538,6 +535,7 @@ class FramelixForm {
     if (!this.autocomplete) this.form.attr('autocomplete', 'off')
     this.form.attr('novalidate', true)
     this.container.empty()
+    this.container.toggleClass('framelix-form-sticky-form-buttons', this.stickyFormButtons)
     if (this.label) {
       this.container.append($(`<div class="framelix-form-label"></div>`).html(FramelixLang.get(this.label)))
     }
@@ -633,7 +631,7 @@ class FramelixForm {
   async submit (submitButtonName) {
 
     // already submitting, skip submit
-    if (this.submitRequest) return false
+    if (this.isSubmitting) return false
 
     // validate the form before submit
     if ((await this.validate()) !== true) return false
@@ -698,7 +696,6 @@ class FramelixForm {
     if (!submitUrl) submitUrl = location.href
     this.submitRequest = FramelixRequest.request('post', submitUrl, null, formData, this.submitStatusContainer)
     const request = self.submitRequest
-    self.submitRequest = null
     await request.finished
     self.setSubmitStatus(false)
     self.form.trigger(FramelixForm.EVENT_SUBMITTED, { 'submitButtonName': submitButtonName })
@@ -732,7 +729,7 @@ class FramelixForm {
     if (await request.getHeader('x-form-async-response')) {
       const responseJson = await request.getJson()
       if (responseJson.modalMessage) {
-        FramelixModal.show(responseJson.modalMessage)
+        FramelixModal.show({ bodyContent: responseJson.modalMessage })
       }
       if (responseJson.reloadTab) {
         const tabContent = this.container.closest('.framelix-tab-content')

@@ -233,7 +233,7 @@ class FramelixQuickSearch {
       }
     }
     this.container.on('click', '.framelix-quick-search-help', function () {
-      FramelixModal.show(FramelixLang.get('__framelix_quick_search_help__'))
+      FramelixModal.show({ bodyContent: FramelixLang.get('__framelix_quick_search_help__') })
     })
     this.container.on('click', '.framelix-quick-search-settings', function () {
       let valueUnset = false
@@ -281,7 +281,7 @@ class FramelixQuickSearch {
       form.addButton('close', '__framelix_close__', 'clear')
       form.container = container
       form.render()
-      const modal = FramelixModal.show(container)
+      const modal = FramelixModal.show({ bodyContent: container })
       container.on('keydown', function (ev) {
         if (ev.key === 'Enter') {
           container.find('button[data-action=\'add\']').trigger('click')

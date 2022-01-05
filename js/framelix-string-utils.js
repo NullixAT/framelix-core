@@ -79,4 +79,16 @@ class FramelixStringUtils {
   static escapeRegex (str) {
     return (str + '').replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
   }
+
+  /**
+   * Cut a string at specific length and add $truncateAffix if too long
+   * @param {string} string
+   * @param {int} length
+   * @param {string} truncateAffix
+   * @return {string}
+   */
+  static cut (string, length, truncateAffix = '...') {
+    if (string.length <= length) return string
+    return string.substr(0, length) + truncateAffix
+  }
 }

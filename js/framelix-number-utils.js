@@ -59,6 +59,10 @@ class FramelixNumberUtils {
    * @return {number}
    */
   static toNumber (value, round = null, commaSeparator = ',') {
+    // value is string but already in a parsable float format
+    if (typeof value === 'string' && parseFloat(value).toString() === value) {
+      value = parseFloat(value)
+    }
     if (typeof value !== 'number') {
       if (value === null || value === false || value === undefined || typeof value === 'function') {
         return 0.0
@@ -72,6 +76,7 @@ class FramelixNumberUtils {
       value = value.trim().replace(new RegExp('[^-0-9' + commaSeparator + ']', 'g'), '')
       value = parseFloat(value.replace(new RegExp(commaSeparator, 'g'), '.'))
     }
+    if (isNaN(value) || typeof value !== 'number') value = 0
     return round !== null ? FramelixNumberUtils.round(value, round) : value
   }
 

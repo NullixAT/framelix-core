@@ -95,17 +95,6 @@ class LangEditor extends View
                 $tabs->addTab('lang-' . $language, $language, new self());
             }
             $tabs->show();
-            ?>
-            <style>
-              .framelix-form-buttons {
-                position: sticky;
-                bottom: 0;
-                background: var(--color-page-bg);
-                padding: 20px 10px 10px;
-                z-index: 1;
-              }
-            </style>
-            <?php
         }
     }
 
@@ -119,6 +108,7 @@ class LangEditor extends View
         $form = new Form();
         $form->id = "update";
         $form->submitAsyncRaw = true;
+        $form->stickyFormButtons = true;
 
         $field = new Hidden();
         $field->name = 'lang';

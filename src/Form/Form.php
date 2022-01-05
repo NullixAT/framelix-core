@@ -3,6 +3,7 @@
 namespace Framelix\Framelix\Form;
 
 use Framelix\Framelix\Form\Field\Grid;
+use Framelix\Framelix\Html\ColorName;
 use Framelix\Framelix\Html\HtmlAttributes;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\Request;
@@ -116,6 +117,12 @@ class Form implements JsonSerializable
     public bool $autocomplete = false;
 
     /**
+     * Form buttons are sticked to the bottom of the screen and always visible
+     * @var bool
+     */
+    public bool $stickyFormButtons = false;
+
+    /**
      * Check if the form with the given name is submitted
      * @param string $formName
      * @return bool
@@ -210,14 +217,14 @@ class Form implements JsonSerializable
      * @param string $actionId
      * @param string $buttonText
      * @param string|null $buttonIcon
-     * @param string $buttonColor
+     * @param ColorName $buttonColor
      * @param string|null $buttonTooltip
      */
     public function addButton(
         string $actionId,
         string $buttonText,
         ?string $buttonIcon = 'open_in_new',
-        string $buttonColor = 'dark',
+        ColorName $buttonColor = ColorName::DEFAULT,
         ?string $buttonTooltip = null
     ): void {
         $this->buttons[] = [
@@ -235,14 +242,14 @@ class Form implements JsonSerializable
      * @param Url $url
      * @param string $buttonText
      * @param string|null $buttonIcon
-     * @param string $buttonColor
+     * @param ColorName $buttonColor
      * @param string|null $buttonTooltip
      */
     public function addLoadUrlButton(
         Url $url,
         string $buttonText,
         ?string $buttonIcon = 'open_in_new',
-        string $buttonColor = 'dark',
+        ColorName $buttonColor = ColorName::DEFAULT,
         ?string $buttonTooltip = null
     ): void {
         $this->buttons[] = [
@@ -260,14 +267,14 @@ class Form implements JsonSerializable
      * @param string $submitFieldName
      * @param string $buttonText
      * @param string|null $buttonIcon
-     * @param string $buttonColor
+     * @param ColorName $buttonColor
      * @param string|null $buttonTooltip
      */
     public function addSubmitButton(
         string $submitFieldName,
         string $buttonText,
         ?string $buttonIcon = null,
-        string $buttonColor = 'success',
+        ColorName $buttonColor = ColorName::SUCCESS,
         ?string $buttonTooltip = null
     ): void {
         $this->buttons[] = [

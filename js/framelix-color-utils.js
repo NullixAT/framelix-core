@@ -124,4 +124,14 @@ class FramelixColorUtils {
   static rgbToHex (r, g, b) {
     return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)
   }
+
+  /**
+   * Convert a rgb() css color string into hex
+   * @param {string|null} rgb
+   * @return {string}
+   */
+  static cssColorToHex (rgb) {
+    const arr = (rgb || null).replace(/[^0-9.,]/g, '').split(',')
+    return FramelixColorUtils.rgbToHex(parseFloat(arr[0] || 0), parseFloat(arr[1] || 0), parseFloat(arr[2] || 0))
+  }
 }

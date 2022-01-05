@@ -3,60 +3,86 @@
   --color-success-hue: 160;
   --color-warning-hue: 28;
   --color-error-hue: 353;
-  --color-subtle-hue: 205;
 
   --color-contrast-modifier: 0%;
 
   --color-page-bg-hue: 0;
-  --color-page-bg-saturation: 0%;
-  --color-page-bg-lightness: 100%;
-  --color-page-bg: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness)));
+  --color-page-bg: white;
+  --color-page-bg-stencil: hsl(var(--color-primary-hue), 10%, 90%);
   --color-page-text: #111;
 
-  --color-border-strong: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 50%));
-  --color-border-subtle: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 30%));
+  --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+  --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+  --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+  --color-error-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
 
-  --color-success-bg-strong: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
-  --color-success-bg-strong-text: white;
-  --color-success-bg-subtle: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
-  --color-success-bg-subtle-text: var(--color-page-text);
-  --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-border-strong: #222;
+  --color-border-subtle: #aaa;
 
-  --color-warning-bg-strong: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
-  --color-warning-bg-strong-text: white;
-  --color-warning-bg-subtle: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
-  --color-warning-bg-subtle-text: var(--color-page-text);
-  --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-alert-default-bg: hsl(var(--color-primary-hue), 20%, 95%);
+  --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 5%);
+  --color-alert-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-alert-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-alert-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-alert-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-alert-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-alert-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-alert-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-alert-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 5%);
 
-  --color-error-bg-strong: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
-  --color-error-bg-strong-text: white;
-  --color-error-bg-subtle: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
-  --color-error-bg-subtle-text: var(--color-page-text);
-  --color-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-toast-default-bg: hsl(var(--color-primary-hue), 20%, 25%);
+  --color-toast-default-text: white;
+  --color-toast-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-toast-success-text: white;
+  --color-toast-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-toast-warning-text: white;
+  --color-toast-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-toast-error-text: white;
+  --color-toast-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-toast-primary-text: white;
 
-  --color-primary-bg-strong: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
-  --color-primary-bg-strong-text: white;
-  --color-primary-bg-subtle: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
-  --color-primary-bg-subtle-text: var(--color-page-text);
-  --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
-
-  --color-button-default: hsl(240, 2%, 8%);
+  --color-button-default-bg: hsl(var(--color-primary-hue), 20%, 25%);
   --color-button-default-text: white;
+  --color-button-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-button-success-text: white;
+  --color-button-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-button-warning-text: white;
+  --color-button-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-button-error-text: white;
+  --color-button-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-button-primary-text: white;
 
-  --color-strong-bg: hsl(var(--color-subtle-hue), 10%, 17%);
-  --color-strong-bg-text: white;
-  --color-strong-text: hsl(var(--color-subtle-hue), 10%, 5%);
+  --color-modal-default-bg: var(--color-page-bg);
+  --color-modal-default-text: var(--color-page-text);
+  --color-modal-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-modal-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-modal-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-modal-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-modal-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-modal-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-modal-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-modal-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 5%);
 
-  --color-subtle-bg: hsl(var(--color-subtle-hue), 20%, 95%);
-  --color-subtle-bg-text: #333;
-  --color-subtle-text: hsl(var(--color-subtle-hue), 20%, 87%);
+  --color-popup-default-bg: hsl(var(--color-primary-hue), 20%, 10%);
+  --color-popup-default-text: hsl(var(--color-primary-hue), 20%, 95%);
+  --color-popup-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-popup-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-popup-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-popup-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-popup-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-popup-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-popup-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
+  --color-popup-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 5%);
 
-  --color-input-background: var(--color-subtle-bg);
-  --color-input-border: hsl(var(--color-subtle-hue), 20%, 77%);
+  --color-input-background: hsl(var(--color-primary-hue), 20%, 95%);
+  --color-input-border: hsl(var(--color-primary-hue), 20%, 77%);
   --color-input-text: var(--color-page-text);
   --color-input-checkbox-background: hsl(0, 0%, 80%);
 
-  --color-table-zebra: hsl(var(--color-subtle-hue), 20%, 95%);
+  --color-table-zebra: hsl(var(--color-primary-hue), 20%, 95%);
+
+  --color-progressbar-1: #f1c40f;
+  --color-progressbar-2: #2c3e50;
 
   ::-webkit-scrollbar {
     width: 15px;
@@ -77,58 +103,77 @@
   --color-success-hue: 160;
   --color-warning-hue: 28;
   --color-error-hue: 353;
-  --color-subtle-hue: 205;
 
   --color-page-bg-hue: 220;
-  --color-page-bg-saturation: 10%;
-  --color-page-bg-lightness: 10%;
-  --color-page-bg: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness)));
-  --color-page-text: hsl(var(--color-page-bg-hue), 50%, 95%);
+  --color-page-bg: hsl(var(--color-page-bg-hue), 10%, 10%);
+  --color-page-bg-stencil: hsl(var(--color-page-bg-hue), 10%, 18%);
+  --color-page-text: hsl(var(--color-page-bg-hue), 10%, 90%);
 
-  --color-border-strong: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 15%));
-  --color-border-subtle: hsl(var(--color-page-bg-hue), var(--color-page-bg-saturation), calc(var(--color-page-bg-lightness) - 5%));
+  --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
+  --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
+  --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
+  --color-error-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
 
-  --color-success-bg-strong: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-success-bg-strong-text: white;
-  --color-success-bg-subtle: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-success-bg-subtle-text: white;
-  --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+  --color-border-strong: hsl(var(--color-page-bg-hue), 10%, 60%);
+  --color-border-subtle: hsl(var(--color-page-bg-hue), 10%, 30%);
 
-  --color-warning-bg-strong: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-warning-bg-strong-text: white;
-  --color-warning-bg-subtle: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-warning-bg-subtle-text: white;
-  --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+  --color-alert-default-bg: var(--color-page-bg-stencil);
+  --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 80%);
+  --color-alert-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-alert-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-alert-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-alert-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-alert-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-alert-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-alert-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-alert-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
 
-  --color-error-bg-strong: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-error-bg-strong-text: white;
-  --color-error-bg-subtle: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-error-bg-subtle-text: white;
-  --color-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+  --color-toast-default-bg: hsl(var(--color-primary-hue), 20%, 25%);
+  --color-toast-default-text: white;
+  --color-toast-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-toast-success-text: white;
+  --color-toast-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-toast-warning-text: white;
+  --color-toast-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-toast-error-text: white;
+  --color-toast-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-toast-primary-text: white;
 
-  --color-primary-bg-strong: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-primary-bg-strong-text: white;
-  --color-primary-bg-subtle: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
-  --color-primary-bg-subtle-text: white;
-  --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
+  --color-button-default-bg: hsl(var(--color-primary-hue), 20%, 25%);
+  --color-button-default-text: white;
+  --color-button-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 30%);
+  --color-button-success-text: white;
+  --color-button-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 30%);
+  --color-button-warning-text: white;
+  --color-button-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 30%);
+  --color-button-error-text: white;
+  --color-button-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 30%);
+  --color-button-primary-text: white;
 
-  --color-button-default: hsl(var(--color-subtle-hue), 20%, 20%);
-  --color-button-default-text: var(--color-page-text);
+  --color-modal-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-modal-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-modal-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-modal-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-modal-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-modal-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-modal-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-modal-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
 
-  --color-strong-bg: hsl(var(--color-subtle-hue), 10%, 17%);
-  --color-strong-bg-text: var(--color-page-text);
-  --color-strong-text: hsl(var(--color-subtle-hue), 10%, 87%);
+  --color-popup-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-popup-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-popup-warning-bg: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-popup-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-popup-error-bg: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-popup-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
+  --color-popup-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
+  --color-popup-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 80%);
 
-  --color-subtle-bg: hsl(var(--color-subtle-hue), 20%, 20%);
-  --color-subtle-bg-text: var(--color-page-text);
-  --color-subtle-text: var(--color-page-text);
-
-  --color-input-background: var(--color-subtle-bg);
-  --color-input-border: hsl(var(--color-subtle-hue), 20%, 35%);
+  --color-input-background: hsl(var(--color-primary-hue), 20%, 15%);
+  --color-input-border: hsl(var(--color-primary-hue), 20%, 35%);
   --color-input-text: var(--color-page-text);
   --color-input-checkbox-background: rgba(0, 0, 0, 0.2);
 
-  --color-table-zebra: hsl(var(--color-subtle-hue), 20%, 13%);
+  --color-table-zebra: hsl(var(--color-primary-hue), 20%, 13%);
 }
 
 [data-color-contrast='less'] {

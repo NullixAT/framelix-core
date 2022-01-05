@@ -1,0 +1,28 @@
+// A _compiler-bootstrap.scss will be included in every compiler execution
+// Use this to include functions and mixins for your project
+
+$framelix-colornames: "primary", "success", "warning", "error", "default";
+
+@mixin insertColorSelectors($classNamePrefix, $varColorPrefix, $bg : true, $text : true) {
+  @each $framelix-colorname in $framelix-colornames {
+    &.#{$classNamePrefix}-#{$framelix-colorname} {
+      @if ($bg) {
+        background-color: var(--color-#{$varColorPrefix}-#{$framelix-colorname}-bg);
+      }
+      @if ($text) {
+        color: var(--color-#{$varColorPrefix}-#{$framelix-colorname}-text);
+        &:any-link {
+          color: var(--color-#{$varColorPrefix}-#{$framelix-colorname}-text);
+        }
+      }
+    }
+  }
+  &.#{$classNamePrefix}-trans {
+    color: inherit;
+    background-color: transparent;
+  }
+  &.#{$classNamePrefix}-customcolor {
+    background-color: var(--color-custom-bg);
+    color: var(--color-custom-text);
+  }
+}

@@ -1,5 +1,4 @@
 .framelix-form-field-toggle {
-
   .framelix-form-field-input {
     cursor: pointer;
     user-select: none;
@@ -14,6 +13,7 @@
       margin: 0;
       height: auto;
       width: auto;
+      background-color: hsla(var(--color-primary-hue), 50%, 50%, 0.4);
     }
 
     &[data-style='toggle'] {

@@ -16,6 +16,18 @@ class FramelixModal {
   static instances = []
 
   /**
+   * The current active instance
+   * @type {FramelixModal|null}
+   */
+  static currentInstance = null
+
+  /**
+   * The options with what the modal was created with
+   * @type {FramelixModalShowOptions}
+   */
+  options = {}
+
+  /**
    * The backdrop container
    * @type {Cash}
    */
@@ -29,7 +41,7 @@ class FramelixModal {
 
   /**
    * The content container
-   * Append actual content to bodyContainer or bottomContainer, this is the outer of the two
+   * Append actual content to header, body and footer container, this is the outer of the two
    * @type {Cash}
    */
   contentContainer
@@ -41,10 +53,16 @@ class FramelixModal {
   bodyContainer
 
   /**
-   * The content bottom container (for buttons, inputs, etc...)
+   * The header content  (for titles, etc...) which is always visible even when body is scrolling
    * @type {Cash}
    */
-  bottomContainer
+  headerContainer
+
+  /**
+   * The footer content  (for buttons, inputs, etc...) which is always visible even when body is scrolling
+   * @type {Cash}
+   */
+  footerContainer
 
   /**
    * The close button
@@ -84,10 +102,10 @@ class FramelixModal {
   resolvers
 
   /**
-   * Hide all modals at once
+   * Destroy all modals at once
    * @return {Promise} Resolved when all modals are really closed
    */
-  static async hideAll () {
+  static async destroyAll () {
     let promises = []
     for (let i = 0; i < FramelixModal.instances.length; i++) {
       const instance = FramelixModal.instances[i]
@@ -112,14 +130,17 @@ class FramelixModal {
   /**
    * Display a nice alert box (instead of a native alert() function)
    * @param {string|Cash} content
+   * @param {FramelixModalShowOptions=} options
    * @return {FramelixModal}
    */
-  static alert (content) {
+  static alert (content, options) {
+    if (!options) options = {}
     const html = $(`<div style="text-align: center;">`)
     html.append(FramelixLang.get(content))
-
-    const modal = FramelixModal.show(html, '<button class="framelix-button" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>')
-    const buttons = modal.bottomContainer.find('button')
+    options.bodyContent = html
+    options.footerContent = '<button class="framelix-button framelix-button-primary" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>'
+    const modal = FramelixModal.show(options)
+    const buttons = modal.footerContainer.find('button')
     buttons.on('click', function () {
       modal.destroy()
     })
@@ -130,33 +151,38 @@ class FramelixModal {
   }
 
   /**
-   * Display a nice confirm box (instead of a native confirm() function)
+   * Display a nice confirm box (instead of a native prompt() function)
    * @param {string|Cash} content
    * @param {string=} defaultText
+   * @param {FramelixModalShowOptions=} options
    * @return {FramelixModal}
    */
-  static prompt (content, defaultText) {
+  static prompt (content, defaultText, options) {
+    if (!options) options = {}
     const html = $(`<div style="text-align: center;"></div>`)
     if (content) {
       html.append(FramelixLang.get(content))
+      html.append('<div class="framelix-spacer"></div>')
     }
     const input = $('<input type="text" class="framelix-form-field-input">')
     if (defaultText !== undefined) input.val(defaultText)
 
-    let bottomContainer = $('<div>')
-    bottomContainer.append(input)
-    bottomContainer.append('<br/><br/>')
-    bottomContainer.append('<button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>')
-    bottomContainer.append('&nbsp;<button class="framelix-button" data-icon-left="clear">' + FramelixLang.get('__framelix_cancel__') + '</button>')
+    html.append($('<div>').append(input))
+    let footerContainer = `
+        <button class="framelix-button framelix-button-primary" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
+        <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check" style="flex-grow: 4">${FramelixLang.get('__framelix_ok__')}</button>
+    `
 
     input.on('keydown', function (ev) {
       if (ev.key === 'Enter') {
-        bottomContainer.find('.framelix-button[data-success=\'1\']').trigger('click')
+        footerContainer.find('.framelix-button[data-success=\'1\']').trigger('click')
       }
     })
 
-    const modal = FramelixModal.show(html, bottomContainer)
-    const buttons = modal.bottomContainer.find('button')
+    options.bodyContent = html
+    options.footerContent = footerContainer
+    const modal = FramelixModal.show(options)
+    const buttons = modal.footerContainer.find('button')
     buttons.on('click', function () {
       if (modal.resolvers['prompt']) {
         modal.resolvers['prompt']($(this).attr('data-success') === '1' ? input.val() : null)
@@ -173,18 +199,21 @@ class FramelixModal {
   /**
    * Display a nice confirm box (instead of a native confirm() function)
    * @param {string|Cash} content
+   * @param {FramelixModalShowOptions=} options
    * @return {FramelixModal}
    */
-  static confirm (content) {
+  static confirm (content, options) {
+    if (!options) options = {}
     const html = $(`<div style="text-align: center;"></div>`)
     html.html(FramelixLang.get(content))
     const bottom = $(`
-      <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check">${FramelixLang.get('__framelix_ok__')}</button>
-      &nbsp;
-      <button class="framelix-button" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
+      <button class="framelix-button framelix-button-primary" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
+      <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check" style="flex-grow: 4">${FramelixLang.get('__framelix_ok__')}</button>
     `)
-    const modal = FramelixModal.show(html, bottom)
-    const buttons = modal.bottomContainer.find('button')
+    options.bodyContent = html
+    options.footerContent = bottom
+    const modal = FramelixModal.show(options)
+    const buttons = modal.footerContainer.find('button')
     buttons.on('click', function () {
       if (modal.resolvers['confirmed']) {
         modal.resolvers['confirmed']($(this).attr('data-success') === '1')
@@ -202,11 +231,13 @@ class FramelixModal {
    * Open a modal that loads content of callPhpMethod into it
    * @param {string} signedUrl The signed url which contains called method and action
    * @param {Object=} parameters Parameters to pass by
-   * @param {boolean} maximized Open modal in biggest size, independent of inner content size
+   * @param {FramelixModalShowOptions=} modalOptions Modal options
    * @return {Promise<FramelixModal>} Resolved when content is loaded
    */
-  static async callPhpMethod (signedUrl, parameters, maximized = false) {
-    const modal = FramelixModal.show('<div class="framelix-loading"></div>', null, maximized)
+  static async callPhpMethod (signedUrl, parameters, modalOptions) {
+    if (!modalOptions) modalOptions = {}
+    modalOptions.bodyContent = '<div class="framelix-loading"></div>'
+    const modal = FramelixModal.show(modalOptions)
     modal.apiResponse = FramelixApi.callPhpMethod(signedUrl, parameters)
     modal.bodyContainer.html(await modal.apiResponse)
     return modal
@@ -220,11 +251,13 @@ class FramelixModal {
    * @param {Object|FormData|string=} postData Post data to send
    * @param {boolean|Cash} showProgressBar Show progress bar at top of page or in given container
    * @param {Object|null} fetchOptions Additonal options to directly pass to the fetch() call
-   * @param {boolean} maximized Open modal in biggest size, independent of inner content size
+   * @param {FramelixModalShowOptions=} modalOptions Modal options
    * @return {Promise<FramelixModal>} Resolved when content is loaded
    */
-  static async request (method, urlPath, urlParams, postData, showProgressBar = false, fetchOptions = null, maximized = false) {
-    const modal = FramelixModal.show('<div class="framelix-loading"></div>', null, maximized)
+  static async request (method, urlPath, urlParams, postData, showProgressBar = false, fetchOptions = null, modalOptions) {
+    if (!modalOptions) modalOptions = {}
+    modalOptions.bodyContent = '<div class="framelix-loading"></div>'
+    const modal = FramelixModal.show(modalOptions)
     modal.request = FramelixRequest.request(method, urlPath, urlParams, postData, showProgressBar, fetchOptions)
     if (await modal.request.checkHeaders() === 0) {
       const json = await modal.request.getJson()
@@ -235,13 +268,13 @@ class FramelixModal {
 
   /**
    * Show modal
-   * @param {string|Cash} bodyContent
-   * @param {string|Cash=} bottomContent
-   * @param {boolean} maximized Open modal in biggest size, independent of inner content size
+   * @param {FramelixModalShowOptions} options
    * @return {FramelixModal}
    */
-  static show (bodyContent, bottomContent, maximized = false) {
-    const instance = new FramelixModal()
+  static show (options) {
+    const instance = options.instance || new FramelixModal()
+    FramelixModal.currentInstance = instance
+    instance.options = options
     instance.resolvers = {}
     instance.confirmed = new Promise(function (resolve) {
       instance.resolvers['confirmed'] = resolve
@@ -252,32 +285,44 @@ class FramelixModal {
     instance.destroyed = new Promise(function (resolve) {
       instance.resolvers['destroyed'] = resolve
     })
-    instance.backdrop = $(`<div class="framelix-modal-backdrop"></div>`)
-    FramelixModal.modalsContainer.children('.framelix-modal').addClass('framelix-blur')
-    FramelixModal.modalsContainer.append(instance.container)
-    FramelixModal.modalsContainer.append(instance.backdrop)
-    instance.closeButton = instance.container.find('.framelix-modal-close')
-    instance.contentContainer = instance.container.find('.framelix-modal-content')
-    instance.bodyContainer = instance.container.find('.framelix-modal-content-body')
-    instance.bottomContainer = instance.container.find('.framelix-modal-content-bottom')
+    // on new instance set properties and events
+    if (!options.instance) {
+      instance.backdrop = $(`<div class="framelix-modal-backdrop"></div>`)
+      FramelixModal.modalsContainer.children('.framelix-modal').addClass('framelix-blur')
+      FramelixModal.modalsContainer.append(instance.container)
+      FramelixModal.modalsContainer.append(instance.backdrop)
+      instance.closeButton = instance.container.find('.framelix-modal-close')
+      instance.contentContainer = instance.container.find('.framelix-modal-content')
+      instance.headerContainer = instance.container.find('.framelix-modal-header')
+      instance.bodyContainer = instance.container.find('.framelix-modal-body')
+      instance.footerContainer = instance.container.find('.framelix-modal-footer')
+      instance.closeButton.on('click', function () {
+        instance.destroy()
+      })
+    }
+    instance.backdrop.removeClass('framelix-modal-backdrop-visible')
+    instance.container.removeClass('framelix-modal-visible')
     instance.apiResponse = null
-    instance.closeButton.on('click', function () {
-      instance.destroy()
-    })
+    instance.container.find('.framelix-modal-inner').attr('class', 'framelix-modal-inner framelix-modal-inner-' + options.color)
     $('body').css({
       'overflow': 'hidden'
     })
+    // wait 1ms for css animations to kick it, otherwise it will be immediately at the end animation state
     Framelix.wait(1).then(function () {
       instance.container.addClass('framelix-modal-visible')
       instance.backdrop.addClass('framelix-modal-backdrop-visible')
     })
     $('.framelix-page').addClass('framelix-blur')
 
-    if (maximized) instance.contentContainer.addClass('framelix-modal-content-maximized')
-    instance.bodyContainer.html(bodyContent)
-    if (bottomContent) {
-      instance.bottomContainer.removeClass('hidden')
-      instance.bottomContainer.html(bottomContent)
+    instance.contentContainer.toggleClass('framelix-modal-content-maximized', !!options.maximized)
+    instance.headerContainer.toggleClass('hidden', !options.headerContent)
+    if (options.headerContent) {
+      instance.headerContainer.html(options.headerContent)
+    }
+    instance.bodyContainer.html(options.bodyContent)
+    instance.footerContainer.toggleClass('hidden', !options.footerContent)
+    if (options.footerContent) {
+      instance.footerContainer.html(options.footerContent)
     }
     instance.container.trigger('focus')
     FramelixPopup.destroyTooltips()
@@ -295,8 +340,9 @@ class FramelixModal {
               <button class="framelix-button" data-icon-left="clear" title="${FramelixLang.get('__framelix_close__')}"></button>
             </div>
             <div class="framelix-modal-content" role="document">
-                <div class="framelix-modal-content-body"></div>
-                <div class="framelix-modal-content-bottom hidden"></div>
+                <div class="framelix-modal-header hidden"></div>
+                <div class="framelix-modal-body"></div>
+                <div class="framelix-modal-footer hidden"></div>
             </div>
         </div>
     </div>`)
@@ -317,10 +363,14 @@ class FramelixModal {
     this.backdrop.removeClass('framelix-modal-backdrop-visible')
     if (!childs.length) {
       $('.framelix-page').removeClass('framelix-blur')
+      FramelixModal.currentInstance = null
+    } else {
+      const lastChild = childs.last()
+      lastChild.removeClass('framelix-blur')
+      FramelixModal.currentInstance = FramelixModal.instances[lastChild.attr('data-instance-id')]
     }
-    childs.last().removeClass('framelix-blur')
     await Framelix.wait(200)
-    if (!childs.length) {
+    if (!FramelixModal.currentInstance) {
       $('body').css({
         'overflow': ''
       })
@@ -335,3 +385,14 @@ class FramelixModal {
 }
 
 FramelixInit.late.push(FramelixModal.init)
+
+/**
+ * @typedef {Object} FramelixModalShowOptions
+ * @property {string|Cash} bodyContent The body content
+ * @property {string|Cash|null=} headerContent The fixed header content
+ * @property {string|Cash|null=} footerContent The fixed footer content
+ * @property {boolean=} maximized The modal opens maximized independent of content size
+ * @property {string=} color The modal color (Backdrop and Modal BG), success, warning, error, primary
+ * @property {FramelixModal=} instance Reuse the given instance instead of creating a new
+ * @property {Object=} data Any data to pass to the instance for later reference
+ */

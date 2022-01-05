@@ -10,6 +10,13 @@ class FramelixPopup {
   static instances = {}
 
   /**
+   * The internal id
+   * @type {string}
+   * @private
+   */
+  id
+
+  /**
    * The target on which the element is bound to
    * @type {Cash|null}
    */
@@ -34,85 +41,10 @@ class FramelixPopup {
   content = null
 
   /**
-   * Where to place the popup beside the target
-   * @see https://popper.js.org/docs/v2/constructors/#options
-   * @type {string}
+   * The options with what the popup was created with
+   * @type {FramelixPopupShowOptions}
    */
-  placement = 'top'
-
-  /**
-   * Stick in viewport so it always is visible, even if target is out of screen
-   * @type {boolean}
-   */
-  stickInViewport = false
-
-  /**
-   * How the popup should be closed
-   * click-outside close self when user click outside of the popup
-   *    click-inside close self when user click inside the popup
-   *    click close self when user click anywhere on the page
-   *    mouseleave-target closes when user leave target element with mouse
-   *    focusout-popup closes when user has focused popup and the leaves the popup focus
-   *    manual can only be closed programmatically with FramelixPopup.destroyInstance()
-   * @type {string|string[]}
-   */
-  closeMethods = 'click-outside'
-
-  /**
-   * Popup color
-   * default depends on color scheme dark/white
-   * dark forces it to dark
-   * trans has no background
-   * primary|error|warning|success
-   * or HexColor starting with #
-   * @type {string}
-   */
-  color = 'default'
-
-  /**
-   * This group id, one target can have one popup of one group
-   * @type {string}
-   */
-  group = 'popup'
-
-  /**
-   * Offset the popup from the target
-   * x, y
-   * @type {number[]}
-   */
-  offset = [0, 5]
-
-  /**
-   * Offset X by given mouse event, so popup is centered where the cursor is
-   * @type {MouseEvent|null}
-   */
-  offsetByMouseEvent = null
-
-  /**
-   * Additional popper options to pass by
-   * @type {Object|null}
-   */
-  popperOptions = null
-
-  /**
-   * Where this popup should be appended to
-   * @type {string|Cash}
-   */
-  appendTo = 'body'
-
-  /**
-   * Css padding of popup container
-   * Sometimes you may not want padding
-   * @type {string}
-   */
-  padding = '5px 10px'
-
-  /**
-   * Internal promise resolver
-   * @type {Object<string, function>|null}
-   * @private
-   */
-  resolvers
+  options = {}
 
   /**
    * The promise that is resolved when the window is destroyed(closed)
@@ -121,26 +53,19 @@ class FramelixPopup {
   destroyed
 
   /**
-   * The internal id
-   * @type {string}
-   * @private
-   */
-  id
-
-  /**
-   * Listeners
-   * @type {{destroy: function[]}}
-   * @private
-   */
-  listeners = { 'destroy': [] }
-
-  /**
    * Internal cached bounding rect to compare after dom change
    * Only update position when rect has changed of target
    * @type {string|null}
    * @private
    */
   boundingRect = null
+
+  /**
+   * Internal promise resolver
+   * @type {Object<string, function>|null}
+   * @private
+   */
+  resolvers
 
   /**
    * Init
@@ -172,13 +97,13 @@ class FramelixPopup {
         if (!instance.popperEl) continue
         const popperEl = instance.popperEl[0]
         const contains = popperEl.contains(ev.target)
-        if (instance.closeMethods.indexOf('click-outside') > -1 && !contains) {
+        if (instance.options.closeMethods.indexOf('click-outside') > -1 && !contains) {
           instance.destroy()
         }
-        if (instance.closeMethods.indexOf('click-inside') > -1 && contains) {
+        if (instance.options.closeMethods.indexOf('click-inside') > -1 && contains) {
           instance.destroy()
         }
-        if (instance.closeMethods.indexOf('click') > -1) {
+        if (instance.options.closeMethods.indexOf('click') > -1) {
           instance.destroy()
         }
       }
@@ -208,76 +133,120 @@ class FramelixPopup {
   }
 
   /**
+   * @typedef {Object} FramelixPopupShowOptions
+   * @property {string} [placement='top'] Where to place the popup beside the target, https://popper.js.org/docs/v2/constructors/#options
+   * @property {boolean} [stickInViewport=false] Stick in viewport so it always is visible, even if target is out of screen
+   * @property {string|string[]} [closeMethods='click-outside'] How the popup should be closed
+   *    click-outside close self when user click outside of the popup
+   *    click-inside close self when user click inside the popup
+   *    click close self when user click anywhere on the page
+   *    mouseleave-target closes when user leave target element with mouse
+   *    focusout-popup closes when user has focused popup and the leaves the popup focus
+   *    manual can only be closed programmatically with FramelixPopup.destroyInstance()
+   * @property {string|HTMLElement=} [color='default'] Popup color
+   *    default is dark
+   *    primary|error|warning|success
+   *    or HexColor starting with #
+   *    or element to copy background and text color from
+   * @property {string=} [group='popup'] The group id, one target can have one popup of one group
+   * @property {number[]=} [offset=[0,5]] Offset the popup from the target (X,Y)
+   * @property {string=} [padding='5px 10px'] Css padding of popup container
+   * @property {MouseEvent=} offsetByMouseEvent Offset X by given mouse event, so popup is centered where the cursor is
+   * @property {string|Cash=} [appendTo='body'] Where this popup should be appended to
+   * @property {Object=} data Any data to pass to the instance for later reference
+   */
+
+  /**
    * Show a popup on given element
    * @param {HTMLElement|Cash} target The target to bind to
    * @param {string|Cash} content The content
-   * @param {FramelixPopup|Object=} options Options are all existing properties of this class, see defaults in class declaration
+   * @param {FramelixPopupShowOptions=} options
    * @return {FramelixPopup}
    */
   static show (target, content, options) {
+    if (!options) options = {}
+    if (options.group === undefined) options.group = 'popup'
+    if (options.offset === undefined) options.offset = [0, 5]
+    if (options.color === undefined) options.color = 'default'
+    if (options.appendTo === undefined) options.appendTo = 'body'
+    if (options.padding === undefined) options.padding = '5px 10px'
+    if (options.closeMethods === undefined) options.closeMethods = 'click-outside'
+    if (typeof options.closeMethods === 'string') options.closeMethods = options.closeMethods.replace(/\s/g, '').split(',')
     if (target instanceof cash) target = target[0]
-    const instance = new FramelixPopup(options)
+
+    const instance = new FramelixPopup()
+    instance.options = options
     instance.resolvers = {}
     instance.destroyed = new Promise(function (resolve) {
       instance.resolvers['destroyed'] = resolve
     })
-    if (instance.offsetByMouseEvent) {
+    if (options.offsetByMouseEvent) {
       const rect = target.getBoundingClientRect()
       const elCenter = rect.left + rect.width / 2
-      instance.offset = [instance.offsetByMouseEvent.pageX - elCenter, 5]
+      options.offset = [options.offsetByMouseEvent.pageX - elCenter, 5]
     }
-    instance.popperOptions = instance.popperOptions || {}
-    instance.popperOptions.placement = instance.placement
-    if (!instance.popperOptions.modifiers) instance.popperOptions.modifiers = []
-    instance.popperOptions.modifiers.push({
+    let popperOptions = {}
+    popperOptions.placement = options.placement || 'top'
+    if (!popperOptions.modifiers) popperOptions.modifiers = []
+    popperOptions.modifiers.push({
       name: 'offset',
       options: {
-        offset: instance.offset,
+        offset: options.offset,
       }
     })
-    instance.popperOptions.modifiers.push({
+    popperOptions.modifiers.push({
       name: 'preventOverflow',
       options: {
         padding: 10,
         altAxis: true,
-        tether: !instance.stickInViewport
+        tether: !options.stickInViewport
       },
     })
     if (!target.popperInstances) target.popperInstances = {}
-    if (target.popperInstances[instance.group]) {
-      target.popperInstances[instance.group].destroy()
+    if (target.popperInstances[options.group]) {
+      target.popperInstances[options.group].destroy()
     }
-    let color = instance.color
-    if (instance.color.startsWith('#')) color = 'hex'
-    let popperEl = $(`<div class="framelix-popup framelix-popup-${color}"><div data-popper-arrow></div><div class="framelix-popup-inner" style="padding:${instance.padding}"></div></div>`)
-    $(instance.appendTo).append(popperEl)
+    let color = options.color
+    if (options.color instanceof HTMLElement || options.color instanceof cash || options.color.startsWith('#')) color = 'customcolor'
+    let popperEl = $(`<div class="framelix-popup framelix-popup-${color}"><div data-popper-arrow></div><div class="framelix-popup-inner" style="padding:${options.padding}"></div></div>`)
+    $(options.appendTo).append(popperEl)
     const contentEl = popperEl.children('.framelix-popup-inner')
     contentEl.html(content)
-    if (instance.color.startsWith('#')) {
-      contentEl.css('background-color', instance.color)
-      contentEl.css('color', FramelixColorUtils.invertColor(instance.color, true))
-      popperEl.css('--arrow-color', instance.color)
+    if (color === 'customcolor') {
+      let bgColor
+      let textColor
+      if (options.color instanceof HTMLElement || options.color instanceof cash) {
+        const el = $(options.color)
+        bgColor = FramelixColorUtils.cssColorToHex(el.css('backgroundColor'))
+        textColor = FramelixColorUtils.cssColorToHex(el.css('color'))
+      } else {
+        bgColor = options.color
+        textColor = FramelixColorUtils.invertColor(options.color, true)
+      }
+      popperEl.css('--arrow-color', bgColor)
+      popperEl.css('--color-custom-bg', bgColor)
+      popperEl.css('--color-customtext', textColor)
     }
     instance.content = contentEl
-    instance.popperInstance = Popper.createPopper(target, popperEl[0], instance.popperOptions)
+    instance.popperInstance = Popper.createPopper(target, popperEl[0], popperOptions)
     instance.popperEl = popperEl
     instance.target = $(target)
     instance.id = FramelixRandom.getRandomHtmlId()
-    target.popperInstances[instance.group] = instance
+    target.popperInstances[options.group] = instance
     // a slight delay before adding the instance, to prevent closing it directly when invoked by a click event
     setTimeout(function () {
       FramelixPopup.instances[instance.id] = instance
       instance.popperInstance?.update()
       popperEl.attr('data-show-arrow', '1')
     }, 100)
-    if (instance.closeMethods.indexOf('mouseleave-target') > -1) {
+    if (options.closeMethods.indexOf('mouseleave-target') > -1) {
       $(target).one('mouseleave touchend', function () {
         // mouseleave could happen faster then the instance exists, so add it to allow destroy() to work properly
         FramelixPopup.instances[instance.id] = instance
         instance.destroy()
       })
     }
-    if (instance.closeMethods.indexOf('focusout-popup') > -1) {
+    if (options.closeMethods.indexOf('focusout-popup') > -1) {
       instance.popperEl.one('focusin', function () {
         instance.popperEl.on('focusout', function () {
           setTimeout(function () {
@@ -330,21 +299,6 @@ class FramelixPopup {
   static destroyAll () {
     for (let id in FramelixPopup.instances) {
       FramelixPopup.instances[id].destroy()
-    }
-  }
-
-  /**
-   * Constructor
-   * @param {Object=} options
-   */
-  constructor (options) {
-    if (options && typeof options === 'object') {
-      for (let i in options) {
-        this[i] = options[i]
-      }
-    }
-    if (typeof this.closeMethods === 'string') {
-      this.closeMethods = this.closeMethods.replace(/\s/g, '').split(',')
     }
   }
 

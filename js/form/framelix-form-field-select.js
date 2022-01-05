@@ -245,7 +245,8 @@ class FramelixFormFieldSelect extends FramelixFormField {
       closeMethods: 'click-outside,focusout-popup',
       appendTo: this.field,
       padding: '',
-      offset: [0, 0]
+      offset: [0, 0],
+      color: this.optionsContainer.parent()
     })
     this.optionsPopup.destroyed.then(function () {
       let values = []

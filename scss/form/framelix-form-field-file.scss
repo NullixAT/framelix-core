@@ -2,8 +2,8 @@
 
   .dragging & {
     border: 0;
-    background: var(--color-success-bg-subtle);
-    box-shadow: var(--color-success-bg) 0 0 10px inset, var(--color-success-bg) 0 0 10px;
+    background: hsla(var(--color-success-hue), 50%, 50%, 0.1);
+    box-shadow: hsl(var(--color-success-hue), 50%, 50%) 0 0 10px;
     padding-left: 20px;
     padding-right: 20px;
     transition: .2s;
@@ -15,7 +15,7 @@
 
   .framelix-form-field-file-file {
     padding: 2px 5px;
-    background: var(--color-subtle-bg);
+    background: var(--color-alert-default-bg);
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius);
     margin-bottom: 3px;

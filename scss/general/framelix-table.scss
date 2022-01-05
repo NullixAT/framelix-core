@@ -1,15 +1,14 @@
 .framelix-table {
   width: 100%;
-  overflow: auto;
 
   > table {
     padding: 0;
     width: 100%;
     margin: 0 0 10px;
     border-spacing: 1px;
-    height: 1px; /* Hack, to make 100% div height in cells possible, tested for edge old/new, chrome, firefox */
-    border: 1px solid var(--color-subtle-bg);
-
+    // Hack, to make 100% div height in cells possible, tested for edge old/new, chrome, firefox
+    height: 1px;
+    border: 1px solid var(--color-border-subtle);
 
     > tbody,
     > thead,
@@ -111,8 +110,7 @@
         padding: 8px;
         vertical-align: bottom;
         user-select: none;
-        background: var(--color-subtle-bg);
-        color: var(--color-subtle-bg-text);
+        background: var(--color-page-bg-stencil);
         border-bottom: 3px solid var(--color-border-subtle);
 
         &:not([data-flag-ignoresort]) {
@@ -122,14 +120,13 @@
     }
 
     > tbody > tr:hover {
-      outline: 1px solid rgba(0, 0, 0, 0.5);
+      outline: 1px solid var(--color-border-strong);
     }
 
     > tfoot td {
       font-weight: bold;
       border-top: 3px solid var(--color-border-subtle);
-      background: var(--color-subtle-bg);
-      color: var(--color-subtle-bg-text);
+      background: var(--color-page-bg-stencil);
     }
   }
 
@@ -166,12 +163,12 @@
   }
 
   .framelix-table-header-sort-info-number {
-    background-color: var(--color-strong-bg);
-    color: var(--color-strong-bg-text);
+    background-color: hsla(var(--color-primary-hue), 50%, 50%, 0.5);
     border-radius: var(--border-radius);
     display: flex;
     padding: 0 5px;
     align-items: center;
+    color: white;
 
     &:empty {
       display: none;

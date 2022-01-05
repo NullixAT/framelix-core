@@ -4,6 +4,7 @@ namespace Framelix\Framelix\View\Backend\UserProfile;
 
 use Framelix\Framelix\Config;
 use Framelix\Framelix\Form\Form;
+use Framelix\Framelix\Html\ColorName;
 use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\JsCall;
@@ -163,7 +164,7 @@ class Fido2 extends View
         $form = $this->meta->getEditForm();
         if (!$this->storable->id) {
             $form->buttons = [];
-            $form->addButton('enable', '__framelix_view_backend_userprofile_fido2_enable__', buttonColor: 'success');
+            $form->addButton('enable', '__framelix_view_backend_userprofile_fido2_enable__', buttonColor: ColorName::PRIMARY);
         }
         $form->show();
 
