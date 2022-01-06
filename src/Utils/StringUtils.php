@@ -8,7 +8,9 @@ use function call_user_func_array;
 use function method_exists;
 use function str_replace;
 use function strlen;
+use function strpos;
 use function substr;
+use function wordwrap;
 
 /**
  * String utilities for frequent tasks
@@ -101,12 +103,18 @@ class StringUtils
      * @param string $string
      * @param int $length
      * @param string $truncateAffix
+     * @param bool $wordCut If true, then cut only at words when length is reached, so resulting string can be longer then length
      * @return string
      */
-    public static function cut(string $string, int $length, string $truncateAffix = "..."): string
+    public static function cut(string $string, int $length, string $truncateAffix = "...", bool $wordCut = true): string
     {
         if (strlen($string) > $length) {
-            return substr($string, 0, $length) . $truncateAffix;
+            if ($wordCut) {
+                $wrapped = wordwrap($string, $length, "\2", true);
+                return substr($wrapped, 0, strpos($string, "\2") ?: null) . $truncateAffix;
+            } else {
+                return substr($string, 0, $length) . $truncateAffix;
+            }
         }
         return $string;
     }

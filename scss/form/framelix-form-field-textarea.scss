@@ -6,10 +6,9 @@
   .framelix-form-field-textarea-contenteditable {
     overflow: auto;
 
-    :not(br):not(p):not(div):not(span), {
+    :not(br):not(p):not(div):not(span) {
       all: unset;
       display: block;
-
     }
   }
 }

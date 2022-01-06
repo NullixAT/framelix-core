@@ -6,7 +6,9 @@ use Framelix\Framelix\ErrorCode;
 use Framelix\Framelix\Exception;
 use Framelix\Framelix\Url;
 
+use function html_entity_decode;
 use function htmlentities;
+use function nl2br;
 use function str_ends_with;
 
 /**
@@ -42,10 +44,20 @@ class HtmlUtils
      */
     public static function escape(mixed $str, bool $nl2br = false): string
     {
-        $str = htmlentities($str);
+        $str = htmlentities($str, encoding: 'UTF-8');
         if ($nl2br) {
             $str = nl2br($str);
         }
         return $str;
+    }
+
+    /**
+     * Unescape a given string to raw text instead of html (opposite of escape())
+     * @param mixed $str
+     * @return string
+     */
+    public static function unescape(mixed $str): string
+    {
+        return html_entity_decode($str, encoding: 'UTF-8');
     }
 }
