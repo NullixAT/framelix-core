@@ -4,6 +4,12 @@
 class Framelix {
 
   /**
+   * Actions to executed when user press escape
+   * @type {function[]}
+   */
+  static escapeActions = []
+
+  /**
    * Initialize things early, before body exist
    */
   static initEarly () {
@@ -54,6 +60,24 @@ class Framelix {
     $(document).on('keydown', '.framelix-space-click', function (ev) {
       if (ev.key === ' ') $(this).trigger('click')
     })
+    // escape handling
+    $(document).on('keydown', function (ev) {
+      if (ev.key === 'Escape') {
+        while (Framelix.escapeActions.length) {
+          if (Framelix.escapeActions.pop()() === true) {
+            break
+          }
+        }
+      }
+    })
+  }
+
+  /**
+   * Add escape action
+   * @param {function} func Should return true when should stop calling the next action
+   */
+  static addEscapeAction (func) {
+    Framelix.escapeActions.push(func)
   }
 
   /**
@@ -192,7 +216,7 @@ class Framelix {
     if (!progressBar.length) {
       progressBar = $(`<div class="framelix-progress" data-type="${type}"><span class="framelix-progress-bar"><span class="framelix-progress-bar-inner"></span></span></div>`)
       container.append(progressBar)
-      Framelix.wait(1).then(function (){
+      Framelix.wait(1).then(function () {
         progressBar.addClass('framelix-progress-show')
       })
     }

@@ -120,11 +120,6 @@ class FramelixModal {
   static init () {
     FramelixModal.modalsContainer = $(`<div class="framelix-modals"></div>`)
     $('body').append(FramelixModal.modalsContainer)
-    $(document).on('keydown', function (ev) {
-      if (ev.key === 'Escape') {
-        FramelixModal.modalsContainer.find('.framelix-modal-close').last().trigger('click')
-      }
-    })
   }
 
   /**
@@ -326,6 +321,11 @@ class FramelixModal {
     }
     instance.container.trigger('focus')
     FramelixPopup.destroyTooltips()
+    Framelix.addEscapeAction(function () {
+      if (!instance.resolvers) return false
+      instance.destroy()
+      return true
+    })
     return instance
   }
 

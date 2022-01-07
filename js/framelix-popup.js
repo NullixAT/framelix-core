@@ -109,11 +109,6 @@ class FramelixPopup {
         }
       }
     })
-    $(document).on('keydown', function (ev) {
-      if (ev.key === 'Escape') {
-        FramelixPopup.destroyAll()
-      }
-    })
     // listen to dom changes to auto hide popups when the target element isn't visible in the dom anymore
     FramelixDom.addChangeListener('framelix-popup', function () {
       if (!FramelixObjectUtils.hasKeys(FramelixPopup.instances)) return
@@ -261,6 +256,11 @@ class FramelixPopup {
     // on any swipe left/right we close as well
     $(document).one('swiped-left swiped-right', function () {
       instance.destroy()
+    })
+    Framelix.addEscapeAction(function () {
+      if (!instance.resolvers) return false
+      instance.destroy()
+      return true
     })
     return instance
   }
