@@ -13,6 +13,7 @@ use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Network\Response;
+use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\View\Backend\View;
@@ -23,6 +24,7 @@ use function array_unique;
 use function ceil;
 use function file_exists;
 use function htmlentities;
+use function ksort;
 use function nl2br;
 use function str_contains;
 use function str_replace;
@@ -57,21 +59,39 @@ class LangEditor extends View
         if (Request::getBody('save')) {
             $lang = Request::getBody('lang');
             $data = Request::getBody('values');
+            $dataUnmodified = Request::getBody('valuesUnmodified');
+            $modules = array_merge($data ? array_keys($data) : [], $dataUnmodified ? array_keys($dataUnmodified) : []);
+            $modules = array_unique($modules);
+            // resort all keys of modified modules
+            foreach ($modules as $module) {
+                $langFile = FileUtils::getModuleRootPath($module) . "/lang";
+                $langFile .= "/$lang.json";;
+                $existingValues = file_exists($langFile) ? JsonUtils::readFromFile($langFile) : [];
+                if ($existingValues) {
+                    ksort($existingValues);
+                    JsonUtils::writeToFile($langFile, $existingValues, true);
+                }
+            }
             if ($data) {
                 foreach ($data as $module => $values) {
+                    $langFile = FileUtils::getModuleRootPath($module) . "/lang";
+                    $langFile .= "/$lang.json";;
+                    $existingValues = file_exists($langFile) ? JsonUtils::readFromFile($langFile) : [];
                     foreach ($values as $key => $row) {
                         // if original have no line breaks, then we can safely convert line breaks to <br/>
                         if (!str_contains(Lang::get($key, null, 'en'), "\n")) {
-                            $values[$key][0] = str_replace("\n", "<br/>", $row[0]);
+                            $existingValues[$key][0] = str_replace("\n", "<br/>", $row[0]);
+                        }
+                        if (isset($row[1])) {
+                            $existingValues[$key][1] = $row[1];
                         }
                         // remove empty entries
-                        if ($lang !== 'en' && $values[$key][0] === '') {
-                            unset($values[$key]);
+                        if ($lang !== 'en' && $existingValues[$key][0] === '') {
+                            unset($existingValues[$key]);
                         }
                     }
-                    $path = FileUtils::getModuleRootPath($module) . "/lang";
-                    $path .= "/$lang.json";
-                    JsonUtils::writeToFile($path, $values, true);
+                    ksort($existingValues);
+                    JsonUtils::writeToFile($langFile, $existingValues, true);
                 }
             }
             Toast::success('__framelix_saved__');
@@ -89,6 +109,29 @@ class LangEditor extends View
             $form = $this->getForm(substr($this->tabId, 5));
             $form->addSubmitButton('save', '__framelix_save__', 'save');
             $form->show();
+            ?>
+            <script>
+              (function () {
+                const form = FramelixForm.getById('<?=$form->id?>')
+                form.container.on('focusin', 'textarea', function () {
+                  if (this.name.startsWith('valuesUnmodified')) {
+                    /** @type {FramelixFormFieldHidden} hiddenField */
+                    const baseName = this.name.substr(0, this.name.length - 3)
+                    const hiddenField = form.fields[baseName + '[1]']
+                    if (hiddenField) {
+                      hiddenField.input[0].name = hiddenField.input[0].name.replace(/valuesUnmodified/, 'values')
+                    }
+                    this.name = this.name.replace(/valuesUnmodified/, 'values')
+                  }
+                })
+                form.fields['visibility'].container.on(FramelixFormField.EVENT_CHANGE_USER, function () {
+                  window.location.href = '<?=Url::getBrowserUrl()
+                      ->removeParameter('visibility')
+                      ->setParameter('visibility', '')->setHash(null)?>' + form.fields['visibility'].getValue()
+                })
+              })()
+            </script>
+            <?php
         } else {
             $tabs = new Tabs();
             foreach (Lang::getAllModuleLanguages() as $language) {
@@ -105,6 +148,7 @@ class LangEditor extends View
      */
     public function getForm(string $language): Form
     {
+        $visibility = Request::getGet('visibility') ?? "untranslated";
         $form = new Form();
         $form->id = "update";
         $form->submitAsyncRaw = true;
@@ -121,7 +165,7 @@ class LangEditor extends View
             $field->label = "Visibility";
             $field->addOption('all', 'All');
             $field->addOption('untranslated', 'Only untranslated');
-            $field->defaultValue = "untranslated";
+            $field->defaultValue = $visibility;
             $form->addField($field);
 
             $fieldTranslated = new Html();
@@ -172,7 +216,7 @@ class LangEditor extends View
             $totalKeys++;
             $hash = substr(md5($row['desc']), 0, 5);
             $field = new Textarea();
-            $field->name = 'values[' . $module . '][' . $key . '][0]';
+            $field->name = 'valuesUnmodified[' . $module . '][' . $key . '][0]';
             $hashEqual = $hash === $row['hash'] && $row['value'] !== '';
             if ($hashEqual) {
                 $translated++;
@@ -185,9 +229,8 @@ class LangEditor extends View
                     $value = str_replace(["<br/>", "<br />"], "\n", $value);
                 }
                 $field->labelDescription = nl2br(htmlentities($value));
-                $condition = $field->getVisibilityCondition();
-                if ($hashEqual) {
-                    $condition->equal('visibility', 'all');
+                if ($hashEqual && $visibility !== 'all') {
+                    continue;
                 }
             }
             $field->label .= trim($key, "_");
@@ -200,7 +243,7 @@ class LangEditor extends View
             $form->addField($field);
             if ($language !== 'en') {
                 $field = new Hidden();
-                $field->name = 'values[' . $module . '][' . $key . '][1]';
+                $field->name = 'valuesUnmodified[' . $module . '][' . $key . '][1]';
                 $field->defaultValue = $hash;
                 $form->addField($field);
             }

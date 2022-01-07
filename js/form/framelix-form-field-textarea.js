@@ -4,16 +4,17 @@
 class FramelixFormFieldTextarea extends FramelixFormField {
 
   /**
+   * Cached autoheight data
+   * @type {Object}
+   * @private
+   */
+  static autoheightData = {}
+
+  /**
    * Placeholder
    * @type {string|null}
    */
   placeholder = null
-
-  /**
-   * The content editable
-   * @type {Cash}
-   */
-  contenteditable
 
   /**
    * The textarea text element
@@ -52,6 +53,70 @@ class FramelixFormFieldTextarea extends FramelixFormField {
   maxLength = null
 
   /**
+   * Initialize autoheight handling
+   */
+  static initLate () {
+    let resizeTo = null
+    $(window).on('resize', function () {
+      if (resizeTo) return
+      resizeTo = setTimeout(function () {
+        $('.framelix-textarea-autoheight-active').each(function () {
+          FramelixFormFieldTextarea.calculateAutoheight(this)
+        })
+        resizeTo = null
+      }, 500)
+    })
+    FramelixDom.addChangeListener('framelix-textarea', function () {
+      $('textarea').filter('.framelix-textarea-autoheight').not('.framelix-textarea-autoheight-active').each(function () {
+        $(this).addClass('framelix-textarea-autoheight-active')
+        FramelixFormFieldTextarea.calculateAutoheight(this)
+        $(this).on('input change', function () {
+          FramelixFormFieldTextarea.calculateAutoheight(this)
+        })
+      })
+    })
+  }
+
+  /**
+   * Calculate autoheight for given textarea
+   * Can be used on every textarea, not only framelix form fields
+   * @param {HTMLTextAreaElement} textarea
+   */
+  static calculateAutoheight (textarea) {
+    textarea.ignoreDomObserver = true
+    const cachedData = FramelixFormFieldTextarea.autoheightData
+    if (!cachedData.helper) {
+      const helperContainer = $('<div class="framelix-textarea-autoheight-helper" aria-hidden="true"><textarea></textarea></div>')
+      cachedData.helper = helperContainer.children()[0]
+      cachedData.helper.ignoreDomObserver = true
+      $('body').append(helperContainer)
+    }
+    const helperTextarea = cachedData.helper
+    if (cachedData.lastTextarea !== textarea) {
+      const styles = window.getComputedStyle(textarea)
+      cachedData.lastTextarea = textarea
+      cachedData.lastHeight = parseInt(textarea.style.height.replace(/[^0-9]/g, ''))
+      if (styles.cssText !== '') {
+        helperTextarea.style.cssText = styles.cssText
+      } else {
+        helperTextarea.style.cssText = Object.values(styles).reduce(
+          (css, propertyName) =>
+            `${css}${propertyName}:${styles.getPropertyValue(
+              propertyName
+            )};`
+        )
+      }
+    }
+    helperTextarea.style.width = textarea.clientWidth + 'px'
+    helperTextarea.value = textarea.value
+    helperTextarea.style.height = '5px'
+    if (cachedData.lastHeight !== helperTextarea.scrollHeight) {
+      cachedData.lastHeight = helperTextarea.scrollHeight
+      textarea.style.height = helperTextarea.scrollHeight + 'px'
+    }
+  }
+
+  /**
    * Set value for this field
    * @param {*} value
    * @param {boolean} isUserChange Indicates if this change was done because of an user input
@@ -61,8 +126,8 @@ class FramelixFormFieldTextarea extends FramelixFormField {
       return
     }
     this.textarea.val(value)
-    this.contenteditable[0].innerText = value
     this.triggerChange(this.textarea, isUserChange)
+    FramelixFormFieldTextarea.calculateAutoheight(this.textarea[0])
   }
 
   /**
@@ -101,54 +166,34 @@ class FramelixFormFieldTextarea extends FramelixFormField {
   }
 
   /**
-   * Get clean text from contenteditable
-   * @return {string}
-   */
-  getCleanText () {
-    let text = this.contenteditable[0].innerText
-    text = text.replace(/[\t\r]/g, '')
-    return text
-  }
-
-  /**
    * Render the field into the container
    * @return {Promise<void>} Resolved when field is fully functional
    */
   async renderInternal () {
     await super.renderInternal()
     const self = this
-    this.textarea = $(`<textarea></textarea>`)
-    this.contenteditable = $(`<div class="framelix-form-field-textarea-contenteditable framelix-form-field-input" contenteditable="true">`)
+    this.textarea = $(`<textarea class="framelix-form-field-input framelix-textarea-autoheight framelix-textarea-autoheight-active"></textarea>`)
     this.field.html(this.textarea)
-    this.field.append(this.contenteditable)
     if (this.placeholder !== null) this.textarea.attr('placeholder', this.placeholder)
     if (this.disabled) {
       this.textarea.attr('disabled', true)
-      this.contenteditable.removeAttr('contenteditable')
     }
-    if (this.minHeight !== null) this.contenteditable.css('minHeight', this.minHeight + 'px')
-    if (this.maxHeight !== null) this.contenteditable.css('maxHeight', this.maxHeight + 'px')
-    this.contenteditable.attr('spellcheck', this.spellcheck ? 'true' : 'false')
+    if (this.minHeight !== null) this.textarea.css('minHeight', this.minHeight + 'px')
+    if (this.maxHeight !== null) this.textarea.css('maxHeight', this.maxHeight + 'px')
+    this.textarea.attr('spellcheck', this.spellcheck ? 'true' : 'false')
     this.textarea.attr('name', this.name)
-    this.contenteditable.attr('tabindex', '0')
-    this.contenteditable.on('change input', function (ev) {
+    this.textarea.on('change input', function (ev) {
       ev.stopPropagation()
-      let cleanText = self.getCleanText()
-      // remove all styles and replace not supported elements
-      self.contenteditable.find('script,style,link').remove()
-      self.contenteditable.find('[style],[href]').removeAttr('style').removeAttr('href')
-      if (self.textarea.val() === cleanText) {
-        return
-      }
-      self.textarea.val(cleanText)
       self.triggerChange(self.textarea, true)
-    }).on('blur paste', function () {
-      setTimeout(function () {
-        self.setValue(self.getCleanText())
-      }, 10)
+      FramelixFormFieldTextarea.calculateAutoheight(self.textarea[0])
     })
-    this.setValue(this.defaultValue || '')
+    // use textarea directly to not trigger expensive autoheight calculation
+    // autoheight on creation can be calculation with fast method because layout jump doesnt matter
+    this.textarea.val(this.defaultValue || '')
+    this.textarea[0].style.height = "5px"
+    this.textarea[0].style.height = this.textarea[0].scrollHeight + 'px'
   }
 }
 
 FramelixFormField.classReferences['FramelixFormFieldTextarea'] = FramelixFormFieldTextarea
+FramelixInit.late.push(FramelixFormFieldTextarea.initLate)

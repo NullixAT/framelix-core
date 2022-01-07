@@ -86,7 +86,8 @@ class FramelixPopup {
         color: 'dark',
         group: 'tooltip',
         closeButton: false,
-        offsetByMouseEvent: ev
+        offsetByMouseEvent: ev,
+        data: { tooltip: true }
       })
       // a tooltip is above everything
       instance.popperEl.css('z-index', 999)
@@ -287,7 +288,7 @@ class FramelixPopup {
       if (!FramelixPopup.instances[id].target) {
         continue
       }
-      if (FramelixPopup.instances[id].target.attr('data-tooltip')) {
+      if (FramelixPopup.instances[id].options.data.tooltip) {
         FramelixPopup.instances[id].destroy()
       }
     }

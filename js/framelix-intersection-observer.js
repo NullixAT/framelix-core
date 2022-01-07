@@ -38,8 +38,8 @@ class FramelixIntersectionObserver {
   static onGetVisible (element, callback) {
     FramelixIntersectionObserver.observe(element, function (isIntersecting) {
       if (isIntersecting) {
-        callback()
         FramelixIntersectionObserver.unobserve(element)
+        callback()
       }
     })
   }
@@ -54,8 +54,8 @@ class FramelixIntersectionObserver {
   static onGetInvisible (element, callback) {
     FramelixIntersectionObserver.observe(element, function (isIntersecting) {
       if (!isIntersecting) {
-        callback()
         FramelixIntersectionObserver.unobserve(element)
+        callback()
       }
     })
   }

@@ -1,14 +1,11 @@
-.framelix-form-field-textarea {
-  textarea {
-    display: none;
-  }
+.framelix-textarea-autoheight-helper {
+    opacity: 0;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+}
 
-  .framelix-form-field-textarea-contenteditable {
-    overflow: auto;
-
-    :not(br):not(p):not(div):not(span) {
-      all: unset;
-      display: block;
-    }
-  }
+.framelix-textarea-autoheight {
+    resize: none;
+    overflow: hidden;
 }
