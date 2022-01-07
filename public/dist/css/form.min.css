@@ -258,8 +258,7 @@ html[data-color-scheme='dark'] .framelix-form-field-time ::-webkit-calendar-pick
     flex: 1 1 auto;
     margin: 0;
     height: auto;
-    width: auto;
-    background-color: hsla(var(--color-primary-hue), 50%, 50%, 0.4); }
+    width: auto; }
   .framelix-form-field-toggle .framelix-form-field-input[data-style='toggle'] input:not(:checked) {
     margin-right: calc(50% + 3px); }
   .framelix-form-field-toggle .framelix-form-field-input[data-style='toggle'] input:checked {
@@ -380,7 +379,7 @@ input[type='checkbox'] {
     font-size: 12px; }
   input[type='radio']:checked,
   input[type='checkbox']:checked {
-    background-color: var(--color-primary-bg-strong); }
+    background-color: var(--color-input-checkbox-checked); }
     input[type='radio']:checked:after,
     input[type='checkbox']:checked:after {
       color: var(--color-primary-bg-strong-text);

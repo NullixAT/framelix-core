@@ -234,6 +234,13 @@ class FramelixFormFieldSelect extends FramelixFormField {
     popupContentInner.append(popupOptionsContainer)
 
     const optionsElementsIndexed = {}
+    if (!this.required) {
+      popupOptionsContainer.append('<button class="framelix-button framelix-button-small" data-unset="1">' + FramelixLang.get('__framelix_form_select_unset__') + '</button><div class="framelix-spacer"></div>')
+      popupOptionsContainer.on('click', 'button[data-unset]', function () {
+        popupContentInner.find('input:checked').prop('checked', false)
+        self.destroyDropdown()
+      })
+    }
     for (let key in this.options) {
       const optionValue = this.options[key][0]
       const optionElement = this.getOptionHtml(key, values === optionValue || Array.isArray(values) && values.indexOf(optionValue) > -1)

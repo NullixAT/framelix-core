@@ -217,6 +217,7 @@
   --color-input-border: hsl(var(--color-primary-hue), 20%, 77%);
   --color-input-text: var(--color-page-text);
   --color-input-checkbox-background: hsl(0, 0%, 80%);
+  --color-input-checkbox-checked: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
   --color-table-zebra: hsl(var(--color-primary-hue), 20%, 95%);
   --color-progressbar-1: #f1c40f;
   --color-progressbar-2: #2c3e50; }
@@ -293,6 +294,7 @@
   --color-input-border: hsl(var(--color-primary-hue), 20%, 35%);
   --color-input-text: var(--color-page-text);
   --color-input-checkbox-background: rgba(0, 0, 0, 0.2);
+  --color-input-checkbox-checked: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
   --color-table-zebra: hsl(var(--color-primary-hue), 20%, 13%); }
 
 [data-color-contrast='less'] {

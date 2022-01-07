@@ -543,6 +543,10 @@
         "Suchen nach Werten....",
         "5036c"
     ],
+    "__framelix_form_select_unset__": [
+        "Auswahl zur\u00fccksetzen",
+        "236ba"
+    ],
     "__framelix_form_validation_captcha_invalid__": [
         "Captcha konnte nicht verifiziert werden, bitte erneut versuchen",
         "a4d84"

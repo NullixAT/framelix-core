@@ -407,6 +407,9 @@
     "__framelix_form_select_search__": [
         "Search for values..."
     ],
+    "__framelix_form_select_unset__": [
+        "Deselect all entries"
+    ],
     "__framelix_form_validation_captcha_invalid__": [
         "Couldn't verify captcha, please try again"
     ],

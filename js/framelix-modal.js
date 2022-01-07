@@ -249,12 +249,12 @@ class FramelixModal {
    * @param {string} urlPath The url path with or without url parameters
    * @param {Object=} urlParams Additional url parameters to append to urlPath
    * @param {Object|FormData|string=} postData Post data to send
-   * @param {boolean|Cash} showProgressBar Show progress bar at top of page or in given container
-   * @param {Object|null} fetchOptions Additonal options to directly pass to the fetch() call
+   * @param {boolean|Cash=} showProgressBar Show progress bar at top of page or in given container
+   * @param {Object=} fetchOptions Additonal options to directly pass to the fetch() call
    * @param {FramelixModalShowOptions=} modalOptions Modal options
    * @return {Promise<FramelixModal>} Resolved when content is loaded
    */
-  static async request (method, urlPath, urlParams, postData, showProgressBar = false, fetchOptions = null, modalOptions) {
+  static async request (method, urlPath, urlParams, postData, showProgressBar, fetchOptions, modalOptions) {
     if (!modalOptions) modalOptions = {}
     modalOptions.bodyContent = '<div class="framelix-loading"></div>'
     const modal = FramelixModal.show(modalOptions)
