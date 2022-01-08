@@ -8,6 +8,9 @@
     "__framelix_appupdate_check_update__": [
         "Click here to check for updates online now"
     ],
+    "__framelix_dashboard__" : [
+        "Dashboard"
+    ],
     "__framelix_appupdate_confirm__": [
         "I confirm this action"
     ],
@@ -328,6 +331,9 @@
     ],
     "__framelix_deleteentry__": [
         "Delete this entry"
+    ],
+    "__framelix_deleted__": [
+        "Deleted"
     ],
     "__framelix_developer_options__": [
         "Developer options"
@@ -667,6 +673,9 @@
     ],
     "__framelix_save__": [
         "Save"
+    ],
+    "__framelix_edit__": [
+        "Edit"
     ],
     "__framelix_save_edited__": [
         "Save edited entry"

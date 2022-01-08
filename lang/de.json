@@ -375,6 +375,10 @@
         "Dark Mode",
         "51b5e"
     ],
+    "__framelix_dashboard__": [
+        "Dashboard",
+        "2938c"
+    ],
     "__framelix_date_quarter__": [
         "Quartal",
         "b25cd"
@@ -435,6 +439,10 @@
         "So",
         "ef657"
     ],
+    "__framelix_deleted__": [
+        "Gel\u00f6scht",
+        "5fe60"
+    ],
     "__framelix_deleteentry__": [
         "Eintrag l\u00f6schen",
         "e313e"
@@ -450,6 +458,10 @@
     "__framelix_downloadfile__": [
         "Datei downloaden",
         "d5ef9"
+    ],
+    "__framelix_edit__": [
+        "Bearbeiten",
+        "7dce1"
     ],
     "__framelix_edituser_sidebar_title__": [
         "Benutzermanagement",
