@@ -209,6 +209,9 @@ html[data-color-scheme='dark'] .framelix-form-field-datetime ::-webkit-calendar-
   padding: 0;
   border: 0; }
 
+.framelix-form-field-select-popup button[data-unset] {
+  margin: 10px; }
+
 .framelix-form-field-select-search {
   margin: 5px; }
 
