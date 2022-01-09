@@ -16,6 +16,7 @@ use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\View;
+use JetBrains\PhpStorm\ExpectedValues;
 use JsonSerializable;
 
 use function array_shift;
@@ -77,11 +78,12 @@ class Form implements JsonSerializable
 
     /**
      * The target to submit to
-     * If null then it is the current window
-     * _blank submits to new window
-     * @var string|null
+     * Only required when submitAsync = false
+     * currentwindow = Same browser window
+     * newwindow = New browser window (tab)
      */
-    public ?string $submitTarget = null;
+    #[ExpectedValues(values: ["currentwindow", "newwindow"])]
+    public string $submitTarget = 'currentwindow';
 
     /**
      * Submit the form async

@@ -15,6 +15,7 @@ use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\NumberUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\Utils\StringUtils;
+use JetBrains\PhpStorm\ExpectedValues;
 use JsonSerializable;
 
 use function array_combine;
@@ -100,6 +101,7 @@ class Table implements JsonSerializable
      * @var array
      */
     protected array $rows = [];
+
     /**
      * Is the table sortable
      * @var bool
@@ -169,6 +171,18 @@ class Table implements JsonSerializable
      * @var string|null
      */
     public ?string $appendHtml = null;
+
+    /**
+     * Row url open method
+     * default = Same browser window or new window when user click with middle mouse button
+     * newwindow = New browser window (tab)
+     * currenttab = If table is in a FramelixTab, then load it into this tab - If is no tab, it falls back to default
+     * currentmodal = If table is in a FramelixModal, then load it into this modal - If is no tab, it falls back to default
+     * newmodal = Opens the row url in a new FramelixModal
+     * @var string
+     */
+    #[ExpectedValues(values: ["default", "newwindow", "currenttab", "currentmodal", "newmodal"])]
+    public string $rowUrlOpenMethod = 'default';
 
     /**
      * On js call

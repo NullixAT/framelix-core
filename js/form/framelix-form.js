@@ -91,11 +91,12 @@ class FramelixForm {
 
   /**
    * The target to submit to
-   * If null then it is the current window
-   * _blank submits to new window
-   * @type {string|null}
+   * Only required when submitAsync = false
+   * currentwindow = Same browser window
+   * newwindow = New browser window (tab)
+   * @type {string}
    */
-  submitTarget = null
+  submitTarget = 'currentwindow'
 
   /**
    * Submit the form async
@@ -645,7 +646,7 @@ class FramelixForm {
       this.setSubmitStatus(true)
       this.form.removeAttr('onsubmit')
       this.form.attr('method', this.submitMethod)
-      this.form.attr('target', this.submitTarget || '_self')
+      this.form.attr('target', this.submitTarget === 'newwindow' ? '_blank' : '_self')
       this.form.attr('action', this.submitUrl || window.location.href)
       this.form[0].submit()
       this.form.attr('onsubmit', 'return false')

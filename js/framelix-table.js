@@ -185,6 +185,17 @@ class FramelixTable {
   appendHtml = null
 
   /**
+   * Row url open method
+   * default = Same browser window or new window when user click with middle mouse button
+   * newwindow = New browser window (tab)
+   * currenttab = If table is in a FramelixTab, then load it into this tab - If is no tab, it falls back to default
+   * currentmodal = If table is in a FramelixModal, then load it into this modal - If is no modal, it falls back to default
+   * newmodal = Opens the row url in a new FramelixModal
+   * @type {string}
+   */
+  rowUrlOpenMethod = 'default'
+
+  /**
    * A promise that is resolved when the table is completely rendered
    * @type {Promise}
    */
@@ -364,6 +375,58 @@ class FramelixTable {
   }
 
   /**
+   * Open row url depending on the table settings
+   * @param {string} url
+   * @param {string=} forceMethod Force open method
+   * @return {Promise}
+   */
+  async openRowUrl (url, forceMethod) {
+    let method = forceMethod || this.rowUrlOpenMethod
+    switch (method) {
+      case 'newmodal':
+      case 'currentmodal': {
+        let modal
+        if (method === 'currentmodal') {
+          const modalContainer = this.container.closest('.framelix-modal')
+          if (!modalContainer.length) {
+            window.location.href = url
+            return
+          }
+          modal = FramelixModal.instances[modalContainer.attr('data-instance-id')]
+        }
+        console.log(modal)
+        const result = await FramelixRequest.request('get', url, null, null, true)
+        if (modal) {
+          modal.bodyContainer.html((await result.getJson()).content || '')
+        } else {
+          FramelixModal.request('get', url, null, null, true)
+        }
+      }
+        break
+      case 'currenttab': {
+        const tab = this.container.closest('.framelix-tab-content')
+        if (!tab.length) {
+          window.location.href = url
+          return
+        }
+        const tabData = FramelixTabs.instances[tab.closest('.framelix-tabs').attr('data-instance-id')].tabs[tab.attr('data-id')]
+        if (tabData && tabData.content instanceof FramelixView) {
+          tabData.content.url = url
+        }
+        const result = await FramelixRequest.request('get', url, null, null, true)
+        tab.html((await result.getJson()).content || '')
+      }
+        break
+      case 'default':
+        window.location.href = url
+        break
+      case 'newwindow':
+        window.open(url)
+        break
+    }
+  }
+
+  /**
    * Render the table into the container
    */
   render () {
@@ -506,10 +569,10 @@ class FramelixTable {
       if (ev.key === 'Enter') {
         ev.preventDefault()
         let url = $(this).attr('data-url')
-        if (ev.ctrlKey) {
-          window.open(url)
+        if (ev.ctrlKey && self.rowUrlOpenMethod === 'default') {
+          self.openRowUrl(url, 'newwindow')
         } else {
-          location.href = url
+          self.openRowUrl(url)
         }
       }
     })
@@ -542,11 +605,11 @@ class FramelixTable {
       if (!ev.touches && !newTab && window.getSelection().toString().length > 0) {
         return
       }
-      if (newTab) {
-        window.open(url)
+      if (newTab && self.rowUrlOpenMethod === 'default') {
+        self.openRowUrl(url, 'newwindow')
         return
       }
-      location.href = url
+      self.openRowUrl(url)
     })
     // bind all available sort events to one catching event
     this.table.on(FramelixTable.EVENT_DRAGSORT_SORT_CHANGED + ' ' + FramelixTable.EVENT_COLUMNSORT_SORT_CHANGED, function () {
