@@ -190,11 +190,11 @@ class FramelixFormFieldTextarea extends FramelixFormField {
     // use textarea directly to not trigger expensive autoheight calculation
     // autoheight on creation can be calculation with fast method because layout jump doesnt matter
     this.textarea.val(this.defaultValue || '')
-    // wait a few ms will fix cases where height is not calculated properly
-    setTimeout(function () {
+    // on get visible calculate height
+    FramelixIntersectionObserver.onGetVisible(self.textarea[0], function () {
       self.textarea[0].style.height = '5px'
       self.textarea[0].style.height = self.textarea[0].scrollHeight + 'px'
-    }, 5)
+    })
   }
 }
 

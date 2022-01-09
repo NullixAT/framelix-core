@@ -331,6 +331,18 @@ abstract class Field implements JsonSerializable
     }
 
     /**
+     * Has field a visibility condition
+     * @return bool
+     */
+    public function hasVisibilityCondition(): bool
+    {
+        if ($this->visibilityCondition->data ?? null) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Get fields visibility condition
      * @return FieldVisibilityCondition
      */
