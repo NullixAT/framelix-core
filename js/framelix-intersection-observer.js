@@ -2,17 +2,18 @@
  * Intersection observer to check if something is intersecting on the screen or not
  */
 class FramelixIntersectionObserver {
+
   /**
-   * the observer
+   * The observer
    * @type {IntersectionObserver}
    */
   static observer = null
 
   /**
-   * All observed elements
-   * @type {[]}
+   * Element map
+   * @type {Map<HTMLElement, Object>}
    */
-  static observedElements = []
+  static elementMap = new Map()
 
   /**
    * Just check if an element is intersecting right now
@@ -68,28 +69,37 @@ class FramelixIntersectionObserver {
   static observe (element, callback) {
     if (!FramelixIntersectionObserver.observer) FramelixIntersectionObserver.init()
     element = $(element)[0]
-    FramelixIntersectionObserver.observedElements.push([element, callback])
-    FramelixIntersectionObserver.observer.observe(element)
+    if (!FramelixIntersectionObserver.elementMap.get(element)) {
+      FramelixIntersectionObserver.elementMap.set(element, {
+        'callbacks': [callback],
+        'isIntersecting': false,
+        'intersectionRatio': 0,
+        'hasValidStatus': false
+      })
+      FramelixIntersectionObserver.observer.observe(element)
+      return
+    }
+    const config = FramelixIntersectionObserver.elementMap.get(element)
+    config.callbacks.push(callback)
+    if (config.hasValidStatus) callback(config.isIntersecting, config.intersectionRatio)
   }
 
   /**
    * Unobserve an element
    * @param {HTMLElement} element
+   * @param {function=} callback If set, only remove given callback but let observation intact (for multiple observer on same entry)
    */
-  static unobserve (element) {
+  static unobserve (element, callback) {
     if (!FramelixIntersectionObserver.observer) FramelixIntersectionObserver.init()
     element = $(element)[0]
-    let removeIndex = null
-    for (let i = 0; i < FramelixIntersectionObserver.observedElements.length; i++) {
-      if (FramelixIntersectionObserver.observedElements[i][0] === element) {
-        removeIndex = i
-        break
-      }
+    if (!callback) {
+      FramelixIntersectionObserver.elementMap.delete(element)
+      FramelixIntersectionObserver.observer.unobserve(element)
+      return
     }
-    if (removeIndex !== null) {
-      FramelixIntersectionObserver.observedElements.splice(removeIndex, 1)
-    }
-    FramelixIntersectionObserver.observer.unobserve(element)
+    const config = FramelixIntersectionObserver.elementMap.get(element)
+    let removeIndex = config.callbacks.indexOf(callback)
+    if (removeIndex > -1) config.callbacks.splice(removeIndex, 1)
   }
 
   /**
@@ -98,12 +108,16 @@ class FramelixIntersectionObserver {
   static init () {
     FramelixIntersectionObserver.observer = new IntersectionObserver(function (observerEntries) {
       observerEntries.forEach(function (observerEntry) {
-        for (let i = 0; i < FramelixIntersectionObserver.observedElements.length; i++) {
-          if (FramelixIntersectionObserver.observedElements[i][0] === observerEntry.target) {
-            FramelixIntersectionObserver.observedElements[i][1](observerEntry.isIntersecting, observerEntry.intersectionRatio)
-            break
+        FramelixIntersectionObserver.elementMap.forEach(function (config, element) {
+          if (element === observerEntry.target) {
+            config.hasValidStatus = true
+            config.isIntersecting = observerEntry.isIntersecting
+            config.intersectionRatio = observerEntry.intersectionRatio
+            for (let i = 0; i < config.callbacks.length; i++) {
+              config.callbacks[i](config.isIntersecting, config.intersectionRatio)
+            }
           }
-        }
+        })
       })
     }, {
       rootMargin: '0px',
