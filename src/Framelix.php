@@ -2,7 +2,6 @@
 
 namespace Framelix\Framelix;
 
-use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\View\Backend\Setup;
@@ -83,14 +82,14 @@ class Framelix
         Config::loadModule("Framelix");
         Config::loadModule(FRAMELIX_MODULE);
 
-        if (!Request::isCli()) {
+        if (!self::isCli()) {
             // set memory limit to 128M as it is enough for almost every use case
             // increase it where it is required
             ini_set("memory_limit", "128M");
         }
 
         // setup required, skip everything and init with minimal data
-        if (!Request::isCli() && !file_exists(
+        if (!self::isCli() && !file_exists(
                 FileUtils::getModuleRootPath(FRAMELIX_MODULE . "/config/config-editable.php")
             )) {
             $baseFolder = str_ends_with(
@@ -117,7 +116,7 @@ class Framelix
                 View::addAvailableViewsByModule($module);
             }
             Lang::$lang = Config::get('languageDefault');
-            if (!Request::isCli() && Config::get('languageMultiple') && Config::get('languagesSupported')) {
+            if (!self::isCli() && Config::get('languageMultiple') && Config::get('languagesSupported')) {
                 if (Config::get('languageDefaultUser')) {
                     $userLang = Lang::getLanguageByBrowserSettings();
                     if ($userLang) {
@@ -126,6 +125,24 @@ class Framelix
                 }
             }
         }
+    }
+
+    /**
+     * Is app running in command line mode
+     * @return bool
+     */
+    public static function isCli(): bool
+    {
+        return php_sapi_name() === "cli";
+    }
+
+    /**
+     * Is app running under windows
+     * @return bool
+     */
+    public static function isWindows(): bool
+    {
+        return str_starts_with(PHP_OS, 'WIN');
     }
 
     /**

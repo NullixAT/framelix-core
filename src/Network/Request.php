@@ -96,12 +96,4 @@ class Request
         return self::getHeader('http_x_requested_with') === 'xmlhttprequest';
     }
 
-    /**
-     * Is app running in command line mode
-     * @return bool
-     */
-    public static function isCli(): bool
-    {
-        return php_sapi_name() === "cli";
-    }
 }

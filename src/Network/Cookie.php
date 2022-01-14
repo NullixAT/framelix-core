@@ -3,6 +3,7 @@
 namespace Framelix\Framelix\Network;
 
 use Framelix\Framelix\Config;
+use Framelix\Framelix\Framelix;
 use Framelix\Framelix\Utils\CryptoUtils;
 
 use function setcookie;
@@ -52,7 +53,7 @@ class Cookie
             $_COOKIE[$name] = $value;
         }
         // @codeCoverageIgnoreStart
-        if (!Request::isCli()) {
+        if (!Framelix::isCli()) {
             setcookie($name, (string)$value, [
                 'expires' => $cookieLifetime,
                 'path' => '/',

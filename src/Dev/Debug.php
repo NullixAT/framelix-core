@@ -2,7 +2,7 @@
 
 namespace Framelix\Framelix\Dev;
 
-use Framelix\Framelix\Network\Request;
+use Framelix\Framelix\Framelix;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 
@@ -21,7 +21,7 @@ class Debug
      */
     public static function dump(mixed $data, ?bool $renderAsHtml = null): void
     {
-        if (is_bool($renderAsHtml) && !$renderAsHtml || $renderAsHtml === null && Request::isCli()) {
+        if (is_bool($renderAsHtml) && !$renderAsHtml || $renderAsHtml === null && Framelix::isCli()) {
             var_dump($data);
             return;
         }

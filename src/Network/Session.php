@@ -2,6 +2,8 @@
 
 namespace Framelix\Framelix\Network;
 
+use Framelix\Framelix\Framelix;
+
 use function session_destroy;
 
 /**
@@ -15,7 +17,7 @@ class Session
     public static function destroy(): void
     {
         // @codeCoverageIgnoreStart
-        if (!Request::isCli()) {
+        if (!Framelix::isCli()) {
             if (!session_id()) {
                 session_start();
             }
@@ -33,7 +35,7 @@ class Session
     public static function get(string $name): mixed
     {
         // @codeCoverageIgnoreStart
-        if (!Request::isCli()) {
+        if (!Framelix::isCli()) {
             if (!session_id()) {
                 session_start();
             }
@@ -50,7 +52,7 @@ class Session
     public static function set(string $name, mixed $value): void
     {
         // @codeCoverageIgnoreStart
-        if (!Request::isCli()) {
+        if (!Framelix::isCli()) {
             if (!session_id()) {
                 session_start();
             }
