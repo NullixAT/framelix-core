@@ -51,26 +51,6 @@
         "Ein Zip Paket hochladen",
         "dfa3b"
     ],
-    "__framelix_backupreestore__": [
-        "Hier kannst du die aktuelle Konfiguration sichern oder ein Backup aus der Sicherung einspielen.<br\/>Achtung: Dieses Backup beinhaltet nur die Konfiguration, keine Datenbankdaten oder Source Codes.",
-        "af0bc"
-    ],
-    "__framelix_backupreestore_download__": [
-        "Backup downloaden",
-        "fab9c"
-    ],
-    "__framelix_backupreestore_invalidfile__": [
-        "Ung\u00fcltiges Configfile",
-        "870c8"
-    ],
-    "__framelix_backupreestore_restore__": [
-        "Backup wiederherstellen",
-        "40115"
-    ],
-    "__framelix_backupreestore_restored__": [
-        "Konfiguration wiederhergestellt",
-        "fc67a"
-    ],
     "__framelix_browser_unsupported__": [
         "Dein Browser wird leider nicht mehr unterst\u00fctzt. Bitte aktualisiere auf einen aktuelle Version von Chrome, Edge, Firefox oder Safari.",
         "fd507"
@@ -1152,7 +1132,7 @@
         "672ca"
     ],
     "__framelix_view_backend_appupdate__": [
-        "App Update",
+        "App Update und Backup",
         "0ea14"
     ],
     "__framelix_view_backend_appupdate_backup__": [

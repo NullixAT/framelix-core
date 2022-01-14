@@ -56,7 +56,7 @@ class Index extends View
                 ["module" => $module]
             );
         }
-        $tabs->addTab("backuprestore", null, new BackupRestore());
+        $tabs->addTab("systemcheck", null, new SystemCheck());
         $tabs->show();
     }
 }

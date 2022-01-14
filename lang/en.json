@@ -41,21 +41,6 @@
     "__framelix_appupdate_updatetype_upload__": [
         "Upload ZIP"
     ],
-    "__framelix_backupreestore__": [
-        "Here you can download a backup of your current configuration or you can restore your configuration from a backup file.<br\/>Attention: This backup only contains configuration data, no database data or source code."
-    ],
-    "__framelix_backupreestore_download__": [
-        "Download backup file"
-    ],
-    "__framelix_backupreestore_invalidfile__": [
-        "Invalid config file"
-    ],
-    "__framelix_backupreestore_restore__": [
-        "Restore backup file"
-    ],
-    "__framelix_backupreestore_restored__": [
-        "Configuration restored"
-    ],
     "__framelix_browser_unsupported__": [
         "Your browser is not supported anymore. Please update to a current version of Chrome, Edge, Firefox, Safari or any other brand."
     ],
@@ -864,7 +849,10 @@
         "Developer"
     ],
     "__framelix_view_backend_appupdate__": [
-        "App Update"
+        "App Update and Backup"
+    ],
+    "__framelix_view_backend_config_systemcheck__" : [
+        "System Check"
     ],
     "__framelix_view_backend_appupdate_backup__": [
         "Download a full backup"

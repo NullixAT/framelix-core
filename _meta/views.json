@@ -1,5 +1,5 @@
 {
-    "directoryListHash": "1|546937835",
+    "directoryListHash": "1|3818993564",
     "views": {
         "Framelix\\Framelix\\View\\Api": {
             "accessRole": "*",
@@ -18,15 +18,6 @@
             "depth": 3,
             "pageTitle": "{classLangKey}",
             "url": "\/backend\/appupdate"
-        },
-        "Framelix\\Framelix\\View\\Backend\\Config\\BackupRestore": {
-            "accessRole": "admin,configuration",
-            "customUrl": null,
-            "devModeOnly": false,
-            "multilanguage": true,
-            "depth": 3,
-            "pageTitle": "{classLangKey}",
-            "url": "\/backend\/config\/backuprestore"
         },
         "Framelix\\Framelix\\View\\Backend\\Config\\Index": {
             "accessRole": "admin,configuration",
@@ -54,6 +45,15 @@
             "depth": 3,
             "pageTitle": "{classLangKey}",
             "url": "\/backend\/config\/moduleconfigtab"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Config\\SystemCheck": {
+            "accessRole": "admin,configuration",
+            "customUrl": null,
+            "devModeOnly": false,
+            "multilanguage": true,
+            "depth": 3,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/config\/systemcheck"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\LangEditor": {
             "accessRole": true,
