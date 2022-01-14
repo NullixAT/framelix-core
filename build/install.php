@@ -10,11 +10,11 @@ if (!file_exists(__DIR__ . "/check-requirements.php")) {
 require __DIR__ . "/check-requirements.php";
 
 $currentFiles = count(scandir(__DIR__));
-$maxFilesInDirectory = 5;
 $zipFile = __DIR__ . "/package.zip";
 $outputDirectory = __DIR__;
+$canInstall = file_exists($zipFile) && !file_exists(__DIR__ . "/index.php") && file_exists(__DIR__ . "/check-requirements.php");
 
-if (($_GET['unpack'] ?? null) && file_exists($zipFile) && $currentFiles <= $maxFilesInDirectory) {
+if (($_GET['unpack'] ?? null) && $canInstall) {
     $zipArchive = new ZipArchive();
     $openResult = $zipArchive->open($zipFile, ZipArchive::RDONLY);
     if ($openResult !== true) {
@@ -90,9 +90,9 @@ if (($_GET['unpack'] ?? null) && file_exists($zipFile) && $currentFiles <= $maxF
     <?php
     if (!file_exists($zipFile)) {
         echo '"package.zip" does not exist in this directory';
-    } elseif ($currentFiles > $maxFilesInDirectory) {
+    } elseif (!$canInstall) {
         ?>
-        Directory contains more files than first time installation files. Please use a fresh empty directory.
+        Cannot start installation. Some required files are missing.
         <?php
     } else {
         ?>
