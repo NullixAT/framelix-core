@@ -173,7 +173,6 @@ class AppUpdate extends View
         switch ($this->tabId) {
             case 'update-log':
                 if ($lastResult = Session::get('appupdate-lastresult')) {
-                    echo '<h2>' . Lang::get('__framelix_view_backend_appupdate_lastresult__') . '</h2>';
                     echo '<pre>' . $lastResult . '</pre>';
                     echo '<div class="framelix-spacer-x4"></div>';
                 }

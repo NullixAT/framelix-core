@@ -2,7 +2,7 @@
 
 namespace Framelix\Framelix;
 
-use function date;
+use Framelix\Framelix\Storable\Mutex;
 
 /**
  * Cron Runner
@@ -14,8 +14,11 @@ class Cron extends Console
      */
     public static function runCron(): void
     {
-        // every hour check for updates
-        if ((int)date("i") <= 0 || self::getParameter('forceUpdateCheck')) {
+        // update check every hour
+        if (self::getParameter('forceUpdateCheck') || !Mutex::isLocked('framelix-cron', 3600)) {
+            if (!self::getParameter('forceUpdateCheck')) {
+                Mutex::create('framelix-cron');
+            }
             self::checkAppUpdates();
         }
     }

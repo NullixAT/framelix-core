@@ -44,4 +44,12 @@
       content: "error";
     }
   }
+
+  &[data-icon]::before {
+    content: attr(data-icon string);
+  }
+
+  &[data-icon='']::before {
+    display: none;
+  }
 }

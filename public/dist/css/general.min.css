@@ -59,6 +59,10 @@
     --icon-color-hue: var(--color-error-hue); }
     .framelix-alert.framelix-alert-error::before {
       content: "error"; }
+  .framelix-alert[data-icon]::before {
+    content: attr(data-icon string); }
+  .framelix-alert[data-icon='']::before {
+    display: none; }
 
 .framelix-button {
   display: inline-flex;
