@@ -48,6 +48,8 @@ if (($_GET['unpack'] ?? null) && $canInstall) {
         unlink(__DIR__ . "/check-requirements.php");
         unlink($zipFile);
     }
+    // wait 3 seconds to prevent opcache in default configs
+    sleep(3);
     header("location: " . str_replace(["?unpack=1", "install.php"], "", $_SERVER['REQUEST_URI']));
     exit;
 }
