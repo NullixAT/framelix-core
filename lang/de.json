@@ -1133,7 +1133,7 @@
     ],
     "__framelix_view_backend_appupdate__": [
         "App Update und Backup",
-        "0ea14"
+        "16be4"
     ],
     "__framelix_view_backend_appupdate_backup__": [
         "Vollst\u00e4ndiges Backup downloaden",
@@ -1158,6 +1158,26 @@
     "__framelix_view_backend_config_index__": [
         "Systemkonfiguration",
         "3c4e3"
+    ],
+    "__framelix_view_backend_config_systemcheck__": [
+        "Systemcheck",
+        "3f15a"
+    ],
+    "__framelix_view_backend_config_systemcheck_cron__": [
+        "Cronjob",
+        "163ca"
+    ],
+    "__framelix_view_backend_config_systemcheck_cron_error__": [
+        "Du solltest das angegebene Script alle 5 Minuten ausf\u00fchren lassen, f\u00fcr Update Checks und weitere Jobs.",
+        "dd1ba"
+    ],
+    "__framelix_view_backend_config_systemcheck_https__": [
+        "Https\/SSL",
+        "90372"
+    ],
+    "__framelix_view_backend_config_systemcheck_https_error__": [
+        "Manche Features sind nur verf\u00fcgbar wenn deine Seite mit https arbeitet.",
+        "7dc87"
     ],
     "__framelix_view_backend_dev_langeditor__": [
         "\u00dcbersetzungseditor",
