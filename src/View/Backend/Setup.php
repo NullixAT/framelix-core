@@ -30,7 +30,6 @@ use function file_exists;
 use function http_response_code;
 use function sleep;
 use function strtolower;
-use function var_dump;
 use function version_compare;
 
 use const FRAMELIX_MIN_PHP_VERSION;
@@ -190,13 +189,17 @@ class Setup extends View
             ) . '</h2>';
         $form->addField($field);
 
-        $field = new Text();
+        if ($_SERVER['FRAMELIX_SETUP_APPURL'] ?? null) {
+            $field = new Hidden();
+        } else {
+            $field = new Text();
+        }
         $field->name = "applicationUrl";
         $field->label = "__framelix_setup_applicationurl_label__";
         $field->labelDescription = "__framelix_setup_applicationurl_desc__";
         $field->required = true;
         $field->type = "url";
-        $field->defaultValue = Url::getApplicationUrl()->getUrlAsString();
+        $field->defaultValue = $_SERVER['FRAMELIX_SETUP_APPURL'] ?? Url::getApplicationUrl()->getUrlAsString();
         $form->addField($field);
 
         // check for default php paths
@@ -233,7 +236,7 @@ class Setup extends View
         $field->defaultValue = $phpPath;
         $form->addField($field);
 
-        if ($_SERVER['FRAMELIX_DB_HOST'] ?? null) {
+        if ($_SERVER['FRAMELIX_SETUP_DB_HOST'] ?? null) {
             $field = new Hidden();
         } else {
             $field = new Html();
@@ -245,10 +248,10 @@ class Setup extends View
         }
         $field->name = "dbHost";
         $field->label = "__framelix_setup_dbhost_label__";
-        $field->defaultValue = $_SERVER['FRAMELIX_DB_HOST'] ?? "127.0.0.1";
+        $field->defaultValue = $_SERVER['FRAMELIX_SETUP_DB_HOST'] ?? "127.0.0.1";
         $form->addField($field);
 
-        if ($_SERVER['FRAMELIX_DB_HOST'] ?? null) {
+        if ($_SERVER['FRAMELIX_SETUP_DB_HOST'] ?? null) {
             $field = new Hidden();
         } else {
             $field = new Text();
@@ -256,20 +259,20 @@ class Setup extends View
         $field->name = "dbUser";
         $field->label = "__framelix_setup_dbuser_label__";
         $field->required = true;
-        $field->defaultValue = $_SERVER['FRAMELIX_DB_USER'] ?? null;
+        $field->defaultValue = $_SERVER['FRAMELIX_SETUP_DB_USER'] ?? null;
         $form->addField($field);
 
-        if ($_SERVER['FRAMELIX_DB_HOST'] ?? null) {
+        if ($_SERVER['FRAMELIX_SETUP_DB_HOST'] ?? null) {
             $field = new Hidden();
         } else {
             $field = new Password();
         }
         $field->name = "dbPassword";
         $field->label = "__framelix_setup_dbpassword_label__";
-        $field->defaultValue = $_SERVER['FRAMELIX_DB_PASS'] ?? null;
+        $field->defaultValue = $_SERVER['FRAMELIX_SETUP_DB_PASS'] ?? null;
         $form->addField($field);
 
-        if ($_SERVER['FRAMELIX_DB_HOST'] ?? null) {
+        if ($_SERVER['FRAMELIX_SETUP_DB_HOST'] ?? null) {
             $field = new Hidden();
         } else {
             $field = new Text();
@@ -277,10 +280,10 @@ class Setup extends View
         $field->name = "dbName";
         $field->label = "__framelix_setup_dbname_label__";
         $field->required = true;
-        $field->defaultValue = $_SERVER['FRAMELIX_DB_NAME'] ?? strtolower(FRAMELIX_MODULE);
+        $field->defaultValue = $_SERVER['FRAMELIX_SETUP_DB_NAME'] ?? strtolower(FRAMELIX_MODULE);
         $form->addField($field);
 
-        if ($_SERVER['FRAMELIX_DB_HOST'] ?? null) {
+        if ($_SERVER['FRAMELIX_SETUP_DB_HOST'] ?? null) {
             $field = new Hidden();
         } else {
             $field = new Number();
@@ -289,17 +292,17 @@ class Setup extends View
         $field->label = "__framelix_setup_dbport_label__";
         $field->commaSeparator = "";
         $field->thousandSeparator = "";
-        $field->defaultValue = $_SERVER['FRAMELIX_DB_PORT'] ?? 3306;
+        $field->defaultValue = $_SERVER['FRAMELIX_SETUP_DB_PORT'] ?? 3306;
         $form->addField($field);
 
-        if ($_SERVER['FRAMELIX_DB_HOST'] ?? null) {
+        if ($_SERVER['FRAMELIX_SETUP_DB_HOST'] ?? null) {
             $field = new Hidden();
         } else {
             $field = new Text();
         }
         $field->name = "dbSocket";
         $field->label = "__framelix_setup_dbsocket_label__";
-        $field->defaultValue = $_SERVER['FRAMELIX_DB_SOCKET'] ?? null;
+        $field->defaultValue = $_SERVER['FRAMELIX_SETUP_DB_SOCKET'] ?? null;
         $form->addField($field);
 
         $field = new Html();
