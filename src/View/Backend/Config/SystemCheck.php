@@ -52,7 +52,7 @@ class SystemCheck extends View
                     );
                     $valid = !!$event;
                     if (!$valid) {
-                        $subInfo = '*\/5 * * * * ' . escapeshellcmd(
+                        $subInfo = '*/5 * * * * ' . escapeshellcmd(
                                 Config::get('shellAliases[php]')
                             ) . ' ' . escapeshellarg(realpath(__DIR__ . "/../../../../console.php")) . ' cron';
                     } else {
