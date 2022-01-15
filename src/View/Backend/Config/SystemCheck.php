@@ -64,7 +64,7 @@ class SystemCheck extends View
             <div class="framelix-alert framelix-alert-<?= $valid ? 'success' : 'error' ?>">
                 <div>
                     <?= Lang::get('__framelix_view_backend_config_systemcheck_' . $check . '__') ?>
-                    <?
+                    <?php
                     if ($subInfo) {
                         echo '<div>' . $subInfo . '</div>';
                     }
