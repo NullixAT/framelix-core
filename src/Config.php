@@ -7,11 +7,13 @@ use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use JetBrains\PhpStorm\ExpectedValues;
 
+use function call_user_func_array;
 use function file_exists;
 use function file_get_contents;
 use function file_put_contents;
 use function gettype;
 use function is_array;
+use function is_callable;
 use function str_replace;
 use function str_starts_with;
 
@@ -116,14 +118,22 @@ class Config
      */
     public static function load(): void
     {
-        // first, load framelix and the current module
+        // load framelix and the current module
         $modules = ["Framelix", FRAMELIX_MODULE];
         foreach ($modules as $module) {
             self::loadModule($module);
         }
-        // second load all modules that are added in the config
+        // load all modules that are added in the config
         $modules = self::get("modules");
         if (is_array($modules)) {
+            foreach ($modules as $module) {
+                self::loadModule($module);
+            }
+        }
+        // load modules that are returned by a configured callable
+        $configCallable = Config::get('modulesCallable');
+        if ($configCallable && is_callable($configCallable)) {
+            $modules = call_user_func_array($configCallable, []);
             foreach ($modules as $module) {
                 self::loadModule($module);
             }

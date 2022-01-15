@@ -60,17 +60,20 @@ class Framelix
             }
             $exp = explode("\\", $className);
             $module = $exp[1];
+            // ignore modules that are not yet loaded
+            if ($module !== "Framelix" && $module !== FRAMELIX_MODULE && !isset(Config::$loadedModules[$module])) {
+                return;
+            }
             unset($exp[0], $exp[1]);
             $rootPath = FileUtils::getModuleRootPath($module);
             // for src classes
             $path = $rootPath . "/src/" . implode("/", $exp) . ".php";
             if (file_exists($path)) {
                 require $path;
-                return;
             }
         });
 
-        // vendor autoloads
+        // integrated vendor autoloads
         self::addPs4Autoloader('RobThree\\Auth', __DIR__ . "/../vendor/twofactorauth/lib");
 
         // exception handling
