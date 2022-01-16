@@ -23,6 +23,12 @@ class FramelixFormFieldSelect extends FramelixFormField {
   searchable = false
 
   /**
+   * Show reset button
+   * @type {boolean}
+   */
+  showResetButton = true
+
+  /**
    * All available options
    * @type {string[][]}
    */
@@ -234,7 +240,7 @@ class FramelixFormFieldSelect extends FramelixFormField {
     popupContentInner.append(popupOptionsContainer)
 
     const optionsElementsIndexed = {}
-    if (!this.required) {
+    if (this.showResetButton) {
       popupOptionsContainer.append('<button class="framelix-button framelix-button-small" data-unset="1">' + FramelixLang.get('__framelix_form_select_unset__') + '</button>')
       popupOptionsContainer.on('click', 'button[data-unset]', function () {
         popupContentInner.find('input:checked').prop('checked', false)

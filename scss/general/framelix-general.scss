@@ -49,6 +49,16 @@ datalist {
   pointer-events: none;
 }
 
+.framelix-word-separator {
+  padding: 0 7px;
+  opacity: 0.8;
+  display: inline;
+
+  &::after {
+    content: "•";
+  }
+}
+
 .framelix-spacer {
   padding-bottom: 10px;
 }

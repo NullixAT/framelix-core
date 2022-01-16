@@ -37,6 +37,12 @@ class Select extends Field
     public bool $searchable = false;
 
     /**
+     * Show reset button
+     * @var bool
+     */
+    public bool $showResetButton = true;
+
+    /**
      * Min selected items for submitted value
      * @var int|null
      */

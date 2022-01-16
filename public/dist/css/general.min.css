@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .framelix-alert {
   padding: 7px 15px;
   border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
@@ -348,6 +349,13 @@ datalist {
 .framelix-blur {
   filter: blur(10px);
   pointer-events: none; }
+
+.framelix-word-separator {
+  padding: 0 7px;
+  opacity: 0.8;
+  display: inline; }
+  .framelix-word-separator::after {
+    content: "•"; }
 
 .framelix-spacer {
   padding-bottom: 10px; }
