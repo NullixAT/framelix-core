@@ -422,12 +422,17 @@ class Lang
     /**
      * Load values from json files for given language
      * @param string $language
+     * @param string|null $forceModule Force to load only given module, even if module is not loaded/activated or data has already been loaded
      */
-    public static function loadValues(string $language): void
+    public static function loadValues(string $language, ?string $forceModule = null): void
     {
-        foreach (Config::$loadedModules as $module) {
+        $modules = Config::$loadedModules;
+        if ($forceModule) {
+            $modules = [$forceModule];
+        }
+        foreach ($modules as $module) {
             $cacheKey = $language . "-" . $module;
-            if (self::$loadedModules[$cacheKey] ?? null) {
+            if ((self::$loadedModules[$cacheKey] ?? null) && !$forceModule) {
                 continue;
             }
             self::$loadedModules[$cacheKey] = true;
