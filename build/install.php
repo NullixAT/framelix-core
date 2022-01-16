@@ -12,7 +12,10 @@ require __DIR__ . "/check-requirements.php";
 $currentFiles = count(scandir(__DIR__));
 $zipFile = __DIR__ . "/package.zip";
 $outputDirectory = __DIR__;
-$canInstall = file_exists($zipFile) && !file_exists(__DIR__ . "/index.php") && file_exists(__DIR__ . "/check-requirements.php");
+$canInstall = file_exists($zipFile) && !file_exists(__DIR__ . "/index.php") && file_exists(
+        __DIR__ . "/check-requirements.php"
+    );
+$isCli = php_sapi_name() === "cli";
 
 if (($_GET['unpack'] ?? null) && $canInstall) {
     $zipArchive = new ZipArchive();
@@ -48,9 +51,11 @@ if (($_GET['unpack'] ?? null) && $canInstall) {
         unlink(__DIR__ . "/check-requirements.php");
         unlink($zipFile);
     }
-    // wait 3 seconds to prevent opcache in default configs
-    sleep(3);
-    header("location: " . str_replace(["?unpack=1", "install.php"], "", $_SERVER['REQUEST_URI']));
+    if (!$isCli) {
+        // wait 3 seconds to prevent opcache in default configs
+        sleep(3);
+        header("location: " . str_replace(["?unpack=1", "install.php"], "", $_SERVER['REQUEST_URI']));
+    }
     exit;
 }
 ?>
