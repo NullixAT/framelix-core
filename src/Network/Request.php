@@ -96,4 +96,16 @@ class Request
         return self::getHeader('http_x_requested_with') === 'xmlhttprequest';
     }
 
+    /**
+     * Is current request a https request
+     * @return bool
+     */
+    public static function isHttps(): bool
+    {
+        if (($_SERVER['HTTPS'] ?? null) === 'on' || self::getHeader('http_x_forwarded_proto') === 'https') {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace Framelix\Framelix;
 
+use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\View\Backend\Setup;
@@ -107,7 +108,7 @@ class Framelix
             Config::set('languageFallback', 'en');
             Config::set('languageMultiple', false);
             Config::set('languageDefaultUser', false);
-            Config::set("applicationHttps", ($_SERVER['HTTPS'] ?? null) === 'on');
+            Config::set("applicationHttps", Request::isHttps());
             Config::set('applicationHost', $_SERVER['HTTP_HOST']);
             Config::set('applicationUrlBasePath', trim(str_replace("/setup", "", $_SERVER['REQUEST_URI']), "/"));
             Lang::$lang = Config::get('languageDefault');
