@@ -164,7 +164,11 @@ class Fido2 extends View
         $form = $this->meta->getEditForm();
         if (!$this->storable->id) {
             $form->buttons = [];
-            $form->addButton('enable', '__framelix_view_backend_userprofile_fido2_enable__', buttonColor: ColorName::PRIMARY);
+            $form->addButton(
+                'enable',
+                '__framelix_view_backend_userprofile_fido2_enable__',
+                buttonColor: ColorName::PRIMARY
+            );
         }
         $form->show();
 

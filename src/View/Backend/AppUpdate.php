@@ -35,8 +35,6 @@ use function strlen;
 use function substr;
 use function unlink;
 
-use function var_dump;
-
 use const FILE_APPEND;
 use const FRAMELIX_APP_ROOT;
 

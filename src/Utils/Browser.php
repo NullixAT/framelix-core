@@ -13,7 +13,6 @@ use function explode;
 use function strpos;
 use function strtoupper;
 use function substr;
-use function var_dump;
 
 use const CURLINFO_RESPONSE_CODE;
 use const CURLOPT_HEADER;
@@ -30,13 +29,13 @@ class Browser
      * The current curl handler
      * @var mixed
      */
-    public mixed $curl;
+    public mixed $curl = null;
 
     /**
      * The last request curl handler
      * @var mixed
      */
-    public mixed $lastRequestCurl;
+    public mixed $lastRequestCurl = null;
 
     /**
      * The url to send to
@@ -52,6 +51,7 @@ class Browser
 
     /**
      * Headers to send with request
+     * By default we simulate chrome
      * @var string[]
      */
     public array $sendHeaders = [
@@ -84,7 +84,7 @@ class Browser
 
     /**
      * Create a new instance
-     * @return static
+     * @return self
      */
     public static function create(): self
     {

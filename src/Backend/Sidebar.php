@@ -178,7 +178,8 @@ abstract class Sidebar
         if ($logoUrl) {
             ?>
             <div class="framelix-sidebar-logo">
-                <a href="<?=Url::getApplicationUrl()->appendPath(Config::get('backendStartUrl'))?>"><img src="<?= $logoUrl ?>" alt="App Logo" title="__framelix_dashboard__"></a>
+                <a href="<?= Url::getApplicationUrl()->appendPath(Config::get('backendStartUrl')) ?>"><img
+                            src="<?= $logoUrl ?>" alt="App Logo" title="__framelix_dashboard__"></a>
             </div>
             <?php
             echo '<div class="framelix-sidebar-entries">';

@@ -40,7 +40,7 @@ abstract class SystemValue extends View
     {
         $reflection = new ReflectionClass($this);
         $storablePropertyType = $reflection->getProperty('storable')->getType() ?? null;
-        $metaPropertyType = $reflection->getProperty('meta')->getType()?? null;
+        $metaPropertyType = $reflection->getProperty('meta')->getType() ?? null;
 
         if (!$storablePropertyType || !$storablePropertyType->getName()) {
             throw new Exception(

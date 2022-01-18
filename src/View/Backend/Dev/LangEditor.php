@@ -65,7 +65,7 @@ class LangEditor extends View
             // resort all keys of modified modules
             foreach ($modules as $module) {
                 $langFile = FileUtils::getModuleRootPath($module) . "/lang";
-                $langFile .= "/$lang.json";;
+                $langFile .= "/$lang.json";
                 $existingValues = file_exists($langFile) ? JsonUtils::readFromFile($langFile) : [];
                 if ($existingValues) {
                     ksort($existingValues);
@@ -75,7 +75,7 @@ class LangEditor extends View
             if ($data) {
                 foreach ($data as $module => $values) {
                     $langFile = FileUtils::getModuleRootPath($module) . "/lang";
-                    $langFile .= "/$lang.json";;
+                    $langFile .= "/$lang.json";
                     $existingValues = file_exists($langFile) ? JsonUtils::readFromFile($langFile) : [];
                     foreach ($values as $key => $row) {
                         // if original have no line breaks, then we can safely convert line breaks to <br/>

@@ -39,6 +39,7 @@ class Buffer
 
     /**
      * Flush complete output buffer
+     * @codeCoverageIgnore Currently not found a way to test this without breaking php unit
      */
     public static function flush(): void
     {

@@ -103,7 +103,7 @@ class StringUtils
      * @param string $string
      * @param int $length
      * @param string $truncateAffix
-     * @param bool $wordCut If true, then cut only at words when length is reached, so resulting string can be longer then length
+     * @param bool $wordCut If true, then cut at words before length is reached, so resulting string can be shorter then $length
      * @return string
      */
     public static function cut(string $string, int $length, string $truncateAffix = "...", bool $wordCut = true): string
@@ -111,7 +111,7 @@ class StringUtils
         if (strlen($string) > $length) {
             if ($wordCut) {
                 $wrapped = wordwrap($string, $length, "\2", true);
-                return substr($wrapped, 0, strpos($string, "\2") ?: null) . $truncateAffix;
+                return substr($string, 0, strpos($wrapped, "\2") ?: null) . $truncateAffix;
             } else {
                 return substr($string, 0, $length) . $truncateAffix;
             }
