@@ -15,8 +15,6 @@ use JsonSerializable;
 use ReflectionClass;
 
 use function array_key_last;
-use function class_parents;
-use function count;
 use function crc32;
 use function explode;
 use function file_exists;
@@ -36,7 +34,7 @@ use function strtolower;
 use function substr;
 
 use const FRAMELIX_MODULE;
-use const SORT_ASC;
+use const SORT_DESC;
 
 /**
  * The base for all views
@@ -73,6 +71,13 @@ abstract class View implements JsonSerializable
      * @var array|null
      */
     protected ?array $customUrlParameters = null;
+
+    /**
+     * If using regex urls, you may define a url priority to define which regex matches first if multiple would match
+     * Higher priority matches first
+     * @var int
+     */
+    protected int $urlPriority = 0;
 
     /**
      * This view requires the given access role to be viewable by the user
@@ -207,19 +212,19 @@ abstract class View implements JsonSerializable
                     if (preg_match($row['customUrl'], $relativeUrl, $match)) {
                         $matchedViews[] = [
                             "class" => $class,
-                            "depth" => $row['depth'],
+                            "urlPriority" => $row['urlPriority'],
                             'parameters' => $match
                         ];
                     }
                 } elseif ($row['customUrl'] === $relativeUrl) {
-                    $matchedViews[] = ["class" => $class, "depth" => $row['depth']];
+                    $matchedViews[] = ["class" => $class, "urlPriority" => $row['urlPriority']];
                 }
             } elseif ($row['url'] === $relativeUrl) {
-                $matchedViews[] = ["class" => $class, "depth" => $row['depth']];
+                $matchedViews[] = ["class" => $class, "urlPriority" => $row['urlPriority']];
             }
         }
         if ($matchedViews) {
-            ArrayUtils::sort($matchedViews, "depth", [SORT_ASC]);
+            ArrayUtils::sort($matchedViews, "urlPriority", [SORT_DESC]);
             $matchedView = reset($matchedViews);
             $viewClass = $matchedView['class'];
             /** @var View $view */
@@ -431,10 +436,7 @@ abstract class View implements JsonSerializable
                     'customUrl' => $defaultProps['customUrl'],
                     'devModeOnly' => $defaultProps['devModeOnly'],
                     'multilanguage' => $defaultProps['multilanguage'],
-                    'depth' => count(class_parents($viewClass)) + (str_starts_with(
-                            $defaultProps['customUrl'] ?? '',
-                            "~"
-                        ) ? 100 : 0),
+                    'urlPriority' => $defaultProps['urlPriority'],
                     'pageTitle' => $pageTitle,
                     'url' => rtrim($url, "/"),
                 ];

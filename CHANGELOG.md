@@ -1,3 +1,22 @@
-# 1.1.2 - 02. Jan 2022
+# Changelog
+All notable changes to this project will be documented in this file.
 
-- first public release
+## [Unreleased]
+
+### :heart: Added
+Initial
+
+### :pencil: Changed
+Initial
+
+### :construction: Deprecated
+Initial
+
+### :x: Removed
+Initial
+
+### :wrench: Fixed
+Initial
+
+### :police_car: Security
+Initial

@@ -10,11 +10,11 @@ use function curl_getinfo;
 use function curl_init;
 use function curl_setopt;
 use function explode;
-use function strpos;
+use function mb_substr;
 use function strtoupper;
-use function substr;
 
 use const CURLINFO_RESPONSE_CODE;
+use const CURLOPT_FOLLOWLOCATION;
 use const CURLOPT_HEADER;
 use const CURLOPT_RETURNTRANSFER;
 use const CURLOPT_URL;
@@ -65,6 +65,12 @@ class Browser
     public array $responseHeaders = [];
 
     /**
+     * Last complete raw response from last request
+     * @var string
+     */
+    public string $rawResponseData = '';
+
+    /**
      * Raw response body from last request
      * @var string
      */
@@ -89,10 +95,23 @@ class Browser
     public static function create(): self
     {
         $instance = new self();
-        $instance->curl = curl_init();
-        curl_setopt($instance->curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($instance->curl, CURLOPT_HEADER, true);
+        $instance->resetCurl();
         return $instance;
+    }
+
+    /**
+     * Reset curl instance
+     * @return void
+     */
+    public function resetCurl(): void
+    {
+        if ($this->curl) {
+            curl_close($this->curl);
+        }
+        $this->curl = curl_init();
+        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->curl, CURLOPT_HEADER, true);
+        curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, true);
     }
 
     /**
@@ -108,6 +127,24 @@ class Browser
     }
 
     /**
+     * Get response body as text
+     * @return string
+     */
+    public function getResponseText(): string
+    {
+        return $this->responseBody;
+    }
+
+    /**
+     * Get response body as parsed json data
+     * @return mixed
+     */
+    public function getResponseJson(): mixed
+    {
+        return $this->responseBody !== '' ? JsonUtils::decode($this->responseBody) : '';
+    }
+
+    /**
      * Send the request
      * @return void
      */
@@ -120,26 +157,27 @@ class Browser
             curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, 0);
         }
-        $responseData = curl_exec($this->curl);
+        $this->rawResponseData = curl_exec($this->curl);
         $error = curl_error($this->curl);
-        curl_close($this->curl);
         $this->requestError = $error ?: null;
+        $this->responseBody = '';
         $this->responseHeaders = [];
         if (!$this->requestError) {
-            $bodyBegin = strpos($responseData, "\r\n\r\n");
-            $headerData = substr($responseData, 0, $bodyBegin);
-            $headerLines = explode("\r\n", $headerData);
+            $headerSize = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
+            $headerData = mb_substr($this->rawResponseData, 0, $headerSize);
+            $headerLines = explode("\n", $headerData);
             array_shift($headerLines);
             foreach ($headerLines as $headerLine) {
-                $spl = explode(":", $headerLine, 2);
-                $this->responseHeaders[$spl[0]] = substr($spl[1], 1);
+                $spl = explode(":", trim($headerLine), 2);
+                if (count($spl) === 2) {
+                    $this->responseHeaders[$spl[0]] = mb_substr($spl[1], 1);
+                }
             }
-            $this->responseBody = substr($responseData, $bodyBegin + 4);
+            $this->responseBody = mb_substr($this->rawResponseData, $headerSize);
         }
 
         // setup new curl and save last curl
         $this->lastRequestCurl = $this->curl;
-        $this->curl = curl_init();
-        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+        $this->resetCurl();
     }
 }

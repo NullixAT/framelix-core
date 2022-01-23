@@ -14,6 +14,8 @@ use function call_user_func_array;
 use function count;
 use function explode;
 use function is_array;
+use function is_float;
+use function is_int;
 use function is_object;
 use function mb_strtolower;
 use function method_exists;
@@ -71,9 +73,11 @@ class ArrayUtils
                 } else {
                     $value = self::getValue($row, $keyName, $keyParameters[$keyIndex] ?? null);
                 }
-                $value = StringUtils::stringify($value, toStringMethods: ["getSortableValue", "getRawTextString"]);
-                $value = StringUtils::slugify($value);
-                $value = mb_strtolower($value);
+                if (!is_int($value) && !is_float($value) && $value !== null) {
+                    $value = StringUtils::stringify($value, toStringMethods: ["getSortableValue", "getRawTextString"]);
+                    $value = StringUtils::slugify($value);
+                    $value = mb_strtolower($value);
+                }
                 $values[$arrayKey] = $value;
             }
 
