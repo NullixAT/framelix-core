@@ -65,8 +65,11 @@ class Url implements JsonSerializable
             return null;
         }
         $url = Url::getApplicationUrl();
-        /** @phpstan-ignore-next-line */
-        if (FRAMELIX_ENTRY_POINT_FOLDER === FRAMELIX_APP_ROOT) {
+        if (
+            !defined("FRAMELIX_ENTRY_POINT_FOLDER")
+            || !defined("FRAMELIX_APP_ROOT")
+            /** @phpstan-ignore-next-line */
+            || FRAMELIX_ENTRY_POINT_FOLDER === FRAMELIX_APP_ROOT) {
             // if entry point is in app root folder instead of public folder of module
             // @codeCoverageIgnoreStart
             $relativePath = FileUtils::getRelativePathToBase($path, FRAMELIX_APP_ROOT);
@@ -121,7 +124,7 @@ class Url implements JsonSerializable
     {
         $url = Config::get('applicationHttps') ? "https" : "http";
         $url .= '://';
-        $url .= str_replace("{host}", $_SERVER['HTTP_HOST'], Config::get('applicationHost'));
+        $url .= str_replace("{host}", $_SERVER['HTTP_HOST'] ?? '', Config::get('applicationHost'));
         $url .= "/" . trim("/" . Config::get('applicationUrlBasePath'), "/");
         return self::create($url);
     }
