@@ -189,7 +189,7 @@ class Console
                     $updateAppUpdateZipFile = substr($updateAppUpdateFile, 0, -5) . ".zip";
                     file_put_contents(
                         $updateAppUpdateZipFile,
-                        file_get_contents($row['browser_download_url'], false, $browser->getResponseText())
+                        $browser->getResponseText()
                     );
                     Console::installZipPackage($updateAppUpdateZipFile, $summaryData);
                     unlink($updateAppUpdateZipFile);
