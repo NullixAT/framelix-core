@@ -2,6 +2,7 @@
 
 namespace Framelix\Framelix\View\Backend\Dev;
 
+use Framelix\Framelix\Console;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
 use Framelix\Framelix\Form\Field\Html;
@@ -11,7 +12,6 @@ use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\HtmlUtils;
-use Framelix\Framelix\Utils\Shell;
 use Framelix\Framelix\View\Backend\View;
 
 use function implode;
@@ -35,21 +35,15 @@ class UpdateDatabase extends View
     {
         if (Request::getPost('safeQueriesExecute') || Request::getPost('unsafeQueriesExecute')) {
             if (Request::getPost('safeQueriesExecute')) {
-                $shell = Shell::prepare("php {*}", [
-                    __DIR__ . "/../../../../console.php",
-                    "updateDatabaseSafe"
-                ])->execute();
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
+                $shell = Console::callMethodInSeparateProcess('updateDatabaseSafe');
                 Toast::info(implode("<br/>", $shell->output));
             }
             if (Request::getPost('unsafeQueriesExecute')) {
-                $shell = Shell::prepare("php {*}", [
-                    __DIR__ . "/../../../../console.php",
-                    "updateDatabaseUnsafe"
-                ])->execute();
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
+                $shell = Console::callMethodInSeparateProcess('updateDatabaseUnsafe');
                 Toast::info(implode("<br/>", $shell->output));
             }
             Url::getBrowserUrl()->redirect();

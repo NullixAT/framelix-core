@@ -2,6 +2,7 @@
 
 namespace Framelix\Framelix\Backend;
 
+use Framelix\Framelix\AppUpdate;
 use Framelix\Framelix\Config;
 use Framelix\Framelix\ErrorCode;
 use Framelix\Framelix\Exception;
@@ -233,7 +234,7 @@ abstract class Sidebar
         $this->addLink(View\Backend\Logs\SystemEventLogs::class);
         $this->showHtmlForLinkData();
 
-        $updateAppUpdateFile = __DIR__ . "/../../tmp/app-update.json";
+        $updateAppUpdateFile = AppUpdate::UPDATE_CACHE_FILE;
         $badgeText = null;
         if (file_exists($updateAppUpdateFile)) {
             $badgeText = '1';

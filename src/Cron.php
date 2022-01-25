@@ -19,7 +19,7 @@ class Cron extends Console
             if (!self::getParameter('forceUpdateCheck')) {
                 Mutex::create('framelix-cron');
             }
-            self::checkAppUpdates();
+            self::checkAppUpdate();
         }
     }
 }

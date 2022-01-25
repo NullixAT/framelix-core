@@ -23,14 +23,14 @@ use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\HtmlUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
+use Framelix\Framelix\Utils\Shell;
 use Framelix\Framelix\Utils\Zip;
 use ZipArchive;
 
 use function file_exists;
-use function file_get_contents;
 use function file_put_contents;
+use function ini_set;
 use function set_time_limit;
-use function stream_context_create;
 use function strlen;
 use function substr;
 use function unlink;
@@ -43,7 +43,6 @@ use const FRAMELIX_APP_ROOT;
  */
 class AppUpdate extends View
 {
-
     /**
      * Access role
      * @var string|bool
@@ -56,64 +55,39 @@ class AppUpdate extends View
     public function onRequest(): void
     {
         if (Request::getGet('autoupdate')) {
-            $updateAppUpdateFile = __DIR__ . "/../../../tmp/app-update.json";
-            if (file_exists($updateAppUpdateFile)) {
-                $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
-                if (isset($updateData['assets'])) {
-                    foreach ($updateData['assets'] as $row) {
-                        if ($row['name'] === 'release-' . $updateData['tag_name'] . ".zip") {
-                            $context = stream_context_create([
-                                    'http' => [
-                                        'method' => "GET",
-                                        'user_agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36'
-                                    ]
-                                ]
-                            );
-                            $updateAppUpdateZipFile = __DIR__ . "/../../../tmp/app-update.zip";
-                            file_put_contents(
-                                $updateAppUpdateZipFile,
-                                file_get_contents($row['browser_download_url'], false, $context)
-                            );
-                            Buffer::start();
-                            Console::$htmlOutput = true;
-                            Console::installZipPackage($updateAppUpdateZipFile);
-                            unlink($updateAppUpdateZipFile);
-                            unlink($updateAppUpdateFile);
-                            $output = Buffer::get();
-                            Session::set('appupdate-lastresult', $output);
-                        }
-                    }
-                }
-            }
-            Url::create()->removeParameter('autoupdate')->redirect();
+            $summary = [];
+            Buffer::start();
+            Console::checkAndInstallAppUpdate($summary);
+            Session::set('appupdate-lastresult', ['summary' => $summary, 'log' => Buffer::get()]);
+            Url::getBrowserUrl()->removeParameter('autoupdate')->setHash("tabs:update-log")->redirect();
         }
 
         if (Request::getGet('check-for-updates')) {
-            Console::checkAppUpdates();
-            $updateAppUpdateFile = __DIR__ . "/../../../tmp/app-update.json";
+            Console::checkAppUpdate();
+            $updateAppUpdateFile = \Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE;
             Toast::success(
                 file_exists(
                     $updateAppUpdateFile
                 ) ? '__framelix_appupdate_update_available__' : '__framelix_appupdate_no_update_available__'
             );
-            Url::create()->removeParameter('check-for-updates')->redirect();
+            Url::getBrowserUrl()->removeParameter('check-for-updates')->redirect();
         }
 
         if (Request::getPost('update1')) {
-            Console::$htmlOutput = true;
             $files = UploadedFile::createFromSubmitData('file');
             if ($files) {
                 $file = reset($files);
+                $summary = [];
                 Buffer::start();
-                Console::installZipPackage($file->path);
-                $output = Buffer::get();
-                Session::set('appupdate-lastresult', $output);
+                Console::installZipPackage($file->path, $summary);
+                Session::set('appupdate-lastresult', ['summary' => $summary, 'log' => Buffer::get()]);
             }
-            Url::getBrowserUrl()->redirect();
+            Url::getBrowserUrl()->removeParameter('update1')->setHash("tabs:update-log")->redirect();
         }
 
         if (Request::getGet('backupdownload')) {
             set_time_limit(0);
+            ini_set("memory_limit", "2G");
             $rand = RandomGenerator::getRandomString(60, 70);
             $zipFile = FileUtils::getModuleRootPath("Framelix") . "/tmp/backup-$rand.zip";
             $backupSqlFile = FileUtils::getModuleRootPath("Framelix") . "/tmp/backup-$rand.sql";
@@ -167,11 +141,25 @@ class AppUpdate extends View
      */
     public function showContent(): void
     {
-        $updateAppUpdateFile = __DIR__ . "/../../../tmp/app-update.json";
+        $updateAppUpdateFile = \Framelix\Framelix\AppUpdate::class;
         switch ($this->tabId) {
             case 'update-log':
                 if ($lastResult = Session::get('appupdate-lastresult')) {
-                    echo '<pre>' . $lastResult . '</pre>';
+                    Session::set('appupdate-lastresult', null);
+                    $summary = $lastResult['summary'];
+                    foreach ($summary as $key => $count) {
+                        ?>
+                        <div style="<?= !$count ? 'opacity: 0.7' : '' ?>">
+                            <b><span class="material-icons">check</span> <?= Lang::get(
+                                    '__framelix_appupdate_tabs_update_log_' . $key . '__'
+                                ) ?></b>: <?= $count ?>
+                        </div>
+                        <?
+                    }
+                    echo '<div class="framelix-spacer"></div>';
+                    echo '<h2>' . Lang::get('__framelix_appupdate_tabs_update_log__') . '</h2>';
+                    $log = $lastResult['log'];
+                    echo '<pre style="font-size: 0.8rem">' . Shell::convertCliOutputToHtml($log, false) . '</pre>';
                     echo '<div class="framelix-spacer-x4"></div>';
                 }
                 break;

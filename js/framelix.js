@@ -195,7 +195,12 @@ class Framelix {
       location.reload()
       return
     }
+    const oldPathName = location.pathname
     location.href = url
+    const newPathName = location.pathname
+    if (newPathName === oldPathName) {
+      location.reload()
+    }
   }
 
   /**

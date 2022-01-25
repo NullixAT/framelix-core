@@ -18,6 +18,40 @@ use function substr;
  */
 class Shell
 {
+    /**
+     * Command line interface color control codes to html color codes
+     * @var array
+     */
+    public static array $cliColorCodes = [
+        // foreground/text colors
+        "30" => "color: black;", // Black
+        "90" => "color: lightgrey;", // Dark Grey
+        "31" => "color: red;", // Red
+        "91" => "color: indianred;", // Light Red
+        "32" => "color: green;", // Green
+        "92" => "color: lime;", // Light Green
+        "33" => "color: brown;", // Brown
+        "93" => "color: sandybrown;", // Yellow
+        "34" => "color: deepskyblue;", // Blue
+        "94" => "color: lightblue;", // Light Blue
+        "35" => "color: magenta;", // Magenta
+        "95" => "color: pink;", // Light Magenta
+        "36" => "color: cyan;", // Cyan
+        "96" => "color: lightcyan;", // Light Cyan
+        "37" => "color: lightcyan", // Light Grey
+        "97" => "color: white;", // White
+        "0" => "", // reset color
+        "39" => "", // reset color
+        // background colors
+        "40" => "background-color: black;", // Black
+        "41" => "background-color: red;", // Red
+        "42" => "background-color: green;", // Green
+        "43" => "background-color: yellow;", // Yellow
+        "44" => "background-color: blue;", // Blue
+        "45" => "background-color: magenta;", // Magenta
+        "46" => "background-color: cyan;", // Cyan
+        "47" => "background-color: lightgrey;", // Light Grey
+    ];
 
     /**
      * The executable programm command line
@@ -42,6 +76,38 @@ class Shell
      * @var array
      */
     public array $output = [];
+
+    /**
+     * Given a CLI output to correct escaped html output, it will decode command line colors into html <span> colors
+     * @param array|string $output
+     * @param bool $nl2br convertNewLines into <br/>
+     * @return string
+     */
+    public static function convertCliOutputToHtml(array|string $output, bool $nl2br): string
+    {
+        $output = is_array($output) ? implode("\n", $output) : $output;
+        $output = HtmlUtils::escape($output, $nl2br);
+        $parts = preg_split("~\e\[([0-9;]+)m~s", $output, flags: PREG_SPLIT_DELIM_CAPTURE);
+        $newOutput = '';
+        for ($i = 0; $i < count($parts); $i++) {
+            if ($i % 2 !== 0) {
+                if ($i > 1) {
+                    $newOutput .= '</span>';
+                }
+                $codes = explode(";", $parts[$i]);
+                $newOutput .= '<span style="';
+                foreach ($codes as $code) {
+                    if (isset(self::$cliColorCodes[$code])) {
+                        $newOutput .= self::$cliColorCodes[$code] . "; ";
+                    }
+                }
+                $newOutput .= '">';
+                continue;
+            }
+            $newOutput .= $parts[$i];
+        }
+        return $newOutput;
+    }
 
     /**
      * Prepare a shell command

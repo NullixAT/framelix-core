@@ -98,4 +98,3 @@ drawLine("Action: " . $argv[1]);
 
 $action = $actions[$argv[1]];
 call_user_func_array($action['callable'], []);
-drawLine("");

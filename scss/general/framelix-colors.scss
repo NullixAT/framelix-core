@@ -9,6 +9,7 @@
   --color-page-bg-hue: 0;
   --color-page-bg: white;
   --color-page-bg-stencil: hsl(var(--color-primary-hue), 10%, 90%);
+  --color-page-bg-stencil-strong: hsl(var(--color-primary-hue), 10%, 85%);
   --color-page-text: #111;
 
   --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
@@ -108,6 +109,7 @@
   --color-page-bg-hue: 220;
   --color-page-bg: hsl(var(--color-page-bg-hue), 10%, 10%);
   --color-page-bg-stencil: hsl(var(--color-page-bg-hue), 10%, 18%);
+  --color-page-bg-stencil-strong: hsl(var(--color-page-bg-hue), 10%, 22%);
   --color-page-text: hsl(var(--color-page-bg-hue), 10%, 90%);
 
   --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 70%);

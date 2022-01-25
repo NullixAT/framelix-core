@@ -2,6 +2,7 @@
 
 namespace Framelix\Framelix\View\Backend\Dev;
 
+use Framelix\Framelix\Console;
 use Framelix\Framelix\Form\Field\Html;
 use Framelix\Framelix\Form\Field\Toggle;
 use Framelix\Framelix\Form\Form;
@@ -82,10 +83,7 @@ class UpdateSourceCode extends View
             if (Request::getPost('dbupdate')) {
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
-                $shell = Shell::prepare("php {*}", [
-                    __DIR__ . "/../../../../console.php",
-                    "updateDatabaseSafe"
-                ])->execute();
+                $shell = Console::callMethodInSeparateProcess('updateDatabaseSafe');
                 Toast::info(implode("<br/>", $shell->output));
             }
             Url::getBrowserUrl()->redirect();

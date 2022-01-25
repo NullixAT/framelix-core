@@ -3,6 +3,7 @@
 namespace Framelix\Framelix\View\Backend\Config;
 
 use Framelix\Framelix\Config;
+use Framelix\Framelix\Console;
 use Framelix\Framelix\DateTime;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Storable\SystemEventLog;
@@ -54,7 +55,7 @@ class SystemCheck extends View
                     if (!$valid) {
                         $subInfo = '*/5 * * * * ' . escapeshellcmd(
                                 Config::get('shellAliases[php]')
-                            ) . ' ' . escapeshellarg(realpath(__DIR__ . "/../../../../console.php")) . ' cron';
+                            ) . ' ' . escapeshellarg(realpath(Console::CONSOLE_SCRIPT)) . ' cron';
                     } else {
                         $subInfo = "Last run: " . $event->createTime->getHtmlString();
                     }

@@ -3,6 +3,7 @@
 namespace Framelix\Framelix\View\Backend;
 
 use Framelix\Framelix\Config;
+use Framelix\Framelix\Console;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
 use Framelix\Framelix\ErrorCode;
@@ -147,11 +148,7 @@ class Setup extends View
                 // again, update database with now correct config and all modules installed
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
-                Shell::prepare("php {*}", [
-                    __DIR__ . "/../../../console.php",
-                    "updateDatabaseSafe"
-                ])->execute();
-
+                Console::callMethodInSeparateProcess('updateDatabaseSafe');
                 if (Config::get('setupDoneRedirect')) {
                     Url::getApplicationUrl()->appendPath(Config::get('setupDoneRedirect'))->redirect();
                 }
