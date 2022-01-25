@@ -154,7 +154,7 @@ class AppUpdate extends View
                                     '__framelix_appupdate_tabs_update_log_' . $key . '__'
                                 ) ?></b>: <?= $count ?>
                         </div>
-                        <?
+                        <?php
                     }
                     echo '<div class="framelix-spacer"></div>';
                     echo '<h2>' . Lang::get('__framelix_appupdate_tabs_update_log__') . '</h2>';
