@@ -67,7 +67,7 @@ class Roles extends View
     public function showContent(): void
     {
         $form = $this->getForm();
-        $form->addSubmitButton('save', '__framelix_saved__', 'save');
+        $form->addSubmitButton('save', '__framelix_save__', 'save');
         $form->show();
     }
 

@@ -32,23 +32,23 @@
     "__framelix_appupdate_tabs_update_log_dir_added__": [
         "Directories added"
     ],
-    "__framelix_appupdate_tabs_update_log_dir_skipped__": [
-        "Directories skipped (Already exist)"
-    ],
     "__framelix_appupdate_tabs_update_log_dir_deleted__": [
         "Directories deleted"
+    ],
+    "__framelix_appupdate_tabs_update_log_dir_skipped__": [
+        "Directories skipped (Already exist)"
     ],
     "__framelix_appupdate_tabs_update_log_file_added__": [
         "Files added"
     ],
-    "__framelix_appupdate_tabs_update_log_file_updated__": [
-        "Files updated"
+    "__framelix_appupdate_tabs_update_log_file_deleted__": [
+        "Files deleted"
     ],
     "__framelix_appupdate_tabs_update_log_file_skipped__": [
         "Files skipped (Already exist and has not changed)"
     ],
-    "__framelix_appupdate_tabs_update_log_file_deleted__": [
-        "Files deleted"
+    "__framelix_appupdate_tabs_update_log_file_updated__": [
+        "Files updated"
     ],
     "__framelix_appupdate_tabs_upload__": [
         "Upload a ZIP package"
@@ -487,6 +487,9 @@
     ],
     "__framelix_form_validation_twofactor__": [
         "The entered code is not valid"
+    ],
+    "__framelix_goaback__": [
+        "Go back"
     ],
     "__framelix_goahead__": [
         "Go ahead"

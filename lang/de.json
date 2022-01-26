@@ -39,6 +39,34 @@
         "Update Log",
         "cbc07"
     ],
+    "__framelix_appupdate_tabs_update_log_dir_added__": [
+        "Verzeichnis hinzugef\u00fcgt",
+        "b920b"
+    ],
+    "__framelix_appupdate_tabs_update_log_dir_deleted__": [
+        "Verzeichnis gel\u00f6scht",
+        "f04e7"
+    ],
+    "__framelix_appupdate_tabs_update_log_dir_skipped__": [
+        "Verzeichnis ignoriert (Existiert bereits)",
+        "c8aef"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_added__": [
+        "Dateien hinzugef\u00fcgt",
+        "f776c"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_deleted__": [
+        "Dateien gel\u00f6scht",
+        "35471"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_skipped__": [
+        "Dateien ignoriert (Existiert bereits und wurde nicht ver\u00e4ndert)",
+        "c1324"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_updated__": [
+        "Dateien aktualisiert",
+        "5566c"
+    ],
     "__framelix_appupdate_tabs_upload__": [
         "Ein Zip Paket hochladen",
         "18a3d"
@@ -622,6 +650,10 @@
     "__framelix_form_validation_twofactor__": [
         "Der eingegebene Code ist nicht g\u00fcltig",
         "ac9d8"
+    ],
+    "__framelix_goaback__": [
+        "Gehe zur\u00fcck",
+        "22b65"
     ],
     "__framelix_goahead__": [
         "Weiter",

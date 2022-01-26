@@ -1,24 +1,25 @@
 .framelix-alert {
-  padding: 7px 15px;
   border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
   margin-bottom: 5px;
   background: var(--color-alert-default-bg);
   color: var(--color-alert-default-text);
   --icon-color-hue: var(--color-primary-hue);
   font-size: 92%;
-  display: flex;
-  align-items: center;
+  min-height: 25px;
+  padding: 13px 20px 10px 40px;
 
   @include insertColorSelectors("framelix-alert", "alert");
 
   &::before {
+    position: absolute;
     color: hsl(var(--icon-color-hue), 50%, 50%);
     content: "star";
     font-family: "Material Icons", sans-serif;
     font-size: 24px;
     flex: 0 0 auto;
     opacity: 0.4;
-    margin-right: 10px;
+    margin-top: -7px;
+    margin-left: -30px;
   }
 
   &.framelix-alert-success {
@@ -49,7 +50,11 @@
     content: attr(data-icon string);
   }
 
-  &[data-icon='']::before {
-    display: none;
+  &[data-icon=''] {
+    &::before {
+      display: none;
+    }
+
+    min-height: auto;
   }
 }
