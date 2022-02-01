@@ -23,7 +23,7 @@ $ignoreModuleFiles = [
     "^/package-lock\.json",
 ];
 $arr = [];
-$modulePackageJson = JsonUtils::readFromFile($modulePath . "/package.json");
+$modulePackageJson = JsonUtils::getPackageJson($module);
 $files = FileUtils::getFiles($modulePath, null, true, true);
 $ignoreArr = $ignoreModuleFiles;
 if (isset($modulePackageJson['framelix']['release']['exclude'])) {

@@ -8,7 +8,7 @@ use Framelix\Framelix\Utils\Zip;
 const FRAMELIX_MODULE = "Framelix";
 require_once __DIR__ . "/../public/index.php";
 
-$packageJson = JsonUtils::readFromFile(__DIR__ . "/../../../package.json");
+$packageJson = JsonUtils::getPackageJson(null);
 $builtInModules = $packageJson['framelix']['builtInModules'];
 
 $ignoreModuleFiles = [

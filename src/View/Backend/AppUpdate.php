@@ -141,7 +141,7 @@ class AppUpdate extends View
      */
     public function showContent(): void
     {
-        $updateAppUpdateFile = \Framelix\Framelix\AppUpdate::class;
+        $updateAppUpdateFile = \Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE;
         switch ($this->tabId) {
             case 'update-log':
                 if ($lastResult = Session::get('appupdate-lastresult')) {

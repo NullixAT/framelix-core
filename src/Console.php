@@ -20,7 +20,6 @@ use function array_values;
 use function copy;
 use function count;
 use function file_exists;
-use function file_get_contents;
 use function hash_file;
 use function implode;
 use function in_array;
@@ -43,7 +42,6 @@ use function substr;
 use function unlink;
 use function version_compare;
 
-use const FRAMELIX_APP_ROOT;
 use const FRAMELIX_MODULE;
 
 /**
@@ -125,10 +123,9 @@ class Console
         if (file_exists($updateAppUpdateFile)) {
             unlink($updateAppUpdateFile);
         }
-        $packageJsonFile = FRAMELIX_APP_ROOT . "/package.json";
-        if (file_exists($packageJsonFile)) {
+        $packageJson = JsonUtils::getPackageJson(null);
+        if ($packageJson) {
             try {
-                $packageJson = JsonUtils::readFromFile($packageJsonFile);
                 $currentVersion = $packageJson['version'];
                 if (isset($packageJson['repository']['url'])) {
                     $url = $packageJson['repository']['url'];

@@ -4,8 +4,10 @@ namespace Framelix\Framelix\Utils;
 
 use Framelix\Framelix\Network\Response;
 
+use function file_exists;
 use function json_encode;
 
+use const FRAMELIX_APP_ROOT;
 use const JSON_PRETTY_PRINT;
 use const JSON_THROW_ON_ERROR;
 
@@ -14,6 +16,36 @@ use const JSON_THROW_ON_ERROR;
  */
 class JsonUtils
 {
+    /**
+     * Internal cache
+     * @var array
+     */
+    private static $cache = [];
+
+    /**
+     * Get package json data
+     * @param string|null $module If null, then take package.json of app root
+     * @return array|null Null if no package.json exists
+     */
+    public static function getPackageJson(?string $module): ?array
+    {
+        $cacheKey = (string)$module;
+        if (ArrayUtils::keyExists(self::$cache, $cacheKey)) {
+            return self::$cache[$cacheKey];
+        }
+        if ($module === null) {
+            $path = FRAMELIX_APP_ROOT . "/package.json";
+        } else {
+            $path = FRAMELIX_APP_ROOT . "/modules/$module/package.json";
+        }
+        if (!file_exists($path)) {
+            self::$cache[$cacheKey] = null;
+            return null;
+        }
+        self::$cache[$cacheKey] = self::readFromFile($path);
+        return self::$cache[$cacheKey];
+    }
+
     /**
      * Write to file
      * @param string $path
