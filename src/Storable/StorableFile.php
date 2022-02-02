@@ -20,7 +20,6 @@ use function in_array;
 use function is_dir;
 use function is_string;
 use function mkdir;
-use function rename;
 use function strrpos;
 use function strtolower;
 use function substr;
@@ -206,15 +205,7 @@ abstract class StorableFile extends Storable
         }
         $path = $this->getPath(false);
         if ($file instanceof UploadedFile) {
-            if (!file_exists($path)) {
-                if (!rename($file->path, $path)) {
-                    // @codeCoverageIgnoreStart
-                    throw new Exception(
-                        "Couldn't move file to destination folder", ErrorCode::STORABLEFILE_COPY_FAILURE
-                    );
-                    // @codeCoverageIgnoreEnd
-                }
-            } elseif (!copy($file->path, $path)) {
+            if (!copy($file->path, $path)) {
                 // @codeCoverageIgnoreStart
                 throw new Exception("Couldn't copy file to destination folder", ErrorCode::STORABLEFILE_COPY_FAILURE);
                 // @codeCoverageIgnoreEnd
