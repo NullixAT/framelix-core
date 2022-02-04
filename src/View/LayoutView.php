@@ -149,6 +149,15 @@ abstract class LayoutView extends View
     }
 
     /**
+     * Set page title
+     * @param string $title
+     */
+    public function setPageTitle(string $title): void
+    {
+        $this->pageTitle = $title;
+    }
+
+    /**
      * Get translated page title
      * @param bool $escape Does remove html tags and html escape the string
      * @return string
