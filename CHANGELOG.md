@@ -5,6 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ### :heart: Added
 * added resort actions to developer language editor to resort keys and update lang files easily
+* added headHtmlAfterInit
 
 ### :pencil: Changed
 
@@ -16,7 +17,7 @@ All notable changes to this project will be documented in this file.
 
 
 ### :wrench: Fixed
-
+fixed framelix-string-utils -> slugify replacing only one char
 
 ### :police_car: Security
 
