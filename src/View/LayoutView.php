@@ -28,12 +28,18 @@ use const FRAMELIX_MODULE;
  */
 abstract class LayoutView extends View
 {
-
     /**
      * Html to directly output in the <head> section of the page
      * @var string
      */
     protected string $headHtml = '';
+
+    /**
+     * Html to directly output in the <head> section of the page but after $headHtml has been included and after page
+     * has reached earlyInit stage
+     * @var string
+     */
+    protected string $headHtmlAfterInit = '';
 
     /**
      * If set, then use call this function instead of showContent()
@@ -49,6 +55,16 @@ abstract class LayoutView extends View
     public function addHeadHtml(string $html): void
     {
         $this->headHtml .= "\n" . $html;
+    }
+
+    /**
+     * Add html to <head> but after $headHtml has been included and after page has reached earlyInit stage
+     * @param string $html
+     * @return void
+     */
+    public function addHeadHtmlAfterInit(string $html): void
+    {
+        $this->headHtmlAfterInit .= "\n" . $html;
     }
 
     /**
@@ -144,6 +160,7 @@ abstract class LayoutView extends View
               FramelixToast.queue = <?=JsonUtils::encode(Toast::getQueueMessages(true))?>;
               Framelix.initEarly()
             </script>
+            <?= $this->headHtmlAfterInit ?>
         </head>
         <?php
     }
