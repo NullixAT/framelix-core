@@ -56,6 +56,23 @@ class LangEditor extends View
      */
     public function onRequest(): void
     {
+        if (Request::getGet('updateFiles')) {
+            $count = 0;
+            foreach (Config::$loadedModules as $module) {
+                foreach (Lang::getAllModuleLanguages() as $lang) {
+                    $langFile = FileUtils::getModuleRootPath($module) . "/lang";
+                    $langFile .= "/$lang.json";
+                    $existingValues = file_exists($langFile) ? JsonUtils::readFromFile($langFile) : [];
+                    if ($existingValues) {
+                        ksort($existingValues);
+                        JsonUtils::writeToFile($langFile, $existingValues, true);
+                        $count++;
+                    }
+                }
+            }
+            Toast::success('Updated ' . $count . ' files in ' . count(Config::$loadedModules) . " modules");
+            $this->getSelfUrl()->redirect();
+        }
         if (Request::getBody('save')) {
             $lang = Request::getBody('lang');
             $data = Request::getBody('values');
@@ -105,7 +122,13 @@ class LangEditor extends View
      */
     public function showContent(): void
     {
-        if ($this->tabId && str_starts_with($this->tabId, "lang-")) {
+        if ($this->tabId === 'actions') {
+            ?>
+            <a href="<?= $this->getSelfUrl()->setParameter('updateFiles', 1) ?>" class="framelix-button"><?= Lang::get(
+                    '__framelix_view_backend_dev_langeditor_sort__'
+                ) ?></a>
+            <?php
+        } elseif ($this->tabId && str_starts_with($this->tabId, "lang-")) {
             $form = $this->getForm(substr($this->tabId, 5));
             $form->addSubmitButton('save', '__framelix_save__', 'save');
             $form->show();
@@ -137,6 +160,7 @@ class LangEditor extends View
             foreach (Lang::getAllModuleLanguages() as $language) {
                 $tabs->addTab('lang-' . $language, $language, new self());
             }
+            $tabs->addTab('actions', '__framelix_view_backend_dev_langeditor_actions__', new self());
             $tabs->show();
         }
     }

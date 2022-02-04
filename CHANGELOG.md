@@ -4,19 +4,19 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### :heart: Added
-Initial
+* added resort actions to developer language editor to resort keys and update lang files easily
 
 ### :pencil: Changed
-Initial
+
 
 ### :construction: Deprecated
-Initial
+
 
 ### :x: Removed
-Initial
+
 
 ### :wrench: Fixed
-Initial
+
 
 ### :police_car: Security
-Initial
+

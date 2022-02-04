@@ -911,6 +911,15 @@
     "__framelix_view_backend_dev_langeditor__": [
         "Translation editor"
     ],
+    "__framelix_view_backend_dev_langeditor_actions__": [
+        "Actions"
+    ],
+    "__framelix_view_backend_dev_langeditor_sort__": [
+        "Update, normalize and resort all language files and keys"
+    ],
+    "__framelix_view_backend_dev_langeditor_sort_info__": [
+        "Do this after you have manually edited a file. It will properly update the contents and resort the keys so you don't have to."
+    ],
     "__framelix_view_backend_dev_update__": [
         "Update database and sources"
     ],

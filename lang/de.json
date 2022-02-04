@@ -1215,6 +1215,18 @@
         "\u00dcbersetzungseditor",
         "3bc96"
     ],
+    "__framelix_view_backend_dev_langeditor_actions__": [
+        "Aktionen",
+        "06df3"
+    ],
+    "__framelix_view_backend_dev_langeditor_sort__": [
+        "Updaten, normalisieren und neu sortieren alles Language Dateien und deren Keys",
+        "08dd8"
+    ],
+    "__framelix_view_backend_dev_langeditor_sort_info__": [
+        "Mach das, nachdem du Language Files h\u00e4ndisch ver\u00e4ndert hast damit die Keys wieder richtig sortiert werden, damit du das nicht machen musst.",
+        "dd9d5"
+    ],
     "__framelix_view_backend_dev_update__": [
         "Datenbank und Code aktualisieren",
         "7869d"
