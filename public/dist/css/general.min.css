@@ -7,7 +7,8 @@
   --icon-color-hue: var(--color-primary-hue);
   font-size: 92%;
   min-height: 25px;
-  padding: 13px 20px 10px 40px; }
+  padding: 13px 20px 10px 40px;
+  position: relative; }
   .framelix-alert.framelix-alert-primary {
     background-color: var(--color-alert-primary-bg);
     color: var(--color-alert-primary-text); }

@@ -7,6 +7,7 @@
   font-size: 92%;
   min-height: 25px;
   padding: 13px 20px 10px 40px;
+  position: relative;
 
   @include insertColorSelectors("framelix-alert", "alert");
 
