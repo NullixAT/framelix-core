@@ -314,6 +314,18 @@ class Form implements JsonSerializable
     }
 
     /**
+     * Reset the cache for getConvertedSubmittedValue of all fields
+     * This is mostly requird for unit tests
+     * @return void
+     */
+    public function resetConvertedSubmittedValueCache(): void
+    {
+        foreach ($this->fields as $field) {
+            $field->resetConvertedSubmittedValueCache();
+        }
+    }
+
+    /**
      * Set all storable values that exist as properties with corresponing field names
      * @param Storable $storable
      */
