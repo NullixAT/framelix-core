@@ -887,6 +887,15 @@ abstract class Storable implements JsonSerializable, ObjectTransformable
     }
 
     /**
+     * Get a value that is explicitely used when displayed inside a html table
+     * @return mixed
+     */
+    public function getHtmlTableValue(): mixed
+    {
+        return trim($this->getHtmlString());
+    }
+
+    /**
      * Get a human-readable raw text representation of this instace
      * @return string
      */

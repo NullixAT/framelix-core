@@ -483,10 +483,11 @@ abstract class View implements JsonSerializable
     /**
      * Show an error that indicate invalid url
      * For example when required parameters are missing
+     * @param string $label
      */
-    public function showInvalidUrlError(): void
+    public function showInvalidUrlError(string $label = '__framelix_error_invalid_url__'): void
     {
-        $this->showSoftError('__framelix_error_invalid_url__');
+        $this->showSoftError($label);
     }
 
     /**

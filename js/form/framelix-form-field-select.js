@@ -24,9 +24,10 @@ class FramelixFormFieldSelect extends FramelixFormField {
 
   /**
    * Show reset button
-   * @type {boolean}
+   * If null, it will be shown depending if this field is required or not, if required, not show this button
+   * @type {boolean|null}
    */
-  showResetButton = true
+  showResetButton = null
 
   /**
    * All available options
@@ -71,13 +72,20 @@ class FramelixFormFieldSelect extends FramelixFormField {
   optionsPopup = null
 
   /**
+   * Is true after first time setValue is called (which happens during render)
+   * @type {boolean}
+   */
+  valueInitialized = false
+
+  /**
    * Set value for this field
    * @param {*} value
    * @param {boolean} isUserChange Indicates if this change was done because of an user input
    */
   setValue (value, isUserChange = false) {
     let countChecked = 0
-    if (value === null || JSON.stringify(value) !== JSON.stringify(this.getValue())) {
+    if (!this.valueInitialized || this.stringifyValue(value) !== this.stringifyValue(this.getValue())) {
+      this.valueInitialized = true
       let arrValues = []
       if (value !== null) {
         if (typeof value !== 'object') {
@@ -240,11 +248,12 @@ class FramelixFormFieldSelect extends FramelixFormField {
     popupContentInner.append(popupOptionsContainer)
 
     const optionsElementsIndexed = {}
-    if (this.showResetButton) {
+    if (this.showResetButton === true || (this.showResetButton === null && !this.required)) {
       popupOptionsContainer.append('<button class="framelix-button framelix-button-small" data-unset="1">' + FramelixLang.get('__framelix_form_select_unset__') + '</button>')
       popupOptionsContainer.on('click', 'button[data-unset]', function () {
         popupContentInner.find('input:checked').prop('checked', false)
         self.destroyDropdown()
+        self.triggerChange(self.field, true)
       })
     }
     for (let key in this.options) {
@@ -364,6 +373,7 @@ class FramelixFormFieldSelect extends FramelixFormField {
   async renderInternal () {
     await super.renderInternal()
     const self = this
+    this.valueInitialized = false
     this.container.attr('data-multiple', this.multiple ? '1' : '0')
     this.container.attr('data-dropdown', this.dropdown ? '1' : '0')
     this.field.html(`

@@ -38,9 +38,10 @@ class Select extends Field
 
     /**
      * Show reset button
-     * @var bool
+     * If null, it will be shown depending if this field is required or not, if required, not show this button
+     * @var bool|null
      */
-    public bool $showResetButton = true;
+    public ?bool $showResetButton = null;
 
     /**
      * Min selected items for submitted value

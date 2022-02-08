@@ -196,7 +196,6 @@ class FramelixQuickSearch {
     this.container.html(`
       <div class="framelix-quick-search-input">
         <button class="framelix-button framelix-button-trans framelix-quick-search-help" title="__framelix_quick_search_help__" type="button" data-icon-left="info"></button>
-        ${FramelixObjectUtils.hasKeys(this.columns) ? '<button class="framelix-button framelix-button-trans framelix-quick-search-settings" title="__framelix_quick_search_settings__" type="button" data-icon-left="settings"></button>' : ''}
       </div>
       <div class="framelix-quick-search-options hidden"></div>
       <div class="framelix-quick-search-result"></div>
@@ -212,7 +211,7 @@ class FramelixQuickSearch {
       form.render()
       await form.rendered
       optionsContainer.append(form.container)
-      optionsContainer.on('change', function () {
+      optionsContainer.on(FramelixFormField.EVENT_CHANGE_USER, function () {
         self.search()
       })
     }
@@ -234,84 +233,6 @@ class FramelixQuickSearch {
     }
     this.container.on('click', '.framelix-quick-search-help', function () {
       FramelixModal.show({ bodyContent: FramelixLang.get('__framelix_quick_search_help__') })
-    })
-    this.container.on('click', '.framelix-quick-search-settings', function () {
-      let valueUnset = false
-      const container = $(`<div>`)
-
-      const form = new FramelixForm()
-      form.id = self.id + '-settings'
-
-      const columnField = new FramelixFormFieldSelect()
-      columnField.name = 'column'
-      columnField.label = '__framelix_quick_search_column__'
-      columnField.required = true
-      form.addField(columnField)
-
-      const compareField = new FramelixFormFieldSelect()
-      compareField.name = 'compare'
-      compareField.label = '__framelix_quick_search_compare__'
-      compareField.required = true
-      compareField.addOption('~', '~ ' + FramelixLang.get('__framelix_quick_search_compare_contain__'))
-      compareField.addOption('!~', '!~ ' + FramelixLang.get('__framelix_quick_search_compare_notcontain__'))
-      compareField.addOption('=', '= ' + FramelixLang.get('__framelix_quick_search_compare_equal__'))
-      compareField.addOption('!=', '!= ' + FramelixLang.get('__framelix_quick_search_compare_notequal__'))
-      compareField.addOption('<', '< ' + FramelixLang.get('__framelix_quick_search_compare_lt__'))
-      compareField.addOption('<=', '<= ' + FramelixLang.get('__framelix_quick_search_compare_lte__'))
-      compareField.addOption('>', '> ' + FramelixLang.get('__framelix_quick_search_compare_gt__'))
-      compareField.addOption('>=', '>= ' + FramelixLang.get('__framelix_quick_search_compare_gte__'))
-      form.addField(compareField)
-
-      const valueField = new FramelixFormFieldText()
-      valueField.name = 'value'
-      valueField.label = '__framelix_quick_search_value__'
-      valueField.required = true
-      form.addField(valueField)
-
-      const conditionPreview = new FramelixFormFieldHtml()
-      conditionPreview.name = 'newquery'
-      conditionPreview.label = '__framelix_quick_search_query_modified__'
-      form.addField(conditionPreview)
-
-      for (let i in self.columns) {
-        const columnRow = self.columns[i]
-        columnField.addOption(columnRow.frontendPropertyName, FramelixLang.get(columnRow.label))
-      }
-      form.addButton('add', '__framelix_quick_search_add__', 'add', 'success')
-      form.addButton('close', '__framelix_close__', 'clear')
-      form.container = container
-      form.render()
-      const modal = FramelixModal.show({ bodyContent: container })
-      container.on('keydown', function (ev) {
-        if (ev.key === 'Enter') {
-          container.find('button[data-action=\'add\']').trigger('click')
-        }
-      })
-      container.on('click', 'button[data-action=\'add\']', async function () {
-        if (await form.validate()) {
-          // unset on first added condition but not when added multiple conditions in the same window
-          if (!valueUnset) {
-            valueUnset = true
-            self.setSearchQuery('')
-          }
-          const formValues = form.getValues()
-          let searchQuery = self.getCleanText()
-          if (searchQuery.length) searchQuery += ' && '
-          searchQuery += formValues.column + formValues.compare + formValues.value
-          self.setSearchQuery(searchQuery)
-          conditionPreview.setValue(FramelixStringUtils.htmlEscape(searchQuery))
-          columnField.setValue(null)
-          compareField.setValue(null)
-          valueField.setValue(null)
-        }
-      })
-      container.on('click', 'button[data-action=\'close\']', function () {
-        modal.destroy()
-      })
-      modal.destroyed.then(function () {
-        self.searchField.trigger('focus')
-        self.search()
-      })
     })
     this.searchField.on('change input', function (ev) {
       ev.stopPropagation()

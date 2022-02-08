@@ -2,7 +2,6 @@
 
 namespace Framelix\Framelix\Form;
 
-use Framelix\Framelix\Form\Field\Grid;
 use Framelix\Framelix\Html\ColorName;
 use Framelix\Framelix\Html\HtmlAttributes;
 use Framelix\Framelix\Lang;
@@ -20,7 +19,6 @@ use JetBrains\PhpStorm\ExpectedValues;
 use JsonSerializable;
 
 use function array_shift;
-use function call_user_func_array;
 use function get_class;
 use function is_array;
 use function ob_end_clean;
@@ -316,65 +314,6 @@ class Form implements JsonSerializable
     }
 
     /**
-     * Create/Update storables based on submitted grid values for given field name
-     * It does create new storables for each row based on $baseStorable
-     * It does modify storables for each row that does exist in $defaultValue
-     * It does remove all storables that are set in $defaultValue and that are marked as deleted (user has removed it)
-     * In the end, it automatically adds new storables when user enters a new row, it modifies existing storable when user modify a row, it deletes storables when user deletes a row
-     * @param string $fieldName The fieldName that need to be a grid, if field is no grid, this action does nothing
-     * @param Storable $baseStorable The base storable to clone from
-     * @param callable|null $rowStore Override the default store behaviour for each row - Use this to set more custom properties and calling store() yourself on each row
-     * @param callable|null $rowDelete Override the default delete behaviour for each row - You must manually call delete() for the passed storable
-     */
-    public function modifyStorablesBasedOnGridValues(
-        string $fieldName,
-        Storable $baseStorable,
-        ?callable $rowStore = null,
-        ?callable $rowDelete = null
-    ): void {
-        /** @var Grid $grid */
-        $grid = $this->fields[$fieldName] ?? null;
-        if (!($grid instanceof Grid)) {
-            return;
-        }
-        $rows = $grid->getConvertedSubmittedValue();
-        if (is_array($rows)) {
-            foreach ($rows as $key => $row) {
-                $storable = $grid->defaultValue[$key] ?? $baseStorable->clone();
-                // expected types does not match
-                if (!($storable instanceof $baseStorable)) {
-                    continue;
-                }
-                foreach ($grid->fields as $fieldName => $field) {
-                    if (Storable::getStorableSchemaProperty($storable, $fieldName)) {
-                        $storable->{$fieldName} = $row[$fieldName] ?? null;
-                    }
-                }
-                if ($rowStore) {
-                    call_user_func_array($rowStore, [$storable]);
-                } else {
-                    $storable->store();
-                }
-            }
-        }
-        $deletedKeys = $grid->getSubmittedDeletedKeys();
-        if ($deletedKeys) {
-            foreach ($deletedKeys as $id) {
-                /** @var Storable|null $storable */
-                $storable = $grid->defaultValue[$id] ?? null;
-                if (!$storable) {
-                    continue;
-                }
-                if ($rowDelete) {
-                    call_user_func_array($rowDelete, [$storable]);
-                } else {
-                    $storable->delete();
-                }
-            }
-        }
-    }
-
-    /**
      * Set all storable values that exist as properties with corresponing field names
      * @param Storable $storable
      */
@@ -397,9 +336,8 @@ class Form implements JsonSerializable
                     continue;
                 }
             }
-            // in case of raw json (no specific storable type) outside a grid field, merge arrays keys instead of override complete property
-            // a grid field is always considered that it contains all values on submit
-            if ($storableSchemaProperty->internalType === 'mixed' && !($field instanceof Grid) && !$storableSchemaProperty->arrayStorableClass && !$storableSchemaProperty->arrayStorableInterface) {
+            // in case of raw json (no specific storable type), merge arrays keys instead of override complete property
+            if ($storableSchemaProperty->internalType === 'mixed' && !$storableSchemaProperty->arrayStorableClass && !$storableSchemaProperty->arrayStorableInterface) {
                 array_shift($nameParts);
                 $storableValue = $storable->{$storableSchemaProperty->name} ?? [];
                 if (!is_array($storableValue)) {

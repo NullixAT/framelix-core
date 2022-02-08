@@ -120,7 +120,6 @@ input[type='checkbox'] {
   }
 
   &:after {
-    color: var(--color-primary-bg-strong-text);
     content: "radio_button_unchecked";
     font-family: "Material Icons", sans-serif;
     line-height: 1;
@@ -132,7 +131,6 @@ input[type='checkbox'] {
     background-color: var(--color-input-checkbox-checked);
 
     &:after {
-      color: var(--color-primary-bg-strong-text);
       content: "check";
     }
   }

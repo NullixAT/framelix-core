@@ -705,13 +705,13 @@ html.dragging [data-tooltip] {
   .framelix-quick-search .framelix-quick-search-options .framelix-form-submit-status {
     display: none; }
 
-.framelix-quick-search .framelix-quick-search-settings {
-  font-size: 24px; }
-
 .framelix-quick-search .framelix-quick-search-input {
   display: flex;
-  padding: 0;
-  border-bottom: 3px solid var(--color-border-subtle); }
+  padding: 5px;
+  background: var(--color-button-primary-bg);
+  color: var(--color-button-primary-text);
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius); }
   .framelix-quick-search .framelix-quick-search-input .material-icons {
     align-self: center;
     margin: 0 10px; }
@@ -824,8 +824,8 @@ html.dragging [data-tooltip] {
       .framelix-table > table > tbody > tr.framelix-table-row-highlight td,
       .framelix-table > table > thead > tr.framelix-table-row-highlight td,
       .framelix-table > table > tfoot > tr.framelix-table-row-highlight td {
-        border-top: 1px solid var(--color-primary-bg-strong);
-        border-bottom: 1px solid var(--color-primary-bg-strong); }
+        border-top: 1px solid var(--color-primary-text);
+        border-bottom: 1px solid var(--color-primary-text); }
       .framelix-table > table > tbody > tr:nth-child(even),
       .framelix-table > table > thead > tr:nth-child(even),
       .framelix-table > table > tfoot > tr:nth-child(even) {
@@ -928,9 +928,7 @@ html.dragging [data-tooltip] {
   right: 5px;
   text-align: center;
   transform: translateY(200%);
-  transition: .3s;
-  background: var(--color-toast-default-bg);
-  color: var(--color-toast-default-text); }
+  transition: .3s; }
   .framelix-toast.framelix-toast-visible {
     transform: translateY(0); }
   .framelix-toast .framelix-toast-inner {
@@ -942,7 +940,10 @@ html.dragging [data-tooltip] {
     transition: .3s;
     position: relative;
     padding: 10px;
-    border-radius: var(--border-radius); }
+    border-radius: var(--border-radius);
+    align-items: center;
+    background: var(--color-toast-default-bg);
+    color: var(--color-toast-default-text); }
     .framelix-toast .framelix-toast-inner.framelix-toast-primary {
       background-color: var(--color-toast-primary-bg);
       color: var(--color-toast-primary-text); }
@@ -994,13 +995,11 @@ html.dragging [data-tooltip] {
     text-align: center;
     color: white; }
   .framelix-toast .framelix-toast-message {
-    flex: 1 1 auto;
-    display: flex;
-    align-items: center;
     max-height: 40vh;
     overflow: auto;
     padding-left: 10px;
-    margin-right: 10px; }
+    margin-right: 10px;
+    flex: 1 1 auto; }
   .framelix-toast .framelix-toast-loader {
     position: absolute;
     left: 0;

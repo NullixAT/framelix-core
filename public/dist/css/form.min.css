@@ -125,13 +125,17 @@ html[data-color-scheme='dark'] .framelix-form-field-datetime ::-webkit-calendar-
   height: 1px;
   /* Hack, to make 100% div height in cells possible, tested for edge old/new, chrome, firefox */ }
   .framelix-form-field-grid table td {
-    padding: 0; }
+    padding: 3px; }
   .framelix-form-field-grid table[data-full-width='1'] {
     width: 100%; }
   .framelix-form-field-grid table thead {
     position: sticky;
     top: 0;
     z-index: 1; }
+  .framelix-form-field-grid table tbody tr:not(:last-child) .framelix-form-field-grid-add {
+    display: none; }
+  .framelix-form-field-grid table tbody td {
+    border: 1px solid var(--color-border-subtle); }
   .framelix-form-field-grid table th {
     text-align: left;
     margin: 0;
@@ -146,18 +150,22 @@ html[data-color-scheme='dark'] .framelix-form-field-datetime ::-webkit-calendar-
     display: none; }
   .framelix-form-field-grid table .framelix-form-field {
     padding: 0;
-    margin: 0; }
+    margin: 0;
+    pointer-events: none; }
   .framelix-form-field-grid table .framelix-form-field-container {
     margin: 0; }
+    .framelix-form-field-grid table .framelix-form-field-container .framelix-form-field-input {
+      background: var(--color-page-bg);
+      border: none; }
 
 .framelix-form-field-grid .framelix-form-field-grid-remove,
+.framelix-form-field-grid .framelix-form-field-grid-edit,
+.framelix-form-field-grid .framelix-form-field-grid-sort,
 .framelix-form-field-grid .framelix-form-field-grid-add {
   margin: 0;
   width: 100%;
-  height: 100%; }
-
-.framelix-form-field-grid .framelix-form-field-grid-add {
-  margin-top: 10px; }
+  height: 100%;
+  min-width: 40px; }
 
 .framelix-form-field-hidden {
   display: none; }
@@ -374,7 +382,6 @@ input[type='checkbox'] {
     box-shadow: rgba(0, 0, 0, 0.6) 0 0 20px inset; }
   input[type='radio']:after,
   input[type='checkbox']:after {
-    color: var(--color-primary-bg-strong-text);
     content: "radio_button_unchecked";
     font-family: "Material Icons", sans-serif;
     line-height: 1;
@@ -385,8 +392,10 @@ input[type='checkbox'] {
     background-color: var(--color-input-checkbox-checked); }
     input[type='radio']:checked:after,
     input[type='checkbox']:checked:after {
-      color: var(--color-primary-bg-strong-text);
       content: "check"; }
+
+.framelix-form {
+  margin-bottom: 20px; }
 
 .framelix-form-label {
   font-size: 1.3rem;

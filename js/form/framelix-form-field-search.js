@@ -109,7 +109,7 @@ class FramelixFormFieldSearch extends FramelixFormField {
     const selectOptionsContainer = this.field.find('.framelix-form-field-search-selected-options')
 
     if (this.initialSelectedOptions && this.initialSelectedOptions.keys.length) {
-      for (let i = 0; i < this.initialSelectedOptions.keys; i++) {
+      for (let i = 0; i < this.initialSelectedOptions.keys.length; i++) {
         const value = this.initialSelectedOptions.keys[i]
         const label = this.initialSelectedOptions.values[i]
         selectOptionsContainer.append(this.getOptionHtml(value, label, true))

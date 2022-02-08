@@ -27,7 +27,6 @@ use function gettype;
 use function is_array;
 use function is_object;
 use function mb_strtolower;
-use function strlen;
 use function trim;
 
 /**
@@ -127,21 +126,17 @@ abstract class StorableMeta implements JsonSerializable
             case 'quicksearch':
                 $meta = StorableMeta::createFromUrl(Url::create());
                 $query = trim((string)($jsCall->parameters['query'] ?? null));
-                if (strlen($query)) {
-                    if (User::hasRole('dev')) {
-                        $condition = $meta->getQuickSearchCondition($jsCall->parameters['options'] ?? null);
-                        Response::header(
-                            "x-debug-query: " . $condition->getPreparedCondition($meta->storable->getDb(), $query)
-                        );
-                    }
-                    $objects = $meta->getQuickSearchResult($query, $jsCall->parameters['options'] ?? null);
-                    if ($objects) {
-                        $meta->getTable($objects, "quicksearch")->show();
-                    } else {
-                        echo '<div class="framelix-alert">' . Lang::get('__framelix_form_search_noresult__') . '</div>';
-                    }
+                if (User::hasRole('dev')) {
+                    $condition = $meta->getQuickSearchCondition($jsCall->parameters['options'] ?? null);
+                    Response::header(
+                        "x-debug-query: " . $condition->getPreparedCondition($meta->storable->getDb(), $query)
+                    );
+                }
+                $objects = $meta->getQuickSearchResult($query, $jsCall->parameters['options'] ?? null);
+                if ($objects) {
+                    $meta->getTable($objects, "quicksearch")->show();
                 } else {
-                    $jsCall->result = '';
+                    echo '<div class="framelix-alert">' . Lang::get('__framelix_form_search_noresult__') . '</div>';
                 }
                 break;
         }

@@ -72,7 +72,7 @@ class LazySearchCondition
     {
         $condition = (string)$this->prependFixedCondition;
         // this wildcard search for everything
-        if ($userSearchQuery === "*" || $userSearchQuery === "**") {
+        if ($userSearchQuery === "*" || $userSearchQuery === "**" || $userSearchQuery === '') {
             return strlen($condition) ? $condition : "1";
         }
         $userSearchQuery = trim(preg_replace("~\s{2,}~", " ", $userSearchQuery));

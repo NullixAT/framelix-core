@@ -13,10 +13,6 @@ use Framelix\Framelix\Utils\ArrayUtils;
 
 use function is_array;
 use function is_object;
-use function str_ends_with;
-use function str_starts_with;
-use function strtolower;
-use function substr;
 
 /**
  * Storable meta property
@@ -186,17 +182,6 @@ class StorableMetaProperty
         $field->defaultValue = $this->getValue();
         if ($storableSchemaProperty) {
             $field->setFieldOptionsForStorable($this->meta->storable, $storableSchemaProperty->name);
-        }
-        // grid fields, also set labels if not yet set
-        if (str_starts_with($field->label, "__") && str_ends_with(
-                $field->label,
-                "__"
-            ) && $field instanceof Field\Grid) {
-            foreach ($field->fields as $gridField) {
-                if ($gridField->label === null) {
-                    $gridField->label = substr($field->label, 0, -2) . "_" . strtolower($gridField->name) . "__";
-                }
-            }
         }
         return $field;
     }

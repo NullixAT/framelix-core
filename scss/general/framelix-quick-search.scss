@@ -9,14 +9,13 @@
     }
   }
 
-  .framelix-quick-search-settings {
-    font-size: 24px;
-  }
-
   .framelix-quick-search-input {
     display: flex;
-    padding: 0;
-    border-bottom: 3px solid var(--color-border-subtle);
+    padding: 5px;
+    background: var(--color-button-primary-bg);
+    color: var(--color-button-primary-text);
+    border-top-left-radius: var(--border-radius);
+    border-top-right-radius: var(--border-radius);
 
     .material-icons {
       align-self: center;

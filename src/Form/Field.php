@@ -103,7 +103,6 @@ abstract class Field implements JsonSerializable
 
     /**
      * Validation message to show in the frontend
-     * Array is required for grid fields
      * @var string|array|null
      */
     public string|array|null $validationMessage = null;

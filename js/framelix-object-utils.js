@@ -98,4 +98,39 @@ class FramelixObjectUtils {
     }
     return str.substring(0, str.length - 1)
   }
+
+  /**
+   * forEach callback
+   * @callback FramelixObjectUtilsForEach
+   * @param {*} key
+   * @param {*} value
+   */
+
+  /**
+   * For each over given rows
+   * Could be any object/array or the special prepared ArrayUtils::getArrayForJavascript from PHP
+   * @param {Object|Array} rows
+   * @param {FramelixObjectUtilsForEach} callback
+   * @return {Promise}
+   */
+  static async forEach (rows, callback) {
+    if (!rows) return
+    if (Array.isArray(rows)) {
+      for (let i = 0; i < rows.length; i++) {
+        await callback(i, rows[i])
+      }
+      return
+    }
+    if (typeof rows === 'object') {
+      if (rows.type === 'preparedArray' && rows.keys && rows.keys.length) {
+        for (let i = 0; i < rows.keys.length; i++) {
+          await callback(rows.keys[i], rows.values[i])
+        }
+      } else {
+        for (let i in rows) {
+          await callback(i, rows[i])
+        }
+      }
+    }
+  }
 }

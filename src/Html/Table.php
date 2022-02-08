@@ -384,6 +384,9 @@ class Table implements JsonSerializable
             $this->addColumnFlag($columnName, self::COLUMNFLAG_IGNORESORT);
             $this->addColumnFlag($columnName, self::COLUMNFLAG_IGNOREURL);
             $this->addColumnFlag($columnName, self::COLUMNFLAG_REMOVE_IF_EMPTY);
+            if ($sortValue === null) {
+                $sortValue = $value->sortValue;
+            }
         }
         $this->rows[$group][$rowKey]['cellValues'][$columnName] = $value;
         $this->rows[$group][$rowKey]['sortValues'][$columnName] = $sortValue;
@@ -491,13 +494,15 @@ class Table implements JsonSerializable
                         $value = NumberUtils::format($value, $storableSchemaProperty?->decimals);
                     }
                     $sortValue = $rowValues['sortValues'][$columnName] ?? null;
-                    if ($value instanceof ObjectTransformable) {
-                        $sortValue = $value->getSortableValue();
-                    } elseif (is_int($value) || is_float($value) || is_bool($value)) {
-                        $sortValue = is_bool($sortValue) ? (int)$sortValue : $sortValue;
+                    if ($sortValue === null) {
+                        if ($value instanceof ObjectTransformable) {
+                            $sortValue = $value->getSortableValue();
+                        } elseif (is_int($value) || is_float($value) || is_bool($value)) {
+                            $sortValue = is_bool($value) ? (int)$value : $value;
+                        }
                     }
                     if (!$value instanceof TableCell) {
-                        $value = trim(StringUtils::stringify($value, "<br/>", ["getHtmlString"]));
+                        $value = trim(StringUtils::stringify($value, "<br/>", ["getHtmlTableValue"]));
                         if ($sortValue === null) {
                             $sortValue = StringUtils::slugify(mb_strtolower($value));
                         }

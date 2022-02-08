@@ -34,7 +34,7 @@ use function unlink;
  * @property Storable|null $assignedStorable
  * @property int $fileNr Internal file nr counter for all files that are stored
  */
-abstract class StorableFile extends Storable
+abstract class StorableFile extends StorableExtended
 {
     /**
      * The folder on disk to store the file in

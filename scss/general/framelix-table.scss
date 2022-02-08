@@ -85,8 +85,8 @@
         }
 
         &.framelix-table-row-highlight td {
-          border-top: 1px solid var(--color-primary-bg-strong);
-          border-bottom: 1px solid var(--color-primary-bg-strong);
+          border-top: 1px solid var(--color-primary-text);
+          border-bottom: 1px solid var(--color-primary-text);
         }
 
         &:nth-child(even) {

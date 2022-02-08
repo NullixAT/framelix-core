@@ -34,6 +34,12 @@ use const FRAMELIX_MODULE;
 class Framelix
 {
     /**
+     * Class autoloading allowed modules
+     * @var string[]
+     */
+    public static array $allowedAutoloadingModules = [];
+
+    /**
      * Initializes the framework
      * @codeCoverageIgnore
      */
@@ -62,7 +68,11 @@ class Framelix
             $exp = explode("\\", $className);
             $module = $exp[1];
             // ignore modules that are not yet loaded
-            if ($module !== "Framelix" && $module !== FRAMELIX_MODULE && !isset(Config::$loadedModules[$module])) {
+            if (
+                $module !== "Framelix"
+                && $module !== FRAMELIX_MODULE
+                && !isset(self::$allowedAutoloadingModules[$module])
+            ) {
                 return;
             }
             unset($exp[0], $exp[1]);

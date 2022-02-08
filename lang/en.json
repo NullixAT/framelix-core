@@ -284,6 +284,9 @@
     "__framelix_configuration_warning__": [
         "Attention: Any change to this configuration values will immediately be applied. Make sure you always have a backup of your configuration file.<br\/>Also make sure you have access to the command-line to edit the config-editable.php file, in case you you kill the application by misconfiguration."
     ],
+    "__framelix_create_or_edit_before_proceed__": [
+        "Please create or select an entry to proceed editing this data section."
+    ],
     "__framelix_darkmode__": [
         "Dark Mode"
     ],
@@ -395,12 +398,6 @@
     "__framelix_form_file_pick__": [
         "Pick a file, or drag & drop a file in here"
     ],
-    "__framelix_form_grid_add__": [
-        "Add a new row"
-    ],
-    "__framelix_form_grid_delete__": [
-        "Delete this row"
-    ],
     "__framelix_form_password_toggle__": [
         "Show\/Hide Password"
     ],
@@ -446,9 +443,6 @@
     "__framelix_form_validation_maxdate__": [
         "The date cannot be greater than {date}"
     ],
-    "__framelix_form_validation_maxgridrows__": [
-        "A maximum of {{number=1:entry|number=*:entries}} entries are allowed"
-    ],
     "__framelix_form_validation_maxlength__": [
         "The text cannot be longer than {{number=1:character|number=*:characters}}"
     ],
@@ -466,9 +460,6 @@
     ],
     "__framelix_form_validation_mindate__": [
         "The date cannot be less than {date}"
-    ],
-    "__framelix_form_validation_mingridrows__": [
-        "At least {{number=1:entry|number=*:entries}} are required"
     ],
     "__framelix_form_validation_minlength__": [
         "The text cannot be less than {{number=1:character|number=*:characters}} long"
@@ -666,13 +657,13 @@
         "Not match"
     ],
     "__framelix_quick_search_help__": [
-        "Use * to search everything<br\/>Use ** to search everything and start on next pageload automatically<br\/>Use >50, >=50, =50, !=50, <50, <=50 to search values greather\/equal\/lower then 50<br\/>Use ~hello to search values containing hello (Which is the default even without ~)<br\/>Use !~hello to search values not containing hello<br\/>Use \"hello friend\" to search for the full sentence \"hello friend\"<br\/>Use hello && bye to find entries which contain both words (Default is either or)<br\/>Use settings icon to search only in specific fields"
+        "Use * or empty search value to search everything<br\/>Use ** to search everything and start on next pageload automatically<br\/>Use >50, >=50, =50, !=50, <50, <=50 to search values greather\/equal\/lower then 50<br\/>Use ~hello to search values containing hello (Which is the default even without ~)<br\/>Use !~hello to search values not containing hello<br\/>Use \"hello friend\" to search for the full sentence \"hello friend\"<br\/>Use hello && bye to find entries which contain both words (Default is either or)<br\/>Use settings icon to search only in specific fields"
     ],
     "__framelix_quick_search_help_tooltip__": [
         "Help for search options"
     ],
     "__framelix_quick_search_placeholder__": [
-        "Type here and press enter to search. Use * to find all."
+        "Type here and press enter to search. Use * or empty value to find all."
     ],
     "__framelix_quick_search_query_modified__": [
         "Your new search query"

@@ -191,15 +191,18 @@ class Framelix {
    * @param {string} url
    */
   static redirect (url) {
-    if (url === location.href) {
-      location.reload()
-      return
+    const urlNow = new URL(window.location.href)
+    if (!url.match(/^http/i)) {
+      url = window.location.protocol + '//' + window.location.hostname + url.trim()
     }
-    const oldPathName = location.pathname
-    location.href = url
-    const newPathName = location.pathname
-    if (newPathName === oldPathName) {
-      location.reload()
+    const urlTarget = new URL(url)
+    if (urlTarget.pathname === urlNow.pathname && urlTarget.search === urlNow.search) {
+      // set correct new url to history and then reload the page based on new state
+      // browser don't reload page if just the hash has changes
+      window.history.pushState('', document.title, urlTarget.toString())
+      window.location.reload()
+    } else {
+      window.location.href = url
     }
   }
 

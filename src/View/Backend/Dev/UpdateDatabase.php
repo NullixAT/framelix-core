@@ -12,9 +12,9 @@ use Framelix\Framelix\Html\Toast;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\HtmlUtils;
+use Framelix\Framelix\Utils\Shell;
 use Framelix\Framelix\View\Backend\View;
 
-use function implode;
 use function sleep;
 
 /**
@@ -38,13 +38,13 @@ class UpdateDatabase extends View
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
                 $shell = Console::callMethodInSeparateProcess('updateDatabaseSafe');
-                Toast::info(implode("<br/>", $shell->output));
+                Toast::info(Shell::convertCliOutputToHtml($shell->output, true));
             }
             if (Request::getPost('unsafeQueriesExecute')) {
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
                 $shell = Console::callMethodInSeparateProcess('updateDatabaseUnsafe');
-                Toast::info(implode("<br/>", $shell->output));
+                Toast::info(Shell::convertCliOutputToHtml($shell->output, true));
             }
             Url::getBrowserUrl()->redirect();
         }

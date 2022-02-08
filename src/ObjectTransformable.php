@@ -24,6 +24,12 @@ interface ObjectTransformable extends JsonSerializable, Stringable
     public function getHtmlString(): string;
 
     /**
+     * Get a value that is explicitely used when displayed inside a html table
+     * @return mixed
+     */
+    public function getHtmlTableValue(): mixed;
+
+    /**
      * Get a human-readable raw text representation of this instace
      * @return string
      */

@@ -403,6 +403,15 @@ class DateTime extends \DateTime implements StorablePropertyInterface
     }
 
     /**
+     * Get a value that is explicitely used when displayed inside a html table
+     * @return mixed
+     */
+    public function getHtmlTableValue(): string
+    {
+        return $this->getHtmlString();
+    }
+
+    /**
      * Get a human-readable raw text representation of this instace
      * @return string
      */

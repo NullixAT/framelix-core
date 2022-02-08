@@ -24,6 +24,7 @@ use const FRAMELIX_MODULE;
  */
 class Config
 {
+
     /**
      * Loaded modules
      * @var string[]
@@ -153,13 +154,20 @@ class Config
             "config-module.php",
             "config-editable.php",
         ];
+        $hasConfig = false;
         foreach ($files as $file) {
             $config = self::getConfigFromFile($module, $file);
             if (is_array($config)) {
+                $hasConfig = true;
                 Config::merge($config);
             }
         }
-        self::$loadedModules[$module] = $module;
+        // only if it has a module config it is considered a real module
+        // otherwise just add to allowed autoloading
+        if ($hasConfig) {
+            self::$loadedModules[$module] = $module;
+        }
+        Framelix::$allowedAutoloadingModules[$module] = $module;
     }
 
     /**

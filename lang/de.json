@@ -379,6 +379,10 @@
         "Achtung: Jede \u00c4nderung an diesen Einstellungen wird sofort durchgef\u00fchrt und angewendet. Stelle sicher das du immer ein funktionierendes Backup hast, falls du dabei etwas falsch konfigurieren solltest.<br\/>Stelle auch sicher, das du immer Zugriff auf die Kommandozeile auf deinem Server hast, damit du die config-editable.php Datei bearbeiten kannst, falls wirklich alles den Bach runter geht.",
         "0200d"
     ],
+    "__framelix_create_or_edit_before_proceed__": [
+        "Bitte erstelle oder w\u00e4hle einen vorhandenen Eintrag um mit Bearbeitung dieser Sektion fortzufahren.",
+        "14012"
+    ],
     "__framelix_darkmode__": [
         "Dark Mode",
         "51b5e"
@@ -527,14 +531,6 @@
         "W\u00e4hle eine Datei oder ziehe sie per Drag&Drop hier rein",
         "e0872"
     ],
-    "__framelix_form_grid_add__": [
-        "Neue Zeile einf\u00fcgen",
-        "51cad"
-    ],
-    "__framelix_form_grid_delete__": [
-        "Diese Zeile l\u00f6schen",
-        "5ea0a"
-    ],
     "__framelix_form_password_toggle__": [
         "Zeige\/Verstecke Passwort",
         "b2b77"
@@ -595,10 +591,6 @@
         "Datum kann nicht gr\u00f6\u00dfer als {date} sein",
         "ddb38"
     ],
-    "__framelix_form_validation_maxgridrows__": [
-        "Maximal {{number=1:Zeile|number=*:Zeilen}} d\u00fcrfen hinzugef\u00fcgt werden",
-        "5e100"
-    ],
     "__framelix_form_validation_maxlength__": [
         "Der Text kann nicht l\u00e4nger als {number} Zeichen sein",
         "d11f4"
@@ -622,10 +614,6 @@
     "__framelix_form_validation_mindate__": [
         "Datum kann nicht kleiner als {date} sein",
         "93dc4"
-    ],
-    "__framelix_form_validation_mingridrows__": [
-        "Mindestens {{number=1:Zeile|number=*:Zeilen}} m\u00fcssen hinzugef\u00fcgt werden",
-        "12091"
     ],
     "__framelix_form_validation_minlength__": [
         "Der Text kann nicht k\u00fcrzer als {number} Zeichen sein",
@@ -888,16 +876,16 @@
         "ecf92"
     ],
     "__framelix_quick_search_help__": [
-        "Nutze * um alles zu finden<br\/>Nutze ** um alles zu finden und die Suche beim n\u00e4chsten Seitenaufruf automatisch wieder auszuf\u00fchren<br\/>Nutze >50, >=50, =50, !=50, <50, <=50 um Werte zu finden die gr\u00f6\u00dfer\/gleich\/ungleich\/kleiner 50 sind<br\/>Nutze ~hallo um alles zu finden was dieses Wort beinhaltet (Das ist das Standardverhalten auch ohne ~) <br\/>Nutze\u00a0!~hallo\u00a0um alles zu finden was das dieses Wort nicht beinhaltet\u00a0<br\/>Nutze \"hello friend\" um nach diesem vollst\u00e4ndigen Begriff zu suchen<br\/>Nutze hallo && bye um Eintr\u00e4ge zu finden die beide W\u00f6rter beinhalten (Standart w\u00e4re eines der beiden)<br\/>Nutze das Einstellungssymbol um noch genauere Suchwerte zu definieren",
-        "ddc91"
+        "Nutze * oder leeres Suchfeld um alles zu finden<br\/>Nutze ** um alles zu finden und die Suche beim n\u00e4chsten Seitenaufruf automatisch wieder auszuf\u00fchren<br\/>Nutze >50, >=50, =50, !=50, <50, <=50 um Werte zu finden die gr\u00f6\u00dfer\/gleich\/ungleich\/kleiner 50 sind<br\/>Nutze ~hallo um alles zu finden was dieses Wort beinhaltet (Das ist das Standardverhalten auch ohne ~) <br\/>Nutze\u00a0!~hallo\u00a0um alles zu finden was das dieses Wort nicht beinhaltet\u00a0<br\/>Nutze \"hello friend\" um nach diesem vollst\u00e4ndigen Begriff zu suchen<br\/>Nutze hallo && bye um Eintr\u00e4ge zu finden die beide W\u00f6rter beinhalten (Standard w\u00e4re eines der beiden)<br\/>Nutze das Einstellungssymbol um noch genauere Suchwerte zu definieren",
+        "ae282"
     ],
     "__framelix_quick_search_help_tooltip__": [
         "Hilfe zu den Suchoptionen",
         "5a0ad"
     ],
     "__framelix_quick_search_placeholder__": [
-        "Gib hier deinen Suchbegriff ein. Nutze * um alles zu finden.",
-        "b68fb"
+        "Gib hier deinen Suchbegriff ein. Nutze * oder leeres Feld um alles zu finden.",
+        "d6df5"
     ],
     "__framelix_quick_search_query_modified__": [
         "Dein neuer Suchbegriff",
