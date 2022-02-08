@@ -151,7 +151,7 @@ class Time implements StorablePropertyInterface
 
     /**
      * Get a value that is explicitely used when displayed inside a html table
-     * @return mixed
+     * @return string
      */
     public function getHtmlTableValue(): string
     {
