@@ -274,6 +274,7 @@ html[data-screen-size='s'] .framelix-content {
 
 html:not([data-layout='2']) .framelix-content-inner {
   padding-bottom: 100px;
+  box-shadow: none;
 }
 
 html[data-layout='2'] {

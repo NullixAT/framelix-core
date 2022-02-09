@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### :heart: Added
 * added config key backendDefaultView which will point to default backend view after login
+* added application and module version info to systemcheck page
 
 ### :pencil: Changed
 * upgraded node-sass compiler and babel compiler to newest version

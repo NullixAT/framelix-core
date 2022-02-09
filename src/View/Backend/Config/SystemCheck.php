@@ -7,8 +7,8 @@ use Framelix\Framelix\Console;
 use Framelix\Framelix\DateTime;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Storable\SystemEventLog;
+use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\View\Backend\View;
-
 use function escapeshellarg;
 use function escapeshellcmd;
 use function realpath;
@@ -37,11 +37,32 @@ class SystemCheck extends View
      */
     public function showContent(): void
     {
-        $checks = ['https', 'cron'];
+        $checks = ['versions', 'https', 'cron'];
         foreach ($checks as $check) {
             $valid = false;
             $subInfo = '';
             switch ($check) {
+                case 'versions':
+                    $valid = true;
+                    $packageJson = JsonUtils::getPackageJson(null);
+                    $subInfo = '<b>Application Version: ' . ($packageJson['version'] ?? "-") . "</b><br/>";
+                    $modules = scandir(FRAMELIX_APP_ROOT . "/modules");
+                    foreach ($modules as $module) {
+                        if (str_starts_with($module, ".")) {
+                            continue;
+                        }
+                        $path = FRAMELIX_APP_ROOT . "/modules/" . $module;
+                        if (!is_dir($path)) {
+                            continue;
+                        }
+                        $packageJson = JsonUtils::getPackageJson($module);
+                        if (!$packageJson) {
+                            continue;
+                        }
+                        $subInfo .= 'Module "' . $module . '" Version ' . (!isset(Config::$loadedModules[$module]) ? '(Not enabled)' : '') . ' ' . ($packageJson['version'] ?? "-") . "<br/>";
+
+                    }
+                    break;
                 case 'https':
                     $valid = Config::get('applicationHttps');
                     break;

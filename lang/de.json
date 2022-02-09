@@ -79,6 +79,10 @@
         "Ein Zip Paket hochladen",
         "dfa3b"
     ],
+    "__framelix_backend_startpage__": [
+        "Home",
+        "8cf04"
+    ],
     "__framelix_browser_unsupported__": [
         "Dein Browser wird leider nicht mehr unterst\u00fctzt. Bitte aktualisiere auf einen aktuelle Version von Chrome, Edge, Firefox oder Safari.",
         "fd507"
@@ -386,10 +390,6 @@
     "__framelix_darkmode__": [
         "Dark Mode",
         "51b5e"
-    ],
-    "__framelix_backend_startpage__": [
-        "Home",
-        "2938c"
     ],
     "__framelix_date_quarter__": [
         "Quartal",
@@ -1194,6 +1194,10 @@
     "__framelix_view_backend_config_systemcheck_https_error__": [
         "Manche Features sind nur verf\u00fcgbar wenn deine Seite mit https arbeitet.",
         "7dc87"
+    ],
+    "__framelix_view_backend_config_systemcheck_versions__": [
+        "Versionsinformationen",
+        "35bef"
     ],
     "__framelix_view_backend_dev_langeditor__": [
         "\u00dcbersetzungseditor",

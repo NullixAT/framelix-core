@@ -59,6 +59,9 @@
     "__framelix_appupdate_updatetype_upload__": [
         "Upload ZIP"
     ],
+    "__framelix_backend_startpage__": [
+        "Home"
+    ],
     "__framelix_browser_unsupported__": [
         "Your browser is not supported anymore. Please update to a current version of Chrome, Edge, Firefox, Safari or any other brand."
     ],
@@ -289,9 +292,6 @@
     ],
     "__framelix_darkmode__": [
         "Dark Mode"
-    ],
-    "__framelix_backend_startpage__": [
-        "Home"
     ],
     "__framelix_date_quarter__": [
         "Quarter"
@@ -895,6 +895,9 @@
     ],
     "__framelix_view_backend_config_systemcheck_https_error__": [
         "Some features may only be available when you running with a valid SSL certificate."
+    ],
+    "__framelix_view_backend_config_systemcheck_versions__": [
+        "Version information"
     ],
     "__framelix_view_backend_dev_langeditor__": [
         "Translation editor"
