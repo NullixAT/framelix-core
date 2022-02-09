@@ -290,8 +290,8 @@
     "__framelix_darkmode__": [
         "Dark Mode"
     ],
-    "__framelix_dashboard__": [
-        "Dashboard"
+    "__framelix_backend_startpage__": [
+        "Home"
     ],
     "__framelix_date_quarter__": [
         "Quarter"
@@ -709,9 +709,6 @@
     ],
     "__framelix_setup_dbuser_label__": [
         "Database Username"
-    ],
-    "__framelix_setup_description__": [
-        "Hello fellow administrator!<br\/>We guide you through the initial setup for this application.<br\/>Just follow the steps on screen.<br\/>Shall we begin?"
     ],
     "__framelix_setup_developer_desc__": [
         "If enabled, you have a special menu for developer options"

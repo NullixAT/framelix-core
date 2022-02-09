@@ -5,14 +5,20 @@ All notable changes to this project will be documented in this file.
 ## [unreleased]
 
 ### :heart: Added
+* added config key backendDefaultView which will point to default backend view after login
 
 ### :pencil: Changed
+* updated backend small layout a bit, so it has a blurry bg
+* changed modal window now use semi-transparent page in background instead of blur
 
 ### :construction: Deprecated
 
 ### :x: Removed
+* module config key setupDoneRedirect and replaced it with "backendDefaultView"
 
 ### :wrench: Fixed
+* fixed typo in Config function
+* fixed modal window blur filter will result in repaint a "broken" sidebar
 
 ### :police_car: Security
 
@@ -42,6 +48,7 @@ a lot of updates and fixes for backend and general framework
 
 * fixed framelix-string-utils -> slugify replacing only one char
 * fixed a lot of layout issues
+* fixed layout issues with fields that uses buttons
 
 ### :police_car: Security
 

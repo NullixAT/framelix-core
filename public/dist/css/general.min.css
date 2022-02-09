@@ -356,6 +356,10 @@ datalist {
   filter: blur(10px);
   pointer-events: none; }
 
+.framelix-page.framelix-blur {
+  opacity: 0.2;
+  filter: none; }
+
 .framelix-word-separator {
   padding: 0 7px;
   opacity: 0.8;

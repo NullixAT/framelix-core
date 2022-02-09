@@ -75,7 +75,7 @@ class ModuleConfig extends View
             }
             ArrayUtils::setValue($configData, $field->name, $field->getConvertedSubmittedValue());
         }
-        Config::writetConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
+        Config::writeConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
         Config::loadModule(FRAMELIX_MODULE);
         Toast::success('__framelix_saved__');
     }

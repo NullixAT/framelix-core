@@ -223,7 +223,6 @@ if (!defined("FRAMELIX_MODULE")) {
             "configuration": "__framelix_view_backend_config_index__",
             "logs": "__framelix_view_backend_logs__"
         },
-        "backendStartUrl" : "/",
         "userTokenCookieName": "{module}_user_token",
         "captchaScoreTreshold": 0,
         "loginCaptcha": false,

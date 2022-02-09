@@ -60,6 +60,11 @@ class Setup extends View
     public function onRequest(): void
     {
         if (file_exists(FileUtils::getModuleRootPath(FRAMELIX_MODULE . "/config/config-editable.php"))) {
+            if (Request::getGet('setupFinished')) {
+                if (Config::get('backendDefaultView')) {
+                    \Framelix\Framelix\View::getUrl(Config::get('backendDefaultView'))->redirect();
+                }
+            }
             http_response_code(500);
             echo "This application is already setup";
             Framelix::stop();
@@ -143,15 +148,13 @@ class Setup extends View
                 }
                 $configData['errorLogDisk'] = true;
                 $configData['mailSendType'] = 'mail';
-                Config::writetConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
+                Config::writeConfigToFile(FRAMELIX_MODULE, "config-editable.php", $configData);
 
                 // again, update database with now correct config and all modules installed
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
                 Console::callMethodInSeparateProcess('updateDatabaseSafe');
-                if (Config::get('setupDoneRedirect')) {
-                    Url::getApplicationUrl()->appendPath(Config::get('setupDoneRedirect'))->redirect();
-                }
+                Url::getBrowserUrl()->setParameter('setupFinished', 1)->redirect();
                 Url::getApplicationUrl()->redirect();
             } catch (Throwable $e) {
                 Response::showFormValidationErrorResponse($e->getMessage() . "\n" . $e->getTraceAsString());
@@ -178,13 +181,6 @@ class Setup extends View
     {
         $form = new Form();
         $form->id = "setup";
-
-        $field = new Html();
-        $field->name = "headerWelcome";
-        $field->defaultValue = '<p>' . Lang::get('__framelix_setup_description__') . '</p><h2>' . Lang::get(
-                '__framelix_setup_step_application_title__'
-            ) . '</h2>';
-        $form->addField($field);
 
         if ($_SERVER['FRAMELIX_SETUP_APPURL'] ?? null) {
             $field = new Hidden();

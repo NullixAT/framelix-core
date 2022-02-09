@@ -99,7 +99,7 @@ class FramelixFormFieldSearch extends FramelixFormField {
     this.container.attr('data-multiple', this.multiple ? '1' : '0')
     this.field.html(`
       <div class="framelix-form-field-search-container">
-        <div class="framelix-form-field-search-input"><div class="framelix-form-field-container" data-field-with-button="1"><input type="search" placeholder="${FramelixLang.get('__framelix_form_select_search__')}" class="framelix-form-field-input" spellcheck="false" data-continuous-search="${this.continuousSearch ? '1' : '0'}" ${this.disabled ? 'disabled' : ''}><div class="framelix-button"><span class="material-icons">search</span></div></div></div>
+        <div class="framelix-form-field-search-input"><div class="framelix-form-field-container" data-field-with-button="1"><input type="search" placeholder="${FramelixLang.get('__framelix_form_select_search__')}" class="framelix-form-field-input" spellcheck="false" data-continuous-search="${this.continuousSearch ? '1' : '0'}" ${this.disabled ? 'disabled' : ''}><div class="framelix-button framelix-button-primary" data-icon-left="search"</div></div></div>
         <div class="framelix-form-field-search-selected-options framelix-form-field-input"></div>
       </div>
     `)

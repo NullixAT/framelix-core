@@ -28,7 +28,7 @@ abstract class View extends LayoutView
     public const LAYOUT_DEFAULT = 1;
 
     /**
-     * Display the page in a small centered container
+     * Display the page in a small centered container with a slightly blurry background image
      * For login page and such stuff
      */
     public const LAYOUT_SMALL_CENTERED = 2;

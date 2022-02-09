@@ -11,7 +11,7 @@ class Password extends Text
      * Max width in pixel or other unit
      * @var int|string|null
      */
-    public int|string|null $maxWidth = 300;
+    public int|string|null $maxWidth = 400;
 
     /**
      * Type for this input field

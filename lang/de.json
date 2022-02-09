@@ -387,8 +387,8 @@
         "Dark Mode",
         "51b5e"
     ],
-    "__framelix_dashboard__": [
-        "Dashboard",
+    "__framelix_backend_startpage__": [
+        "Home",
         "2938c"
     ],
     "__framelix_date_quarter__": [
@@ -946,10 +946,6 @@
     "__framelix_setup_dbuser_label__": [
         "Datenbank Benutzername",
         "aa4fa"
-    ],
-    "__framelix_setup_description__": [
-        "Gr\u00fc\u00df dich, alter Knabe oder junge Lady!<br\/>Wir f\u00fchren dich nun durch das Setup der Applikation.<br\/>Folge einfach den Anweisungen am Bildschirm und f\u00fclle die n\u00f6tigen Daten aus.<br\/>Sollen wir beginnen?",
-        "5b969"
     ],
     "__framelix_setup_developer_desc__": [
         "Falls aktiviert, dann siehst du das Men\u00fc f\u00fcr Entwickleroptionen",

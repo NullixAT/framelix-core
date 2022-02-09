@@ -19,6 +19,7 @@ use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\View;
 
+use function class_exists;
 use function file_exists;
 use function get_class;
 use function in_array;
@@ -175,15 +176,19 @@ abstract class Sidebar
      */
     public function showDefaultSidebarStart(): void
     {
-        $logoUrl = Url::getUrlToFile((string)Config::get('backendLogo'));
-        if ($logoUrl) {
-            ?>
-            <div class="framelix-sidebar-logo">
-                <a href="<?= Url::getApplicationUrl()->appendPath(Config::get('backendStartUrl')) ?>"><img
-                            src="<?= $logoUrl ?>" alt="App Logo" title="__framelix_dashboard__"></a>
-            </div>
-            <?php
-            echo '<div class="framelix-sidebar-entries">';
+        if (!Config::get('backendDefaultView') || !class_exists(Config::get('backendDefaultView'))) {
+            echo '<div class="framelix-alert framelix-alert-error">Missing correct class in config key "backendDefaultView" in config-module.php</div>';
+        } else {
+            $logoUrl = Url::getUrlToFile((string)Config::get('backendLogo'));
+            if ($logoUrl) {
+                ?>
+                <div class="framelix-sidebar-logo">
+                    <a href="<?= View::getUrl(Config::get('backendDefaultView')) ?>"><img
+                                src="<?= $logoUrl ?>" alt="App Logo" title="__framelix_backend_startpage__"></a>
+                </div>
+                <?php
+                echo '<div class="framelix-sidebar-entries">';
+            }
         }
         if (UserToken::getByCookie()->simulatedUser ?? null) {
             ?>
@@ -261,13 +266,11 @@ abstract class Sidebar
         }
         echo '</div>';
 
-        echo '<div class="framelix-sidebar-settings" data-url="' . JsCall::getCallUrl(
-                __CLASS__,
-                'settings'
-            ) . '">';
-        echo '<button class="framelix-button framelix-button-trans framelix-button-block" data-icon-left="settings">' . Lang::get(
-                '__framelix_sidebar_settings__'
-            ) . '</button>';
+        $url = JsCall::getCallUrl(__CLASS__, 'settings');
+        echo '<div class="framelix-sidebar-settings" data-url="' . $url . '">';
+        echo '<button class="framelix-button framelix-button-trans framelix-button-block" data-icon-left="settings">'
+            . Lang::get('__framelix_sidebar_settings__')
+            . '</button>';
         echo '</div>';
     }
 

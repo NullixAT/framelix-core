@@ -47,25 +47,21 @@
     margin-top: 6px;
 
     &[data-field-with-button='1'] {
-      display: inline-flex;
+      display: flex;
 
       .framelix-button {
         flex: 1 1 auto;
         padding: 0 5px;
         display: flex;
         align-items: center;
-        border-radius: 0 var(--border-radius) 3px var(--border-radius);
-        background: transparent;
-        box-shadow: none;
-        border: 0;
-        position: relative;
-        left: -32px;
-        top: 1px;
-        color: var(--color-input-text);
+        margin: 0;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
       }
 
-      input {
-        padding-right: 30px;
+      .framelix-form-field-input {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
       }
     }
   }

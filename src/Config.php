@@ -206,7 +206,7 @@ class Config
      * @param string $file
      * @param array $configData
      */
-    public static function writetConfigToFile(string $module, string $file, array $configData): void
+    public static function writeConfigToFile(string $module, string $file, array $configData): void
     {
         $configFileData = file_get_contents(
             FileUtils::getModuleRootPath("Framelix") . "/config/config-editable-template.php"
