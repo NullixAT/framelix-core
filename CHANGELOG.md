@@ -5,8 +5,24 @@ All notable changes to this project will be documented in this file.
 ## [unreleased]
 
 ### :heart: Added
+
+### :pencil: Changed
+
+### :construction: Deprecated
+
+### :x: Removed
+
+### :wrench: Fixed
+
+### :police_car: Security
+
+
+## [1.5.0 - 2022-02-09]
+
+### :heart: Added
 * added config key backendDefaultView which will point to default backend view after login
 * added application and module version info to systemcheck page
+* added userpwd to browser
 
 ### :pencil: Changed
 * upgraded node-sass compiler and babel compiler to newest version

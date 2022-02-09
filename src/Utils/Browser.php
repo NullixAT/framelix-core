@@ -12,7 +12,6 @@ use function curl_setopt;
 use function explode;
 use function mb_substr;
 use function strtoupper;
-
 use const CURLINFO_RESPONSE_CODE;
 use const CURLOPT_FOLLOWLOCATION;
 use const CURLOPT_HEADER;
@@ -48,6 +47,13 @@ class Browser
      * @var string
      */
     public string $requestMethod = 'get';
+
+    /**
+     * User and/or password credentials for basic auth
+     * Example: username:yourpassword
+     * @var string|null
+     */
+    public ?string $userPwd = null;
 
     /**
      * Headers to send with request
@@ -156,6 +162,9 @@ class Browser
         if (!$this->validateSsl) {
             curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, 0);
+        }
+        if ($this->userPwd) {
+            curl_setopt($this->curl, CURLOPT_USERPWD, $this->userPwd);
         }
         $this->rawResponseData = curl_exec($this->curl);
         $error = curl_error($this->curl);
