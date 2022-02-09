@@ -155,7 +155,6 @@ class Setup extends View
                 sleep(3);
                 Console::callMethodInSeparateProcess('updateDatabaseSafe');
                 Url::getBrowserUrl()->setParameter('setupFinished', 1)->redirect();
-                Url::getApplicationUrl()->redirect();
             } catch (Throwable $e) {
                 Response::showFormValidationErrorResponse($e->getMessage() . "\n" . $e->getTraceAsString());
             }

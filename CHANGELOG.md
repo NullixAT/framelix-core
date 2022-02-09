@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 * added config key backendDefaultView which will point to default backend view after login
 
 ### :pencil: Changed
+* upgraded node-sass compiler and babel compiler to newest version
 * updated backend small layout a bit, so it has a blurry bg
 * changed modal window now use semi-transparent page in background instead of blur
 

@@ -3,10 +3,10 @@
   "description": "A full featured PHP framework with built-in backend and data management capabilities.",
   "version": "1.4.0",
   "devDependencies": {
-    "@babel/core": "^7.16.7",
+    "@babel/core": "^7.17.2",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/preset-env": "^7.16.7",
-    "node-sass": "^6.0.1"
+    "@babel/preset-env": "^7.16.11",
+    "node-sass": "^7.0.1"
   },
   "framelix": {
     "module": "Framelix",
