@@ -49,6 +49,14 @@ class Browser
     public string $requestMethod = 'get';
 
     /**
+     * The request body to send
+     * For raw body just pass a string
+     * This will get flushed on sendRequest()
+     * @var mixed
+     */
+    public mixed $requestBody = null;
+
+    /**
      * User and/or password credentials for basic auth
      * Example: username:yourpassword
      * @var string|null
@@ -159,6 +167,11 @@ class Browser
         curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, strtoupper($this->requestMethod));
         curl_setopt($this->curl, CURLOPT_URL, $this->url);
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, $this->sendHeaders);
+        if ($this->requestBody !== null) {
+            curl_setopt($this->curl, CURLOPT_POST, 1);
+            curl_setopt($this->curl, CURLOPT_POSTFIELDS, $this->requestBody);
+            $this->requestBody = null;
+        }
         if (!$this->validateSsl) {
             curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, 0);
             curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, 0);
