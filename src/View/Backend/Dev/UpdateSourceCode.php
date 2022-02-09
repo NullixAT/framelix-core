@@ -84,7 +84,7 @@ class UpdateSourceCode extends View
                 // wait 3 seconds to prevent opcache in default configs
                 sleep(3);
                 $shell = Console::callMethodInSeparateProcess('updateDatabaseSafe');
-                Toast::info(implode("<br/>", $shell->output));
+                Toast::info(Shell::convertCliOutputToHtml($shell->output, true));
             }
             Url::getBrowserUrl()->redirect();
         }
