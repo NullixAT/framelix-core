@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 ### :heart: Added
 
 ### :pencil: Changed
+* changed language key syntax for singular/plurar to must include the number itself for more flexibility
 
 ### :construction: Deprecated
 

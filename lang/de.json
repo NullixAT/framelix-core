@@ -593,15 +593,15 @@
     ],
     "__framelix_form_validation_maxlength__": [
         "Der Text kann nicht l\u00e4nger als {number} Zeichen sein",
-        "d11f4"
+        "1e101"
     ],
     "__framelix_form_validation_maxselectedfiles__": [
-        "Maximal {{number=1:Datei|number=*:Dateien}} k\u00f6nnen ausgew\u00e4hlt werden",
-        "43202"
+        "Maximal {{number=1:{number} Datei|number=*:{number} Dateien}} k\u00f6nnen ausgew\u00e4hlt werden",
+        "84aad"
     ],
     "__framelix_form_validation_maxselecteditems__": [
-        "Maximal {{number=1:Option|number=*:Optionen}} k\u00f6nnen\u00a0ausgew\u00e4hlt werden",
-        "93767"
+        "Maximal {{number=1:{number} Option|number=*:{number} Optionen}} k\u00f6nnen\u00a0ausgew\u00e4hlt werden",
+        "61599"
     ],
     "__framelix_form_validation_maxtime__": [
         "Zeit kann nicht gr\u00f6\u00dfer als {time} sein",
@@ -617,15 +617,15 @@
     ],
     "__framelix_form_validation_minlength__": [
         "Der Text kann nicht k\u00fcrzer als {number} Zeichen sein",
-        "8f552"
+        "83846"
     ],
     "__framelix_form_validation_minselectedfiles__": [
-        "Mindestens {{number=1:Datei|number=*:Dateien}} m\u00fcssen ausgew\u00e4hlt werden",
-        "735ee"
+        "Mindestens {{number=1:{number} Datei|number=*:{number} Dateien}} m\u00fcssen ausgew\u00e4hlt werden",
+        "c18d9"
     ],
     "__framelix_form_validation_minselecteditems__": [
-        "Mindestens {{number=1:Option|number=*:Optionen}} m\u00fcssen ausgew\u00e4hlt werden",
-        "80a70"
+        "Mindestens {{number=1:{number} Option|number=*:{number} Optionen}} m\u00fcssen ausgew\u00e4hlt werden",
+        "55804"
     ],
     "__framelix_form_validation_mintime__": [
         "Zeit kann nicht kleiner als {time} sein",
@@ -1104,16 +1104,16 @@
         "cbfcf"
     ],
     "__framelix_time_hours__": [
-        "{{0=1:Stunde|0=*:Stunden}}",
-        "a7b6c"
+        "{{0=1:{0} Stunde|0=*:{0} Stunden}}",
+        "7dac8"
     ],
     "__framelix_time_minutes__": [
-        "{{0=1:Minute|0=*:Minuten}}",
-        "2bd4c"
+        "{{0=1:{0} Minute|0=*:{0} Minuten}}",
+        "39b4e"
     ],
     "__framelix_time_seconds__": [
-        "{{0=1:Sekunde|0=*:Sekunden}}",
-        "4e0eb"
+        "{{0=1:{0} Sekunde|0=*:{0} Sekunden}}",
+        "f97c6"
     ],
     "__framelix_toast_count__": [
         "Anzahl der Nachrichten in der Warteschlange",

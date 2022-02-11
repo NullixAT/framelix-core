@@ -369,7 +369,6 @@ class Lang
                             $replaceWith = $outputValue;
                         }
                         if ($replaceWith !== null) {
-                            $replaceWith = $parameterValue . " " . $replaceWith;
                             break;
                         }
                     }

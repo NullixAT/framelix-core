@@ -444,13 +444,13 @@
         "The date cannot be greater than {date}"
     ],
     "__framelix_form_validation_maxlength__": [
-        "The text cannot be longer than {{number=1:character|number=*:characters}}"
+        "The text cannot be longer than {{number=1:{number} character|number=*:{number} characters}}"
     ],
     "__framelix_form_validation_maxselectedfiles__": [
-        "A maximum of {{number=1:file|number=*:files}} can be selected"
+        "A maximum of {{number=1:{number} file|number=*:{number} files}} can be selected"
     ],
     "__framelix_form_validation_maxselecteditems__": [
-        "A maximum of {{number=1:option|number=*:options}} can be selected"
+        "A maximum of {{number=1:{number} option|number=*:{number} options}} can be selected"
     ],
     "__framelix_form_validation_maxtime__": [
         "The time cannot be greater than {time}"
@@ -462,13 +462,13 @@
         "The date cannot be less than {date}"
     ],
     "__framelix_form_validation_minlength__": [
-        "The text cannot be less than {{number=1:character|number=*:characters}} long"
+        "The text cannot be less than {{number=1:{number} character|number=*:{number} characters}} long"
     ],
     "__framelix_form_validation_minselectedfiles__": [
-        "At least {{number=1:file|number=*:files}} must be selected"
+        "At least {{number=1:{number} file|number=*:{number} files}} must be selected"
     ],
     "__framelix_form_validation_minselecteditems__": [
-        "At least {{number=1:option|number=*:options}} must be selected"
+        "At least {{number=1:{number} option|number=*:{number} options}} must be selected"
     ],
     "__framelix_form_validation_mintime__": [
         "The time cannot be less than {time}"
@@ -828,13 +828,13 @@
         "Sort saved"
     ],
     "__framelix_time_hours__": [
-        "{{0=1:hour|0=*:hours}}"
+        "{{0=1:{0} hour|0=*:{0} hours}}"
     ],
     "__framelix_time_minutes__": [
-        "{{0=1:minute|0=*:minutes}}"
+        "{{0=1:{0} minute|0=*:{0} minutes}}"
     ],
     "__framelix_time_seconds__": [
-        "{{0=1:second|0=*:seconds}}"
+        "{{0=1:{0} second|0=*:{0} seconds}}"
     ],
     "__framelix_toast_count__": [
         "Number of messages in the queue"

@@ -88,7 +88,6 @@ class FramelixLang {
                 replaceWith = outputValue
               }
               if (replaceWith !== null) {
-                replaceWith = parameterValue + ' ' + replaceWith
                 break
               }
             }

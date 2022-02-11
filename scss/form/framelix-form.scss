@@ -35,6 +35,12 @@
   position: sticky;
   bottom: 0;
   z-index: 1;
+  border-top: 2px solid var(--color-border-subtle);
+}
+
+.framelix-modal .framelix-form-sticky-form-buttons .framelix-form-row-bottom {
+  bottom: -5px;
+  padding: 10px 0;
 }
 
 .framelix-form-submitting {
