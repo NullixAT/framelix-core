@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 
 ### :pencil: Changed
 * changed language key syntax for singular/plurar to must include the number itself for more flexibility
+* changed sass compiler to `sass` instead of deprecated `node-sass`
 
 ### :construction: Deprecated
 

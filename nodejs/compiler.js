@@ -1,6 +1,6 @@
 const fs = require('fs')
 const babelCore = require('@babel/core')
-const sass = require('node-sass')
+const sass = require('sass')
 
 const cmdParams = JSON.parse((Buffer.from(process.argv[2], 'base64').toString('utf8')))
 
@@ -32,9 +32,7 @@ if (!cmdParams.options || !cmdParams.options.noCompile) {
       }]],
     }).code
   } else {
-    fileDataCombined = sass.renderSync({
-      data: fileDataCombined
-    }).css.toString()
+    fileDataCombined = sass.compileString(fileDataCombined).css.toString()
   }
 }
 fs.writeFileSync(cmdParams.distFilePath, fileDataCombined)
