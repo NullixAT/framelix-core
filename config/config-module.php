@@ -224,7 +224,7 @@ if (!defined("FRAMELIX_MODULE")) {
             "logs": "__framelix_view_backend_logs__"
         },
         "userTokenCookieName": "{module}_user_token",
-        "captchaScoreTreshold": 0,
+        "captchaScoreThreshold": 0.5,
         "loginCaptcha": false,
         "devMode": false,
         "systemEventLog": {
