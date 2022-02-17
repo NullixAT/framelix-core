@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.6.1 - 2022-02-17]
 
 ### :heart: Added
 
@@ -17,6 +17,7 @@ All notable changes to this project will be documented in this file.
 
 ### :wrench: Fixed
 * fixed typo in `captchaScoreTreshold`
+* fixed error when app update throws an error during update result in update never work again because tmp folder was not cleared
 
 ### :police_car: Security
 
