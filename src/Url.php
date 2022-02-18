@@ -86,10 +86,7 @@ class Url implements JsonSerializable
             }
         }
         if ($antiCacheParameter) {
-            $filetime = filemtime($path);
-            if ($filetime > time() - (86400 * 7)) {
-                $url->setParameter('t', $filetime);
-            }
+            $url->setParameter('t', filemtime($path));
         }
         $url->removeGlobalContextParameters();
         return $url;
