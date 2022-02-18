@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### :heart: Added
+
+### :pencil: Changed
+* changed url antic cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
+
+### :construction: Deprecated
+
+### :x: Removed
+
+### :wrench: Fixed
+
+### :police_car: Security
+
 ## [1.6.1 - 2022-02-17]
 
 ### :heart: Added
