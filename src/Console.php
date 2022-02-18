@@ -351,6 +351,7 @@ class Console
             }
         }
         if ($packageJson['framelix']['isRootPackage'] ?? null) {
+            FileUtils::deleteDirectory("$tmpPath-zips");
             rename($tmpPath, "$tmpPath-zips");
             $tmpPath .= "-zips";
             $moduleZipFiles = FileUtils::getFiles($tmpPath . "/modules", "~\.zip$~");
