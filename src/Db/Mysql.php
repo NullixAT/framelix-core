@@ -50,7 +50,7 @@ class Mysql
      * For debugging you log executed queries into $executedQueries
      * @var bool
      */
-    public static $logExecutedQueries = false;
+    public static bool $logExecutedQueries = false;
 
     /**
      * The connection config values
@@ -91,7 +91,7 @@ class Mysql
     /**
      * Get mysql instance for given id
      * @param string $id
-     * @param bool $connect If true than connect instantly
+     * @param bool $connect If true, then connect instantly
      * @return Mysql
      */
     public static function get(string $id = "default", bool $connect = true): Mysql
