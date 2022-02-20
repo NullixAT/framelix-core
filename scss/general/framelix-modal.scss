@@ -69,6 +69,18 @@
     height: 90vh;
   }
 
+  &.framelix-modal-maxwidth {
+    .framelix-modal-inner {
+      min-width: unset;
+    }
+
+    .framelix-modal-content {
+      min-width: unset;
+      max-width: unset;
+      width: unset;
+    }
+  }
+
   .framelix-modal-header {
     font-weight: bold;
     text-align: center;

@@ -132,6 +132,7 @@ class FramelixModal {
     if (!options) options = {}
     const html = $(`<div style="text-align: center;">`)
     html.append(FramelixLang.get(content))
+    if (!options.maxWidth) options.maxWidth = 600
     options.bodyContent = html
     options.footerContent = '<button class="framelix-button framelix-button-primary" data-icon-left="check">' + FramelixLang.get('__framelix_ok__') + '</button>'
     const modal = FramelixModal.show(options)
@@ -170,10 +171,11 @@ class FramelixModal {
 
     input.on('keydown', function (ev) {
       if (ev.key === 'Enter') {
-        footerContainer.find('.framelix-button[data-success=\'1\']').trigger('click')
+        modal.footerContainer.find('.framelix-button[data-success=\'1\']').trigger('click')
       }
     })
 
+    if (!options.maxWidth) options.maxWidth = 600
     options.bodyContent = html
     options.footerContent = footerContainer
     const modal = FramelixModal.show(options)
@@ -205,6 +207,7 @@ class FramelixModal {
       <button class="framelix-button framelix-button-primary" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
       <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check" style="flex-grow: 4">${FramelixLang.get('__framelix_ok__')}</button>
     `)
+    if (!options.maxWidth) options.maxWidth = 600
     options.bodyContent = html
     options.footerContent = bottom
     const modal = FramelixModal.show(options)
@@ -310,6 +313,11 @@ class FramelixModal {
     $('.framelix-page').addClass('framelix-blur')
 
     instance.contentContainer.toggleClass('framelix-modal-content-maximized', !!options.maximized)
+    if (typeof options.maxWidth === 'number') {
+      instance.container.toggleClass('framelix-modal-maxwidth', true)
+      instance.contentContainer.css('max-width', options.maxWidth + 'px')
+      instance.contentContainer.css('width', options.maxWidth + 'px')
+    }
     instance.headerContainer.toggleClass('hidden', !options.headerContent)
     if (options.headerContent) {
       instance.headerContainer.html(options.headerContent)
@@ -391,6 +399,7 @@ FramelixInit.late.push(FramelixModal.init)
  * @property {string|Cash} bodyContent The body content
  * @property {string|Cash|null=} headerContent The fixed header content
  * @property {string|Cash|null=} footerContent The fixed footer content
+ * @property {number=} maxWidth Max width in pixel
  * @property {boolean=} maximized The modal opens maximized independent of content size
  * @property {string=} color The modal color (Backdrop and Modal BG), success, warning, error, primary
  * @property {FramelixModal=} instance Reuse the given instance instead of creating a new

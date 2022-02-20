@@ -715,6 +715,14 @@ html.dragging [data-tooltip] {
   width: 94vw;
   height: 90vh;
 }
+.framelix-modal.framelix-modal-maxwidth .framelix-modal-inner {
+  min-width: unset;
+}
+.framelix-modal.framelix-modal-maxwidth .framelix-modal-content {
+  min-width: unset;
+  max-width: unset;
+  width: unset;
+}
 .framelix-modal .framelix-modal-header {
   font-weight: bold;
   text-align: center;
