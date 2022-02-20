@@ -77,7 +77,7 @@ abstract class LayoutView extends View
         if ($metadata) {
             foreach ($metadata as $type => $groups) {
                 foreach ($groups as $groupId => $row) {
-                    if (!($row['options']['noInclude'] ?? null)) {
+                    if (!($row['options']['noInclude'] ?? null) && ($row['files'] ?? null)) {
                         $this->includeCompiledFile($module, $type, $groupId);
                     }
                 }
