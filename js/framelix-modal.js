@@ -310,7 +310,7 @@ class FramelixModal {
       instance.container.addClass('framelix-modal-visible')
       instance.backdrop.addClass('framelix-modal-backdrop-visible')
     })
-    $('.framelix-page').addClass('framelix-blur')
+    $('.framelix-page, .framelix-content').addClass('framelix-page-backdrop')
 
     instance.contentContainer.toggleClass('framelix-modal-content-maximized', !!options.maximized)
     if (typeof options.maxWidth === 'number') {
@@ -370,7 +370,7 @@ class FramelixModal {
     this.container.removeClass('framelix-modal-visible')
     this.backdrop.removeClass('framelix-modal-backdrop-visible')
     if (!childs.length) {
-      $('.framelix-page').removeClass('framelix-blur')
+      $('.framelix-page, .framelix-content').removeClass('framelix-page-backdrop')
       FramelixModal.currentInstance = null
     } else {
       const lastChild = childs.last()

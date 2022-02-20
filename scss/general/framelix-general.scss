@@ -49,9 +49,9 @@ datalist {
   pointer-events: none;
 }
 
-.framelix-page.framelix-blur {
-  opacity: 0.2;
-  filter: none;
+.framelix-page-backdrop {
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 .framelix-word-separator {
