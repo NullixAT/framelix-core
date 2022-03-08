@@ -654,7 +654,7 @@ class Url implements JsonSerializable
         if (!$result && $throwError) {
             throw new Exception("URL not correctly signed", ErrorCode::URL_INCORRECT_SIGNATURE);
         }
-        if ($result && $expires < time()) {
+        if ($result && $expires > 0 && $expires < time()) {
             $result = false;
             if ($throwError) {
                 throw new Exception("URL has expired", ErrorCode::URL_EXPIRED_SIGNATURE);

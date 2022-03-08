@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## [1.6.2 - 2022-03-08]
 
 ### :heart: Added
 * added maxWidth option to framelix modal and use it for alert, confirm and prompt by default
@@ -10,12 +10,9 @@ All notable changes to this project will be documented in this file.
 ### :pencil: Changed
 * changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
 
-### :construction: Deprecated
-
-### :x: Removed
-
 ### :wrench: Fixed
 * fixed modal window prompt enter key not working
+* fixed url signature check
 
 ### :police_car: Security
 
