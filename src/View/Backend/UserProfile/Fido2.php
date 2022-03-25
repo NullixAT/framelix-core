@@ -102,8 +102,8 @@ class Fido2 extends View
     {
         require __DIR__ . "/../../../../vendor/webauthn/src/WebAuthn.php";
         return new WebAuthn(
-            $_SERVER['HTTP_HOST'] ?? "0x.at",
-            $_SERVER['HTTP_HOST'] ?? "0x.at",
+            $_SERVER['HTTP_HOST'] ?? Config::get('applicationHost'),
+            $_SERVER['HTTP_HOST'] ?? Config::get('applicationHost'),
             ['android-key', 'android-safetynet', 'apple', 'fido-u2f', 'none', 'packed', 'tpm']
         );
     }
