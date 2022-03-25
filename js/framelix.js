@@ -140,7 +140,7 @@ class Framelix {
       container = $(container)
     }
     if (!duration) {
-      container.scrollTop(newTop)
+      container[0].scrollTop = newTop
       return
     }
     Framelix.animate(container[0].scrollTop, newTop, duration, function (newScroll) {
