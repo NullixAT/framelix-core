@@ -10,7 +10,6 @@ use Framelix\Framelix\View;
 use JsonSerializable;
 
 use function get_class;
-use function is_array;
 
 /**
  * Tabs - Show content in multiple tabs
@@ -50,7 +49,6 @@ class Tabs implements JsonSerializable
         array $urlParameters = null,
         ?string $tabColor = null,
         ?string $accessRole = null,
-        bool $cardContentLayout = true,
         HtmlAttributes|null $optionalButtonAttributes = null,
         HtmlAttributes|null $optionalContentAttributes = null
     ): void {
@@ -70,7 +68,6 @@ class Tabs implements JsonSerializable
             "content" => $content,
             "urlParameters" => $urlParameters,
             "tabColor" => $tabColor,
-            "cardContentLayout" => $cardContentLayout,
             "optionalButtonAttributes" => $optionalButtonAttributes,
             "optionalContentAttributes" => $optionalContentAttributes
         ];

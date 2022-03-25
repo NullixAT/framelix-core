@@ -459,8 +459,7 @@ abstract class StorableMeta implements JsonSerializable
         $tabs->addTab(
             'entries',
             Lang::get('__framelix_meta_searchandtable_entries__') . " (" . count($objects) . ")",
-            Buffer::get(),
-            cardContentLayout: false
+            Buffer::get()
         );
 
         Buffer::start();
@@ -469,8 +468,7 @@ abstract class StorableMeta implements JsonSerializable
         $tabs->addTab(
             'search',
             "__framelix_meta_searchandtable_search__",
-            Buffer::get(),
-            cardContentLayout: false
+            Buffer::get()
         );
 
         $tabs->show();

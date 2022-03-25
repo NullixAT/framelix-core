@@ -251,11 +251,13 @@ class Login extends View
         $field->name = "email";
         $field->label = "__framelix_email__";
         $field->required = true;
+        $field->maxWidth = null;
         $form->addField($field);
 
         $field = new Password();
         $field->name = "password";
         $field->label = "__framelix_password__";
+        $field->maxWidth = null;
         $field->required = true;
         $form->addField($field);
 

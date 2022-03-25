@@ -72,6 +72,7 @@
   border: 0;
   background: var(--color-input-background);
   border-radius: var(--border-radius);
+  border: var(--color-input-border);
   box-sizing: border-box;
   width: 100%;
   color: var(--color-input-text);
@@ -97,13 +98,13 @@ input[type='checkbox'] {
   width: 18px;
   height: 18px;
   vertical-align: middle;
-  background-color: var(--color-input-checkbox-background);
+  background-color: rgba(0, 0, 0, 0.3);
   outline: 0;
   border-radius: var(--border-radius);
   align-items: center;
   justify-content: center;
   color: white;
-  transition: .3s all, 0s outline;
+  transition: .3s margin-left;
   cursor: pointer;
 
   &:hover {
@@ -112,7 +113,7 @@ input[type='checkbox'] {
 
   &:focus-within {
     background-color: rgba(0, 0, 0, 0.6);
-    box-shadow: rgba(0, 0, 0, 0.6) 0 0 20px inset;
+    outline: 2px solid black;
   }
 
   &:after {

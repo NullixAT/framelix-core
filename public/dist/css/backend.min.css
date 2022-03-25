@@ -31,17 +31,8 @@ button,
   --sidebar-width: 300px;
   --sidebar-left: 0px;
   --sidebar-left-closed: -300px;
-  --sidebar-bg: transparent;
+  --sidebar-bg: var(--color-page-bg-stencil-weak);
   --sidebar-text-color: var(--color-page-text);
-}
-
-[data-color-scheme=light] {
-  --color-page-bg-hue: 0;
-  --color-page-bg: #f9f9f9;
-  --color-page-bg-stencil-weak: white;
-  --color-page-bg-stencil: #e5e5e5;
-  --color-page-bg-stencil-strong: #d5d5d5;
-  --color-page-text: #111;
 }
 
 html[data-sidebar-status=closed] {
@@ -96,15 +87,16 @@ hr {
   width: 50px;
   height: 60px;
   position: fixed;
-  top: 0;
+  top: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  left: calc(var(--sidebar-left) + var(--sidebar-width));
+  left: calc(var(--sidebar-left) + var(--sidebar-width) + 10px);
   transition: 0.2s;
   cursor: pointer;
   z-index: 2;
   font-size: 24px;
+  padding: 33px;
 }
 .framelix-sidebar-toggle[data-icon-left]::before {
   font-size: 24px;
@@ -116,7 +108,6 @@ hr {
   top: 0;
   height: 100vh;
   width: var(--sidebar-width);
-  background: var(--sidebar-bg);
   color: var(--sidebar-text-color);
   overflow: auto;
   transition: 0.2s;
@@ -129,6 +120,10 @@ hr {
 
 .framelix-sidebar-inner {
   padding: 10px;
+  margin: 10px;
+  box-sizing: border-box;
+  background: var(--sidebar-bg);
+  min-height: calc(100% - 20px);
 }
 
 .framelix-sidebar-logo {
@@ -158,7 +153,7 @@ hr {
   font-size: inherit;
   line-height: inherit;
   text-align: left;
-  border-radius: var(--border-radius-big);
+  border-radius: var(--border-radius);
   margin-bottom: 2px;
 }
 html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-link:any-link,
@@ -173,21 +168,20 @@ html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {
   width: 32px;
   height: 32px;
   font-size: 18px;
-  border-radius: 100px;
-  background: var(--color-page-bg-stencil);
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 100px;
 }
 .framelix-sidebar .framelix-sidebar-link:any-link.framelix-sidebar-link-active,
 .framelix-sidebar .framelix-sidebar-collapsable-title.framelix-sidebar-link-active {
   background: var(--color-page-bg-stencil-weak);
   font-weight: bold;
-  box-shadow: var(--color-card-shadow) 2px 4px 13px;
+  color: var(--color-primary-text);
 }
 .framelix-sidebar .framelix-sidebar-link:any-link:hover,
 .framelix-sidebar .framelix-sidebar-collapsable-title:hover {
-  background: var(--color-page-bg-stencil-weak);
+  background: var(--color-page-bg-stencil);
 }
 .framelix-sidebar:last-child .framelix-sidebar-link:any-link,
 .framelix-sidebar:last-child .framelix-sidebar-collapsable-title {
@@ -248,23 +242,16 @@ html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-collapsable-container {
   display: block;
 }
-.framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-collapsable-title,
-.framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-link-active {
-  background: var(--color-page-bg-stencil-weak);
-}
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-collapsable-title::after,
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-link-active::after {
   transform: rotate(0deg);
 }
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-collapsable-title:hover,
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-link-active:hover {
-  background: var(--color-page-bg-stencil-weak);
-}
-.framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-link {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-page-bg-stencil);
 }
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active a.framelix-sidebar-link .material-icons {
-  background-color: transparent;
+  background-color: rgba(0, 0, 0, 0.1);
   transform: scale(0.7);
 }
 
@@ -282,17 +269,13 @@ html[data-screen-size=s] .framelix-content {
 .framelix-content-inner {
   min-width: 240px;
   padding: 10px;
-  border-radius: var(--border-radius-big);
-  box-shadow: var(--color-card-shadow) 2px 4px 10px;
-}
-
-.framelix-quick-search .framelix-table {
-  padding: 0;
-  box-shadow: none;
+  margin: 10px;
+  border-radius: var(--border-radius);
+  background: var(--color-page-bg-stencil-weak);
 }
 
 html:not([data-layout="2"]) .framelix-content-inner {
-  padding-bottom: 100px;
+  margin-bottom: 100px;
   box-shadow: none;
 }
 
@@ -312,8 +295,7 @@ html[data-layout="2"] .framelix-content {
 html[data-layout="2"] .framelix-content-inner {
   max-width: 600px;
   width: 100%;
-  padding: 20px;
-  background: var(--color-page-bg);
+  padding: 30px;
 }
 
 html[data-layout="3"] .framelix-sidebar, html[data-layout="3"] .framelix-sidebar-toggle, html[data-layout="3"] .framelix-page-title {

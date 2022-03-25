@@ -124,7 +124,7 @@ class FramelixQuickSearch {
     this.id = 'quicksearch-' + FramelixRandom.getRandomHtmlId()
     FramelixQuickSearch.instances.push(this)
     this.container = $('<div>')
-    this.container.addClass('framelix-quick-search framelix-card')
+    this.container.addClass('framelix-quick-search')
     this.container.attr('data-instance-id', FramelixQuickSearch.instances.length - 1)
 
   }

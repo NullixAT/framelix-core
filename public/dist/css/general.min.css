@@ -202,20 +202,6 @@
   margin-right: 0;
 }
 
-.framelix-card {
-  background: var(--color-card-bg);
-  border-radius: var(--border-radius-big);
-  padding: 20px;
-  box-shadow: var(--color-card-shadow) 2px 4px 13px;
-  margin-bottom: 5px;
-}
-.framelix-card .framelix-card {
-  background: initial;
-  padding: initial;
-  border-radius: initial;
-  box-shadow: initial;
-}
-
 :root {
   --color-primary-hue: 204;
   --color-success-hue: 160;
@@ -229,13 +215,11 @@
   --color-border-strong: #222;
   --color-border-subtle: #aaa;
   --color-page-bg-hue: 0;
-  --color-page-bg: #f9f9f9;
+  --color-page-bg: #f5f7fb;
   --color-page-bg-stencil-weak: white;
-  --color-page-bg-stencil: #e5e5e5;
+  --color-page-bg-stencil: #eceef5;
   --color-page-bg-stencil-strong: #d5d5d5;
   --color-page-text: #111;
-  --color-card-bg: var(--color-page-bg-stencil-weak);
-  --color-card-shadow: var(--color-page-bg-stencil-strong);
   --color-alert-default-bg: hsl(var(--color-primary-hue), 20%, 95%);
   --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 5%);
   --color-alert-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
@@ -286,10 +270,11 @@
   --color-popup-error-text: hsl(var(--color-error-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
   --color-popup-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
   --color-popup-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 5%);
-  --color-input-background: hsl(var(--color-primary-hue), 20%, 95%);
+  --color-input-background: white;
+  --color-input-border: 1px solid #ddd;
   --color-input-text: var(--color-page-text);
-  --color-input-checkbox-background: hsl(0, 0%, 80%);
-  --color-input-checkbox-checked: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
+  --color-input-checkbox-background: var(--color-input-background);
+  --color-input-checkbox-checked: var(--color-button-primary-bg);
   --color-table-zebra: hsl(var(--color-primary-hue), 20%, 95%);
   --color-progressbar-1: #f1c40f;
   --color-progressbar-2: #2c3e50;
@@ -322,7 +307,6 @@
   --color-page-bg-stencil: #222;
   --color-page-bg-stencil-strong: #2c2c2c;
   --color-page-text: white;
-  --color-card-shadow: none;
   --color-alert-default-bg: var(--color-page-bg-stencil);
   --color-alert-default-text: white;
   --color-alert-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
@@ -371,8 +355,7 @@
   --color-popup-primary-text: white;
   --color-input-background: #333;
   --color-input-text: white;
-  --color-input-checkbox-background: rgba(0, 0, 0, 0.2);
-  --color-input-checkbox-checked: var(--color-primary-text);
+  --color-input-border: none;
   --color-table-zebra: rgba(255, 255, 255, 0.05) ;
 }
 
@@ -386,7 +369,6 @@
 
 :root {
   --border-radius: 3px;
-  --border-radius-big: 3px;
 }
 
 * {
@@ -668,7 +650,7 @@ html.dragging [data-tooltip] {
   margin: 40px;
   background: var(--color-modal-default-bg);
   color: var(--color-modal-default-text);
-  border-radius: var(--border-radius-big);
+  border-radius: var(--border-radius);
   box-shadow: rgba(0, 0, 0, 0.2) 2px 4px 13px;
   position: relative;
   min-height: 50px;
