@@ -144,7 +144,10 @@ class FramelixTabs {
       }
     } else if (row.content instanceof FramelixView) {
       content.html(row.content.container)
-      row.content.render()
+      content.addClass('framelix-card')
+      row.content.load().then(function () {
+        if (!row.cardContentLayout) content.removeClass('framelix-card')
+      })
     } else if (typeof row.content === 'function') {
       content.html(await row.content())
     } else {
