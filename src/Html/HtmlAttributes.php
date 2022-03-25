@@ -32,7 +32,7 @@ class HtmlAttributes implements JsonSerializable
      * @param array|null $attributes
      * @param array|null $classes
      * @param array|null $styles
-     * @return static
+     * @return self
      */
     public static function create(?array $attributes, ?array $classes, ?array $styles): self
     {
