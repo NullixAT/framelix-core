@@ -31,13 +31,13 @@ button,
   --sidebar-width: 300px;
   --sidebar-left: 0px;
   --sidebar-left-closed: -300px;
-  --sidebar-bg: var(--color-page-bg);
+  --sidebar-bg: transparent;
   --sidebar-text-color: var(--color-page-text);
 }
 
 [data-color-scheme=light] {
   --color-page-bg-hue: 0;
-  --color-page-bg: #f5f5f5;
+  --color-page-bg: #f9f9f9;
   --color-page-bg-stencil-weak: white;
   --color-page-bg-stencil: #e5e5e5;
   --color-page-bg-stencil-strong: #d5d5d5;
