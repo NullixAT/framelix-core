@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.0 - TBA]
+* design refactoring to be more modern and clear
+
+### :pencil: Changed
+* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
+
+
+### :heart: Added
+* added maxWidth option to framelix modal and use it for alert, confirm and prompt by default
+
+### :pencil: Changed
+* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
+
+### :wrench: Fixed
+* fixed modal window prompt enter key not working
+* fixed url signature check
+
 ## [1.6.2 - 2022-03-08]
 
 ### :heart: Added

@@ -162,7 +162,7 @@
   color: var(--color-custom-text);
 }
 .framelix-button.framelix-button-trans:hover {
-  box-shadow: rgba(0, 0, 0, 0.7) 0 0 5px;
+  box-shadow: rgba(0, 0, 0, 0.2) 2px 4px 13px;
 }
 .framelix-button[data-icon-left]::before {
   font-family: "Material Icons";
@@ -202,23 +202,39 @@
   margin-right: 0;
 }
 
+.framelix-card {
+  background: var(--color-card-bg);
+  border-radius: var(--border-radius-big);
+  padding: 20px;
+  box-shadow: var(--color-card-shadow) 2px 4px 13px;
+  margin-bottom: 5px;
+}
+.framelix-card .framelix-card {
+  background: initial;
+  padding: initial;
+  border-radius: initial;
+  box-shadow: initial;
+}
+
 :root {
   --color-primary-hue: 204;
   --color-success-hue: 160;
   --color-warning-hue: 28;
   --color-error-hue: 353;
   --color-contrast-modifier: 0%;
-  --color-page-bg-hue: 0;
-  --color-page-bg: white;
-  --color-page-bg-stencil: hsl(var(--color-primary-hue), 10%, 90%);
-  --color-page-bg-stencil-strong: hsl(var(--color-primary-hue), 10%, 85%);
-  --color-page-text: #111;
   --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
   --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
   --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
   --color-error-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
   --color-border-strong: #222;
   --color-border-subtle: #aaa;
+  --color-page-bg-hue: 0;
+  --color-page-bg-stencil-weak: #f5f5f5;
+  --color-page-bg-stencil: #e5e5e5;
+  --color-page-bg-stencil-strong: #d5d5d5;
+  --color-page-text: #111;
+  --color-card-bg: var(--color-page-bg-stencil-weak);
+  --color-card-shadow: var(--color-page-bg-stencil-strong);
   --color-alert-default-bg: hsl(var(--color-primary-hue), 20%, 95%);
   --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 5%);
   --color-alert-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
@@ -294,17 +310,19 @@
   --color-success-hue: 160;
   --color-warning-hue: 28;
   --color-error-hue: 353;
-  --color-page-bg-hue: 220;
-  --color-page-bg: hsl(var(--color-page-bg-hue), 10%, 10%);
-  --color-page-bg-stencil: hsl(var(--color-page-bg-hue), 10%, 18%);
-  --color-page-bg-stencil-strong: hsl(var(--color-page-bg-hue), 10%, 22%);
-  --color-page-text: hsl(var(--color-page-bg-hue), 10%, 90%);
+  --color-page-bg-hue: 200;
   --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
   --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
   --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
   --color-error-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
   --color-border-strong: hsl(var(--color-page-bg-hue), 10%, 60%);
   --color-border-subtle: hsl(var(--color-page-bg-hue), 10%, 30%);
+  --color-page-bg: hsl(var(--color-page-bg-hue), 10%, 5%);
+  --color-page-bg-stencil-weak: hsl(var(--color-page-bg-hue), 10%, 13%);
+  --color-page-bg-stencil: hsl(var(--color-page-bg-hue), 10%, 18%);
+  --color-page-bg-stencil-strong: hsl(var(--color-page-bg-hue), 10%, 22%);
+  --color-page-text: white;
+  --color-card-shadow: none;
   --color-alert-default-bg: var(--color-page-bg-stencil);
   --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 80%);
   --color-alert-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);
@@ -369,6 +387,7 @@
 
 :root {
   --border-radius: 3px;
+  --border-radius-big: 3px;
 }
 
 * {
@@ -650,8 +669,8 @@ html.dragging [data-tooltip] {
   margin: 40px;
   background: var(--color-modal-default-bg);
   color: var(--color-modal-default-text);
-  border-radius: var(--border-radius);
-  box-shadow: rgba(0, 0, 0, 0.7) 0 0 10px;
+  border-radius: var(--border-radius-big);
+  box-shadow: rgba(0, 0, 0, 0.2) 2px 4px 13px;
   position: relative;
   min-height: 50px;
   min-width: 50vw;
@@ -858,10 +877,9 @@ html.dragging [data-tooltip] {
   --arrow-color: transparent;
 }
 
-.framelix-quick-search .framelix-quick-search-options {
-  padding: 10px;
-  border: 1px solid var(--color-border-subtle);
-  margin-bottom: 10px;
+.framelix-quick-search .framelix-quick-search-options .framelix-form {
+  padding: 0;
+  box-shadow: none;
 }
 .framelix-quick-search .framelix-quick-search-options .framelix-form-submit-status {
   display: none;
@@ -912,9 +930,6 @@ html.dragging [data-tooltip] {
   content: "";
 }
 
-.framelix-table {
-  width: 100%;
-}
 .framelix-table > table {
   padding: 0;
   width: 100%;
@@ -922,11 +937,6 @@ html.dragging [data-tooltip] {
   border-spacing: 1px;
   height: 1px;
   border: 1px solid var(--color-border-subtle);
-}
-.framelix-table > table > tbody > tr,
-.framelix-table > table > thead > tr,
-.framelix-table > table > tfoot > tr {
-  background-color: var(--color-page-bg);
 }
 .framelix-table > table > tbody > tr > *[data-flag-smallwidth="1"],
 .framelix-table > table > thead > tr > *[data-flag-smallwidth="1"],
@@ -1094,7 +1104,8 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
 .framelix-tabs .framelix-tab-buttons {
   display: flex;
   flex-wrap: wrap;
-  border-radius: var(--border-radius);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 .framelix-tabs .framelix-tab-button {
   margin: 0;
@@ -1114,11 +1125,6 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
 }
 html[data-screen-size=s] .framelix-tabs .framelix-tab-button {
   width: 50%;
-}
-.framelix-tabs .framelix-tab-contents {
-  padding: 15px;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: var(--border-radius);
 }
 .framelix-tabs .framelix-tab-content {
   display: none;
