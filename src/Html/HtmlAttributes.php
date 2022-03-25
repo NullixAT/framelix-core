@@ -7,6 +7,7 @@ use JsonSerializable;
 
 use function explode;
 use function implode;
+use function is_array;
 use function str_contains;
 use function str_replace;
 use function trim;
@@ -25,6 +26,28 @@ class HtmlAttributes implements JsonSerializable
         'classes' => [],
         'other' => []
     ];
+
+    /**
+     * Create instance from given parameters
+     * @param array|null $attributes
+     * @param array|null $classes
+     * @param array|null $styles
+     * @return static
+     */
+    public static function create(?array $attributes, ?array $classes, ?array $styles): self
+    {
+        $instance = new self();
+        if (is_array($attributes)) {
+            $instance->setArray($attributes);
+        }
+        if (is_array($classes)) {
+            $instance->addClass(implode(" ", $classes));
+        }
+        if (is_array($styles)) {
+            $instance->setStyleArray($styles);
+        }
+        return $instance;
+    }
 
     /**
      * To string

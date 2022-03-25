@@ -2,7 +2,8 @@
   .framelix-tab-buttons {
     display: flex;
     flex-wrap: wrap;
-    border-radius: var(--border-radius);
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   .framelix-tab-button {
@@ -26,12 +27,6 @@
     html[data-screen-size='s'] & {
       width: 50%;
     }
-  }
-
-  .framelix-tab-contents {
-    padding: 15px;
-    border: 1px solid var(--color-border-subtle);
-    border-radius: var(--border-radius);
   }
 
   .framelix-tab-content {

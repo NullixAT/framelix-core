@@ -128,24 +128,27 @@ class FramelixTabs {
    * Reload tab
    * @param {string} tabId
    */
-  reloadTab (tabId) {
+  async reloadTab (tabId) {
     const row = this.tabs[tabId]
     if (!row) return
     const content = $(`<div class="framelix-tab-content"></div>`)
     content.attr('data-id', tabId)
+    if (row.optionalContentAttributes) FramelixHtmlAttributes.createFromPhpData(row.optionalContentAttributes).assignToElement(content)
+    if (row.cardContentLayout) content.addClass('framelix-card')
     if (row.url) {
-      FramelixIntersectionObserver.onGetVisible(content, async function () {
-        let request = FramelixRequest.request('get', row.url, row.urlParameters, null, content)
-        if (await request.checkHeaders() === 0) {
-          content.html((await request.getJson()).content)
-        }
-      })
-    }
-    if (row.content instanceof FramelixView) {
-      content.append(row.content.container)
+      content.addClass('framelix-card')
+      let request = FramelixRequest.request('get', row.url, row.urlParameters, null, content)
+      if (await request.checkHeaders() === 0) {
+        content.html((await request.getJson()).content)
+        if (!row.cardContentLayout) content.removeClass('framelix-card')
+      }
+    } else if (row.content instanceof FramelixView) {
+      content.html(row.content.container)
       row.content.render()
+    } else if (typeof row.content === 'function') {
+      content.html(await row.content())
     } else {
-      content.append(row.content)
+      content.html(row.content)
     }
     row.contentContainer = content
     this.contentContainer.children('[data-id=\'' + tabId + '\']').replaceWith(content)
@@ -181,7 +184,7 @@ class FramelixTabs {
     let matchedStoredActiveTabId = null
     let storedActiveTabId = FramelixLocalStorage.get('tabs-active-' + location.pathname)
     let hashTabId = location.hash.substr(1)
-    this.buttonContainer = $(`<div class="framelix-tab-buttons"></div>`)
+    this.buttonContainer = $(`<div class="framelix-tab-buttons framelix-card"></div>`)
     this.contentContainer = $(`<div class="framelix-tab-contents"></div>`)
     let firstTabId = null
     let count = 0
@@ -196,25 +199,11 @@ class FramelixTabs {
       }
       btn.html(FramelixLang.get(row.label))
       this.buttonContainer.append(btn)
-      const content = $(`<div class="framelix-tab-content"></div>`)
+      const content = $(`<div></div>`)
       content.attr('data-id', tabId)
-      if (row.url) {
-        FramelixIntersectionObserver.onGetVisible(content, async function () {
-          let request = FramelixRequest.request('get', row.url, row.urlParameters, null, content)
-          if (await request.checkHeaders() === 0) {
-            content.html((await request.getJson()).content)
-          }
-        })
-      }
-      this.contentContainer.append(content)
-      if (row.content instanceof FramelixView) {
-        content.html(row.content.container)
-        row.content.render()
-      } else if (typeof row.content === 'function') {
-        content.html(await row.content())
-      } else {
-        content.html(row.content)
-      }
+      FramelixIntersectionObserver.onGetVisible(content, async function () {
+        self.reloadTab(tabId)
+      })
       if (fullPath === storedActiveTabId) {
         matchedStoredActiveTabId = tabId
       }
@@ -223,6 +212,7 @@ class FramelixTabs {
       }
       row.buttonContainer = btn
       row.contentContainer = content
+      this.contentContainer.append(row.contentContainer)
       count++
     }
     this.container.attr('data-id', this.id)
@@ -232,7 +222,8 @@ class FramelixTabs {
     this.buttonContainer.on('click', '.framelix-tab-button', function () {
       location.hash = '#' + self.getFullPath($(this).attr('data-id'))
     })
-    this.setActiveTab(matchedHashActiveTabId || matchedStoredActiveTabId || firstTabId || '')
+    let activeTabId = matchedHashActiveTabId || matchedStoredActiveTabId || firstTabId || ''
+    this.setActiveTab(activeTabId)
   }
 }
 

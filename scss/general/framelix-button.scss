@@ -21,14 +21,15 @@
   &:any-link {
     color: var(--color-button-default-text);
   }
-  &:focus-visible{
+
+  &:focus-visible {
     outline: 2px solid invert;
   }
 
   @include insertColorSelectors("framelix-button", "button");
 
   &.framelix-button-trans:hover {
-    box-shadow: rgba(0, 0, 0, 0.7) 0 0 5px;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 4px 13px;
   }
 
 

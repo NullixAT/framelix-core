@@ -10,6 +10,7 @@ use Framelix\Framelix\View;
 use JsonSerializable;
 
 use function get_class;
+use function is_array;
 
 /**
  * Tabs - Show content in multiple tabs
@@ -39,6 +40,8 @@ class Tabs implements JsonSerializable
      * @param array|null $urlParameters Url parameters to append to the View/Url async call
      * @param string|null $tabColor Tab color
      * @param string|null $accessRole The access role to check before adding this tab. If null then use View's default access role
+     * @param HtmlAttributes|null $optionalButtonAttributes Add optional button attributes
+     * @param HtmlAttributes|null $optionalContentAttributes Add optional content container attributes
      */
     public function addTab(
         string $id,
@@ -46,7 +49,10 @@ class Tabs implements JsonSerializable
         View|Url|string $content,
         array $urlParameters = null,
         ?string $tabColor = null,
-        ?string $accessRole = null
+        ?string $accessRole = null,
+        bool $cardContentLayout = true,
+        HtmlAttributes|null $optionalButtonAttributes = null,
+        HtmlAttributes|null $optionalContentAttributes = null
     ): void {
         if ($label === null && $content instanceof View) {
             $meta = View::getMetadataForView($content);
@@ -63,7 +69,10 @@ class Tabs implements JsonSerializable
             "label" => $label,
             "content" => $content,
             "urlParameters" => $urlParameters,
-            "tabColor" => $tabColor
+            "tabColor" => $tabColor,
+            "cardContentLayout" => $cardContentLayout,
+            "optionalButtonAttributes" => $optionalButtonAttributes,
+            "optionalContentAttributes" => $optionalContentAttributes
         ];
     }
 

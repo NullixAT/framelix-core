@@ -130,7 +130,12 @@ class ModuleConfig extends View
     {
         $tabs = new Tabs();
         foreach (self::$forms as $key => $row) {
-            $tabs->addTab($key, $row['label'], new ModuleConfigTab(), ['module' => $this->module, 'formId' => $key]);
+            $tabs->addTab(
+                $key,
+                $row['label'],
+                new ModuleConfigTab(),
+                ['module' => $this->module, 'formId' => $key]
+            );
         }
         $tabs->show();
     }

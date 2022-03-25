@@ -5,8 +5,22 @@
   --sidebar-width: 300px;
   --sidebar-left: 0px;
   --sidebar-left-closed: -300px;
-  --sidebar-bg: hsl(0, 0%, 7%);
-  --sidebar-text-color: #eee;
+
+  --sidebar-bg: var(--color-page-bg);
+  --sidebar-text-color: var(--color-page-text);
+}
+
+[data-color-scheme='light'] {
+  --color-page-bg-hue: 0;
+  --color-page-bg: #f5f5f5;
+  --color-page-bg-stencil-weak: white;
+  --color-page-bg-stencil: #e5e5e5;
+  --color-page-bg-stencil-strong: #d5d5d5;
+  --color-page-text: #111;
+}
+
+[data-color-scheme='dark'] {
+
 }
 
 
@@ -61,10 +75,7 @@ hr {
 }
 
 .framelix-sidebar-toggle {
-  border: 0;
-  color: var(--sidebar-text-color);
-  background: var(--sidebar-bg);
-  border-radius: 0 0 var(--border-radius) 0;
+  border-radius: 0;
   width: 50px;
   height: 60px;
   position: fixed;
@@ -77,6 +88,9 @@ hr {
   cursor: pointer;
   z-index: 2;
   font-size: 24px;
+  &[data-icon-left]::before{
+    font-size: 24px;
+  }
 }
 
 .framelix-sidebar {
@@ -97,20 +111,27 @@ hr {
   }
 }
 
+.framelix-sidebar-inner {
+  padding: 10px;
+}
+
 .framelix-sidebar-logo {
   padding: 15px;
   margin-bottom: 10px;
   text-align: center;
+  background: #111;
+  border-radius: var(--border-radius);
 
   img {
     max-width: 100%;
+    display: block;
   }
 }
 
 .framelix-sidebar {
   .framelix-sidebar-link:any-link,
   .framelix-sidebar-collapsable-title {
-    color: white;
+    color: var(--sidebar-text-color);
     text-decoration: none;
     padding: 4px 15px;
     display: flex;
@@ -123,6 +144,8 @@ hr {
     font-size: inherit;
     line-height: inherit;
     text-align: left;
+    border-radius: var(--border-radius-big);
+    margin-bottom: 2px;
 
     html[data-screen-size='s'] & {
       padding-top: 8px;
@@ -136,19 +159,20 @@ hr {
       height: 32px;
       font-size: 18px;
       border-radius: 100px;
-      background: rgba(0, 0, 0, 0.1);
+      background: var(--color-page-bg-stencil);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     &.framelix-sidebar-link-active {
-      background: hsl(var(--color-primary-hue), 10%, 10%);
+      background: var(--color-page-bg-stencil-weak);
+      font-weight: bold;
+      box-shadow: var(--color-card-shadow) 2px 4px 13px;
     }
 
     &:hover {
-      background: hsl(var(--color-primary-hue), 20%, 10%);
-      color: white;
+      background: var(--color-page-bg-stencil-weak);
     }
   }
 
@@ -195,10 +219,6 @@ hr {
   .framelix-sidebar-settings {
     text-align: center;
     padding: 0 25px;
-
-    button {
-      color: var(--sidebar-text-color);
-    }
   }
 
   .framelix-sidebar-context-select {
@@ -232,14 +252,14 @@ hr {
 
     .framelix-sidebar-collapsable-title,
     .framelix-sidebar-link-active {
-      background: hsl(var(--color-primary-hue), 25%, 10%);
+      background: var(--color-page-bg-stencil-weak);
 
       &::after {
         transform: rotate(0deg);
       }
 
       &:hover {
-        background: hsl(var(--color-primary-hue), 30%, 15%);
+        background: var(--color-page-bg-stencil-weak);
       }
     }
 
@@ -268,8 +288,15 @@ html[data-screen-size='s'] .framelix-content {
 .framelix-content-inner {
   min-width: 240px;
   padding: 10px;
-  border-radius: var(--border-radius);
-  box-shadow: rgba(0, 0, 0, 0.2) 5px 5px 10px;
+  border-radius: var(--border-radius-big);
+  box-shadow: var(--color-card-shadow) 2px 4px 10px;
+}
+
+.framelix-quick-search {
+  .framelix-table {
+    padding: 0;
+    box-shadow: none;
+  }
 }
 
 html:not([data-layout='2']) .framelix-content-inner {

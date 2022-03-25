@@ -1,6 +1,4 @@
 .framelix-table {
-  width: 100%;
-
   > table {
     padding: 0;
     width: 100%;
@@ -14,8 +12,6 @@
     > thead,
     > tfoot {
       > tr {
-        background-color: var(--color-page-bg);
-
         > * {
           &[data-flag-smallwidth='1'] {
             white-space: nowrap;

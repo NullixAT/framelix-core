@@ -147,7 +147,7 @@ class LangEditor extends View
                     this.name = this.name.replace(/valuesUnmodified/, 'values')
                   }
                 })
-                form.fields['visibility'].container.on(FramelixFormField.EVENT_CHANGE_USER, function () {
+                form.fields['visibility']?.container.on(FramelixFormField.EVENT_CHANGE_USER, function () {
                   window.location.href = '<?=Url::getBrowserUrl()
                       ->removeParameter('visibility')
                       ->setParameter('visibility', '')->setHash(null)?>' + form.fields['visibility'].getValue()
@@ -158,9 +158,17 @@ class LangEditor extends View
         } else {
             $tabs = new Tabs();
             foreach (Lang::getAllModuleLanguages() as $language) {
-                $tabs->addTab('lang-' . $language, $language, new self());
+                $tabs->addTab(
+                    'lang-' . $language,
+                    $language,
+                    new self()
+                );
             }
-            $tabs->addTab('actions', '__framelix_view_backend_dev_langeditor_actions__', new self());
+            $tabs->addTab(
+                'actions',
+                '__framelix_view_backend_dev_langeditor_actions__',
+                new self()
+            );
             $tabs->show();
         }
     }

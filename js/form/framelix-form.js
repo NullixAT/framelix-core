@@ -245,7 +245,7 @@ class FramelixForm {
     this.id = 'form-' + FramelixRandom.getRandomHtmlId()
     FramelixForm.instances.push(this)
     this.container = $('<div>')
-    this.container.addClass('framelix-form')
+    this.container.addClass('framelix-form framelix-card')
     this.container.attr('data-instance-id', FramelixForm.instances.length - 1)
   }
 

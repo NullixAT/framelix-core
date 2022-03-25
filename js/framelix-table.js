@@ -260,7 +260,7 @@ class FramelixTable {
     this.id = 'table-' + FramelixRandom.getRandomHtmlId()
     FramelixTable.instances.push(this)
     this.container = $('<div>')
-    this.container.addClass('framelix-table')
+    this.container.addClass('framelix-table framelix-card')
     this.container.attr('data-instance-id', FramelixTable.instances.length - 1)
   }
 

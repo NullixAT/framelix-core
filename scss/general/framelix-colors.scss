@@ -6,12 +6,6 @@
 
   --color-contrast-modifier: 0%;
 
-  --color-page-bg-hue: 0;
-  --color-page-bg: white;
-  --color-page-bg-stencil: hsl(var(--color-primary-hue), 10%, 90%);
-  --color-page-bg-stencil-strong: hsl(var(--color-primary-hue), 10%, 85%);
-  --color-page-text: #111;
-
   --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
   --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
   --color-warning-text: hsl(var(--color-warning-hue), calc(var(--color-contrast-modifier) + 70%), 50%);
@@ -19,6 +13,15 @@
 
   --color-border-strong: #222;
   --color-border-subtle: #aaa;
+
+  --color-page-bg-hue: 0;
+  --color-page-bg-stencil-weak: #f5f5f5;
+  --color-page-bg-stencil: #e5e5e5;
+  --color-page-bg-stencil-strong: #d5d5d5;
+  --color-page-text: #111;
+
+  --color-card-bg: var(--color-page-bg-stencil-weak);
+  --color-card-shadow: var(--color-page-bg-stencil-strong);
 
   --color-alert-default-bg: hsl(var(--color-primary-hue), 20%, 95%);
   --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 5%);
@@ -105,12 +108,7 @@
   --color-success-hue: 160;
   --color-warning-hue: 28;
   --color-error-hue: 353;
-
-  --color-page-bg-hue: 220;
-  --color-page-bg: hsl(var(--color-page-bg-hue), 10%, 10%);
-  --color-page-bg-stencil: hsl(var(--color-page-bg-hue), 10%, 18%);
-  --color-page-bg-stencil-strong: hsl(var(--color-page-bg-hue), 10%, 22%);
-  --color-page-text: hsl(var(--color-page-bg-hue), 10%, 90%);
+  --color-page-bg-hue: 200;
 
   --color-primary-text: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
   --color-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 70%);
@@ -119,6 +117,14 @@
 
   --color-border-strong: hsl(var(--color-page-bg-hue), 10%, 60%);
   --color-border-subtle: hsl(var(--color-page-bg-hue), 10%, 30%);
+
+  --color-page-bg: hsl(var(--color-page-bg-hue), 10%, 5%);
+  --color-page-bg-stencil-weak: hsl(var(--color-page-bg-hue), 10%, 13%);
+  --color-page-bg-stencil: hsl(var(--color-page-bg-hue), 10%, 18%);
+  --color-page-bg-stencil-strong: hsl(var(--color-page-bg-hue), 10%, 22%);
+  --color-page-text: white;
+
+  --color-card-shadow: none;
 
   --color-alert-default-bg: var(--color-page-bg-stencil);
   --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 80%);

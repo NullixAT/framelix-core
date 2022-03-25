@@ -1,8 +1,9 @@
 .framelix-quick-search {
   .framelix-quick-search-options {
-    padding: 10px;
-    border: 1px solid var(--color-border-subtle);
-    margin-bottom: 10px;
+    .framelix-form {
+      padding: 0;
+      box-shadow: none;
+    }
 
     .framelix-form-submit-status {
       display: none;

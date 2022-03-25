@@ -1,0 +1,14 @@
+.framelix-card {
+  background: var(--color-card-bg);
+  border-radius: var(--border-radius-big);
+  padding: 20px;
+  box-shadow: var(--color-card-shadow) 2px 4px 13px;
+  margin-bottom: 5px;
+
+  .framelix-card {
+    background: initial;
+    padding: initial;
+    border-radius: initial;
+    box-shadow: initial;
+  }
+}
