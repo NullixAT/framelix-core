@@ -16,8 +16,7 @@
     "release": {
       "exclude": [
         "^/build",
-        "^/dev",
-        "^/nodejs"
+        "^/dev"
       ]
     }
   }
