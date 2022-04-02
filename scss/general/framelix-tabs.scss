@@ -2,8 +2,22 @@
   .framelix-tab-buttons {
     display: flex;
     flex-wrap: wrap;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+    background: var(--color-page-bg-stencil);
+    gap: 10px;
+    align-items: center;
+
+    ::before {
+      height: 10px;
+      line-height: 10px;
+      content: "arrow_right";
+      font-family: "Material Icons", sans-serif;
+      font-size: 24px;
+      opacity: 0.5;
+      transition: transform .3s;
+    }
   }
 
   .framelix-tab-button {
@@ -14,10 +28,14 @@
     border: none;
     color: var(--color-page-text);
     padding: 10px 25px;
+    padding-left: 10px;
 
     &[data-active='1'] {
       background: var(--color-button-primary-bg);
       color: var(--color-button-primary-text);
+      &::before {
+        transform: rotate(90deg);
+      }
     }
 
     &:hover {
@@ -25,7 +43,7 @@
     }
 
     html[data-screen-size='s'] & {
-      width: 50%;
+      width: calc(50% - 10px);
     }
   }
 

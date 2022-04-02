@@ -144,12 +144,17 @@
     opacity: 0.2;
   }
 
+  .framelix-table-cell-header {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
   [data-flag-ignoresort] .framelix-table-header-sort-info {
     display: none;
   }
 
   .framelix-table-header-sort-info {
-    margin-top: 5px;
     height: 18px;
     display: flex;
     font-size: 0.6rem;

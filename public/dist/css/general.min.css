@@ -1050,11 +1050,15 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
   text-decoration: line-through;
   opacity: 0.2;
 }
+.framelix-table .framelix-table-cell-header {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
 .framelix-table [data-flag-ignoresort] .framelix-table-header-sort-info {
   display: none;
 }
 .framelix-table .framelix-table-header-sort-info {
-  margin-top: 5px;
   height: 18px;
   display: flex;
   font-size: 0.6rem;
@@ -1086,8 +1090,21 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
 .framelix-tabs .framelix-tab-buttons {
   display: flex;
   flex-wrap: wrap;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding: 10px;
+  border-radius: var(--border-radius);
+  margin-bottom: 10px;
+  background: var(--color-page-bg-stencil);
+  gap: 10px;
+  align-items: center;
+}
+.framelix-tabs .framelix-tab-buttons ::before {
+  height: 10px;
+  line-height: 10px;
+  content: "arrow_right";
+  font-family: "Material Icons", sans-serif;
+  font-size: 24px;
+  opacity: 0.5;
+  transition: transform 0.3s;
 }
 .framelix-tabs .framelix-tab-button {
   margin: 0;
@@ -1097,16 +1114,20 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
   border: none;
   color: var(--color-page-text);
   padding: 10px 25px;
+  padding-left: 10px;
 }
 .framelix-tabs .framelix-tab-button[data-active="1"] {
   background: var(--color-button-primary-bg);
   color: var(--color-button-primary-text);
 }
+.framelix-tabs .framelix-tab-button[data-active="1"]::before {
+  transform: rotate(90deg);
+}
 .framelix-tabs .framelix-tab-button:hover {
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 1000px inset;
 }
 html[data-screen-size=s] .framelix-tabs .framelix-tab-button {
-  width: 50%;
+  width: calc(50% - 10px);
 }
 .framelix-tabs .framelix-tab-content {
   display: none;

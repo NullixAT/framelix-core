@@ -522,6 +522,7 @@ class FramelixTable {
           } else {
             cellValue = rowGroup === 'thead' ? FramelixLang.get(cellValue) : cellValue
           }
+          if (rowGroup === 'thead') cellValue = `<div class="framelix-tableheader-text">${cellValue}</div>`
           if (this.sortable && rowGroup === 'thead' && !cellAttributes.get('data-flag-ignoresort')) {
             cellAttributes.set('tabindex', '0')
             cellValue = `<div class="framelix-table-header-sort-info"><div class="framelix-table-header-sort-info-number"></div><div class="framelix-table-header-sort-info-text"></div></div>${cellValue}`

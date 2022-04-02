@@ -8,7 +8,6 @@ All notable changes to this project will be documented in this file.
 ### :pencil: Changed
 * changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
 
-
 ### :heart: Added
 * added maxWidth option to framelix modal and use it for alert, confirm and prompt by default
 

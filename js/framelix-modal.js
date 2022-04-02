@@ -165,7 +165,7 @@ class FramelixModal {
 
     html.append($('<div>').append(input))
     let footerContainer = `
-        <button class="framelix-button framelix-button-primary" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
+        <button class="framelix-button framelix-button-trans" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
         <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check" style="flex-grow: 4">${FramelixLang.get('__framelix_ok__')}</button>
     `
 
@@ -204,7 +204,7 @@ class FramelixModal {
     const html = $(`<div style="text-align: center;"></div>`)
     html.html(FramelixLang.get(content))
     const bottom = $(`
-      <button class="framelix-button framelix-button-primary" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
+      <button class="framelix-button framelix-button-trans" data-icon-left="clear">${FramelixLang.get('__framelix_cancel__')}</button>
       <button class="framelix-button framelix-button-success" data-success="1" data-icon-left="check" style="flex-grow: 4">${FramelixLang.get('__framelix_ok__')}</button>
     `)
     if (!options.maxWidth) options.maxWidth = 600
