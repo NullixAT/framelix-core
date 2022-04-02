@@ -250,6 +250,7 @@ abstract class Sidebar
         $this->startGroup("__framelix_developer_options__", "developer_mode");
         $this->addLink(View\Backend\Dev\Update::class, null, "system_update");
         $this->addLink(View\Backend\Dev\LangEditor::class, null, "g_translate");
+        $this->addLink(View\Backend\Dev\ReleaseBuilder::class, null, "new_releases");
         $this->showHtmlForLinkData();
 
         if (User::get()) {

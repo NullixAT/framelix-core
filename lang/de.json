@@ -1215,6 +1215,18 @@
         "Mach das, nachdem du Language Files h\u00e4ndisch ver\u00e4ndert hast damit die Keys wieder richtig sortiert werden, damit du das nicht machen musst.",
         "dd9d5"
     ],
+    "__framelix_view_backend_dev_releasebuilder__": [
+        "Build Release Files",
+        "6b1cc"
+    ],
+    "__framelix_view_backend_dev_releasebuilder_create__": [
+        "Release files erstellen\/aktualisieren",
+        "bc1b2"
+    ],
+    "__framelix_view_backend_dev_releasebuilder_created__": [
+        "Release erstellt",
+        "6f022"
+    ],
     "__framelix_view_backend_dev_update__": [
         "Datenbank und Code aktualisieren",
         "7869d"

@@ -911,6 +911,15 @@
     "__framelix_view_backend_dev_langeditor_sort_info__": [
         "Do this after you have manually edited a file. It will properly update the contents and resort the keys so you don't have to."
     ],
+    "__framelix_view_backend_dev_releasebuilder__": [
+        "Build Release Files"
+    ],
+    "__framelix_view_backend_dev_releasebuilder_create__": [
+        "Create\/Update release files now"
+    ],
+    "__framelix_view_backend_dev_releasebuilder_created__": [
+        "Release files created"
+    ],
     "__framelix_view_backend_dev_update__": [
         "Update database and sources"
     ],

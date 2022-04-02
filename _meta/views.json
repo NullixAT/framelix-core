@@ -1,5 +1,5 @@
 {
-    "directoryListHash": "1|3818993564",
+    "directoryListHash": "1|2777764093",
     "views": {
         "Framelix\\Framelix\\View\\Api": {
             "accessRole": "*",
@@ -63,6 +63,15 @@
             "urlPriority": 0,
             "pageTitle": "{classLangKey}",
             "url": "\/backend\/dev\/langeditor"
+        },
+        "Framelix\\Framelix\\View\\Backend\\Dev\\ReleaseBuilder": {
+            "accessRole": true,
+            "customUrl": null,
+            "devModeOnly": true,
+            "multilanguage": true,
+            "urlPriority": 0,
+            "pageTitle": "{classLangKey}",
+            "url": "\/backend\/dev\/releasebuilder"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\Update": {
             "accessRole": "dev",
