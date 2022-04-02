@@ -257,6 +257,9 @@ class ErrorHandler
             try {
                 View::$activeView->onException($logData);
             } catch (Throwable $subE) {
+                if ($subE instanceof StopException) {
+                    return;
+                }
                 Buffer::clear();
                 echo '<h2 style="color: red">There is an error in the error handler</h2>';
                 echo '<h3 style="color: red">Original Error</h3>';

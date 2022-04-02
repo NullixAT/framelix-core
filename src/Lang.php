@@ -264,6 +264,23 @@ class Lang
     }
 
     /**
+     * Concat lang keys by joining them with an underscore and keeping ending double underscores
+     * Example: concat foo to __framelix_yes__ => __framelix_yes_foo__
+     * @param string $key
+     * @param string ...$keys
+     * @return string
+     */
+    public static function concatKeys(string $key, string ...$keys): string
+    {
+        $key = rtrim($key, "_");
+        foreach ($keys as $concat) {
+            $key .= "_" . $concat;
+        }
+        $key .= "__";
+        return $key;
+    }
+
+    /**
      * Get all supported languages that are enabled in the config
      * @return string[]
      */
