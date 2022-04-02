@@ -156,6 +156,7 @@ hr {
   text-align: left;
   border-radius: var(--border-radius);
   margin-bottom: 2px;
+  overflow: hidden;
 }
 html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-link:any-link,
 html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {

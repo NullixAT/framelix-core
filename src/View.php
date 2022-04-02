@@ -175,6 +175,8 @@ abstract class View implements JsonSerializable
                     $urlPath = preg_replace("~\(\?<$key>.*?\)~", $value, $urlPath);
                 }
             }
+            // remove rest of parametesr
+            $urlPath = preg_replace("~\(\?<[a-z0-9]+>.*?\)~", '', $urlPath);
             // remove any unsupported chars from regex url
             $urlPath = preg_replace("~[^a-z0-9-_/+.,]~i", "", $urlPath);
         }

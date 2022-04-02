@@ -51,6 +51,12 @@ abstract class View extends LayoutView
     protected int $layout = self::LAYOUT_DEFAULT;
 
     /**
+     * Access role
+     * @var string|bool
+     */
+    protected string|bool $accessRole = true;
+
+    /**
      * Show the content including the layout
      */
     public function showContentWithLayout(): void

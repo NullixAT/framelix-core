@@ -138,6 +138,7 @@ hr {
     text-align: left;
     border-radius: var(--border-radius);
     margin-bottom: 2px;
+    overflow: hidden;
 
     html[data-screen-size='s'] & {
       padding-top: 8px;

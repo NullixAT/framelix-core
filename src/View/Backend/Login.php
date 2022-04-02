@@ -118,6 +118,9 @@ class Login extends View
             if (Request::getGet('redirect')) {
                 Url::create(Request::getGet('redirect'))->redirect();
             }
+            if (Config::get('backendDefaultView')) {
+                \Framelix\Framelix\View::getUrl(Config::get('backendDefaultView'))->redirect();
+            }
             Url::getApplicationUrl()->redirect();
         }
         if (Form::isFormSubmitted('login')) {
