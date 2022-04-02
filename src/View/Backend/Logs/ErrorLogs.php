@@ -38,7 +38,7 @@ class ErrorLogs extends View
             $files = FileUtils::getFiles(FRAMELIX_APP_ROOT . "/logs", sortOrder: SCANDIR_SORT_DESCENDING);
             $count = 0;
             foreach ($files as $file) {
-                if (base64_decode($file) !== ".gitignore") {
+                if (basename($file) !== ".gitignore") {
                     unlink($file);
                     $count++;
                 }
