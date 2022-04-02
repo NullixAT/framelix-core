@@ -1,8 +1,4 @@
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-## [1.7.0 - TBA]
+## [1.7.0 - 2022-02-04]
 * design refactoring to be more modern and clear
 
 ### :pencil: Changed
