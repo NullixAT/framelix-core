@@ -38,7 +38,7 @@ class ErrorLogs extends View
             $files = FileUtils::getFiles(FRAMELIX_APP_ROOT . "/logs", sortOrder: SCANDIR_SORT_DESCENDING);
             $count = 0;
             foreach ($files as $file) {
-                if (basename($file) === Request::getGet('clear') && base64_decode($file) !== ".gitignore") {
+                if (base64_decode($file) !== ".gitignore") {
                     unlink($file);
                     $count++;
                 }
@@ -67,7 +67,7 @@ class ErrorLogs extends View
         }
         $firstFile = basename(reset($files));
         ?>
-        <a href="<?= Url::create()->setParameter('clear', $firstFile) ?>"
+        <a href="<?= Url::create()->setParameter('clear', 1) ?>"
            class="framelix-button"><?= Lang::get('__framelix_view_backend_logs_clear__') ?></a>
         <?php
         foreach ($files as $file) {
