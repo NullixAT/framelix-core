@@ -454,9 +454,10 @@ class FramelixForm {
                   }
                 }
               } else {
-                for (let conditionValueKey in requiredValue) {
-                  isVisible = conditionRow.type === 'equal' ? val !== requiredValue[conditionValueKey] : !val.match(FramelixStringUtils.escapeRegex(requiredValue[conditionValueKey]), 'i')
-                  if (!isVisible) {
+                for (let conditionFieldValueKey in conditionFieldValue) {
+                  const val = conditionFieldValue[conditionFieldValueKey]
+                  isVisible = conditionRow.type === 'notEqual' ? val !== requiredValue[requiredValueKey] : !val.match(FramelixStringUtils.escapeRegex(requiredValue[requiredValueKey]), 'i')
+                  if (isVisible) {
                     continue conditionLoop
                   }
                 }

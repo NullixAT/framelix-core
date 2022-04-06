@@ -125,21 +125,25 @@ $field->addOption('none', '__framelix_configuration_module_email_mailsendtype_no
 $field->addOption('mail', '__framelix_configuration_module_email_mailsendtype_mail__');
 $field->addOption('smtp', '__framelix_configuration_module_email_mailsendtype_smtp__');
 $field->addOption('sendmail', '__framelix_configuration_module_email_mailsendtype_sendmail__');
+$field->required = true;
 $form->addField($field);
 
 $field = new Text();
 $field->name = "smtpHost";
+$field->required = true;
 $field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new Number();
 $field->name = "smtpPort";
 $field->decimals = 0;
+$field->required = true;
 $field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new Text();
 $field->name = "smtpUsername";
+$field->required = true;
 $field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
@@ -156,19 +160,24 @@ $field->getVisibilityCondition()->equal('mailSendType', 'smtp');
 $form->addField($field);
 
 $field = new Email();
-$field->name = "emailOverrideRecipient";
+$field->name = "emailDefaultFrom";
+$field->required = true;
+$field->getVisibilityCondition()->notEmpty('mailSendType')->and()->notEqual('mailSendType', 'none');
 $form->addField($field);
 
 $field = new Email();
-$field->name = "emailDefaultFrom";
+$field->name = "emailOverrideRecipient";
+$field->getVisibilityCondition()->notEmpty('mailSendType')->and()->notEqual('mailSendType', 'none');
 $form->addField($field);
 
 $field = new Text();
 $field->name = "emailTitleTemplate";
+$field->getVisibilityCondition()->notEmpty('mailSendType')->and()->notEqual('mailSendType', 'none');
 $form->addField($field);
 
 $field = new Textarea();
 $field->name = "emailBodyTemplate";
+$field->getVisibilityCondition()->notEmpty('mailSendType')->and()->notEqual('mailSendType', 'none');
 $form->addField($field);
 
 ModuleConfig::addForm($form, '__framelix_configuration_module_email_pagetitle__');
@@ -238,7 +247,9 @@ for ($i = 1; $i <= 5; $i++) {
 }
 
 
-ModuleConfig::addForm($form, '__framelix_configuration_module_logging_pagetitle__',
+ModuleConfig::addForm(
+    $form,
+    '__framelix_configuration_module_logging_pagetitle__',
     function (Form $form) {
         $errorLogMail = Config::get('errorLogEmail');
         ModuleConfig::saveConfig($form);
@@ -251,4 +262,5 @@ ModuleConfig::addForm($form, '__framelix_configuration_module_logging_pagetitle_
                 ErrorHandler::sendErrorLogEmail(ErrorHandler::throwableToJson($e));
             }
         }
-    });
+    }
+);

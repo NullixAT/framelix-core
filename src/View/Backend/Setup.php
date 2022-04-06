@@ -106,6 +106,7 @@ class Setup extends View
                 );
                 Config::set('applicationUrlBasePath', $url->urlData['path']);
                 Config::set('salts[general]', RandomGenerator::getRandomString(64, 70));
+                Config::set('mailSendType', 'none');
                 Mysql::get()->query(
                     "CREATE TABLE `__framelix_test__` (
                     `id` BIGINT(18) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -140,7 +141,8 @@ class Setup extends View
                     'languageDefault',
                     'languageFallback',
                     'languageMultiple',
-                    'shellAliases'
+                    'shellAliases',
+                    'mailSendType'
                 ];
                 $configData = [];
                 foreach ($keys as $key) {
