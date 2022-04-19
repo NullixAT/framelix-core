@@ -167,12 +167,12 @@ class FramelixFormField {
 
   /**
    * Get field by name in given container
-   * @param {Cash|HTMLElement} container
+   * @param {Cash|FramelixForm|HTMLElement|string} container
    * @param {string|null} name Null if you want to find the first field in the container
    * @return {FramelixFormField|null}
    */
   static getFieldByName (container, name) {
-    const fields = $(container).find('.framelix-form-field')
+    const fields = $(container instanceof FramelixForm ? container.container : container).find('.framelix-form-field')
     if (!fields.length) return null
     let field
     if (!name) {
@@ -182,6 +182,37 @@ class FramelixFormField {
     }
     if (!field.length) return null
     return FramelixFormField.instances[field.attr('data-instance-id')] || null
+  }
+
+  /**
+   * Callback doc
+   * @callback FramelixFormField~onValueChange
+   * @param {FramelixFormField} field
+   */
+
+  /**
+   * Quick bind an action on form change
+   * @param {FramelixForm|string|Cash} container
+   * @param {FramelixFormField|FramelixFormField[]|string|string[]} fields
+   * @param {boolean} onUserChangeOnly If true, fires only when an user changed a value, not by a script change
+   * @param {FramelixFormField~onValueChange} callback
+   */
+  static onValueChange (container, fields, onUserChangeOnly, callback) {
+    if (!fields) return
+    if (!Array.isArray(fields)) fields = [fields]
+    $(document).on(this.EVENT_CHANGE_USER, function (ev) {
+      let el = container
+      if (!el) el = $('body')
+      if (typeof el === 'string') el = FramelixForm.getById(el).container
+      for (let i in fields) {
+        let field = fields[i]
+        if (typeof field === 'string') {
+          field = FramelixFormField.getFieldByName(el, field)
+        }
+        const fieldName = $(ev.target).closest('.framelix-form-field').attr('data-name')
+        if (fieldName === field.name) callback(field)
+      }
+    })
   }
 
   /**

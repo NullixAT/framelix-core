@@ -281,7 +281,7 @@ class FramelixFormFieldSelect extends FramelixFormField {
       self.setValue(values, true)
       self.optionsPopup = null
     })
-    this.optionsPopup.popperEl.css('width', this.field.width() + 'px')
+    this.optionsPopup.popperEl.css('width', Math.max(this.field.width(), 250) + 'px')
     this.initOptionsContainer(popupOptionsContainer)
     popupContentInner.find('.framelix-form-field-select-search input').on('search-start', function (ev) {
       ev.stopPropagation()

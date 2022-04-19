@@ -181,7 +181,7 @@ html[data-color-scheme=dark] .framelix-form-field-datetime ::-webkit-calendar-pi
 .framelix-form-field-select[data-dropdown="1"] .framelix-form-field-select-picker .framelix-form-field-select-option:hover {
   background: transparent;
 }
-.framelix-form-field-select[data-dropdown="1"] .framelix-form-field-select-picker:hover > div {
+.framelix-form-field-select[data-dropdown="1"]:not([data-disabled="1"]) .framelix-form-field-select-picker:hover > div {
   background: rgba(0, 0, 0, 0.1);
 }
 
@@ -288,6 +288,13 @@ html[data-color-scheme=dark] .framelix-form-field-time ::-webkit-calendar-picker
   font-size: 0.9rem;
 }
 
+.framelix-form-field-single {
+  display: inline-block;
+}
+.framelix-form-field-single.framelix-form-field .framelix-form-field-container {
+  margin: 0;
+}
+
 .framelix-form-field {
   margin-bottom: 1px;
   padding: 4px 0;
@@ -306,6 +313,7 @@ html[data-color-scheme=dark] .framelix-form-field-time ::-webkit-calendar-picker
 }
 .framelix-form-field[data-disabled="1"] * {
   cursor: default !important;
+  --color-input-background: var(--color-page-bg-stencil);
 }
 .framelix-form-field .framelix-form-field-label {
   margin-bottom: 3px;

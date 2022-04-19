@@ -398,7 +398,7 @@ class FramelixForm {
    * Update field visibility
    */
   updateFieldVisibility () {
-    const formValues = FormDataJson.toJson(this.form, { 'flatList': true })
+    const formValues = FormDataJson.toJson(this.form, { 'flatList': true, 'includeDisabled': true })
     let formValuesFlatIndexed = {}
     for (let i = 0; i < formValues.length; i++) {
       formValuesFlatIndexed[formValues[i][0]] = formValues[i][1]

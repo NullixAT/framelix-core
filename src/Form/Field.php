@@ -162,12 +162,12 @@ abstract class Field implements JsonSerializable
         $jsonData = JsonUtils::encode($this);
         $randomId = RandomGenerator::getRandomHtmlId();
         ?>
-        <div id="<?= $randomId ?>"></div>
+        <div class="hidden" id="<?= $randomId ?>"></div>
         <script>
           (function () {
             const field = FramelixFormField.createFromPhpData(<?=$jsonData?>)
             field.render()
-            $("#<?=$randomId?>").replaceWith(field.container)
+            $("#<?=$randomId?>").replaceWith(field.container.addClass('framelix-form-field-single'))
           })()
         </script>
         <?php

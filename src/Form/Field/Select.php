@@ -111,6 +111,10 @@ class Select extends Field
             if ($label instanceof ObjectTransformable) {
                 $label = $label->getHtmlString();
             }
+            // if label is null, automatically use default label
+            if ($label === null && $this->label) {
+                $label = Lang::concatKeys($this->label, strtolower((string)$value));
+            }
             $this->options[] = [(string)$value, $label];
         }
     }

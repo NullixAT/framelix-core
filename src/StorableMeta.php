@@ -259,8 +259,11 @@ abstract class StorableMeta implements JsonSerializable
         $property = new StorableMetaProperty();
         $property->meta = $this;
         $property->name = $name;
-        $langKeyLabel = ClassUtils::getLangKey($this->storable, $name . "_label");
-        $langKeyDesc = ClassUtils::getLangKey($this->storable, $name . "_label_desc");
+        $langKey = str_replace('][', '_', strtolower($name));
+        $langKey = str_replace('[', '_', $langKey);
+        $langKey = str_replace(']', '', $langKey);
+        $langKeyLabel = ClassUtils::getLangKey($this->storable, $langKey . "_label");
+        $langKeyDesc = ClassUtils::getLangKey($this->storable, $langKey . "_label_desc");
         // get better labels for some built in storables like system value
         if ($storableSchemaProperty->storableClass ?? null) {
             $storableClass = new $storableSchemaProperty->storableClass();
@@ -436,7 +439,10 @@ abstract class StorableMeta implements JsonSerializable
         array $objects,
         ?string $idAffix = null
     ): Table {
+        ArrayUtils::sort($objects, "sort", [SORT_ASC, SORT_NUMERIC]);
         $table = $this->getTable($objects, $idAffix);
+        $table->initialSort = null;
+        $table->rememberSort = false;
         $table->dragSort = true;
         $table->appendHtml = '<script>FramelixStorableMeta.enableStorableSorting("' . $table->id . '", "' . JsCall::getCallUrl(
                 __CLASS__,

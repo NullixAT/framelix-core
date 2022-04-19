@@ -1,3 +1,13 @@
+.framelix-form-field-single {
+  display: inline-block;
+
+  &.framelix-form-field {
+    .framelix-form-field-container {
+      margin: 0;
+    }
+  }
+}
+
 .framelix-form-field {
   margin-bottom: 1px;
   padding: 4px 0;
@@ -21,6 +31,7 @@
 
   &[data-disabled="1"] * {
     cursor: default !important;
+    --color-input-background: var(--color-page-bg-stencil);
   }
 
   .framelix-form-field-label {
