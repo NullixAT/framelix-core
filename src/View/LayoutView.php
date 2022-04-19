@@ -15,12 +15,10 @@ use Framelix\Framelix\Utils\HtmlUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\View;
-
 use function call_user_func_array;
 use function file_exists;
 use function get_class;
 use function htmlentities;
-
 use const FRAMELIX_MODULE;
 
 /**
@@ -96,6 +94,7 @@ abstract class LayoutView extends View
         string $type,
         string $id
     ): void {
+        Compiler::compile($module);
         $this->addHeadHtml(HtmlUtils::getIncludeTagForUrl(Compiler::getDistUrl($module, $type, $id)));
     }
 

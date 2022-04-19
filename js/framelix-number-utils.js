@@ -38,7 +38,6 @@ class FramelixNumberUtils {
    * @return {number}
    */
   static round (value, decimals) {
-    if (!decimals) return value
     if (!('' + value).includes('e')) {
       return +(Math.round(value + 'e+' + decimals) + 'e-' + decimals)
     } else {
@@ -59,10 +58,6 @@ class FramelixNumberUtils {
    * @return {number}
    */
   static toNumber (value, round = null, commaSeparator = ',') {
-    // value is string but already in a parsable float format
-    if (typeof value === 'string' && parseFloat(value).toString() === value) {
-      value = parseFloat(value)
-    }
     if (typeof value !== 'number') {
       if (value === null || value === false || value === undefined || typeof value === 'function') {
         return 0.0
@@ -73,7 +68,7 @@ class FramelixNumberUtils {
       if (typeof value !== 'string') {
         value = value.toString()
       }
-      value = value.trim().replace(new RegExp('[^-0-9' + commaSeparator + ']', 'g'), '')
+      value = value.trim().replace(new RegExp('[^-0-9' + FramelixStringUtils.escapeRegex(commaSeparator) + ']', 'g'), '')
       value = parseFloat(value.replace(new RegExp(commaSeparator, 'g'), '.'))
     }
     if (isNaN(value) || typeof value !== 'number') value = 0
@@ -95,7 +90,7 @@ class FramelixNumberUtils {
     }
     let number = value
     if (typeof value !== 'number') {
-      number = FramelixNumberUtils.toNumber(value, decimals, commaSeparator)
+      number = FramelixNumberUtils.toNumber(value, decimals, commaSeparator, thousandSeparator)
     } else {
       number = FramelixNumberUtils.round(number, decimals)
     }

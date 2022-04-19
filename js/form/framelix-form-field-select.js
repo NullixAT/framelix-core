@@ -249,7 +249,7 @@ class FramelixFormFieldSelect extends FramelixFormField {
 
     const optionsElementsIndexed = {}
     if (this.showResetButton === true || (this.showResetButton === null && !this.required)) {
-      popupOptionsContainer.append('<button class="framelix-button framelix-button-small" data-unset="1">' + FramelixLang.get('__framelix_form_select_unset__') + '</button>')
+      popupOptionsContainer.append('<button class="framelix-button framelix-button-small" data-unset="1" data-icon-left="clear">' + FramelixLang.get('__framelix_form_select_unset__') + '</button>')
       popupOptionsContainer.on('click', 'button[data-unset]', function () {
         popupContentInner.find('input:checked').prop('checked', false)
         self.destroyDropdown()

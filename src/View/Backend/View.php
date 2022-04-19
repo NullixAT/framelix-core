@@ -4,17 +4,14 @@ namespace Framelix\Framelix\View\Backend;
 
 use Framelix\Framelix\Backend\Sidebar;
 use Framelix\Framelix\Config;
-use Framelix\Framelix\Html\Compiler;
 use Framelix\Framelix\Html\HtmlAttributes;
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Storable\User;
 use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\View\LayoutView;
-
 use function call_user_func_array;
 use function get_class;
-
 use const FRAMELIX_MODULE;
 
 /**
@@ -61,12 +58,10 @@ abstract class View extends LayoutView
      */
     public function showContentWithLayout(): void
     {
-        Compiler::compile("Framelix");
         $this->includeCompiledFilesForModule("Framelix");
         $this->includeCompiledFile("Framelix", "scss", "backend");
         $this->includeCompiledFile("Framelix", "scss", "backend-fonts");
         $this->includeCompiledFile("Framelix", "js", "backend");
-        Compiler::compile(FRAMELIX_MODULE);
         $this->includeCompiledFilesForModule(FRAMELIX_MODULE);
         $sidebarClass = $this->showSidebar ? "Framelix\\" . FRAMELIX_MODULE . "\\Backend\\Sidebar" : null;
         $sidebarContent = null;

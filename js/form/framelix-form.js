@@ -640,8 +640,8 @@ class FramelixForm {
 
     const self = this
 
-    this.inputHiddenSubmitFormName.attr('name', this.id)
-    this.inputHiddenSubmitButtonName.attr('name', submitButtonName || this.id)
+    this.inputHiddenSubmitFormName.attr('name', 'framelix-form-' + this.id)
+    this.inputHiddenSubmitButtonName.attr('name', 'framelix-form-button-' + (submitButtonName || this.id))
 
     if (!this.submitAsync) {
       this.setSubmitStatus(true)
@@ -667,8 +667,6 @@ class FramelixForm {
     } else {
       let values = FormDataJson.toJson(this.form, { 'flatList': true, 'includeDisabled': true })
       formData = new FormData()
-      // add current form name as form data
-      formData.append(this.id, '1')
       for (let i = 0; i < values.length; i++) {
         formData.append(values[i][0], values[i][1])
       }

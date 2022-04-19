@@ -13,6 +13,7 @@ use Framelix\Framelix\Utils\ArrayUtils;
 
 use function is_array;
 use function is_object;
+use function var_dump;
 
 /**
  * Storable meta property
@@ -280,10 +281,10 @@ class StorableMetaProperty
             if ($field instanceof Field\Select) {
                 if (is_array($value)) {
                     foreach ($value as $key => $v) {
-                        $value[$key] = $field->getOptionLabel($v) ?? $v;
+                        $value[$key] = Lang::get($field->getOptionLabel($v) ?? $v);
                     }
                 } elseif (!is_object($value)) {
-                    $value = $field->getOptionLabel($value) ?? $value;
+                    $value = Lang::get($field->getOptionLabel($value) ?? $value);
                 }
             }
         }

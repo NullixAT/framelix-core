@@ -46,10 +46,6 @@ h2, h3 {
   min-height: 50px;
   overflow: hidden;
   text-overflow: ellipsis;
-
-  html[data-screen-size='s'] & {
-    font-size: 1.4rem;
-  }
 }
 
 hr {
@@ -100,11 +96,9 @@ hr {
 
 .framelix-sidebar-inner {
   padding: 10px;
-  margin: 10px;
-  margin-right: 0;
   box-sizing: border-box;
   background: var(--sidebar-bg);
-  min-height: calc(100% - 20px);
+  min-height: calc(100%);
 }
 
 .framelix-sidebar-logo {
@@ -121,11 +115,16 @@ hr {
 }
 
 .framelix-sidebar {
+  .framelix-sidebar-entry {
+    font-weight: bold;
+  }
+
   .framelix-sidebar-link:any-link,
-  .framelix-sidebar-collapsable-title {
+  .framelix-sidebar-collapsable-title,
+  button {
     color: var(--sidebar-text-color);
     text-decoration: none;
-    padding: 4px 15px;
+    padding: 4px 8px;
     display: flex;
     align-items: center;
     box-sizing: border-box;
@@ -137,8 +136,9 @@ hr {
     line-height: inherit;
     text-align: left;
     border-radius: var(--border-radius);
-    margin-bottom: 2px;
     overflow: hidden;
+    border-bottom: 1px solid var(--color-page-bg-stencil);
+    justify-content: start;
 
     html[data-screen-size='s'] & {
       padding-top: 8px;
@@ -166,6 +166,10 @@ hr {
     &:hover {
       background: var(--color-page-bg-stencil);
     }
+  }
+
+  .framelix-sidebar-collapsable-title {
+    font-weight: bold;
   }
 
   &:last-child {
@@ -209,8 +213,18 @@ hr {
   }
 
   .framelix-sidebar-settings {
-    text-align: center;
-    padding: 0 25px;
+    button {
+      opacity: 0.6;
+      font-weight: normal;
+      padding: 15px;
+      border: 0;
+      font-size: 90%;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
   }
 
   .framelix-sidebar-context-select {
@@ -221,7 +235,6 @@ hr {
   .framelix-sidebar-entries {
     margin-bottom: 10px;
     padding-bottom: 10px;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -235,13 +248,13 @@ hr {
 
   .framelix-sidebar-collapsable-container {
     display: none;
+    font-size: 90%;
+    font-weight: normal;
   }
 
   &.framelix-sidebar-collapsable-active {
     .framelix-sidebar-collapsable-container {
       display: block;
-      border-left: 2px solid var(--color-page-bg-stencil);
-      padding-left: 5px;
     }
 
     .framelix-sidebar-collapsable-title,

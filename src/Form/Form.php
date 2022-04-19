@@ -17,7 +17,6 @@ use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\View;
 use JetBrains\PhpStorm\ExpectedValues;
 use JsonSerializable;
-
 use function array_shift;
 use function get_class;
 use function is_array;
@@ -129,6 +128,7 @@ class Form implements JsonSerializable
      */
     public static function isFormSubmitted(string $formName): bool
     {
+        $formName = "framelix-form-" . $formName;
         if (Request::getPost($formName) === '1') {
             return true;
         }
@@ -247,7 +247,7 @@ class Form implements JsonSerializable
      */
     public function addLoadUrlButton(
         Url $url,
-        string $buttonText,
+        string $buttonText = '__framelix_stop_edit__',
         ?string $buttonIcon = 'open_in_new',
         ColorName $buttonColor = ColorName::DEFAULT,
         ?string $buttonTooltip = null
@@ -271,9 +271,9 @@ class Form implements JsonSerializable
      * @param string|null $buttonTooltip
      */
     public function addSubmitButton(
-        string $submitFieldName,
-        string $buttonText,
-        ?string $buttonIcon = null,
+        string $submitFieldName = 'save',
+        string $buttonText = '__framelix_save__',
+        ?string $buttonIcon = 'save',
         ColorName $buttonColor = ColorName::SUCCESS,
         ?string $buttonTooltip = null
     ): void {
@@ -339,10 +339,8 @@ class Form implements JsonSerializable
                 continue;
             }
             if ($storableSchemaProperty->storableClass || $storableSchemaProperty->arrayStorableClass) {
-                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass(
-                ) : null;
-                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass(
-                ) : null;
+                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass() : null;
+                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass() : null;
                 // skip storable files, they can be handled with this->storeWithFiles()
                 if ($storableClass instanceof StorableFile || $arrayStorableClass instanceof StorableFile) {
                     continue;
@@ -377,10 +375,8 @@ class Form implements JsonSerializable
                 continue;
             }
             if ($storableSchemaProperty->storableClass || $storableSchemaProperty->arrayStorableClass) {
-                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass(
-                ) : null;
-                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass(
-                ) : null;
+                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass() : null;
+                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass() : null;
                 if ($storableClass instanceof StorableFile || $arrayStorableClass instanceof StorableFile) {
                     $files = UploadedFile::createFromSubmitData($storableSchemaProperty->name);
                     if ($files) {
@@ -389,8 +385,7 @@ class Form implements JsonSerializable
                             $existingValues = $storable->{$storableSchemaProperty->name} ?? [];
                             foreach ($files as $file) {
                                 /** @var StorableFile $storableFile */
-                                $storableFile = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass(
-                                ) : new $storableSchemaProperty->storableClass();
+                                $storableFile = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass() : new $storableSchemaProperty->storableClass();
                                 $storableFile->store($file);
                                 $existingValues[] = $storableFile;
                                 $newFiles[] = $storableFile;

@@ -70,9 +70,6 @@ h2:after, h3:after {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-html[data-screen-size=s] .framelix-page-title {
-  font-size: 1.4rem;
-}
 
 hr {
   border: 0;
@@ -120,11 +117,9 @@ hr {
 
 .framelix-sidebar-inner {
   padding: 10px;
-  margin: 10px;
-  margin-right: 0;
   box-sizing: border-box;
   background: var(--sidebar-bg);
-  min-height: calc(100% - 20px);
+  min-height: 100%;
 }
 
 .framelix-sidebar-logo {
@@ -139,11 +134,15 @@ hr {
   display: block;
 }
 
+.framelix-sidebar .framelix-sidebar-entry {
+  font-weight: bold;
+}
 .framelix-sidebar .framelix-sidebar-link:any-link,
-.framelix-sidebar .framelix-sidebar-collapsable-title {
+.framelix-sidebar .framelix-sidebar-collapsable-title,
+.framelix-sidebar button {
   color: var(--sidebar-text-color);
   text-decoration: none;
-  padding: 4px 15px;
+  padding: 4px 8px;
   display: flex;
   align-items: center;
   box-sizing: border-box;
@@ -155,16 +154,19 @@ hr {
   line-height: inherit;
   text-align: left;
   border-radius: var(--border-radius);
-  margin-bottom: 2px;
   overflow: hidden;
+  border-bottom: 1px solid var(--color-page-bg-stencil);
+  justify-content: start;
 }
 html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-link:any-link,
-html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {
+html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title,
+html[data-screen-size=s] .framelix-sidebar button {
   padding-top: 8px;
   padding-bottom: 8px;
 }
 .framelix-sidebar .framelix-sidebar-link:any-link .material-icons,
-.framelix-sidebar .framelix-sidebar-collapsable-title .material-icons {
+.framelix-sidebar .framelix-sidebar-collapsable-title .material-icons,
+.framelix-sidebar button .material-icons {
   margin-right: 10px;
   transition: 0.2s;
   width: 32px;
@@ -176,14 +178,19 @@ html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {
   border-radius: 100px;
 }
 .framelix-sidebar .framelix-sidebar-link:any-link.framelix-sidebar-link-active,
-.framelix-sidebar .framelix-sidebar-collapsable-title.framelix-sidebar-link-active {
+.framelix-sidebar .framelix-sidebar-collapsable-title.framelix-sidebar-link-active,
+.framelix-sidebar button.framelix-sidebar-link-active {
   background: var(--color-page-bg-stencil-weak);
   font-weight: bold;
   color: var(--color-primary-text);
 }
 .framelix-sidebar .framelix-sidebar-link:any-link:hover,
-.framelix-sidebar .framelix-sidebar-collapsable-title:hover {
+.framelix-sidebar .framelix-sidebar-collapsable-title:hover,
+.framelix-sidebar button:hover {
   background: var(--color-page-bg-stencil);
+}
+.framelix-sidebar .framelix-sidebar-collapsable-title {
+  font-weight: bold;
 }
 .framelix-sidebar:last-child .framelix-sidebar-link:any-link,
 .framelix-sidebar:last-child .framelix-sidebar-collapsable-title {
@@ -218,9 +225,15 @@ html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {
 .framelix-sidebar .framelix-sidebar-label-small {
   font-size: 90%;
 }
-.framelix-sidebar .framelix-sidebar-settings {
-  text-align: center;
-  padding: 0 25px;
+.framelix-sidebar .framelix-sidebar-settings button {
+  opacity: 0.6;
+  font-weight: normal;
+  padding: 15px;
+  border: 0;
+  font-size: 90%;
+}
+.framelix-sidebar .framelix-sidebar-settings button:hover {
+  opacity: 1;
 }
 .framelix-sidebar .framelix-sidebar-context-select {
   padding: 0 25px;
@@ -229,7 +242,6 @@ html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {
 .framelix-sidebar .framelix-sidebar-entries {
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .framelix-sidebar-collapsable .framelix-sidebar-collapsable-title::after {
@@ -240,11 +252,11 @@ html[data-screen-size=s] .framelix-sidebar .framelix-sidebar-collapsable-title {
 }
 .framelix-sidebar-collapsable .framelix-sidebar-collapsable-container {
   display: none;
+  font-size: 90%;
+  font-weight: normal;
 }
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-collapsable-container {
   display: block;
-  border-left: 2px solid var(--color-page-bg-stencil);
-  padding-left: 5px;
 }
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-collapsable-title::after,
 .framelix-sidebar-collapsable.framelix-sidebar-collapsable-active .framelix-sidebar-link-active::after {

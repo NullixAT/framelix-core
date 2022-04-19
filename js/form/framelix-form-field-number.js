@@ -69,16 +69,16 @@ class FramelixFormFieldNumber extends FramelixFormFieldText {
     const parentValidation = await super.validate()
     if (parentValidation !== true) return parentValidation
 
-    const value = FramelixNumberUtils.toNumber(this.getValue(), this.decimals)
+    const value = FramelixNumberUtils.toNumber(this.getValue(), this.decimals, this.commaSeparator)
     if (this.min !== null) {
       if (value < this.min) {
-        return FramelixLang.get('__framelix_form_validation_min__', { 'number': FramelixNumberUtils.format(this.min, this.decimals) })
+        return FramelixLang.get('__framelix_form_validation_min__', { 'number': FramelixNumberUtils.format(this.min, this.decimals, this.commaSeparator, this.thousandSeparator) })
       }
     }
 
     if (this.max !== null) {
       if (value > this.max) {
-        return FramelixLang.get('__framelix_form_validation_max__', { 'number': FramelixNumberUtils.format(this.max, this.decimals) })
+        return FramelixLang.get('__framelix_form_validation_max__', { 'number': FramelixNumberUtils.format(this.max, this.decimals, this.commaSeparator, this.thousandSeparator) })
       }
     }
     return true

@@ -4,7 +4,6 @@ namespace Framelix\Framelix\Form\Field;
 
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Utils\NumberUtils;
-
 use function is_string;
 
 /**
@@ -63,6 +62,16 @@ class Number extends Text
             return $value;
         }
         return null;
+    }
+
+    /**
+     * Set format to integer only without thousand separator
+     * @return void
+     */
+    public function setIntegerOnly(): void
+    {
+        $this->decimals = 0;
+        $this->thousandSeparator = "";
     }
 
     /**
