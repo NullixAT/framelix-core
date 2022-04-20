@@ -17,7 +17,7 @@ class FramelixFormFieldTextarea extends FramelixFormField {
   placeholder = null
 
   /**
-   * The textarea text element
+   * The textarea element
    * @type {Cash}
    */
   textarea
