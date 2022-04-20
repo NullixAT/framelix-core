@@ -76,10 +76,7 @@ class FramelixDom {
     if (el instanceof cash) {
       el = el[0]
     }
-    if (el instanceof HTMLElement) {
-      return document.body.contains(el)
-    }
-    return false
+    return document.body.contains(el)
   }
 
   /**
