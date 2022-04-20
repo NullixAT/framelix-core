@@ -240,7 +240,7 @@
   --color-toast-error-text: white;
   --color-toast-primary-bg: hsl(var(--color-primary-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
   --color-toast-primary-text: white;
-  --color-button-default-bg: hsl(var(--color-primary-hue), 20%, 25%);
+  --color-button-default-bg: #444;
   --color-button-default-text: white;
   --color-button-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 40%);
   --color-button-success-text: white;
@@ -462,7 +462,7 @@ datalist {
   font-size: 80%;
   color: var(--color-input-text);
   padding: 2px 5px;
-  border: #0f0f0f;
+  border: hsl(0deg, 0%, 6%);
   margin-bottom: 1px;
   border-radius: var(--border-radius);
 }
