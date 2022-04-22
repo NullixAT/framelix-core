@@ -220,7 +220,7 @@ class FramelixModal {
       modal.destroy()
     })
     setTimeout(function () {
-      buttons.first().trigger('focus')
+      buttons.last().trigger('focus')
     }, 10)
     return modal
   }
@@ -317,11 +317,9 @@ class FramelixModal {
     }
     $('.framelix-page, .framelix-content').addClass('framelix-page-backdrop')
 
-    instance.contentContainer.toggleClass('framelix-modal-content-maximized', !!options.maximized)
-    if (typeof options.maxWidth === 'number') {
-      instance.container.toggleClass('framelix-modal-maxwidth', true)
-      instance.contentContainer.css('max-width', options.maxWidth + 'px')
-      instance.contentContainer.css('width', options.maxWidth + 'px')
+    if (options.maxWidth) {
+      const inner = instance.container.find('.framelix-modal-inner')
+      inner.css('max-width', (typeof options.maxWidth === 'number' ? options.maxWidth + 'px' : options.maxWidth))
     }
     instance.headerContainer.toggleClass('hidden', !options.headerContent)
     if (options.headerContent) {
@@ -406,8 +404,7 @@ FramelixInit.late.push(FramelixModal.init)
  * @property {string|Cash} bodyContent The body content
  * @property {string|Cash|null=} headerContent The fixed header content
  * @property {string|Cash|null=} footerContent The fixed footer content
- * @property {number=} maxWidth Max width in pixel
- * @property {boolean=} maximized The modal opens maximized independent of content size
+ * @property {number|string=} maxWidth Max width
  * @property {string=} color The modal color (Backdrop and Modal BG), success, warning, error, primary
  * @property {FramelixModal=} instance Reuse the given instance instead of creating a new
  * @property {Object=} data Any data to pass to the instance for later reference

@@ -52,7 +52,7 @@ abstract class StorableFile extends StorableExtended
 
     /**
      * Keep file extensions on disk
-     * The files that are not matches this extensions stored on disk as {filename}.txt to prevent any abuse
+     * The files that are not matches these extensions stored on disk as {filename}.txt to prevent any abuse
      * By default, only images/videos are considered safe to keep and they are useful when you want link them directly on a website
      * @var string[]
      */
@@ -188,8 +188,8 @@ abstract class StorableFile extends StorableExtended
             $folderName = ceil($fileNr / $this->maxFilesPerFolder) * $this->maxFilesPerFolder;
             while (true) {
                 $this->relativePathOnDisk .= $folderName . "/" . RandomGenerator::getRandomString(
-                        40,
-                        60
+                        30,
+                        40
                     ) . "." . $extensionOnDisk;
                 // file not exist, break the loop
                 if (!$this->getPath()) {

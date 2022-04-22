@@ -46,39 +46,27 @@
     border-radius: var(--border-radius);
     box-shadow: rgba(0, 0, 0, 0.2) 2px 4px 13px;
     position: relative;
-    min-height: 50px;
-    min-width: 50vw;
     display: flex;
+    max-width: 85vw;
+    max-height: 90vh;
+    width: 85vw;
     @include insertColorSelectors("framelix-modal-inner", "modal");
   }
 
   .framelix-modal-content {
+    min-width: 20px;
     min-height: 20px;
-    min-width: 60vw;
-    max-width: 94vw;
-    max-height: 90vh;
     box-sizing: border-box;
     padding: 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
   .framelix-modal-content-maximized {
     width: 94vw;
     height: 90vh;
-  }
-
-  &.framelix-modal-maxwidth {
-    .framelix-modal-inner {
-      min-width: unset;
-    }
-
-    .framelix-modal-content {
-      min-width: unset;
-      max-width: unset;
-      width: unset;
-    }
   }
 
   .framelix-modal-header {
