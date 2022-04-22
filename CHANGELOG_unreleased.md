@@ -11,3 +11,4 @@
 * backend pages now by default need a user to be logged in
 * added Lang::concatKeys to easily concat lang keys
 * added setIntegerOnly() to number field
+* added noAnimation option to FramelixModal

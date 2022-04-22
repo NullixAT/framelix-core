@@ -305,11 +305,16 @@ class FramelixModal {
     $('body').css({
       'overflow': 'hidden'
     })
-    // wait 1ms for css animations to kick it, otherwise it will be immediately at the end animation state
-    Framelix.wait(1).then(function () {
+    if (instance.options.noAnimation) {
       instance.container.addClass('framelix-modal-visible')
       instance.backdrop.addClass('framelix-modal-backdrop-visible')
-    })
+    } else {
+      // wait 1ms for css animations to kick it, otherwise it will be immediately at the end animation state
+      Framelix.wait(1).then(function () {
+        instance.container.addClass('framelix-modal-visible')
+        instance.backdrop.addClass('framelix-modal-backdrop-visible')
+      })
+    }
     $('.framelix-page, .framelix-content').addClass('framelix-page-backdrop')
 
     instance.contentContainer.toggleClass('framelix-modal-content-maximized', !!options.maximized)
@@ -367,8 +372,10 @@ class FramelixModal {
     for (let key in this.resolvers) this.resolvers[key]()
     this.resolvers = null
     const childs = FramelixModal.modalsContainer.children('.framelix-modal-visible').not(this.container)
-    this.container.removeClass('framelix-modal-visible')
-    this.backdrop.removeClass('framelix-modal-backdrop-visible')
+    if (!this.options.noAnimation) {
+      this.container.removeClass('framelix-modal-visible')
+      this.backdrop.removeClass('framelix-modal-backdrop-visible')
+    }
     if (!childs.length) {
       $('.framelix-page, .framelix-content').removeClass('framelix-page-backdrop')
       FramelixModal.currentInstance = null
@@ -377,7 +384,7 @@ class FramelixModal {
       lastChild.removeClass('framelix-blur')
       FramelixModal.currentInstance = FramelixModal.instances[lastChild.attr('data-instance-id')]
     }
-    await Framelix.wait(200)
+    if (!this.options.noAnimation) await Framelix.wait(200)
     if (!FramelixModal.currentInstance) {
       $('body').css({
         'overflow': ''
@@ -404,4 +411,5 @@ FramelixInit.late.push(FramelixModal.init)
  * @property {string=} color The modal color (Backdrop and Modal BG), success, warning, error, primary
  * @property {FramelixModal=} instance Reuse the given instance instead of creating a new
  * @property {Object=} data Any data to pass to the instance for later reference
+ * @property {boolean=} noAnimation Instantly show and hide this modal without any transition
  */
