@@ -7,6 +7,7 @@
 * fixed a fiew field layout issues
 * fixed FramelixDom.isInDom() with some elements
 * optimized email settings
+* optimized FramelixModal for different screen sizes
 * views with regex in url now remove parameters that are not used when generating urls
 * backend pages now by default need a user to be logged in
 * added Lang::concatKeys to easily concat lang keys
