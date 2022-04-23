@@ -13,7 +13,6 @@ use Framelix\Framelix\Utils\ArrayUtils;
 
 use function is_array;
 use function is_object;
-use function var_dump;
 
 /**
  * Storable meta property

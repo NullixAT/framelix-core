@@ -17,6 +17,7 @@ use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\View;
 use JetBrains\PhpStorm\ExpectedValues;
 use JsonSerializable;
+
 use function array_shift;
 use function get_class;
 use function is_array;
@@ -339,8 +340,10 @@ class Form implements JsonSerializable
                 continue;
             }
             if ($storableSchemaProperty->storableClass || $storableSchemaProperty->arrayStorableClass) {
-                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass() : null;
-                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass() : null;
+                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass(
+                ) : null;
+                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass(
+                ) : null;
                 // skip storable files, they can be handled with this->storeWithFiles()
                 if ($storableClass instanceof StorableFile || $arrayStorableClass instanceof StorableFile) {
                     continue;
@@ -375,8 +378,10 @@ class Form implements JsonSerializable
                 continue;
             }
             if ($storableSchemaProperty->storableClass || $storableSchemaProperty->arrayStorableClass) {
-                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass() : null;
-                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass() : null;
+                $storableClass = $storableSchemaProperty->storableClass ? new $storableSchemaProperty->storableClass(
+                ) : null;
+                $arrayStorableClass = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass(
+                ) : null;
                 if ($storableClass instanceof StorableFile || $arrayStorableClass instanceof StorableFile) {
                     $files = UploadedFile::createFromSubmitData($storableSchemaProperty->name);
                     if ($files) {
@@ -385,7 +390,8 @@ class Form implements JsonSerializable
                             $existingValues = $storable->{$storableSchemaProperty->name} ?? [];
                             foreach ($files as $file) {
                                 /** @var StorableFile $storableFile */
-                                $storableFile = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass() : new $storableSchemaProperty->storableClass();
+                                $storableFile = $storableSchemaProperty->arrayStorableClass ? new $storableSchemaProperty->arrayStorableClass(
+                                ) : new $storableSchemaProperty->storableClass();
                                 $storableFile->store($file);
                                 $existingValues[] = $storableFile;
                                 $newFiles[] = $storableFile;

@@ -4,6 +4,7 @@ namespace Framelix\Framelix\Form\Field;
 
 use Framelix\Framelix\Lang;
 use Framelix\Framelix\Utils\NumberUtils;
+
 use function is_string;
 
 /**

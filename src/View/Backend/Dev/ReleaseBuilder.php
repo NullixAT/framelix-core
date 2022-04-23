@@ -40,7 +40,7 @@ class ReleaseBuilder extends View
                 unlink($distFile);
             }
             $shell = Shell::prepare("php {*}", [self::BUILD_FOLDER . "/create-release-package.php"]);
-            $shell->execute();;
+            $shell->execute();
             Toast::success('__framelix_view_backend_dev_releasebuilder_created__');
             $this->getSelfUrl()->redirect();
         }
@@ -53,7 +53,9 @@ class ReleaseBuilder extends View
     public function showContent(): void
     {
         ?>
-        <a href="?createDist=1" class="framelix-button"><?= Lang::get('__framelix_view_backend_dev_releasebuilder_create__') ?></a>
+        <a href="?createDist=1" class="framelix-button"><?= Lang::get(
+                '__framelix_view_backend_dev_releasebuilder_create__'
+            ) ?></a>
         <div class="framelix-spacer"></div>
         <?php
         $distFiles = FileUtils::getFiles(self::DIST_FOLDER, "~\.zip$~");

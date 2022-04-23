@@ -12,6 +12,7 @@ use function curl_setopt;
 use function explode;
 use function mb_substr;
 use function strtoupper;
+
 use const CURLINFO_RESPONSE_CODE;
 use const CURLOPT_FOLLOWLOCATION;
 use const CURLOPT_HEADER;

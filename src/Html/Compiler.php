@@ -209,7 +209,8 @@ class Compiler
                     'files' => $compileFiles,
                     'options' => $groupData['options'] ?? []
                 ];
-                $shell = Shell::prepare("node {*}",
+                $shell = Shell::prepare(
+                    "node {*}",
                     [
                         FileUtils::getModuleRootPath("Framelix") . "/nodejs/compiler.js",
                         base64_encode(JsonUtils::encode($cmdParams))

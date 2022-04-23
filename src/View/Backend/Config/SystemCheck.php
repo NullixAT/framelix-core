@@ -9,6 +9,7 @@ use Framelix\Framelix\Lang;
 use Framelix\Framelix\Storable\SystemEventLog;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\View\Backend\View;
+
 use function escapeshellarg;
 use function escapeshellcmd;
 use function realpath;
@@ -60,7 +61,6 @@ class SystemCheck extends View
                             continue;
                         }
                         $subInfo .= 'Module "' . $module . '" Version ' . (!isset(Config::$loadedModules[$module]) ? '(Not enabled)' : '') . ' ' . ($packageJson['version'] ?? "-") . "<br/>";
-
                     }
                     break;
                 case 'https':
