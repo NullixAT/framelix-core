@@ -2,11 +2,11 @@
   .framelix-tab-buttons {
     display: flex;
     flex-wrap: wrap;
-    padding: 10px;
+    padding: 5px;
     border-radius: var(--border-radius);
     margin-bottom: 10px;
     background: var(--color-page-bg-stencil);
-    gap: 10px;
+    column-gap: 10px;
     align-items: center;
 
     ::before {
@@ -27,12 +27,12 @@
     background: transparent;
     border: none;
     color: var(--color-page-text);
-    padding: 10px 25px;
-    padding-left: 10px;
+    padding: 5px 10px;
+    padding-left: 5px;
 
     &[data-active='1'] {
-      background: var(--color-button-primary-bg);
-      color: var(--color-button-primary-text);
+      color: var(--color-primary-text);
+
       &::before {
         transform: rotate(90deg);
       }
@@ -40,10 +40,6 @@
 
     &:hover {
       box-shadow: rgba(0, 0, 0, 0.1) 0 0 1000px inset;
-    }
-
-    html[data-screen-size='s'] & {
-      width: calc(50% - 10px);
     }
   }
 
@@ -53,5 +49,11 @@
     &[data-active='1'] {
       display: block;
     }
+  }
+}
+
+html[data-screen-size='s'] {
+  .framelix-tab-button {
+    width: calc(50% - 10px);
   }
 }

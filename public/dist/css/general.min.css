@@ -1073,11 +1073,11 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
 .framelix-tabs .framelix-tab-buttons {
   display: flex;
   flex-wrap: wrap;
-  padding: 10px;
+  padding: 5px;
   border-radius: var(--border-radius);
   margin-bottom: 10px;
   background: var(--color-page-bg-stencil);
-  gap: 10px;
+  column-gap: 10px;
   align-items: center;
 }
 .framelix-tabs .framelix-tab-buttons ::before {
@@ -1096,12 +1096,11 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
   background: transparent;
   border: none;
   color: var(--color-page-text);
-  padding: 10px 25px;
-  padding-left: 10px;
+  padding: 5px 10px;
+  padding-left: 5px;
 }
 .framelix-tabs .framelix-tab-button[data-active="1"] {
-  background: var(--color-button-primary-bg);
-  color: var(--color-button-primary-text);
+  color: var(--color-primary-text);
 }
 .framelix-tabs .framelix-tab-button[data-active="1"]::before {
   transform: rotate(90deg);
@@ -1109,14 +1108,15 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
 .framelix-tabs .framelix-tab-button:hover {
   box-shadow: rgba(0, 0, 0, 0.1) 0 0 1000px inset;
 }
-html[data-screen-size=s] .framelix-tabs .framelix-tab-button {
-  width: calc(50% - 10px);
-}
 .framelix-tabs .framelix-tab-content {
   display: none;
 }
 .framelix-tabs .framelix-tab-content[data-active="1"] {
   display: block;
+}
+
+html[data-screen-size=s] .framelix-tab-button {
+  width: calc(50% - 10px);
 }
 
 .framelix-toast {
