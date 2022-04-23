@@ -1,54 +1,42 @@
 .framelix-alert {
-  border-radius: var(--border-radius) var(--border-radius) var(--border-radius) 0;
+  border-radius: var(--border-radius);
   margin-bottom: 5px;
   background: var(--color-alert-default-bg);
   color: var(--color-alert-default-text);
   --icon-color-hue: var(--color-primary-hue);
-  font-size: 92%;
-  min-height: 25px;
-  padding: 13px 20px 10px 40px;
+  font-size: 0.95rem;
+  padding: 10px;
   position: relative;
+  border-left: 2px solid rgba(0, 0, 0, 0.1);
 
   @include insertColorSelectors("framelix-alert", "alert");
 
-  &::before {
+  &.framelix-alert-success {
+    --icon-color-hue: var(--color-success-hue);
+  }
+
+  &.framelix-alert-warning {
+    --icon-color-hue: var(--color-warning-hue);
+  }
+
+  &.framelix-alert-error {
+    --icon-color-hue: var(--color-error-hue);
+  }
+
+  &[data-icon] {
+    padding-left: 40px;
+  }
+
+  &[data-icon]::before {
+    content: attr(data-icon string);
     position: absolute;
     color: hsl(var(--icon-color-hue), 50%, 50%);
-    content: "star";
     font-family: "Material Icons", sans-serif;
     font-size: 24px;
     flex: 0 0 auto;
     opacity: 0.4;
     margin-top: -7px;
     margin-left: -30px;
-  }
-
-  &.framelix-alert-success {
-    --icon-color-hue: var(--color-success-hue);
-
-    &::before {
-      content: "check";
-    }
-  }
-
-  &.framelix-alert-warning {
-    --icon-color-hue: var(--color-warning-hue);
-
-    &::before {
-      content: "warning";
-    }
-  }
-
-  &.framelix-alert-error {
-    --icon-color-hue: var(--color-error-hue);
-
-    &::before {
-      content: "error";
-    }
-  }
-
-  &[data-icon]::before {
-    content: attr(data-icon string);
   }
 
   &[data-icon=''] {
