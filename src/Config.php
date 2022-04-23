@@ -168,6 +168,8 @@ class Config
             self::$loadedModules[$module] = $module;
         }
         Framelix::$allowedAutoloadingModules[$module] = $module;
+        $moduleLangFolder = __DIR__ . "/../../$module/lang";
+        Lang::addValuesForFolder($moduleLangFolder);
     }
 
     /**

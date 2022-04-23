@@ -13,3 +13,4 @@
 * added Lang::concatKeys to easily concat lang keys
 * added setIntegerOnly() to number field
 * added noAnimation option to FramelixModal
+* refactored language handling for more flexible way to load and add values

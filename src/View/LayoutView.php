@@ -15,10 +15,12 @@ use Framelix\Framelix\Utils\HtmlUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\View;
+
 use function call_user_func_array;
 use function file_exists;
 use function get_class;
 use function htmlentities;
+
 use const FRAMELIX_MODULE;
 
 /**
@@ -154,8 +156,8 @@ abstract class LayoutView extends View
               FramelixConfig.compiledFileUrls = <?=JsonUtils::encode($distUrls)?>;
               FramelixLang.lang = <?=JsonUtils::encode(Lang::$lang)?>;
               FramelixLang.langFallback = <?=JsonUtils::encode(Config::get('languageFallback') ?? 'en')?>;
-              FramelixLang.supportedLanguages = <?=JsonUtils::encode(Lang::getSupportedLanguages())?>;
-              FramelixLang.values = <?=JsonUtils::encode(Lang::getValuesForSupportedLanguages())?>;
+              FramelixLang.supportedLanguages = <?=JsonUtils::encode(Lang::getEnabledLanguages())?>;
+              FramelixLang.values = <?=JsonUtils::encode(Lang::$values)?>;
               FramelixToast.queue = <?=JsonUtils::encode(Toast::getQueueMessages(true))?>;
               Framelix.initEarly()
             </script>

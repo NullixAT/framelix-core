@@ -96,6 +96,11 @@ class Framelix
         Config::loadModule("Framelix");
         Config::loadModule(FRAMELIX_MODULE);
 
+        // load languages for all enabled modules by default
+        foreach (Config::$loadedModules as $module) {
+            Lang::addValuesForModule($module);
+        }
+
         if (!self::isCli()) {
             // set memory limit to 128M as it is enough for almost every use case
             // increase it where it is required

@@ -232,16 +232,16 @@ class Lang
     public static array $values = [];
 
     /**
-     * All loaded modules and languages for them
-     * @var array
-     */
-    private static array $loadedModules = [];
-
-    /**
-     * Supported languages
+     * All module langauges
      * @var array|null
      */
-    private static ?array $supportedLanguages = null;
+    private static ?array $moduleLanguages = null;
+
+    /**
+     * All loaded json files
+     * @var array
+     */
+    private static array $loadedFiles = [];
 
     /**
      * Get all languages that are supported by at least one module
@@ -249,18 +249,35 @@ class Lang
      */
     public static function getAllModuleLanguages(): array
     {
-        if (self::$supportedLanguages === null) {
-            self::$supportedLanguages = [];
+        if (self::$moduleLanguages === null) {
+            self::$moduleLanguages = [];
             foreach (Config::$loadedModules as $module) {
                 $files = FileUtils::getFiles(FileUtils::getModuleRootPath($module) . "/lang", "~\.json$~");
                 foreach ($files as $file) {
                     $lang = substr(basename($file), 0, -5);
-                    self::$supportedLanguages[] = $lang;
+                    self::$moduleLanguages[] = $lang;
                 }
             }
-            self::$supportedLanguages = array_unique(self::$supportedLanguages);
+            self::$moduleLanguages = array_unique(self::$moduleLanguages);
         }
-        return self::$supportedLanguages;
+        return self::$moduleLanguages;
+    }
+
+    /**
+     * Get all enabled languages that are enabled in the configs
+     * @return string[]
+     */
+    public static function getEnabledLanguages(): array
+    {
+        $languages = [self::$lang];
+        if (Config::get('languageMultiple') && Config::get('languagesSupported')) {
+            $languages = Config::get('languagesSupported');
+        }
+        $langDefault = $lang ?? self::$lang ?? Config::get('languageDefault');
+        $langFallback = Config::get('languageFallback') ?? 'en';
+        $languages[] = $langDefault;
+        $languages[] = $langFallback;
+        return array_unique($languages);
     }
 
     /**
@@ -281,19 +298,6 @@ class Lang
     }
 
     /**
-     * Get all supported languages that are enabled in the config
-     * @return string[]
-     */
-    public static function getSupportedLanguages(): array
-    {
-        $languages = [self::$lang];
-        if (Config::get('languageMultiple') && Config::get('languagesSupported')) {
-            $languages = Config::get('languagesSupported');
-        }
-        return $languages;
-    }
-
-    /**
      * Check if a key exist
      * @param string $key
      * @param string|null $lang
@@ -303,16 +307,7 @@ class Lang
     {
         $langDefault = $lang ?? self::$lang ?? Config::get('languageDefault');
         $langFallback = Config::get('languageFallback') ?? 'en';
-        if (!isset(self::$values[$langDefault])) {
-            self::$values[$langDefault] = [];
-            self::loadValues($langDefault);
-        }
-        if (!isset(self::$values[$langFallback])) {
-            self::$values[$langFallback] = [];
-            self::loadValues($langFallback);
-        }
-        $value = self::$values[$langDefault][$key] ?? self::$values[$langFallback][$key] ?? null;
-        return $value !== null;
+        return isset(self::$values[$langDefault][$key]) || isset(self::$values[$langFallback][$key]);
     }
 
     /**
@@ -401,18 +396,6 @@ class Lang
     }
 
     /**
-     * Get all values for all supported languages
-     * @return string[][]
-     */
-    public static function getValuesForSupportedLanguages(): array
-    {
-        foreach (self::getSupportedLanguages() as $language) {
-            self::loadValues($language);
-        }
-        return self::$values;
-    }
-
-    /**
      * Get active language by browser settings
      * @return string|null
      */
@@ -436,28 +419,55 @@ class Lang
     }
 
     /**
-     * Load values from json files for given language
-     * @param string $language
-     * @param string|null $forceModule Force to load only given module, even if module is not loaded/activated or data has already been loaded
+     * Add all values for a given module name
+     * Only for supportedLanguages()
+     * @param string $module
+     * @return void
      */
-    public static function loadValues(string $language, ?string $forceModule = null): void
+    public static function addValuesForModule(string $module): void
     {
-        $modules = Config::$loadedModules;
-        if ($forceModule) {
-            $modules = [$forceModule];
-        }
-        foreach ($modules as $module) {
-            $cacheKey = $language . "-" . $module;
-            if ((self::$loadedModules[$cacheKey] ?? null) && !$forceModule) {
-                continue;
-            }
-            self::$loadedModules[$cacheKey] = true;
-            $file = FileUtils::getModuleRootPath($module) . "/lang/$language.json";
-            if (file_exists($file)) {
-                $values = JsonUtils::readFromFile($file);
-                foreach ($values as $key => $value) {
-                    self::set($key, $value[0], $language);
+        self::addValuesForFolder(__DIR__ . "/../../$module/lang");
+    }
+
+    /**
+     * Add all values that are in given folder with json files
+     * Only for supportedLanguages()
+     * @param string $folder
+     * @return void
+     */
+    public static function addValuesForFolder(string $folder): void
+    {
+        if (file_exists($folder)) {
+            $supportedLanguages = self::getEnabledLanguages();
+            $files = FileUtils::getFiles($folder, "~\.json~");
+            foreach ($files as $file) {
+                $basename = basename($file);
+                $lang = substr($basename, 0, strpos($basename, "."));
+                if (in_array($lang, $supportedLanguages)) {
+                    self::addValuesForFile($lang, $file);
                 }
+            }
+        }
+    }
+
+    /**
+     * Add values that are in given json file
+     * @param string $language
+     * @param string $filePath
+     * @param bool $force If true, force to load the file even it already has been loaded
+     * @return void
+     */
+    public static function addValuesForFile(string $language, string $filePath, bool $force = false): void
+    {
+        if (!file_exists($filePath)) {
+            return;
+        }
+        $filePath = realpath($filePath);
+        if ($force || !isset(self::$loadedFiles[$filePath])) {
+            self::$loadedFiles[$filePath] = true;
+            $values = JsonUtils::readFromFile($filePath);
+            foreach ($values as $key => $value) {
+                self::set($key, $value[0], $language);
             }
         }
     }
