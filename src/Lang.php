@@ -273,7 +273,7 @@ class Lang
         if (Config::get('languageMultiple') && Config::get('languagesSupported')) {
             $languages = Config::get('languagesSupported');
         }
-        $langDefault = $lang ?? self::$lang ?? Config::get('languageDefault');
+        $langDefault = self::$lang ?? Config::get('languageDefault');
         $langFallback = Config::get('languageFallback') ?? 'en';
         $languages[] = $langDefault;
         $languages[] = $langFallback;
@@ -422,20 +422,22 @@ class Lang
      * Add all values for a given module name
      * Only for supportedLanguages()
      * @param string $module
+     * @param bool $force If true, force to load the file even it already has been loaded
      * @return void
      */
-    public static function addValuesForModule(string $module): void
+    public static function addValuesForModule(string $module, bool $force = false): void
     {
-        self::addValuesForFolder(__DIR__ . "/../../$module/lang");
+        self::addValuesForFolder(__DIR__ . "/../../$module/lang", $force);
     }
 
     /**
      * Add all values that are in given folder with json files
      * Only for supportedLanguages()
      * @param string $folder
+     * @param bool $force If true, force to load the file even it already has been loaded
      * @return void
      */
-    public static function addValuesForFolder(string $folder): void
+    public static function addValuesForFolder(string $folder, bool $force = false): void
     {
         if (file_exists($folder)) {
             $supportedLanguages = self::getEnabledLanguages();
@@ -444,7 +446,7 @@ class Lang
                 $basename = basename($file);
                 $lang = substr($basename, 0, strpos($basename, "."));
                 if (in_array($lang, $supportedLanguages)) {
-                    self::addValuesForFile($lang, $file);
+                    self::addValuesForFile($lang, $file, $force);
                 }
             }
         }
