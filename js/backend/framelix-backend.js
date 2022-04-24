@@ -46,7 +46,7 @@ class FramelixBackend {
     darkModeSelect.render()
     sidebar.find('.framelix-sidebar-select-darkmode').append(darkModeSelect.container)
     sidebar.on('click', '.framelix-sidebar-settings', function () {
-      FramelixModal.callPhpMethod($(this).attr('data-url'))
+      FramelixModal.callPhpMethod($(this).attr('data-url'), {}, { maxWidth: 600 })
     })
     sidebar.on(FramelixFormField.EVENT_CHANGE, '.framelix-sidebar-context-select', function (ev) {
       const value = FormDataJson.toJson(this)

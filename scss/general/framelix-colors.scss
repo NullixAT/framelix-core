@@ -21,7 +21,7 @@
   --color-page-bg-stencil-strong: #d5d5d5;
   --color-page-text: #111;
 
-  --color-alert-default-bg: hsl(var(--color-primary-hue), 20%, 85%);
+  --color-alert-default-bg: var(--color-page-bg-stencil);
   --color-alert-default-text: hsl(var(--color-primary-hue), 20%, 5%);
   --color-alert-success-bg: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 90%);
   --color-alert-success-text: hsl(var(--color-success-hue), calc(var(--color-contrast-modifier) + 70%), 20%);

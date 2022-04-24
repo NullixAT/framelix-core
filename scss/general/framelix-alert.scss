@@ -7,7 +7,7 @@
   font-size: 0.95rem;
   padding: 10px;
   position: relative;
-  border-left: 2px solid rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(0, 0, 0, 0.05);
 
   @include insertColorSelectors("framelix-alert", "alert");
 
