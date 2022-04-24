@@ -59,7 +59,10 @@ class Api extends View
      */
     public function downloadFile(): void
     {
-        Url::create()->verify();
+        if (!Url::create()->verify(false)) {
+            http_response_code(404);
+            return;
+        }
         $file = StorableFile::getById(Request::getGet('id'), Request::getGet('connectionId'));
         if (!$file) {
             http_response_code(404);
@@ -73,7 +76,10 @@ class Api extends View
      */
     public function callPhpMethod(): void
     {
-        Url::create()->verify(true);
+        if (!Url::create()->verify(false)) {
+            http_response_code(404);
+            return;
+        }
         $jsCall = new JsCall((string)Request::getGet('action'), Request::getBody());
         $this->success($jsCall->call((string)Request::getGet('phpMethod')));
     }
