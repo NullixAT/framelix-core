@@ -39,6 +39,13 @@ class QuickSearch implements JsonSerializable
     public bool $autostartSearch = true;
 
     /**
+     * Force initial query to be executed on load
+     * The user can override this after that, but with a page refresh it will start with the forced query again
+     * @var string|null
+     */
+    public ?string $forceInitialQuery = null;
+
+    /**
      * Assigned table
      * If set then load results into this table container of an own result container
      * @var Table|null

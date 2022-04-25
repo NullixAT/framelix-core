@@ -67,6 +67,13 @@ class FramelixQuickSearch {
   autostartSearch = true
 
   /**
+   * Force initial query to be executed on load
+   * The user can override this after that, but with a page refresh it will start with the forced query again
+   * @type {string|null}
+   */
+  forceInitialQuery = null
+
+  /**
    * If set then load results into this table container of an own result container
    * @type {string|FramelixTable|null}
    */
@@ -222,14 +229,17 @@ class FramelixQuickSearch {
         self.searchField.trigger('focus')
       }, 10)
     }
+    let defaultValue = null
     if (this.rememberSearch) {
-      const defaultValue = FramelixLocalStorage.get(this.getLocalStorageKey())
+      defaultValue = FramelixLocalStorage.get(this.getLocalStorageKey())
       this.setSearchQuery(defaultValue)
-      if (defaultValue !== null && defaultValue.length > 0 && defaultValue !== '*') {
-        if (this.autostartSearch) {
-          this.search()
-        }
-      }
+    }
+    if (this.forceInitialQuery !== null) {
+      defaultValue = this.forceInitialQuery
+      this.setSearchQuery(defaultValue)
+      this.search()
+    } else if (defaultValue !== null && defaultValue.length > 0 && defaultValue !== '*' && this.autostartSearch) {
+      this.search()
     }
     this.container.on('click', '.framelix-quick-search-help', function () {
       FramelixModal.show({ bodyContent: FramelixLang.get('__framelix_quick_search_help__') })

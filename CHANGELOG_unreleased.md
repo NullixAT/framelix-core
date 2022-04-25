@@ -13,4 +13,5 @@
 * added Lang::concatKeys to easily concat lang keys
 * added setIntegerOnly() to number field
 * added noAnimation option to FramelixModal
+* added QuickSearch->forceInitialQuery to set a initial query no matter what the user have stored
 * refactored language handling for more flexible way to load and add values
