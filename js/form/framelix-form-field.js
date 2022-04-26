@@ -310,6 +310,7 @@ class FramelixFormField {
    * @param {string} message
    */
   showValidationMessage (message) {
+    this.container.toggleClass('framelix-form-field-group-hidden', false)
     if (!this.isVisible()) {
       this.form.showValidationMessage(message)
       return

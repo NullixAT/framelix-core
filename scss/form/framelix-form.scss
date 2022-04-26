@@ -8,6 +8,19 @@
   margin-bottom: 10px;
 }
 
+.framelix-form-field-group {
+  margin: 10px 0;
+
+  button {
+    background: var(--color-page-bg-stencil-strong);
+    color: var(--color-page-text);
+  }
+
+  &[data-state='1'] button:before {
+    transform: rotate(90deg);
+  }
+}
+
 .framelix-form-row-bottom {
   display: flex;
   gap: 10px;

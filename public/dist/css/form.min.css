@@ -298,7 +298,6 @@ html[data-color-scheme=dark] .framelix-form-field-time ::-webkit-calendar-picker
 .framelix-form-field {
   margin-bottom: 1px;
   padding: 4px 0;
-  border-radius: var(--border-radius);
 }
 .framelix-form-field.framelix-form-field-hidden[data-visibility-hidden-method=transparent] {
   opacity: 0.2;
@@ -311,9 +310,16 @@ html[data-color-scheme=dark] .framelix-form-field-time ::-webkit-calendar-picker
 .framelix-form-field.framelix-form-field-hidden[data-visibility-hidden-method=hidden] {
   display: none;
 }
+.framelix-form-field.framelix-form-field-group-hidden {
+  display: none !important;
+}
 .framelix-form-field[data-disabled="1"] * {
   cursor: default !important;
   --color-input-background: var(--color-page-bg-stencil);
+}
+.framelix-form-field[data-field-group-id] {
+  padding-left: 10px;
+  border-left: 2px solid var(--color-page-bg-stencil-strong);
 }
 .framelix-form-field .framelix-form-field-label {
   margin-bottom: 3px;
@@ -419,6 +425,17 @@ input[type=checkbox]:checked:after {
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.framelix-form-field-group {
+  margin: 10px 0;
+}
+.framelix-form-field-group button {
+  background: var(--color-page-bg-stencil-strong);
+  color: var(--color-page-text);
+}
+.framelix-form-field-group[data-state="1"] button:before {
+  transform: rotate(90deg);
 }
 
 .framelix-form-row-bottom {

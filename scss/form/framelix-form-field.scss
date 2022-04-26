@@ -11,7 +11,6 @@
 .framelix-form-field {
   margin-bottom: 1px;
   padding: 4px 0;
-  border-radius: var(--border-radius);
 
   &.framelix-form-field-hidden {
     &[data-visibility-hidden-method='transparent'] {
@@ -29,9 +28,18 @@
     }
   }
 
+  &.framelix-form-field-group-hidden {
+    display: none !important;
+  }
+
   &[data-disabled="1"] * {
     cursor: default !important;
     --color-input-background: var(--color-page-bg-stencil);
+  }
+
+  &[data-field-group-id] {
+    padding-left: 10px;
+    border-left: 2px solid var(--color-page-bg-stencil-strong);
   }
 
   .framelix-form-field-label {

@@ -132,6 +132,12 @@ class FramelixForm {
   stickyFormButtons = false
 
   /**
+   * Field groups
+   * @type {Object|null}
+   */
+  fieldGroups = null
+
+  /**
    * A function with custom validation rules
    * If set must return true on success, string on error
    * @type {function|null}
@@ -395,6 +401,41 @@ class FramelixForm {
   }
 
   /**
+   * Add a field group
+   * Each field in $fieldNames will be grouped under a collapsable container with $label
+   * The group collapsable will be inserted before the first field in $fieldNames
+   * @param {string} id
+   * @param {string} label
+   * @param {string[]} fieldNames
+   * @param {boolean} defaultState
+   * @param {boolean} rememberState
+   */
+  addFieldGroup (
+    id,
+    label,
+    fieldNames,
+    defaultState = true,
+    rememberState = true
+  ) {
+    this.fieldGroups[id] = {
+      'label': label,
+      'fieldNames': fieldNames,
+      'defaultState': defaultState,
+      'rememberState': rememberState
+    }
+  }
+
+  /**
+   * Remove field groupby given id
+   * @param {string} id
+   */
+  removeFieldGroup (id) {
+    if (this.fieldGroups) {
+      delete this.fieldGroups[id]
+    }
+  }
+
+  /**
    * Update field visibility
    */
   updateFieldVisibility () {
@@ -565,10 +606,40 @@ class FramelixForm {
       fieldRenderPromises.push(field.rendered)
     }
 
+    if (this.fieldGroups) {
+      for (let id in this.fieldGroups) {
+        const row = this.fieldGroups[id]
+        const storageKey = this.id + '_' + id
+        let state = row.defaultState
+        if (row.rememberState) {
+          state = FramelixLocalStorage.get(storageKey)
+          if (state === null) state = row.defaultState
+        }
+        let groupStartField = null
+        let prevGroupField = null
+        for (let i = 0; i < row.fieldNames.length; i++) {
+          const fieldName = row.fieldNames[i]
+          const field = this.fields[fieldName]
+          if (field) {
+            if (!groupStartField) {
+              groupStartField = field
+              field.container.before(`<div class="framelix-form-field-group" data-id="${id}" data-storage-key="${storageKey}" data-state="${state ? 1 : 0}" data-remember="${row.rememberState ? '1' : '0'}"><button class="framelix-button" data-icon-left="chevron_right">${FramelixLang.get(row.label)}</button></div>`)
+            }
+            field.container.toggleClass('framelix-form-field-group-hidden', !state)
+            field.container.attr('data-field-group-id', id)
+            if (prevGroupField) {
+              prevGroupField.container.after(field.container)
+            }
+            prevGroupField = field
+          }
+        }
+      }
+    }
+
     const bottomRow = $(`<div class="framelix-form-row framelix-form-row-bottom"></div>`)
     this.container.append(bottomRow)
 
-    if (Object.keys(this.buttons).length) {
+    if (FramelixObjectUtils.hasKeys(this.buttons)) {
       const buttonsRow = $(`<div class="framelix-form-buttons"></div>`)
       bottomRow.append(buttonsRow)
 
@@ -614,6 +685,16 @@ class FramelixForm {
     if (this.validationMessage !== null) this.showValidationMessage(this.validationMessage)
     this.form.on('focusin', function () {
       self.hideValidationMessage()
+    })
+    this.form.on('click', '.framelix-form-field-group button', function () {
+      const el = $(this).parent()
+      const newState = el.attr('data-state') !== '1'
+      const id = el.attr('data-id')
+      el.attr('data-state', newState ? '1' : '0')
+      self.form.find('.framelix-form-field').filter('[data-field-group-id=\'' + id + '\']').toggleClass('framelix-form-field-group-hidden', !newState)
+      if (el.attr('data-remember') === '1') {
+        FramelixLocalStorage.set(el.attr('data-storage-key'), newState)
+      }
     })
     Promise.all(fieldRenderPromises).then(function () {
       if (self._renderedResolve) self._renderedResolve()
