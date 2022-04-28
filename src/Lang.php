@@ -7,6 +7,7 @@ use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 
 use function array_unique;
+use function array_values;
 use function basename;
 use function explode;
 use function file_exists;
@@ -277,7 +278,7 @@ class Lang
         $langFallback = Config::get('languageFallback') ?? 'en';
         $languages[] = $langDefault;
         $languages[] = $langFallback;
-        return array_unique($languages);
+        return array_values(array_unique($languages));
     }
 
     /**

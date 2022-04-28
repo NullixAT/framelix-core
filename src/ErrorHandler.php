@@ -66,7 +66,7 @@ class ErrorHandler
      */
     public static function throwableToJson(Throwable $e): array
     {
-        if (Config::get('errorLogExtended')) {
+        if (Config::get('errorLogExtended') || Config::get('devMode')) {
             $server = $_SERVER;
             ksort($server);
             $post = $_POST;
