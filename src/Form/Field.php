@@ -407,7 +407,7 @@ abstract class Field implements JsonSerializable
                 continue;
             }
             $submittedValue = ArrayUtils::getValue($submittedValues, $row['field']);
-            $requiredValue = $row['value'];
+            $requiredValue = $row['value'] ?? null;
             switch ($row['type']) {
                 case 'equal':
                 case 'notEqual':
