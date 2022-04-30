@@ -6,6 +6,7 @@
 * fixed number format/parse
 * fixed a fiew field layout issues
 * fixed FramelixDom.isInDom() with some elements
+* fixed setStorableValues in case of storableFile properties without a fileUpload
 * optimized email settings
 * optimized FramelixModal for different screen sizes
 * views with regex in url now remove parameters that are not used when generating urls
