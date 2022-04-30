@@ -27,7 +27,7 @@ class ErrorLogs extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin,logs";
+    protected string|bool $accessRole = "admin";
 
     /**
      * On request

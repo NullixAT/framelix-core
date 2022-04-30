@@ -23,7 +23,7 @@ class SystemCheck extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin,configuration";
+    protected string|bool $accessRole = "admin";
 
     /**
      * On request
@@ -47,21 +47,6 @@ class SystemCheck extends View
                     $valid = true;
                     $packageJson = JsonUtils::getPackageJson(null);
                     $subInfo = '<b>Application Version: ' . ($packageJson['version'] ?? "-") . "</b><br/>";
-                    $modules = scandir(FRAMELIX_APP_ROOT . "/modules");
-                    foreach ($modules as $module) {
-                        if (str_starts_with($module, ".")) {
-                            continue;
-                        }
-                        $path = FRAMELIX_APP_ROOT . "/modules/" . $module;
-                        if (!is_dir($path)) {
-                            continue;
-                        }
-                        $packageJson = JsonUtils::getPackageJson($module);
-                        if (!$packageJson) {
-                            continue;
-                        }
-                        $subInfo .= 'Module "' . $module . '" Version ' . (!isset(Config::$loadedModules[$module]) ? '(Not enabled)' : '') . ' ' . ($packageJson['version'] ?? "-") . "<br/>";
-                    }
                     break;
                 case 'https':
                     $valid = Config::get('applicationHttps');

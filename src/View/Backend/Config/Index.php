@@ -19,7 +19,7 @@ class Index extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin,configuration";
+    protected string|bool $accessRole = "admin";
 
     /**
      * On request

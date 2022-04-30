@@ -20,7 +20,7 @@ class ModuleConfigTab extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin,configuration";
+    protected string|bool $accessRole = "admin";
 
     /**
      * The module

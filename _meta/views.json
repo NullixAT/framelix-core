@@ -1,5 +1,5 @@
 {
-    "directoryListHash": "1|2777764093",
+    "directoryListHash": "1|2880204347",
     "views": {
         "Framelix\\Framelix\\View\\Api": {
             "accessRole": "*",
@@ -20,7 +20,7 @@
             "url": "\/backend\/appupdate"
         },
         "Framelix\\Framelix\\View\\Backend\\Config\\Index": {
-            "accessRole": "admin,configuration",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -29,7 +29,7 @@
             "url": "\/backend\/config"
         },
         "Framelix\\Framelix\\View\\Backend\\Config\\ModuleConfig": {
-            "accessRole": "admin,configuration",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -38,7 +38,7 @@
             "url": "\/backend\/config\/moduleconfig"
         },
         "Framelix\\Framelix\\View\\Backend\\Config\\ModuleConfigTab": {
-            "accessRole": "admin,configuration",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -47,7 +47,7 @@
             "url": "\/backend\/config\/moduleconfigtab"
         },
         "Framelix\\Framelix\\View\\Backend\\Config\\SystemCheck": {
-            "accessRole": "admin,configuration",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -74,7 +74,7 @@
             "url": "\/backend\/dev\/releasebuilder"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\Update": {
-            "accessRole": "dev",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -83,22 +83,13 @@
             "url": "\/backend\/dev\/update"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\UpdateDatabase": {
-            "accessRole": "dev",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
             "urlPriority": 0,
             "pageTitle": "{classLangKey}",
             "url": "\/backend\/dev\/updatedatabase"
-        },
-        "Framelix\\Framelix\\View\\Backend\\Dev\\UpdateSourceCode": {
-            "accessRole": "dev",
-            "customUrl": null,
-            "devModeOnly": false,
-            "multilanguage": true,
-            "urlPriority": 0,
-            "pageTitle": "{classLangKey}",
-            "url": "\/backend\/dev\/updatesourcecode"
         },
         "Framelix\\Framelix\\View\\Backend\\ForgotPassword": {
             "accessRole": "*",
@@ -137,7 +128,7 @@
             "url": "\/backend\/logout"
         },
         "Framelix\\Framelix\\View\\Backend\\Logs\\ErrorLogs": {
-            "accessRole": "admin,logs",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -146,7 +137,7 @@
             "url": "\/backend\/logs\/errorlogs"
         },
         "Framelix\\Framelix\\View\\Backend\\Logs\\SystemEventLogs": {
-            "accessRole": "admin,logs",
+            "accessRole": "admin",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,

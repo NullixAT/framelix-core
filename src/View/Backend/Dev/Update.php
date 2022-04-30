@@ -5,10 +5,6 @@ namespace Framelix\Framelix\View\Backend\Dev;
 use Framelix\Framelix\Html\Tabs;
 use Framelix\Framelix\View\Backend\View;
 
-use function is_dir;
-
-use const FRAMELIX_APP_ROOT;
-
 /**
  * Updating sources and database
  */
@@ -18,7 +14,7 @@ class Update extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "dev";
+    protected string|bool $accessRole = "admin";
 
     /**
      * On request
@@ -35,9 +31,6 @@ class Update extends View
     {
         $tabs = new Tabs();
         $tabs->addTab('update-database', null, new UpdateDatabase());
-        if (is_dir(FRAMELIX_APP_ROOT . "/.svn")) {
-            $tabs->addTab('update-source', null, new UpdateSourceCode());
-        }
         $tabs->show();
     }
 }
