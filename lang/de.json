@@ -1,1538 +1,1538 @@
 {
-  "__framelix_appupdate_autoupdate__": [
-    "Klicke hier um deine App zu aktualisieren",
-    "4f9b4"
-  ],
-  "__framelix_appupdate_changelog__": [
-    "Changelog",
-    "c4918"
-  ],
-  "__framelix_appupdate_check_update__": [
-    "Klicke hier um auf Updates zu pr\u00fcfen",
-    "4e5d3"
-  ],
-  "__framelix_appupdate_confirm__": [
-    "Ich best\u00e4tige diese Aktion",
-    "44bac"
-  ],
-  "__framelix_appupdate_confirm_desc__": [
-    "Ich habe ein Backup gemacht und wei\u00df, wie ich im Notfall das Backup wieder einspielen kann.",
-    "ea47c"
-  ],
-  "__framelix_appupdate_file__": [
-    "W\u00e4hle ein ZIP Paket",
-    "faae2"
-  ],
-  "__framelix_appupdate_no_update_available__": [
-    "Kein Update verf\u00fcgbar. Deine App ist aktuell.",
-    "c92c5"
-  ],
-  "__framelix_appupdate_tabs_appupdate__": [
-    "App Update",
-    "0ea14"
-  ],
-  "__framelix_appupdate_tabs_backup__": [
-    "Backup",
-    "3500b"
-  ],
-  "__framelix_appupdate_tabs_update_log__": [
-    "Update Log",
-    "cbc07"
-  ],
-  "__framelix_appupdate_tabs_update_log_dir_added__": [
-    "Verzeichnis hinzugef\u00fcgt",
-    "b920b"
-  ],
-  "__framelix_appupdate_tabs_update_log_dir_deleted__": [
-    "Verzeichnis gel\u00f6scht",
-    "f04e7"
-  ],
-  "__framelix_appupdate_tabs_update_log_dir_skipped__": [
-    "Verzeichnis ignoriert (Existiert bereits)",
-    "c8aef"
-  ],
-  "__framelix_appupdate_tabs_update_log_file_added__": [
-    "Dateien hinzugef\u00fcgt",
-    "f776c"
-  ],
-  "__framelix_appupdate_tabs_update_log_file_deleted__": [
-    "Dateien gel\u00f6scht",
-    "35471"
-  ],
-  "__framelix_appupdate_tabs_update_log_file_skipped__": [
-    "Dateien ignoriert (Existiert bereits und wurde nicht ver\u00e4ndert)",
-    "c1324"
-  ],
-  "__framelix_appupdate_tabs_update_log_file_updated__": [
-    "Dateien aktualisiert",
-    "5566c"
-  ],
-  "__framelix_appupdate_tabs_upload__": [
-    "Ein Zip Paket hochladen",
-    "18a3d"
-  ],
-  "__framelix_appupdate_update_available__": [
-    "Es gibt eine neue App Version welche du mit einem Klick installieren kannst. Mach immer ein Backup vor dem Update.",
-    "d0718"
-  ],
-  "__framelix_appupdate_updatetype_upload__": [
-    "Ein Zip Paket hochladen",
-    "dfa3b"
-  ],
-  "__framelix_backend_startpage__": [
-    "Home",
-    "8cf04"
-  ],
-  "__framelix_browser_unsupported__": [
-    "Dein Browser wird leider nicht mehr unterst\u00fctzt. Bitte aktualisiere auf einen aktuelle Version von Chrome, Edge, Firefox oder Safari.",
-    "fd507"
-  ],
-  "__framelix_cancel__": [
-    "Abbrechen",
-    "ea478"
-  ],
-  "__framelix_close__": [
-    "Schlie\u00dfen",
-    "d3d2e"
-  ],
-  "__framelix_config_applicationhost_label__": [
-    "Domain",
-    "eae63"
-  ],
-  "__framelix_config_applicationhost_label_desc__": [
-    "Die Domain unter der deine Applikation l\u00e4uft. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt. Nutze den Platzhalter {host} falls du einfach die aktuelle Domain, mit der du diese App gerade aufrufst, nehmen willst. Das erlaubt dir mehrere Domains auf eine Applikation zu legen.",
-    "5e96b"
-  ],
-  "__framelix_config_applicationhttps_label__": [
-    "Https aktiviert",
-    "34586"
-  ],
-  "__framelix_config_applicationhttps_label_desc__": [
-    "Die Applikation l\u00e4uft mit einer gesicherten https Verbindung. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt.",
-    "e7703"
-  ],
-  "__framelix_config_applicationurlbasepath_label__": [
-    "Pfad zur Applikation",
-    "76bf3"
-  ],
-  "__framelix_config_applicationurlbasepath_label_desc__": [
-    "Dies wird dann notwendig, wenn die Applikation in einem Unterordner deines Webservers l\u00e4uft.",
-    "3d1b7"
-  ],
-  "__framelix_config_captchakeys_recaptchav2_privatekey_label__": [
-    "Recaptcha V2 secret key",
-    "837cd"
-  ],
-  "__framelix_config_captchakeys_recaptchav2_privatekey_label_desc__": [
-    "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-    "41340"
-  ],
-  "__framelix_config_captchakeys_recaptchav2_publickey_label__": [
-    "Recaptcha V2 public key",
-    "575cb"
-  ],
-  "__framelix_config_captchakeys_recaptchav2_publickey_label_desc__": [
-    "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-    "41340"
-  ],
-  "__framelix_config_captchakeys_recaptchav3_privatekey_label__": [
-    "Recaptcha V3 secret key",
-    "de055"
-  ],
-  "__framelix_config_captchakeys_recaptchav3_privatekey_label_desc__": [
-    "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-    "41340"
-  ],
-  "__framelix_config_captchakeys_recaptchav3_publickey_label__": [
-    "Recaptcha V3 public key",
-    "5eb6b"
-  ],
-  "__framelix_config_captchakeys_recaptchav3_publickey_label_desc__": [
-    "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
-    "41340"
-  ],
-  "__framelix_config_captchatype_label__": [
-    "Art des Captchas",
-    "6f340"
-  ],
-  "__framelix_config_captchatype_label_desc__": [
-    "Du kannst zwischen verschiedenen Captcha-Methoden w\u00e4hlen. Falls du nichts w\u00e4hlst, dann ist Captcha global deaktiviert.",
-    "27d38"
-  ],
-  "__framelix_config_emailbody_label__": [
-    "Text",
-    "c7e9e"
-  ],
-  "__framelix_config_emailbodytemplate_label__": [
-    "Body template",
-    "431ae"
-  ],
-  "__framelix_config_emailbodytemplate_label_desc__": [
-    "Hier kannst du deiner E-Mail ein generelles HTML Layout geben. Der Platzhalter {body} wird mit dem Nachrichtentext ersetzt.",
-    "f8cf9"
-  ],
-  "__framelix_config_emaildefaultfrom_label__": [
-    "Standard \"FROM\" gesendet von E-Mail",
-    "e0524"
-  ],
-  "__framelix_config_emailoverriderecipient_label__": [
-    "Leite alle ausgehenden E-Mails an diese E-Mail",
-    "e4636"
-  ],
-  "__framelix_config_emailoverriderecipient_label_desc__": [
-    "Dies leitet alle ausgehenden E-Mails an eine einzige E-Mailadresse. Das sollte unbedingt in der lokalen Entwicklung bzw. zum Debugging benutzt werden. Du willst ja nicht w\u00e4hrend dem Testen E-Mails an au\u00dfenstehende schicken.",
-    "16b7b"
-  ],
-  "__framelix_config_emailtest_error__": [
-    "Fehler beim senden der E-Mail",
-    "7c182"
-  ],
-  "__framelix_config_emailtest_success__": [
-    "E-Mail erfolgreich gesendet",
-    "f4775"
-  ],
-  "__framelix_config_emailtitle_label__": [
-    "Betreff",
-    "2f1bf"
-  ],
-  "__framelix_config_emailtitletemplate_label__": [
-    "Betreff Template",
-    "15bf5"
-  ],
-  "__framelix_config_emailtitletemplate_label_desc__": [
-    "Wenn du willst, dass immer ein fixer Text im Titel steht.<br\/>Beispiel:\u00a0\"{title} - Fixer text\"<br\/>{title} wird mit dem richtigen Betreff ersetzt",
-    "82a6e"
-  ],
-  "__framelix_config_emailto_label__": [
-    "E-Mail Empf\u00e4nger",
-    "5dc40"
-  ],
-  "__framelix_config_errorlogdisk_label__": [
-    "Schreibe Fehler auf Festplatte",
-    "9af22"
-  ],
-  "__framelix_config_errorlogdisk_label_desc__": [
-    "Diese Fehler k\u00f6nnen sp\u00e4ter in Entwickleroptionen -> Logs angesehen werden.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-    "3f5c1"
-  ],
-  "__framelix_config_errorlogemail_label__": [
-    "Schicke Fehler per E-Mail",
-    "d1938"
-  ],
-  "__framelix_config_errorlogemail_label_desc__": [
-    "Schickt alle Fehler an die angegebene E-Mail.<br\/>Diese Einstellung ist empfohlen.<br\/>Nachdem du das ge\u00e4ndert hast, wird dir eine Testemail geschickt.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-    "593e1"
-  ],
-  "__framelix_config_errorlogextended_label__": [
-    "Erweitertes Logging",
-    "aedc5"
-  ],
-  "__framelix_config_errorlogextended_label_desc__": [
-    "Falls aktiviert, dann werden alle Daten die das System zu diesem Zeitpunkt zur Verf\u00fcgung hat, geloggt.<br\/>Das beinhaltet mitunter Formulardaten, Benutzerdaten, Serverdaten, usw...<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-    "a267d"
-  ],
-  "__framelix_config_errorlogsyslog_label__": [
-    "Schreibe Fehler in syslog",
-    "5afd6"
-  ],
-  "__framelix_config_errorlogsyslog_label_desc__": [
-    "Schreibt die Fehler in den syslog des Systems.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
-    "eccde"
-  ],
-  "__framelix_config_languagedefault_label__": [
-    "Standardsprache",
-    "c96a7"
-  ],
-  "__framelix_config_languagedefaultuser_label__": [
-    "Ermittle Standardsprache automatisch auf Basis der Browsereinstellungen vom Benutzer",
-    "24ddb"
-  ],
-  "__framelix_config_languagedefaultuser_label_desc__": [
-    "Falls aktiviert, dann wird das System versuchen automatisch die Standardsprache des Browsers vom Benutzer zu ermitteln. Wird keine passende Sprache gefunden, dann wird wieder die Standardsprache des System gew\u00e4hlt.",
-    "48e87"
-  ],
-  "__framelix_config_languagefallback_label__": [
-    "Fallback Sprache",
-    "9475d"
-  ],
-  "__framelix_config_languagefallback_label_desc__": [
-    "Falls ein Bezeichner nicht existiert oder noch nicht \u00fcbersetzt wurde, dann nutze diese Sprache als Fallback.",
-    "3ac39"
-  ],
-  "__framelix_config_languagemultiple_label__": [
-    "Mehrsprachig",
-    "75543"
-  ],
-  "__framelix_config_languagemultiple_label_desc__": [
-    "Das erlaubt dem Benutzer die Auswahl aus mehreren Sprachen.<br\/>Diese Einstellung gilt f\u00fcr dieses Backend und m\u00f6glicherweise auch f\u00fcr eventuelle Frontend Seiten. Dies kommt auf die Implentierung an.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte diese Einstellung\u00a0 nicht mehr ge\u00e4ndert werden. Bei \u00c4nderung werden ALLE existierenden URLs ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
-    "33752"
-  ],
-  "__framelix_config_languagessupported_label__": [
-    "Unterst\u00fctzte Sprachen",
-    "06c07"
-  ],
-  "__framelix_config_languagessupported_label_desc__": [
-    "Der Benutzer kann zwischen diesen Sprachen w\u00e4hlen.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte keine Sprache mehr entfernt werden. Bei Entfernung einer Sprache werden ALLE existierenden URLs die auf die Sprache referenzieren ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
-    "f2b13"
-  ],
-  "__framelix_config_logincaptcha_label__": [
-    "Login ben\u00f6tigt ausgef\u00fclltes Captcha",
-    "f9625"
-  ],
-  "__framelix_config_logincaptcha_label_desc__": [
-    "Achtung: Falls du das aktivierst, kontrolliere sofort in einem 2ten Inkognito Tab ob der Login dann auch noch funktioniert. Im Falle eines Problems kannst du dich sonst nicht mehr einloggen.Falls das passiert, dann kannst du nur mehr via Kommandozeile die Datei\u00a0config-editable.php bearbeiten und das Hakerl dort wieder entfernen.",
-    "31562"
-  ],
-  "__framelix_config_mailsendtype_label__": [
-    "Mail Send-Architektur",
-    "63f89"
-  ],
-  "__framelix_config_missing_forms_file__": [
-    "Das Modul hat keine\u00a0config\/config-editable-form.php Datei",
-    "554ce"
-  ],
-  "__framelix_config_smtphost_label__": [
-    "SMTP Hostname",
-    "4cb45"
-  ],
-  "__framelix_config_smtppassword_label__": [
-    "SMTP Passwort",
-    "13dfa"
-  ],
-  "__framelix_config_smtpport_label__": [
-    "SMTP Port",
-    "63ede"
-  ],
-  "__framelix_config_smtpsecure_label__": [
-    "SMTP Verschl\u00fcsselung",
-    "336ff"
-  ],
-  "__framelix_config_smtpusername_label__": [
-    "SMTP Benutzername",
-    "bf4f9"
-  ],
-  "__framelix_config_systemeventlog_1_label__": [
-    "Loggt jede Aktion die einen neuen Datenbankeintrag erzeugt",
-    "26ee8"
-  ],
-  "__framelix_config_systemeventlog_2_label__": [
-    "Loggt jede Aktion die einen Datenbankeintrag aktualisiert",
-    "33670"
-  ],
-  "__framelix_config_systemeventlog_3_label__": [
-    "Loggt jede Aktion die einen Datenbankeintrag l\u00f6scht",
-    "ba9f5"
-  ],
-  "__framelix_config_systemeventlog_4_label__": [
-    "Loggt alle fehlgeschlagenen Logins",
-    "02385"
-  ],
-  "__framelix_config_systemeventlog_5_label__": [
-    "Loggt alle erfolgreichen Logins",
-    "987b8"
-  ],
-  "__framelix_config_systemeventlog_labeldesc__": [
-    "Die folgenden Logs sind Event Logs welche unabh\u00e4ngig von den oben gelisteten Optionen sind. Diese Logs k\u00f6nnen auch im Men\u00fc f\u00fcr Logs angesehen werden.",
-    "880dc"
-  ],
-  "__framelix_configuration_module_captcha_pagetitle__": [
-    "Captcha",
-    "45d04"
-  ],
-  "__framelix_configuration_module_email_mailsendtype_mail__": [
-    "PHP mail (Muss in php.ini konfiguriert werden)",
-    "2756b"
-  ],
-  "__framelix_configuration_module_email_mailsendtype_none__": [
-    "Mail senden deaktiviert",
-    "b7991"
-  ],
-  "__framelix_configuration_module_email_mailsendtype_sendmail__": [
-    "Sendmail (Muss in php.ini konfiguriert werden)",
-    "1eb42"
-  ],
-  "__framelix_configuration_module_email_mailsendtype_smtp__": [
-    "SMTP",
-    "c2239"
-  ],
-  "__framelix_configuration_module_email_pagetitle__": [
-    "E-Mail\/Smtp",
-    "fbbdb"
-  ],
-  "__framelix_configuration_module_emailtext_pagetitle__": [
-    "E-Mail Test",
-    "6cd35"
-  ],
-  "__framelix_configuration_module_language_pagetitle__": [
-    "Sprache",
-    "4994a"
-  ],
-  "__framelix_configuration_module_logging_pagetitle__": [
-    "Logging",
-    "8db7d"
-  ],
-  "__framelix_configuration_module_pagetitle__": [
-    "Grundeinstellungen",
-    "b8855"
-  ],
-  "__framelix_configuration_module_url_pagetitle__": [
-    "Domain\/URL",
-    "2b9b6"
-  ],
-  "__framelix_configuration_warning__": [
-    "Achtung: Jede \u00c4nderung an diesen Einstellungen wird sofort durchgef\u00fchrt und angewendet. Stelle sicher das du immer ein funktionierendes Backup hast, falls du dabei etwas falsch konfigurieren solltest.<br\/>Stelle auch sicher, das du immer Zugriff auf die Kommandozeile auf deinem Server hast, damit du die config-editable.php Datei bearbeiten kannst, falls wirklich alles den Bach runter geht.",
-    "0200d"
-  ],
-  "__framelix_create_or_edit_before_proceed__": [
-    "Bitte erstelle oder w\u00e4hle einen vorhandenen Eintrag um mit Bearbeitung dieser Sektion fortzufahren.",
-    "14012"
-  ],
-  "__framelix_darkmode__": [
-    "Dark Mode",
-    "51b5e"
-  ],
-  "__framelix_date_quarter__": [
-    "Quartal",
-    "b25cd"
-  ],
-  "__framelix_day_1__": [
-    "Montag",
-    "6f852"
-  ],
-  "__framelix_day_2__": [
-    "Dienstag",
-    "57923"
-  ],
-  "__framelix_day_3__": [
-    "Mittwoch",
-    "796c1"
-  ],
-  "__framelix_day_4__": [
-    "Donnerstag",
-    "78ae6"
-  ],
-  "__framelix_day_5__": [
-    "Freitag",
-    "c33b1"
-  ],
-  "__framelix_day_6__": [
-    "Samstag",
-    "8b705"
-  ],
-  "__framelix_day_7__": [
-    "Sonntag",
-    "9d1a0"
-  ],
-  "__framelix_dayshort_1__": [
-    "Mo",
-    "fd294"
-  ],
-  "__framelix_dayshort_2__": [
-    "Di",
-    "2ddec"
-  ],
-  "__framelix_dayshort_3__": [
-    "Mi",
-    "510c2"
-  ],
-  "__framelix_dayshort_4__": [
-    "Do",
-    "ed5e8"
-  ],
-  "__framelix_dayshort_5__": [
-    "Fr",
-    "ac616"
-  ],
-  "__framelix_dayshort_6__": [
-    "Sa",
-    "13c7d"
-  ],
-  "__framelix_dayshort_7__": [
-    "So",
-    "ef657"
-  ],
-  "__framelix_deleted__": [
-    "Gel\u00f6scht",
-    "5fe60"
-  ],
-  "__framelix_deleteentry__": [
-    "Eintrag l\u00f6schen",
-    "e313e"
-  ],
-  "__framelix_developer_options__": [
-    "Entwickleroptionen",
-    "029a9"
-  ],
-  "__framelix_download_file__": [
-    "Datei downloaden",
-    "d5ef9"
-  ],
-  "__framelix_downloadfile__": [
-    "Datei downloaden",
-    "d5ef9"
-  ],
-  "__framelix_edit__": [
-    "Bearbeiten",
-    "7dce1"
-  ],
-  "__framelix_edituser_sidebar_title__": [
-    "Benutzermanagement",
-    "e8f36"
-  ],
-  "__framelix_email__": [
-    "E-Mail",
-    "082e5"
-  ],
-  "__framelix_emailnew__": [
-    "Deine neue E-Mail",
-    "cb9c8"
-  ],
-  "__framelix_error_access_denied__": [
-    "Sorry. Du darfst diese Seite nicht sehen.",
-    "6739d"
-  ],
-  "__framelix_error_invalid_url__": [
-    "Der angeforderten Seite fehlen Parameter",
-    "19d82"
-  ],
-  "__framelix_forgotpassword__": [
-    "Passwort vergessen",
-    "98f13"
-  ],
-  "__framelix_form_2fa_backup_code_used__": [
-    "Du hast einen One Time Backup Code f\u00fcr deine 2-Faktor Authentifizierung verwendet. Dieser Code kann nun nicht mehr verwendet werden.",
-    "d1917"
-  ],
-  "__framelix_form_2fa_enter__": [
-    "Gib deinen Code mit 6 Zahlen ein",
-    "7539c"
-  ],
-  "__framelix_form_2fa_enter_backup__": [
-    "Gib deinen Backup Code mit 10 Zeichen ein",
-    "9d7ae"
-  ],
-  "__framelix_form_2fa_usebackup__": [
-    "Oder klicke hier um einen Backup Code zu nutzen",
-    "d79d3"
-  ],
-  "__framelix_form_date_open_datepicker__": [
-    "Kalender \u00f6ffnen",
-    "fe966"
-  ],
-  "__framelix_form_file_delete_existing__": [
-    "Datei aus der Datenbank l\u00f6schen<br\/>Du musst den Eintrag speichern bevor die Datei wirklich gel\u00f6scht wird",
-    "71d18"
-  ],
-  "__framelix_form_file_delete_queue__": [
-    "Aus der Warteschlange l\u00f6schen",
-    "5affc"
-  ],
-  "__framelix_form_file_pick__": [
-    "W\u00e4hle eine Datei oder ziehe sie per Drag&Drop hier rein",
-    "e0872"
-  ],
-  "__framelix_form_password_toggle__": [
-    "Zeige\/Verstecke Passwort",
-    "b2b77"
-  ],
-  "__framelix_form_search_noresult__": [
-    "Keine Suchergebnisse",
-    "52d2a"
-  ],
-  "__framelix_form_search_start__": [
-    "Jetzt suchen",
-    "83675"
-  ],
-  "__framelix_form_select_chooseoption_label__": [
-    "W\u00e4hle...",
-    "ab254"
-  ],
-  "__framelix_form_select_noptions_label__": [
-    "Keine Werte zum ausw\u00e4hlen verf\u00fcgbar",
-    "c180a"
-  ],
-  "__framelix_form_select_open__": [
-    "Alle Optionen anzeigen",
-    "86fb0"
-  ],
-  "__framelix_form_select_search__": [
-    "Suchen nach Werten....",
-    "5036c"
-  ],
-  "__framelix_form_select_unset__": [
-    "Auswahl zur\u00fccksetzen",
-    "236ba"
-  ],
-  "__framelix_form_validation_captcha_invalid__": [
-    "Captcha konnte nicht verifiziert werden, bitte erneut versuchen",
-    "a4d84"
-  ],
-  "__framelix_form_validation_captcha_loading__": [
-    "Captcha wird verifiziert...",
-    "1ae4f"
-  ],
-  "__framelix_form_validation_captcha_verified__": [
-    "Dein Ger\u00e4t wurde erfolgreich verifiziert",
-    "dd78f"
-  ],
-  "__framelix_form_validation_email__": [
-    "Das muss eine korrekte E-Mailadresse sein",
-    "1d8b0"
-  ],
-  "__framelix_form_validation_invaliddate__": [
-    "Das ist kein g\u00fcltiges Datum",
-    "73a64"
-  ],
-  "__framelix_form_validation_max__": [
-    "Wert kann nicht gr\u00f6\u00dfer als {number} sein",
-    "98a98"
-  ],
-  "__framelix_form_validation_maxdate__": [
-    "Datum kann nicht gr\u00f6\u00dfer als {date} sein",
-    "ddb38"
-  ],
-  "__framelix_form_validation_maxlength__": [
-    "Der Text kann nicht l\u00e4nger als {number} Zeichen sein",
-    "1e101"
-  ],
-  "__framelix_form_validation_maxselectedfiles__": [
-    "Maximal {{number=1:{number} Datei|number=*:{number} Dateien}} k\u00f6nnen ausgew\u00e4hlt werden",
-    "84aad"
-  ],
-  "__framelix_form_validation_maxselecteditems__": [
-    "Maximal {{number=1:{number} Option|number=*:{number} Optionen}} k\u00f6nnen\u00a0ausgew\u00e4hlt werden",
-    "61599"
-  ],
-  "__framelix_form_validation_maxtime__": [
-    "Zeit kann nicht gr\u00f6\u00dfer als {time} sein",
-    "7e61d"
-  ],
-  "__framelix_form_validation_min__": [
-    "Wert kann nicht kleiner als {number} sein",
-    "c38da"
-  ],
-  "__framelix_form_validation_mindate__": [
-    "Datum kann nicht kleiner als {date} sein",
-    "93dc4"
-  ],
-  "__framelix_form_validation_minlength__": [
-    "Der Text kann nicht k\u00fcrzer als {number} Zeichen sein",
-    "83846"
-  ],
-  "__framelix_form_validation_minselectedfiles__": [
-    "Mindestens {{number=1:{number} Datei|number=*:{number} Dateien}} m\u00fcssen ausgew\u00e4hlt werden",
-    "c18d9"
-  ],
-  "__framelix_form_validation_minselecteditems__": [
-    "Mindestens {{number=1:{number} Option|number=*:{number} Optionen}} m\u00fcssen ausgew\u00e4hlt werden",
-    "55804"
-  ],
-  "__framelix_form_validation_mintime__": [
-    "Zeit kann nicht kleiner als {time} sein",
-    "702bd"
-  ],
-  "__framelix_form_validation_required__": [
-    "Dieses Feld muss ausgef\u00fcllt werden",
-    "1ec46"
-  ],
-  "__framelix_form_validation_twofactor__": [
-    "Der eingegebene Code ist nicht g\u00fcltig",
-    "ac9d8"
-  ],
-  "__framelix_goaback__": [
-    "Gehe zur\u00fcck",
-    "22b65"
-  ],
-  "__framelix_goahead__": [
-    "Weiter",
-    "6dd82"
-  ],
-  "__framelix_https_required__": [
-    "Das Feature ist nur verf\u00fcgbar, wenn die Applikation unter https l\u00e4uft. Der Administrator dieser Applikation muss dieses Feature aktivieren.",
-    "d5503"
-  ],
-  "__framelix_login_fido2__": [
-    "Mit FIDO2 einloggen",
-    "eb133"
-  ],
-  "__framelix_login_invalid_fido2__": [
-    "E-Mail existiert nicht, hat kein FIDO2 aktiviert oder dein Ger\u00e4t hat kein FIDO2 aktiviert f\u00fcr diese E-Mail",
-    "21f7a"
-  ],
-  "__framelix_login_invalid_user__": [
-    "E-Mail und\/oder Passwort stimmt nicht",
-    "4080f"
-  ],
-  "__framelix_login_submit__": [
-    "Jetzt einloggen",
-    "88013"
-  ],
-  "__framelix_logout__": [
-    "Ausloggen",
-    "0323d"
-  ],
-  "__framelix_meta_searchandtable_entries__": [
-    "Eintr\u00e4ge",
-    "bc14b"
-  ],
-  "__framelix_meta_searchandtable_search__": [
-    "Suchen",
-    "13348"
-  ],
-  "__framelix_modified_timestamp__": [
-    "Zeitstempel",
-    "a3d5d"
-  ],
-  "__framelix_modified_timestamp_createuser__": [
-    "Erstellt von {0} am {1}",
-    "a279c"
-  ],
-  "__framelix_modified_timestamp_updated__": [
-    "Dieser Eintrag wurde modifiziert nachdem er erstellt wurde",
-    "678aa"
-  ],
-  "__framelix_modified_timestamp_updateuser__": [
-    "Zuletzt bearbeitet von {0} am {1}",
-    "12f2e"
-  ],
-  "__framelix_month_10__": [
-    "Oktober",
-    "eca60"
-  ],
-  "__framelix_month_11__": [
-    "November",
-    "7e823"
-  ],
-  "__framelix_month_12__": [
-    "Dezember",
-    "82331"
-  ],
-  "__framelix_month_1__": [
-    "J\u00e4nner",
-    "86f59"
-  ],
-  "__framelix_month_2__": [
-    "Februar",
-    "659e5"
-  ],
-  "__framelix_month_3__": [
-    "M\u00e4rz",
-    "fa3e5"
-  ],
-  "__framelix_month_4__": [
-    "April",
-    "3fcf0"
-  ],
-  "__framelix_month_5__": [
-    "Mai",
-    "195fb"
-  ],
-  "__framelix_month_6__": [
-    "Juni",
-    "68893"
-  ],
-  "__framelix_month_7__": [
-    "Juli",
-    "1b539"
-  ],
-  "__framelix_month_8__": [
-    "August",
-    "41ba7"
-  ],
-  "__framelix_month_9__": [
-    "September",
-    "cc5d9"
-  ],
-  "__framelix_monthshort_10__": [
-    "Ockt",
-    "594be"
-  ],
-  "__framelix_monthshort_11__": [
-    "Nov",
-    "343e6"
-  ],
-  "__framelix_monthshort_12__": [
-    "Dez",
-    "d207b"
-  ],
-  "__framelix_monthshort_1__": [
-    "J\u00e4n",
-    "e6856"
-  ],
-  "__framelix_monthshort_2__": [
-    "Feb",
-    "ea171"
-  ],
-  "__framelix_monthshort_3__": [
-    "M\u00e4r",
-    "7ce6b"
-  ],
-  "__framelix_monthshort_4__": [
-    "Apr",
-    "6d721"
-  ],
-  "__framelix_monthshort_5__": [
-    "Mai",
-    "195fb"
-  ],
-  "__framelix_monthshort_6__": [
-    "Jun",
-    "eb4b4"
-  ],
-  "__framelix_monthshort_7__": [
-    "Jul",
-    "a2866"
-  ],
-  "__framelix_monthshort_8__": [
-    "Aug",
-    "22f1a"
-  ],
-  "__framelix_monthshort_9__": [
-    "Sep",
-    "f04aa"
-  ],
-  "__framelix_no__": [
-    "Nein",
-    "bafd7"
-  ],
-  "__framelix_ok__": [
-    "OK",
-    "e0aa0"
-  ],
-  "__framelix_password__": [
-    "Passwort",
-    "dc647"
-  ],
-  "__framelix_password_current__": [
-    "Dein aktuelles Passwort",
-    "5f87e"
-  ],
-  "__framelix_password_incorrect__": [
-    "Passwort ist nicht korrekt",
-    "a8666"
-  ],
-  "__framelix_password_new__": [
-    "Dein neues Passwort",
-    "c5f46"
-  ],
-  "__framelix_password_notcorrect__": [
-    "Dein aktuelles Passwort stimmt nicht",
-    "d3099"
-  ],
-  "__framelix_password_notmatch__": [
-    "Passw\u00f6rter stimmen nicht \u00fcberein",
-    "c5a77"
-  ],
-  "__framelix_password_repeat__": [
-    "Passwort wiederholen",
-    "c1379"
-  ],
-  "__framelix_password_verify__": [
-    "Bitte gib dein Passwort erneut f\u00fcr diesen sicheren Bereich ein",
-    "a4a36"
-  ],
-  "__framelix_quick_search_add__": [
-    "Zur Suche hinzuf\u00fcgen",
-    "3f24f"
-  ],
-  "__framelix_quick_search_column__": [
-    "Suche in einem spezifischem Feld",
-    "20e82"
-  ],
-  "__framelix_quick_search_compare__": [
-    "Vergleichsmethode",
-    "faafe"
-  ],
-  "__framelix_quick_search_compare_contain__": [
-    "Beinhaltet",
-    "0e75e"
-  ],
-  "__framelix_quick_search_compare_equal__": [
-    "Exakte \u00dcbereinstimmung",
-    "161b4"
-  ],
-  "__framelix_quick_search_compare_gt__": [
-    "Gr\u00f6\u00dfer als",
-    "05824"
-  ],
-  "__framelix_quick_search_compare_gte__": [
-    "Gr\u00f6\u00dfer gleich",
-    "e7d16"
-  ],
-  "__framelix_quick_search_compare_lt__": [
-    "Kleiner als",
-    "6c1e9"
-  ],
-  "__framelix_quick_search_compare_lte__": [
-    "Kleiner gleich",
-    "d2c55"
-  ],
-  "__framelix_quick_search_compare_notcontain__": [
-    "Beinhaltet nicht",
-    "29f80"
-  ],
-  "__framelix_quick_search_compare_notequal__": [
-    "Stimmt nicht \u00fcberein",
-    "ecf92"
-  ],
-  "__framelix_quick_search_help__": [
-    "Nutze * oder leeres Suchfeld um alles zu finden<br\/>Nutze ** um alles zu finden und die Suche beim n\u00e4chsten Seitenaufruf automatisch wieder auszuf\u00fchren<br\/>Nutze >50, >=50, =50, !=50, <50, <=50 um Werte zu finden die gr\u00f6\u00dfer\/gleich\/ungleich\/kleiner 50 sind<br\/>Nutze ~hallo um alles zu finden was dieses Wort beinhaltet (Das ist das Standardverhalten auch ohne ~) <br\/>Nutze\u00a0!~hallo\u00a0um alles zu finden was das dieses Wort nicht beinhaltet\u00a0<br\/>Nutze \"hello friend\" um nach diesem vollst\u00e4ndigen Begriff zu suchen<br\/>Nutze hallo && bye um Eintr\u00e4ge zu finden die beide W\u00f6rter beinhalten (Standard w\u00e4re eines der beiden)<br\/>Nutze das Einstellungssymbol um noch genauere Suchwerte zu definieren",
-    "ae282"
-  ],
-  "__framelix_quick_search_help_tooltip__": [
-    "Hilfe zu den Suchoptionen",
-    "5a0ad"
-  ],
-  "__framelix_quick_search_placeholder__": [
-    "Gib hier deinen Suchbegriff ein. Nutze * oder leeres Feld um alles zu finden.",
-    "d6df5"
-  ],
-  "__framelix_quick_search_query_modified__": [
-    "Dein neuer Suchbegriff",
-    "72a81"
-  ],
-  "__framelix_quick_search_settings__": [
-    "Erweiterte Suche - Definiere genaue Felder in denen du suchen willst",
-    "01e49"
-  ],
-  "__framelix_quick_search_value__": [
-    "Suche nach",
-    "900c6"
-  ],
-  "__framelix_save__": [
-    "Speichern",
-    "c9cc8"
-  ],
-  "__framelix_save_edited__": [
-    "Ge\u00e4nderten Eintrag speichern",
-    "9e11d"
-  ],
-  "__framelix_save_new__": [
-    "Neuer Eintrag gespeichert",
-    "39c4b"
-  ],
-  "__framelix_saved__": [
-    "Daten wurden gespeichert",
-    "cfc9a"
-  ],
-  "__framelix_setup_applicationurl_desc__": [
-    "Deine URL inklusive Domain zu deiner Applikation",
-    "2b0dd"
-  ],
-  "__framelix_setup_applicationurl_label__": [
-    "Applikations-URL",
-    "0aef0"
-  ],
-  "__framelix_setup_dbhost_label__": [
-    "Datenbank Host",
-    "e9629"
-  ],
-  "__framelix_setup_dbname_label__": [
-    "Datenbank Name",
-    "82568"
-  ],
-  "__framelix_setup_dbpassword_label__": [
-    "Datenbank Passwort",
-    "7a51b"
-  ],
-  "__framelix_setup_dbport_label__": [
-    "Datenbank Port",
-    "268cb"
-  ],
-  "__framelix_setup_dbsocket_label__": [
-    "Datenbank Socket",
-    "9de67"
-  ],
-  "__framelix_setup_dbuser_label__": [
-    "Datenbank Benutzername",
-    "aa4fa"
-  ],
-  "__framelix_setup_developer_desc__": [
-    "Falls aktiviert, dann siehst du das Men\u00fc f\u00fcr Entwickleroptionen",
-    "1b245"
-  ],
-  "__framelix_setup_finish_description__": [
-    "Ok. Jetz wird's Zeit damit die Magie ihren Teil erledigt und das Setup abschlie\u00dft.<br\/>Das kann einen Moment, oder zwei, dauern.<br\/>Falls du bereit bist, dr\u00fcck den Knopf.",
-    "11d34"
-  ],
-  "__framelix_setup_finish_setup__": [
-    "Setup abschlie\u00dfen",
-    "85a18"
-  ],
-  "__framelix_setup_next__": [
-    "N\u00e4chster Schritt",
-    "c290a"
-  ],
-  "__framelix_setup_phpexecutable_desc__": [
-    "Pfad zur ausf\u00fchrbaren PHP Kommandozeile.<br\/>Dies sollte bereits automatisch mit dem passenden Pfad ausgef\u00fcllt sein.",
-    "23ca2"
-  ],
-  "__framelix_setup_phpexecutable_label__": [
-    "PHP Pfad",
-    "5edc4"
-  ],
-  "__framelix_setup_step_application_title__": [
-    "Grundeinstellungen",
-    "b8855"
-  ],
-  "__framelix_setup_step_database_title__": [
-    "Mysql Datenbank Verbindung",
-    "e1246"
-  ],
-  "__framelix_setup_step_finish_title__": [
-    "Finalisieren",
-    "a20dd"
-  ],
-  "__framelix_setup_step_security_desc__": [
-    "Administrator Accountdaten",
-    "58e87"
-  ],
-  "__framelix_setup_step_security_title__": [
-    "Sicherheit",
-    "2fae3"
-  ],
-  "__framelix_setup_step_welcome_title__": [
-    "Willkommen",
-    "83218"
-  ],
-  "__framelix_sidebar_settings__": [
-    "Deine Browsereinstellungen",
-    "c9e2c"
-  ],
-  "__framelix_simulateuser__": [
-    "Diesen Benutzer simulieren<br\/>Deine Ansicht ist dann wie wenn es dieser Benutzer sehen w\u00fcrde<br\/>Du kannst sehen\/nicht sehen was dieser Nutzer sieht<br\/>Datenbankaktionen wird aber weiterhin mit deinem echten Benutzer geloggt",
-    "c4ac4"
-  ],
-  "__framelix_simulateuser_cancel__": [
-    "Beende Benutzer-Simulation",
-    "61bf8"
-  ],
-  "__framelix_simulateuser_canceled__": [
-    "Benutzer-Simulation beendet",
-    "4ae35"
-  ],
-  "__framelix_simulateuser_done__": [
-    "Du bist nun {0}",
-    "a93c9"
-  ],
-  "__framelix_simulateuser_info__": [
-    "Du siehst diese Seite als simulierter Benutzer {0}",
-    "89699"
-  ],
-  "__framelix_stay_logged_in__": [
-    "F\u00fcr 60 Tage eingeloggt bleiben",
-    "5fef9"
-  ],
-  "__framelix_stop_edit__": [
-    "Bearbeitung abbrechen",
-    "12c11"
-  ],
-  "__framelix_stop_edit_tooltip__": [
-    "Verwirft alle \u00c4nderungen in diesem Formular und \u00f6ffnet einen neuen Eintrag",
-    "784f4"
-  ],
-  "__framelix_storable_systemeventlog_info_label__": [
-    "Info",
-    "4059b"
-  ],
-  "__framelix_storable_userwebauthn_devicename_label__": [
-    "Ger\u00e4tename",
-    "92394"
-  ],
-  "__framelix_sure__": [
-    "Bist du sicher?",
-    "729a5"
-  ],
-  "__framelix_systemeventlog_1__": [
-    "Eintrag #{id} erstellt: {info}",
-    "5be5e"
-  ],
-  "__framelix_systemeventlog_2__": [
-    "Eintrag #{id} aktualisiert: {info}",
-    "052bf"
-  ],
-  "__framelix_systemeventlog_3__": [
-    "Eintrag #{id} gel\u00f6scht: {info}",
-    "5abc2"
-  ],
-  "__framelix_systemeventlog_4__": [
-    "Login fehlgeschlagen mit E-Mail {email}",
-    "0ccdf"
-  ],
-  "__framelix_systemeventlog_5__": [
-    "Login erfolgreich mit E-Mail {email}",
-    "9932d"
-  ],
-  "__framelix_systemeventlog_6__": [
-    "Cron: {0}",
-    "33324"
-  ],
-  "__framelix_systemvalues__": [
-    "Grundeinstellungen",
-    "00422"
-  ],
-  "__framelix_systemvalues_active__": [
-    "Aktive Eintr\u00e4ge",
-    "265be"
-  ],
-  "__framelix_systemvalues_active_form_label__": [
-    "Aktiv",
-    "4d3d7"
-  ],
-  "__framelix_systemvalues_active_form_label_desc__": [
-    "Aktive Eintr\u00e4ge sind in Formularen w\u00e4hlbar, inaktive nicht mehr.\u00a0<br\/>Vorhandene Verkn\u00fcpfungen bleiben unabh\u00e4ngig davon bestehen.",
-    "4f067"
-  ],
-  "__framelix_systemvalues_inactive__": [
-    "Inaktive Eintr\u00e4ge",
-    "c7a85"
-  ],
-  "__framelix_table_dragsort__": [
-    "Sortiere Eintr\u00e4ge per Drag&Drop",
-    "6eab5"
-  ],
-  "__framelix_table_rendering__": [
-    "Die Tabelle wird gerendert... Bitte warten...",
-    "9b20e"
-  ],
-  "__framelix_table_savesort__": [
-    "Speichere diese Sortierung",
-    "c5aae"
-  ],
-  "__framelix_table_savesort_saved__": [
-    "Sortierung gespeichert",
-    "cbfcf"
-  ],
-  "__framelix_time_hours__": [
-    "{{0=1:{0} Stunde|0=*:{0} Stunden}}",
-    "7dac8"
-  ],
-  "__framelix_time_minutes__": [
-    "{{0=1:{0} Minute|0=*:{0} Minuten}}",
-    "39b4e"
-  ],
-  "__framelix_time_seconds__": [
-    "{{0=1:{0} Sekunde|0=*:{0} Sekunden}}",
-    "f97c6"
-  ],
-  "__framelix_toast_count__": [
-    "Anzahl der Nachrichten in der Warteschlange",
-    "e2405"
-  ],
-  "__framelix_toast_next__": [
-    "N\u00e4chste Nachricht anzeigen",
-    "1135f"
-  ],
-  "__framelix_unknown_user__": [
-    "System\/Gast",
-    "adbd4"
-  ],
-  "__framelix_user_edituser_validation_adminrequired__": [
-    "Es ist immer mindestens ein, nicht gesperrter, Administrator Account notwendig.",
-    "d4747"
-  ],
-  "__framelix_user_flag_locked__": [
-    "Gesperrt",
-    "6e09a"
-  ],
-  "__framelix_user_flag_locked_desc__": [
-    "Falls aktiviert, dann wird der Benutzer sofort gesperrt und kann sich nicht mehr einloggen.",
-    "a6146"
-  ],
-  "__framelix_user_role_admin__": [
-    "Administrator - Darf alles",
-    "979c8"
-  ],
-  "__framelix_view_backend_appupdate__": [
-    "App Update und Backup",
-    "16be4"
-  ],
-  "__framelix_view_backend_appupdate_backup__": [
-    "Vollst\u00e4ndiges Backup downloaden",
-    "f9bc9"
-  ],
-  "__framelix_view_backend_appupdate_backup_desc__": [
-    "Hier kannst du ein vollst\u00e4ndiges Backup deiner Applikation herunterladen.<br\/>Diese Aktion kann dauern, je nachdem wie gro\u00df deine App ist.<br\/>Achtung: Dieses Backup beinhaltet ALLE Daten und Konfigurationen deiner Applikation. Stelle also sicher das du das Backup an einer sicheren Stelle aufbewahrst.",
-    "9c9a6"
-  ],
-  "__framelix_view_backend_appupdate_backup_download__": [
-    "Jetzt downloaden",
-    "f2d2d"
-  ],
-  "__framelix_view_backend_appupdate_do_update1__": [
-    "Ausf\u00fchren",
-    "40cd0"
-  ],
-  "__framelix_view_backend_config_backuprestore__": [
-    "Backup\/Restore",
-    "d3cb3"
-  ],
-  "__framelix_view_backend_config_index__": [
-    "Systemkonfiguration",
-    "3c4e3"
-  ],
-  "__framelix_view_backend_config_systemcheck__": [
-    "Systemcheck",
-    "3f15a"
-  ],
-  "__framelix_view_backend_config_systemcheck_cron__": [
-    "Cronjob",
-    "163ca"
-  ],
-  "__framelix_view_backend_config_systemcheck_cron_error__": [
-    "Du solltest das angegebene Script alle 5 Minuten ausf\u00fchren lassen, f\u00fcr Update Checks und weitere Jobs.",
-    "dd1ba"
-  ],
-  "__framelix_view_backend_config_systemcheck_https__": [
-    "Https\/SSL",
-    "90372"
-  ],
-  "__framelix_view_backend_config_systemcheck_https_error__": [
-    "Manche Features sind nur verf\u00fcgbar wenn deine Seite mit https arbeitet.",
-    "7dc87"
-  ],
-  "__framelix_view_backend_config_systemcheck_versions__": [
-    "Versionsinformationen",
-    "35bef"
-  ],
-  "__framelix_view_backend_dev_langeditor__": [
-    "\u00dcbersetzungseditor",
-    "3bc96"
-  ],
-  "__framelix_view_backend_dev_langeditor_actions__": [
-    "Aktionen",
-    "06df3"
-  ],
-  "__framelix_view_backend_dev_langeditor_sort__": [
-    "Updaten, normalisieren und neu sortieren alles Language Dateien und deren Keys",
-    "08dd8"
-  ],
-  "__framelix_view_backend_dev_langeditor_sort_info__": [
-    "Mach das, nachdem du Language Files h\u00e4ndisch ver\u00e4ndert hast damit die Keys wieder richtig sortiert werden, damit du das nicht machen musst.",
-    "dd9d5"
-  ],
-  "__framelix_view_backend_dev_releasebuilder__": [
-    "Build Release Files",
-    "6b1cc"
-  ],
-  "__framelix_view_backend_dev_releasebuilder_create__": [
-    "Release files erstellen\/aktualisieren",
-    "bc1b2"
-  ],
-  "__framelix_view_backend_dev_releasebuilder_created__": [
-    "Release erstellt",
-    "6f022"
-  ],
-  "__framelix_view_backend_dev_update__": [
-    "Datenbank aktualisieren",
-    "7869d"
-  ],
-  "__framelix_view_backend_dev_updatedatabase__": [
-    "Datenbank aktualisieren",
-    "00bbb"
-  ],
-  "__framelix_view_backend_dev_updatedatabase_hashchanged__": [
-    "Schema hat sich ver\u00e4ndert. Bitte neu laden und neu probieren.",
-    "bdd4e"
-  ],
-  "__framelix_view_backend_dev_updatedatabase_noupdates__": [
-    "Keine Datenbank\u00e4nderungen notwendig. Gute Arbeit, Meister.",
-    "b009f"
-  ],
-  "__framelix_view_backend_dev_updatedatabase_safequeries__": [
-    "Sichere Abfragen die nur neue Tabellen und Spalten erzeugt",
-    "ee99d"
-  ],
-  "__framelix_view_backend_dev_updatedatabase_safequeries_execute__": [
-    "Sichere Abfragen ausf\u00fchren",
-    "709cd"
-  ],
-  "__framelix_view_backend_dev_updatedatabase_unsafequeries__": [
-    "Unsichere Abfrage die vorhandene Tabellen\/Spalten und evtl. auch Daten \u00e4ndern und l\u00f6schen.<br\/>Achtung: F\u00fchre diese Abfragen nur aus, wenn du sicher bist das sie ausgef\u00fchrt werden k\u00f6nnen. Mach immer ein Backup bevor die dies tust.",
-    "9d6f0"
-  ],
-  "__framelix_view_backend_dev_updatedatabase_unsafequeries_execute__": [
-    "Unsichere Abfragen ausf\u00fchren",
-    "090a0"
-  ],
-  "__framelix_view_backend_dev_updatedatabase_updatenow__": [
-    "Datenbank jetzt aktualisieren",
-    "65805"
-  ],
-  "__framelix_view_backend_dev_updatesourcecode__": [
-    "Source Code jetzt updaten",
-    "0f3e4"
-  ],
-  "__framelix_view_backend_dev_updatesourcecode_dbupdate_after__": [
-    "Datenbank nach diesem Update aktualisieren",
-    "bb7df"
-  ],
-  "__framelix_view_backend_dev_updatesourcecode_dbupdate_requireunsafe__": [
-    "Es gibt unsichere Abfragen die ausgef\u00fchrt werden m\u00fcssen.\u00a0Gehe auf die <a href=\"#tabs:update-database\">Update Seite<\/a>.",
-    "84848"
-  ],
-  "__framelix_view_backend_dev_updatesourcecode_gitpull__": [
-    "Pull changes from branch",
-    "eed52"
-  ],
-  "__framelix_view_backend_dev_updatesourcecode_noupdates__": [
-    "Es gibt keine anstehenden \u00c4nderungen. Gut gemacht.",
-    "e4a0d"
-  ],
-  "__framelix_view_backend_dev_updatesourcecode_svnupdate__": [
-    "Aktualisiere auf SVN Head Revision",
-    "08a69"
-  ],
-  "__framelix_view_backend_dev_updatesourcecode_updatedone__": [
-    "Source Code aktualisiert",
-    "05aec"
-  ],
-  "__framelix_view_backend_forgotpassword__": [
-    "Passwort vergessen",
-    "98f13"
-  ],
-  "__framelix_view_backend_forgotpassword_mailbody__": [
-    "Du hast einen Passwort Reset angefordert, f\u00fcr deinen Account auf {0}.<br\/>Bitte \u00f6ffne den Link um dein Passwort zur\u00fcck zu setzen.",
-    "461ea"
-  ],
-  "__framelix_view_backend_forgotpassword_resetdone__": [
-    "Du hast dein neues Passwort gesetzt. Du kannst dich jetzt damit einloggen.",
-    "44075"
-  ],
-  "__framelix_view_backend_forgotpassword_sendmail__": [
-    "Sende Best\u00e4tigungslink",
-    "0e1e0"
-  ],
-  "__framelix_view_backend_forgotpassword_sentmail__": [
-    "Falls die E-Mail {0} im System existiert, dann haben wir dir einen Best\u00e4tigungslink gesendet. Du musst die Mail innerhalb der n\u00e4chsten Stunde \u00f6ffnen.",
-    "d9ef2"
-  ],
-  "__framelix_view_backend_forgotpassword_token_invalid__": [
-    "Der Token ist nicht oder nicht mehr g\u00fcltig. Bitte probiere es erneut.",
-    "ccf87"
-  ],
-  "__framelix_view_backend_login2fa__": [
-    "Gib deinen 2-Faktor Code ein",
-    "a457a"
-  ],
-  "__framelix_view_backend_login2fa_back__": [
-    "Zur\u00fcck zur Loginseite",
-    "e12c0"
-  ],
-  "__framelix_view_backend_login__": [
-    "Login",
-    "99dea"
-  ],
-  "__framelix_view_backend_logs__": [
-    "Logs",
-    "b2d37"
-  ],
-  "__framelix_view_backend_logs_clear__": [
-    "L\u00f6sche alle Logs",
-    "a7dbf"
-  ],
-  "__framelix_view_backend_logs_errorlogs__": [
-    "Error Logs",
-    "2749d"
-  ],
-  "__framelix_view_backend_logs_nologs__": [
-    "Hier gibt es jetzt keine Logs",
-    "932b0"
-  ],
-  "__framelix_view_backend_logs_systemeventlogs__": [
-    "Event Logs",
-    "9e436"
-  ],
-  "__framelix_view_backend_setup__": [
-    "Set 'em up!",
-    "7180f"
-  ],
-  "__framelix_view_backend_user_basic__": [
-    "Basisdaten",
-    "c43ff"
-  ],
-  "__framelix_view_backend_user_index__": [
-    "Erstellen\/Bearbeiten",
-    "c1621"
-  ],
-  "__framelix_view_backend_user_password__": [
-    "Passwort \u00e4ndern",
-    "0b39c"
-  ],
-  "__framelix_view_backend_user_roles__": [
-    "Berechtigungen",
-    "d08cc"
-  ],
-  "__framelix_view_backend_user_search__": [
-    "Benutzer suchen",
-    "26728"
-  ],
-  "__framelix_view_backend_userprofile_2fa_disable__": [
-    "2-Faktor deaktivieren",
-    "74ce7"
-  ],
-  "__framelix_view_backend_userprofile_2fa_disable_info__": [
-    "Falls du ein weiteres Ger\u00e4t als 2ten Faktor hinzuf\u00fcgen willst, dann musst du zuerst den 2ten Faktor deaktivieren und dann alle 2-Faktor Ger\u00e4te mit dem selben QR Code scannen.",
-    "d987d"
-  ],
-  "__framelix_view_backend_userprofile_2fa_disable_warning__": [
-    "Bist du sicher? Das wird den 2ten Faktor deaktivieren!",
-    "3b9db"
-  ],
-  "__framelix_view_backend_userprofile_2fa_disabled__": [
-    "2-Faktor deaktiviert",
-    "b9fcb"
-  ],
-  "__framelix_view_backend_userprofile_2fa_download_codes__": [
-    "Downloade deine Backup Codes",
-    "02df8"
-  ],
-  "__framelix_view_backend_userprofile_2fa_enable__": [
-    "2-Faktor aktivieren",
-    "53f7c"
-  ],
-  "__framelix_view_backend_userprofile_2fa_enable_enter__": [
-    "Nachdem du den QR Code mit der App gescannt hast, gib den 6 stelligen Code aus der App hier ein. Nachdem du das getan hast, wird sich das Fenster automatisch schlie\u00dfen und der 2-Faktor ist aktiviert.",
-    "bcef4"
-  ],
-  "__framelix_view_backend_userprofile_2fa_enable_info__": [
-    "Du kannst den QR Code nun mit deiner Authenticator App scannen. Wir empfehlen Google Authenticator, andOTP oder Twilio.<br\/>Lade auch deine Backup Codes runter, im Fall wenn deine App oder Ger\u00e4t verloren geht",
-    "d2b7e"
-  ],
-  "__framelix_view_backend_userprofile_2fa_enable_name__": [
-    "W\u00e4hle einen Namen f\u00fcr die Authenticator App",
-    "207c2"
-  ],
-  "__framelix_view_backend_userprofile_2fa_enabled__": [
-    "2-Faktor aktiviert",
-    "fd546"
-  ],
-  "__framelix_view_backend_userprofile_2fa_info__": [
-    "Mit einer 2-Faktor Authentifizierung erh\u00f6hst du die Sicherheit deines Accounts, welcher dann einen 2-Faktor zum Login ben\u00f6tigt (TOTP - One Time Password). Wenn aktiviert, solltest du immer deine Backup Codes an einem sicheren Ort gespeichert haben, falls dein Ger\u00e4t verloren geht. Andernfalls, falls der 2-Faktor verloren geht und du keine Backup Codes hast, kannst du dich nicht mehr einloggen.",
-    "57a14"
-  ],
-  "__framelix_view_backend_userprofile_2fa_regenerate_codes__": [
-    "Erstelle neue Backup Codes",
-    "ab550"
-  ],
-  "__framelix_view_backend_userprofile_2fa_regenerate_codes_warning__": [
-    "Bist du sicher? Dies wird alle alten Backup Codes deaktivieren!",
-    "c3326"
-  ],
-  "__framelix_view_backend_userprofile_2fa_test__": [
-    "Teste deine 2-Faktor Authentifizierung",
-    "8e692"
-  ],
-  "__framelix_view_backend_userprofile_2fa_test_success__": [
-    "Code erfolgreich verifiziert",
-    "a4f17"
-  ],
-  "__framelix_view_backend_userprofile_email__": [
-    "Deine E-Mail",
-    "cd5b6"
-  ],
-  "__framelix_view_backend_userprofile_email_equal__": [
-    "Diese E-Mail ist die gleiche, die du bereits hast",
-    "65b38"
-  ],
-  "__framelix_view_backend_userprofile_email_info__": [
-    "Auf dieser Seite kannst du deine E-Mail \u00e4ndern. Wir schicken dir auf die alte und neue E-Mail einen Best\u00e4tigungslink den du \u00f6ffnen musst.",
-    "47443"
-  ],
-  "__framelix_view_backend_userprofile_email_mail_body__": [
-    "Du hast eine \u00c4nderung deiner E-Mail\u00a0 auf {0} beantragt.<br\/>Bitte \u00f6ffne den folgenden Link und best\u00e4tige den darin enthaltenen Link.",
-    "e9a8a"
-  ],
-  "__framelix_view_backend_userprofile_email_mail_changed__": [
-    "Deine E-Mail wurde ge\u00e4ndert",
-    "d761f"
-  ],
-  "__framelix_view_backend_userprofile_email_mail_sent__": [
-    "Wir haben der auf beide Adresse nun eine E-Mail geschickt. Bitte \u00f6ffnen die Best\u00e4tigungslink beider E-Mails.",
-    "bf938"
-  ],
-  "__framelix_view_backend_userprofile_email_mail_title__": [
-    "E-Mail \u00c4nderung angefordert",
-    "4abd1"
-  ],
-  "__framelix_view_backend_userprofile_emailverification__": [
-    "E-Mail \u00c4nderung best\u00e4tigen",
-    "862b1"
-  ],
-  "__framelix_view_backend_userprofile_emailverification_error__": [
-    "Fehler. Best\u00e4tigungslink ist ung\u00fcltig. Du musst den Link innerhalb 1 Stunde \u00f6ffnen.",
-    "7707e"
-  ],
-  "__framelix_view_backend_userprofile_emailverification_step1__": [
-    "Schritt 1 erledigt. Bitte \u00f6ffne nun den 2ten Best\u00e4tigungslink der anderen E-Mail. Du kannst das Fenster nun schlie\u00dfen.",
-    "3fece"
-  ],
-  "__framelix_view_backend_userprofile_emailverification_step2__": [
-    "Schritt 2 erledigt. Deine neue E-Mail ist nun {0}. Du kannst das Fenster nun schlie\u00dfen.",
-    "d776d"
-  ],
-  "__framelix_view_backend_userprofile_fido2_2fa_info__": [
-    "Falls du dich mit FIDO2 einloggst, dann braucht du den 2ten Faktor nicht, egal ob er aktiviert ist oder nicht. FIDO2 ist bereits sicherer als der 2te Faktor und wenn mans genau nimmt, FIDO2 ist der 2te Faktor.",
-    "e9df6"
-  ],
-  "__framelix_view_backend_userprofile_fido2__": [
-    "FIDO2 (Fingerprint, Hardware Token, etc...)",
-    "b3ac4"
-  ],
-  "__framelix_view_backend_userprofile_fido2_already_enabled__": [
-    "Du hast FIDO2 bereits auf diesem Ger\u00e4t aktiviert",
-    "fe7fe"
-  ],
-  "__framelix_view_backend_userprofile_fido2_authnid_error__": [
-    "Fehlende WebAuthnId. Bitte erneut probieren.",
-    "eed94"
-  ],
-  "__framelix_view_backend_userprofile_fido2_disable__": [
-    "Deaktiviere FIDO2 auf diesem Ger\u00e4t",
-    "62256"
-  ],
-  "__framelix_view_backend_userprofile_fido2_enable__": [
-    "Aktiviere jetzt FIDO2 auf diesem Ger\u00e4t",
-    "5b39d"
-  ],
-  "__framelix_view_backend_userprofile_fido2_error__": [
-    "Fehler: {0}",
-    "70ead"
-  ],
-  "__framelix_view_backend_userprofile_fido2_info__": [
-    "Mit FIDO2 kannst du einen weiteren sicheren Login f\u00fcr deinen Account aktivieren. Du kannst zwischen verschiedenen Methoden w\u00e4hlen, je nachdem was dein Ger\u00e4t unterst\u00fctzt. Fingerprint, Hardware Token, etc... Du kannst dich aber auch weiterhin mit deinem Passwort einloggen. Du kannst auch einen Eintrag wieder l\u00f6schen, dann wird der erweiterte Login f\u00fcr das jeweilige Ger\u00e4t wieder deaktiviert wird.",
-    "ac068"
-  ],
-  "__framelix_view_backend_userprofile_fido2_success__": [
-    "Authentifizierung erfolgreich hinzugef\u00fcgt. Du kannst dich mit der gew\u00e4hlten Methode nun einloggen.",
-    "f3bdc"
-  ],
-  "__framelix_view_backend_userprofile_fido2_unsupported__": [
-    "Upsi. FIDO2 ist auf deinem Ger\u00e4t\/Browser nicht verf\u00fcgbar.",
-    "70dbb"
-  ],
-  "__framelix_view_backend_userprofile_fido2_webauthn_error__": [
-    "Fehler vom WebAuthn Backend",
-    "bd8d5"
-  ],
-  "__framelix_view_backend_userprofile_index__": [
-    "Mein Profil",
-    "8746c"
-  ],
-  "__framelix_view_backend_userprofile_password__": [
-    "Dein Passwort",
-    "5afd8"
-  ],
-  "__framelix_view_backend_userprofile_twofactor__": [
-    "2-Faktor Authentifizierung",
-    "aaafe"
-  ],
-  "__framelix_view_loading__": [
-    "Die Ansicht wird geladen... Bitte warten...",
-    "acf1e"
-  ],
-  "__framelix_yes__": [
-    "Ja",
-    "93cba"
-  ]
+    "__framelix_appupdate_autoupdate__": [
+        "Klicke hier um deine App zu aktualisieren",
+        "4f9b4"
+    ],
+    "__framelix_appupdate_changelog__": [
+        "Changelog",
+        "c4918"
+    ],
+    "__framelix_appupdate_check_update__": [
+        "Klicke hier um auf Updates zu pr\u00fcfen",
+        "4e5d3"
+    ],
+    "__framelix_appupdate_confirm__": [
+        "Ich best\u00e4tige diese Aktion",
+        "44bac"
+    ],
+    "__framelix_appupdate_confirm_desc__": [
+        "Ich habe ein Backup gemacht und wei\u00df, wie ich im Notfall das Backup wieder einspielen kann.",
+        "ea47c"
+    ],
+    "__framelix_appupdate_file__": [
+        "W\u00e4hle ein ZIP Paket",
+        "faae2"
+    ],
+    "__framelix_appupdate_no_update_available__": [
+        "Kein Update verf\u00fcgbar. Deine App ist aktuell.",
+        "c92c5"
+    ],
+    "__framelix_appupdate_tabs_appupdate__": [
+        "App Update",
+        "0ea14"
+    ],
+    "__framelix_appupdate_tabs_backup__": [
+        "Backup",
+        "3500b"
+    ],
+    "__framelix_appupdate_tabs_update_log__": [
+        "Update Log",
+        "cbc07"
+    ],
+    "__framelix_appupdate_tabs_update_log_dir_added__": [
+        "Verzeichnis hinzugef\u00fcgt",
+        "b920b"
+    ],
+    "__framelix_appupdate_tabs_update_log_dir_deleted__": [
+        "Verzeichnis gel\u00f6scht",
+        "f04e7"
+    ],
+    "__framelix_appupdate_tabs_update_log_dir_skipped__": [
+        "Verzeichnis ignoriert (Existiert bereits)",
+        "c8aef"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_added__": [
+        "Dateien hinzugef\u00fcgt",
+        "f776c"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_deleted__": [
+        "Dateien gel\u00f6scht",
+        "35471"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_skipped__": [
+        "Dateien ignoriert (Existiert bereits und wurde nicht ver\u00e4ndert)",
+        "c1324"
+    ],
+    "__framelix_appupdate_tabs_update_log_file_updated__": [
+        "Dateien aktualisiert",
+        "5566c"
+    ],
+    "__framelix_appupdate_tabs_upload__": [
+        "Ein Zip Paket hochladen",
+        "18a3d"
+    ],
+    "__framelix_appupdate_update_available__": [
+        "Es gibt eine neue App Version welche du mit einem Klick installieren kannst. Mach immer ein Backup vor dem Update.",
+        "d0718"
+    ],
+    "__framelix_appupdate_updatetype_upload__": [
+        "Ein Zip Paket hochladen",
+        "dfa3b"
+    ],
+    "__framelix_backend_startpage__": [
+        "Home",
+        "8cf04"
+    ],
+    "__framelix_browser_unsupported__": [
+        "Dein Browser wird leider nicht mehr unterst\u00fctzt. Bitte aktualisiere auf einen aktuelle Version von Chrome, Edge, Firefox oder Safari.",
+        "fd507"
+    ],
+    "__framelix_cancel__": [
+        "Abbrechen",
+        "ea478"
+    ],
+    "__framelix_close__": [
+        "Schlie\u00dfen",
+        "d3d2e"
+    ],
+    "__framelix_config_applicationhost_label__": [
+        "Domain",
+        "eae63"
+    ],
+    "__framelix_config_applicationhost_label_desc__": [
+        "Die Domain unter der deine Applikation l\u00e4uft. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt. Nutze den Platzhalter {host} falls du einfach die aktuelle Domain, mit der du diese App gerade aufrufst, nehmen willst. Das erlaubt dir mehrere Domains auf eine Applikation zu legen.",
+        "5e96b"
+    ],
+    "__framelix_config_applicationhttps_label__": [
+        "Https aktiviert",
+        "34586"
+    ],
+    "__framelix_config_applicationhttps_label_desc__": [
+        "Die Applikation l\u00e4uft mit einer gesicherten https Verbindung. Diese Einstellung wird f\u00fcr das generieren von allen Links benutzt.",
+        "e7703"
+    ],
+    "__framelix_config_applicationurlbasepath_label__": [
+        "Pfad zur Applikation",
+        "76bf3"
+    ],
+    "__framelix_config_applicationurlbasepath_label_desc__": [
+        "Dies wird dann notwendig, wenn die Applikation in einem Unterordner deines Webservers l\u00e4uft.",
+        "3d1b7"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_privatekey_label__": [
+        "Recaptcha V2 secret key",
+        "837cd"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_privatekey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_publickey_label__": [
+        "Recaptcha V2 public key",
+        "575cb"
+    ],
+    "__framelix_config_captchakeys_recaptchav2_publickey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_privatekey_label__": [
+        "Recaptcha V3 secret key",
+        "de055"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_privatekey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_publickey_label__": [
+        "Recaptcha V3 public key",
+        "5eb6b"
+    ],
+    "__framelix_config_captchakeys_recaptchav3_publickey_label_desc__": [
+        "Wird benutzt um Captchas f\u00fcr Logins oder andere Formulare zu generieren. Mehre dazu auf\u00a0https:\/\/www.google.com\/recaptcha\/about\/",
+        "41340"
+    ],
+    "__framelix_config_captchatype_label__": [
+        "Art des Captchas",
+        "6f340"
+    ],
+    "__framelix_config_captchatype_label_desc__": [
+        "Du kannst zwischen verschiedenen Captcha-Methoden w\u00e4hlen. Falls du nichts w\u00e4hlst, dann ist Captcha global deaktiviert.",
+        "27d38"
+    ],
+    "__framelix_config_emailbody_label__": [
+        "Text",
+        "c7e9e"
+    ],
+    "__framelix_config_emailbodytemplate_label__": [
+        "Body template",
+        "431ae"
+    ],
+    "__framelix_config_emailbodytemplate_label_desc__": [
+        "Hier kannst du deiner E-Mail ein generelles HTML Layout geben. Der Platzhalter {body} wird mit dem Nachrichtentext ersetzt.",
+        "f8cf9"
+    ],
+    "__framelix_config_emaildefaultfrom_label__": [
+        "Standard \"FROM\" gesendet von E-Mail",
+        "e0524"
+    ],
+    "__framelix_config_emailoverriderecipient_label__": [
+        "Leite alle ausgehenden E-Mails an diese E-Mail",
+        "e4636"
+    ],
+    "__framelix_config_emailoverriderecipient_label_desc__": [
+        "Dies leitet alle ausgehenden E-Mails an eine einzige E-Mailadresse. Das sollte unbedingt in der lokalen Entwicklung bzw. zum Debugging benutzt werden. Du willst ja nicht w\u00e4hrend dem Testen E-Mails an au\u00dfenstehende schicken.",
+        "16b7b"
+    ],
+    "__framelix_config_emailtest_error__": [
+        "Fehler beim senden der E-Mail",
+        "7c182"
+    ],
+    "__framelix_config_emailtest_success__": [
+        "E-Mail erfolgreich gesendet",
+        "f4775"
+    ],
+    "__framelix_config_emailtitle_label__": [
+        "Betreff",
+        "2f1bf"
+    ],
+    "__framelix_config_emailtitletemplate_label__": [
+        "Betreff Template",
+        "15bf5"
+    ],
+    "__framelix_config_emailtitletemplate_label_desc__": [
+        "Wenn du willst, dass immer ein fixer Text im Titel steht.<br\/>Beispiel:\u00a0\"{title} - Fixer text\"<br\/>{title} wird mit dem richtigen Betreff ersetzt",
+        "82a6e"
+    ],
+    "__framelix_config_emailto_label__": [
+        "E-Mail Empf\u00e4nger",
+        "5dc40"
+    ],
+    "__framelix_config_errorlogdisk_label__": [
+        "Schreibe Fehler auf Festplatte",
+        "9af22"
+    ],
+    "__framelix_config_errorlogdisk_label_desc__": [
+        "Diese Fehler k\u00f6nnen sp\u00e4ter in Entwickleroptionen -> Logs angesehen werden.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "3f5c1"
+    ],
+    "__framelix_config_errorlogemail_label__": [
+        "Schicke Fehler per E-Mail",
+        "d1938"
+    ],
+    "__framelix_config_errorlogemail_label_desc__": [
+        "Schickt alle Fehler an die angegebene E-Mail.<br\/>Diese Einstellung ist empfohlen.<br\/>Nachdem du das ge\u00e4ndert hast, wird dir eine Testemail geschickt.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "593e1"
+    ],
+    "__framelix_config_errorlogextended_label__": [
+        "Erweitertes Logging",
+        "aedc5"
+    ],
+    "__framelix_config_errorlogextended_label_desc__": [
+        "Falls aktiviert, dann werden alle Daten die das System zu diesem Zeitpunkt zur Verf\u00fcgung hat, geloggt.<br\/>Das beinhaltet mitunter Formulardaten, Benutzerdaten, Serverdaten, usw...<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "a267d"
+    ],
+    "__framelix_config_errorlogsyslog_label__": [
+        "Schreibe Fehler in syslog",
+        "5afd6"
+    ],
+    "__framelix_config_errorlogsyslog_label_desc__": [
+        "Schreibt die Fehler in den syslog des Systems.<br\/>Achtung: Diese Logs k\u00f6nnen sehr sensible Daten enthalten.",
+        "eccde"
+    ],
+    "__framelix_config_languagedefault_label__": [
+        "Standardsprache",
+        "c96a7"
+    ],
+    "__framelix_config_languagedefaultuser_label__": [
+        "Ermittle Standardsprache automatisch auf Basis der Browsereinstellungen vom Benutzer",
+        "24ddb"
+    ],
+    "__framelix_config_languagedefaultuser_label_desc__": [
+        "Falls aktiviert, dann wird das System versuchen automatisch die Standardsprache des Browsers vom Benutzer zu ermitteln. Wird keine passende Sprache gefunden, dann wird wieder die Standardsprache des System gew\u00e4hlt.",
+        "48e87"
+    ],
+    "__framelix_config_languagefallback_label__": [
+        "Fallback Sprache",
+        "9475d"
+    ],
+    "__framelix_config_languagefallback_label_desc__": [
+        "Falls ein Bezeichner nicht existiert oder noch nicht \u00fcbersetzt wurde, dann nutze diese Sprache als Fallback.",
+        "3ac39"
+    ],
+    "__framelix_config_languagemultiple_label__": [
+        "Mehrsprachig",
+        "75543"
+    ],
+    "__framelix_config_languagemultiple_label_desc__": [
+        "Das erlaubt dem Benutzer die Auswahl aus mehreren Sprachen.<br\/>Diese Einstellung gilt f\u00fcr dieses Backend und m\u00f6glicherweise auch f\u00fcr eventuelle Frontend Seiten. Dies kommt auf die Implentierung an.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte diese Einstellung\u00a0 nicht mehr ge\u00e4ndert werden. Bei \u00c4nderung werden ALLE existierenden URLs ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
+        "33752"
+    ],
+    "__framelix_config_languagessupported_label__": [
+        "Unterst\u00fctzte Sprachen",
+        "06c07"
+    ],
+    "__framelix_config_languagessupported_label_desc__": [
+        "Der Benutzer kann zwischen diesen Sprachen w\u00e4hlen.<br\/>Achtung: Sobald die Applikation einmal ver\u00f6ffentlicht wurde sollte keine Sprache mehr entfernt werden. Bei Entfernung einer Sprache werden ALLE existierenden URLs die auf die Sprache referenzieren ung\u00fcltig. Das hat zur Folge das alle Links aus Google verschwinden, alle Lesezeichen ung\u00fcltig werden, etc... Das sollte niemals gemacht werden, sobald die Applikation aktiv ist.",
+        "f2b13"
+    ],
+    "__framelix_config_logincaptcha_label__": [
+        "Login ben\u00f6tigt ausgef\u00fclltes Captcha",
+        "f9625"
+    ],
+    "__framelix_config_logincaptcha_label_desc__": [
+        "Achtung: Falls du das aktivierst, kontrolliere sofort in einem 2ten Inkognito Tab ob der Login dann auch noch funktioniert. Im Falle eines Problems kannst du dich sonst nicht mehr einloggen.Falls das passiert, dann kannst du nur mehr via Kommandozeile die Datei\u00a0config-editable.php bearbeiten und das Hakerl dort wieder entfernen.",
+        "31562"
+    ],
+    "__framelix_config_mailsendtype_label__": [
+        "Mail Send-Architektur",
+        "63f89"
+    ],
+    "__framelix_config_missing_forms_file__": [
+        "Das Modul hat keine\u00a0config\/config-editable-form.php Datei",
+        "554ce"
+    ],
+    "__framelix_config_smtphost_label__": [
+        "SMTP Hostname",
+        "4cb45"
+    ],
+    "__framelix_config_smtppassword_label__": [
+        "SMTP Passwort",
+        "13dfa"
+    ],
+    "__framelix_config_smtpport_label__": [
+        "SMTP Port",
+        "63ede"
+    ],
+    "__framelix_config_smtpsecure_label__": [
+        "SMTP Verschl\u00fcsselung",
+        "336ff"
+    ],
+    "__framelix_config_smtpusername_label__": [
+        "SMTP Benutzername",
+        "bf4f9"
+    ],
+    "__framelix_config_systemeventlog_1_label__": [
+        "Loggt jede Aktion die einen neuen Datenbankeintrag erzeugt",
+        "26ee8"
+    ],
+    "__framelix_config_systemeventlog_2_label__": [
+        "Loggt jede Aktion die einen Datenbankeintrag aktualisiert",
+        "33670"
+    ],
+    "__framelix_config_systemeventlog_3_label__": [
+        "Loggt jede Aktion die einen Datenbankeintrag l\u00f6scht",
+        "ba9f5"
+    ],
+    "__framelix_config_systemeventlog_4_label__": [
+        "Loggt alle fehlgeschlagenen Logins",
+        "02385"
+    ],
+    "__framelix_config_systemeventlog_5_label__": [
+        "Loggt alle erfolgreichen Logins",
+        "987b8"
+    ],
+    "__framelix_config_systemeventlog_labeldesc__": [
+        "Die folgenden Logs sind Event Logs welche unabh\u00e4ngig von den oben gelisteten Optionen sind. Diese Logs k\u00f6nnen auch im Men\u00fc f\u00fcr Logs angesehen werden.",
+        "880dc"
+    ],
+    "__framelix_configuration_module_captcha_pagetitle__": [
+        "Captcha",
+        "45d04"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_mail__": [
+        "PHP mail (Muss in php.ini konfiguriert werden)",
+        "2756b"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_none__": [
+        "Mail senden deaktiviert",
+        "b7991"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_sendmail__": [
+        "Sendmail (Muss in php.ini konfiguriert werden)",
+        "1eb42"
+    ],
+    "__framelix_configuration_module_email_mailsendtype_smtp__": [
+        "SMTP",
+        "c2239"
+    ],
+    "__framelix_configuration_module_email_pagetitle__": [
+        "E-Mail\/Smtp",
+        "fbbdb"
+    ],
+    "__framelix_configuration_module_emailtext_pagetitle__": [
+        "E-Mail Test",
+        "6cd35"
+    ],
+    "__framelix_configuration_module_language_pagetitle__": [
+        "Sprache",
+        "4994a"
+    ],
+    "__framelix_configuration_module_logging_pagetitle__": [
+        "Logging",
+        "8db7d"
+    ],
+    "__framelix_configuration_module_pagetitle__": [
+        "Grundeinstellungen",
+        "b8855"
+    ],
+    "__framelix_configuration_module_url_pagetitle__": [
+        "Domain\/URL",
+        "2b9b6"
+    ],
+    "__framelix_configuration_warning__": [
+        "Achtung: Jede \u00c4nderung an diesen Einstellungen wird sofort durchgef\u00fchrt und angewendet. Stelle sicher das du immer ein funktionierendes Backup hast, falls du dabei etwas falsch konfigurieren solltest.<br\/>Stelle auch sicher, das du immer Zugriff auf die Kommandozeile auf deinem Server hast, damit du die config-editable.php Datei bearbeiten kannst, falls wirklich alles den Bach runter geht.",
+        "0200d"
+    ],
+    "__framelix_create_or_edit_before_proceed__": [
+        "Bitte erstelle oder w\u00e4hle einen vorhandenen Eintrag um mit Bearbeitung dieser Sektion fortzufahren.",
+        "14012"
+    ],
+    "__framelix_darkmode__": [
+        "Dark Mode",
+        "51b5e"
+    ],
+    "__framelix_date_quarter__": [
+        "Quartal",
+        "b25cd"
+    ],
+    "__framelix_day_1__": [
+        "Montag",
+        "6f852"
+    ],
+    "__framelix_day_2__": [
+        "Dienstag",
+        "57923"
+    ],
+    "__framelix_day_3__": [
+        "Mittwoch",
+        "796c1"
+    ],
+    "__framelix_day_4__": [
+        "Donnerstag",
+        "78ae6"
+    ],
+    "__framelix_day_5__": [
+        "Freitag",
+        "c33b1"
+    ],
+    "__framelix_day_6__": [
+        "Samstag",
+        "8b705"
+    ],
+    "__framelix_day_7__": [
+        "Sonntag",
+        "9d1a0"
+    ],
+    "__framelix_dayshort_1__": [
+        "Mo",
+        "fd294"
+    ],
+    "__framelix_dayshort_2__": [
+        "Di",
+        "2ddec"
+    ],
+    "__framelix_dayshort_3__": [
+        "Mi",
+        "510c2"
+    ],
+    "__framelix_dayshort_4__": [
+        "Do",
+        "ed5e8"
+    ],
+    "__framelix_dayshort_5__": [
+        "Fr",
+        "ac616"
+    ],
+    "__framelix_dayshort_6__": [
+        "Sa",
+        "13c7d"
+    ],
+    "__framelix_dayshort_7__": [
+        "So",
+        "ef657"
+    ],
+    "__framelix_deleted__": [
+        "Gel\u00f6scht",
+        "5fe60"
+    ],
+    "__framelix_deleteentry__": [
+        "Eintrag l\u00f6schen",
+        "e313e"
+    ],
+    "__framelix_developer_options__": [
+        "Entwickleroptionen",
+        "029a9"
+    ],
+    "__framelix_download_file__": [
+        "Datei downloaden",
+        "d5ef9"
+    ],
+    "__framelix_downloadfile__": [
+        "Datei downloaden",
+        "d5ef9"
+    ],
+    "__framelix_edit__": [
+        "Bearbeiten",
+        "7dce1"
+    ],
+    "__framelix_edituser_sidebar_title__": [
+        "Benutzermanagement",
+        "e8f36"
+    ],
+    "__framelix_email__": [
+        "E-Mail",
+        "082e5"
+    ],
+    "__framelix_emailnew__": [
+        "Deine neue E-Mail",
+        "cb9c8"
+    ],
+    "__framelix_error_access_denied__": [
+        "Sorry. Du darfst diese Seite nicht sehen.",
+        "6739d"
+    ],
+    "__framelix_error_invalid_url__": [
+        "Der angeforderten Seite fehlen Parameter",
+        "19d82"
+    ],
+    "__framelix_forgotpassword__": [
+        "Passwort vergessen",
+        "98f13"
+    ],
+    "__framelix_form_2fa_backup_code_used__": [
+        "Du hast einen One Time Backup Code f\u00fcr deine 2-Faktor Authentifizierung verwendet. Dieser Code kann nun nicht mehr verwendet werden.",
+        "d1917"
+    ],
+    "__framelix_form_2fa_enter__": [
+        "Gib deinen Code mit 6 Zahlen ein",
+        "7539c"
+    ],
+    "__framelix_form_2fa_enter_backup__": [
+        "Gib deinen Backup Code mit 10 Zeichen ein",
+        "9d7ae"
+    ],
+    "__framelix_form_2fa_usebackup__": [
+        "Oder klicke hier um einen Backup Code zu nutzen",
+        "d79d3"
+    ],
+    "__framelix_form_date_open_datepicker__": [
+        "Kalender \u00f6ffnen",
+        "fe966"
+    ],
+    "__framelix_form_file_delete_existing__": [
+        "Datei aus der Datenbank l\u00f6schen<br\/>Du musst den Eintrag speichern bevor die Datei wirklich gel\u00f6scht wird",
+        "71d18"
+    ],
+    "__framelix_form_file_delete_queue__": [
+        "Aus der Warteschlange l\u00f6schen",
+        "5affc"
+    ],
+    "__framelix_form_file_pick__": [
+        "W\u00e4hle eine Datei oder ziehe sie per Drag&Drop hier rein",
+        "e0872"
+    ],
+    "__framelix_form_password_toggle__": [
+        "Zeige\/Verstecke Passwort",
+        "b2b77"
+    ],
+    "__framelix_form_search_noresult__": [
+        "Keine Suchergebnisse",
+        "52d2a"
+    ],
+    "__framelix_form_search_start__": [
+        "Jetzt suchen",
+        "83675"
+    ],
+    "__framelix_form_select_chooseoption_label__": [
+        "W\u00e4hle...",
+        "ab254"
+    ],
+    "__framelix_form_select_noptions_label__": [
+        "Keine Werte zum ausw\u00e4hlen verf\u00fcgbar",
+        "c180a"
+    ],
+    "__framelix_form_select_open__": [
+        "Alle Optionen anzeigen",
+        "86fb0"
+    ],
+    "__framelix_form_select_search__": [
+        "Suchen nach Werten....",
+        "5036c"
+    ],
+    "__framelix_form_select_unset__": [
+        "Auswahl zur\u00fccksetzen",
+        "236ba"
+    ],
+    "__framelix_form_validation_captcha_invalid__": [
+        "Captcha konnte nicht verifiziert werden, bitte erneut versuchen",
+        "a4d84"
+    ],
+    "__framelix_form_validation_captcha_loading__": [
+        "Captcha wird verifiziert...",
+        "1ae4f"
+    ],
+    "__framelix_form_validation_captcha_verified__": [
+        "Dein Ger\u00e4t wurde erfolgreich verifiziert",
+        "dd78f"
+    ],
+    "__framelix_form_validation_email__": [
+        "Das muss eine korrekte E-Mailadresse sein",
+        "1d8b0"
+    ],
+    "__framelix_form_validation_invaliddate__": [
+        "Das ist kein g\u00fcltiges Datum",
+        "73a64"
+    ],
+    "__framelix_form_validation_max__": [
+        "Wert kann nicht gr\u00f6\u00dfer als {number} sein",
+        "98a98"
+    ],
+    "__framelix_form_validation_maxdate__": [
+        "Datum kann nicht gr\u00f6\u00dfer als {date} sein",
+        "ddb38"
+    ],
+    "__framelix_form_validation_maxlength__": [
+        "Der Text kann nicht l\u00e4nger als {number} Zeichen sein",
+        "1e101"
+    ],
+    "__framelix_form_validation_maxselectedfiles__": [
+        "Maximal {{number=1:{number} Datei|number=*:{number} Dateien}} k\u00f6nnen ausgew\u00e4hlt werden",
+        "84aad"
+    ],
+    "__framelix_form_validation_maxselecteditems__": [
+        "Maximal {{number=1:{number} Option|number=*:{number} Optionen}} k\u00f6nnen\u00a0ausgew\u00e4hlt werden",
+        "61599"
+    ],
+    "__framelix_form_validation_maxtime__": [
+        "Zeit kann nicht gr\u00f6\u00dfer als {time} sein",
+        "7e61d"
+    ],
+    "__framelix_form_validation_min__": [
+        "Wert kann nicht kleiner als {number} sein",
+        "c38da"
+    ],
+    "__framelix_form_validation_mindate__": [
+        "Datum kann nicht kleiner als {date} sein",
+        "93dc4"
+    ],
+    "__framelix_form_validation_minlength__": [
+        "Der Text kann nicht k\u00fcrzer als {number} Zeichen sein",
+        "83846"
+    ],
+    "__framelix_form_validation_minselectedfiles__": [
+        "Mindestens {{number=1:{number} Datei|number=*:{number} Dateien}} m\u00fcssen ausgew\u00e4hlt werden",
+        "c18d9"
+    ],
+    "__framelix_form_validation_minselecteditems__": [
+        "Mindestens {{number=1:{number} Option|number=*:{number} Optionen}} m\u00fcssen ausgew\u00e4hlt werden",
+        "55804"
+    ],
+    "__framelix_form_validation_mintime__": [
+        "Zeit kann nicht kleiner als {time} sein",
+        "702bd"
+    ],
+    "__framelix_form_validation_required__": [
+        "Dieses Feld muss ausgef\u00fcllt werden",
+        "1ec46"
+    ],
+    "__framelix_form_validation_twofactor__": [
+        "Der eingegebene Code ist nicht g\u00fcltig",
+        "ac9d8"
+    ],
+    "__framelix_goaback__": [
+        "Gehe zur\u00fcck",
+        "22b65"
+    ],
+    "__framelix_goahead__": [
+        "Weiter",
+        "6dd82"
+    ],
+    "__framelix_https_required__": [
+        "Das Feature ist nur verf\u00fcgbar, wenn die Applikation unter https l\u00e4uft. Der Administrator dieser Applikation muss dieses Feature aktivieren.",
+        "d5503"
+    ],
+    "__framelix_login_fido2__": [
+        "Mit FIDO2 einloggen",
+        "eb133"
+    ],
+    "__framelix_login_invalid_fido2__": [
+        "E-Mail existiert nicht, hat kein FIDO2 aktiviert oder dein Ger\u00e4t hat kein FIDO2 aktiviert f\u00fcr diese E-Mail",
+        "21f7a"
+    ],
+    "__framelix_login_invalid_user__": [
+        "E-Mail und\/oder Passwort stimmt nicht",
+        "4080f"
+    ],
+    "__framelix_login_submit__": [
+        "Jetzt einloggen",
+        "88013"
+    ],
+    "__framelix_logout__": [
+        "Ausloggen",
+        "0323d"
+    ],
+    "__framelix_meta_searchandtable_entries__": [
+        "Eintr\u00e4ge",
+        "bc14b"
+    ],
+    "__framelix_meta_searchandtable_search__": [
+        "Suchen",
+        "13348"
+    ],
+    "__framelix_modified_timestamp__": [
+        "Zeitstempel",
+        "a3d5d"
+    ],
+    "__framelix_modified_timestamp_createuser__": [
+        "Erstellt von {0} am {1}",
+        "a279c"
+    ],
+    "__framelix_modified_timestamp_updated__": [
+        "Dieser Eintrag wurde modifiziert nachdem er erstellt wurde",
+        "678aa"
+    ],
+    "__framelix_modified_timestamp_updateuser__": [
+        "Zuletzt bearbeitet von {0} am {1}",
+        "12f2e"
+    ],
+    "__framelix_month_10__": [
+        "Oktober",
+        "eca60"
+    ],
+    "__framelix_month_11__": [
+        "November",
+        "7e823"
+    ],
+    "__framelix_month_12__": [
+        "Dezember",
+        "82331"
+    ],
+    "__framelix_month_1__": [
+        "J\u00e4nner",
+        "86f59"
+    ],
+    "__framelix_month_2__": [
+        "Februar",
+        "659e5"
+    ],
+    "__framelix_month_3__": [
+        "M\u00e4rz",
+        "fa3e5"
+    ],
+    "__framelix_month_4__": [
+        "April",
+        "3fcf0"
+    ],
+    "__framelix_month_5__": [
+        "Mai",
+        "195fb"
+    ],
+    "__framelix_month_6__": [
+        "Juni",
+        "68893"
+    ],
+    "__framelix_month_7__": [
+        "Juli",
+        "1b539"
+    ],
+    "__framelix_month_8__": [
+        "August",
+        "41ba7"
+    ],
+    "__framelix_month_9__": [
+        "September",
+        "cc5d9"
+    ],
+    "__framelix_monthshort_10__": [
+        "Ockt",
+        "594be"
+    ],
+    "__framelix_monthshort_11__": [
+        "Nov",
+        "343e6"
+    ],
+    "__framelix_monthshort_12__": [
+        "Dez",
+        "d207b"
+    ],
+    "__framelix_monthshort_1__": [
+        "J\u00e4n",
+        "e6856"
+    ],
+    "__framelix_monthshort_2__": [
+        "Feb",
+        "ea171"
+    ],
+    "__framelix_monthshort_3__": [
+        "M\u00e4r",
+        "7ce6b"
+    ],
+    "__framelix_monthshort_4__": [
+        "Apr",
+        "6d721"
+    ],
+    "__framelix_monthshort_5__": [
+        "Mai",
+        "195fb"
+    ],
+    "__framelix_monthshort_6__": [
+        "Jun",
+        "eb4b4"
+    ],
+    "__framelix_monthshort_7__": [
+        "Jul",
+        "a2866"
+    ],
+    "__framelix_monthshort_8__": [
+        "Aug",
+        "22f1a"
+    ],
+    "__framelix_monthshort_9__": [
+        "Sep",
+        "f04aa"
+    ],
+    "__framelix_no__": [
+        "Nein",
+        "bafd7"
+    ],
+    "__framelix_ok__": [
+        "OK",
+        "e0aa0"
+    ],
+    "__framelix_password__": [
+        "Passwort",
+        "dc647"
+    ],
+    "__framelix_password_current__": [
+        "Dein aktuelles Passwort",
+        "5f87e"
+    ],
+    "__framelix_password_incorrect__": [
+        "Passwort ist nicht korrekt",
+        "a8666"
+    ],
+    "__framelix_password_new__": [
+        "Dein neues Passwort",
+        "c5f46"
+    ],
+    "__framelix_password_notcorrect__": [
+        "Dein aktuelles Passwort stimmt nicht",
+        "d3099"
+    ],
+    "__framelix_password_notmatch__": [
+        "Passw\u00f6rter stimmen nicht \u00fcberein",
+        "c5a77"
+    ],
+    "__framelix_password_repeat__": [
+        "Passwort wiederholen",
+        "c1379"
+    ],
+    "__framelix_password_verify__": [
+        "Bitte gib dein Passwort erneut f\u00fcr diesen sicheren Bereich ein",
+        "a4a36"
+    ],
+    "__framelix_quick_search_add__": [
+        "Zur Suche hinzuf\u00fcgen",
+        "3f24f"
+    ],
+    "__framelix_quick_search_column__": [
+        "Suche in einem spezifischem Feld",
+        "20e82"
+    ],
+    "__framelix_quick_search_compare__": [
+        "Vergleichsmethode",
+        "faafe"
+    ],
+    "__framelix_quick_search_compare_contain__": [
+        "Beinhaltet",
+        "0e75e"
+    ],
+    "__framelix_quick_search_compare_equal__": [
+        "Exakte \u00dcbereinstimmung",
+        "161b4"
+    ],
+    "__framelix_quick_search_compare_gt__": [
+        "Gr\u00f6\u00dfer als",
+        "05824"
+    ],
+    "__framelix_quick_search_compare_gte__": [
+        "Gr\u00f6\u00dfer gleich",
+        "e7d16"
+    ],
+    "__framelix_quick_search_compare_lt__": [
+        "Kleiner als",
+        "6c1e9"
+    ],
+    "__framelix_quick_search_compare_lte__": [
+        "Kleiner gleich",
+        "d2c55"
+    ],
+    "__framelix_quick_search_compare_notcontain__": [
+        "Beinhaltet nicht",
+        "29f80"
+    ],
+    "__framelix_quick_search_compare_notequal__": [
+        "Stimmt nicht \u00fcberein",
+        "ecf92"
+    ],
+    "__framelix_quick_search_help__": [
+        "Nutze * oder leeres Suchfeld um alles zu finden<br\/>Nutze ** um alles zu finden und die Suche beim n\u00e4chsten Seitenaufruf automatisch wieder auszuf\u00fchren<br\/>Nutze >50, >=50, =50, !=50, <50, <=50 um Werte zu finden die gr\u00f6\u00dfer\/gleich\/ungleich\/kleiner 50 sind<br\/>Nutze ~hallo um alles zu finden was dieses Wort beinhaltet (Das ist das Standardverhalten auch ohne ~) <br\/>Nutze\u00a0!~hallo\u00a0um alles zu finden was das dieses Wort nicht beinhaltet\u00a0<br\/>Nutze \"hello friend\" um nach diesem vollst\u00e4ndigen Begriff zu suchen<br\/>Nutze hallo && bye um Eintr\u00e4ge zu finden die beide W\u00f6rter beinhalten (Standard w\u00e4re eines der beiden)<br\/>Nutze das Einstellungssymbol um noch genauere Suchwerte zu definieren",
+        "ae282"
+    ],
+    "__framelix_quick_search_help_tooltip__": [
+        "Hilfe zu den Suchoptionen",
+        "5a0ad"
+    ],
+    "__framelix_quick_search_placeholder__": [
+        "Gib hier deinen Suchbegriff ein. Nutze * oder leeres Feld um alles zu finden.",
+        "d6df5"
+    ],
+    "__framelix_quick_search_query_modified__": [
+        "Dein neuer Suchbegriff",
+        "72a81"
+    ],
+    "__framelix_quick_search_settings__": [
+        "Erweiterte Suche - Definiere genaue Felder in denen du suchen willst",
+        "01e49"
+    ],
+    "__framelix_quick_search_value__": [
+        "Suche nach",
+        "900c6"
+    ],
+    "__framelix_save__": [
+        "Speichern",
+        "c9cc8"
+    ],
+    "__framelix_save_edited__": [
+        "Ge\u00e4nderten Eintrag speichern",
+        "9e11d"
+    ],
+    "__framelix_save_new__": [
+        "Neuer Eintrag gespeichert",
+        "39c4b"
+    ],
+    "__framelix_saved__": [
+        "Daten wurden gespeichert",
+        "cfc9a"
+    ],
+    "__framelix_setup_applicationurl_desc__": [
+        "Deine URL inklusive Domain zu deiner Applikation",
+        "2b0dd"
+    ],
+    "__framelix_setup_applicationurl_label__": [
+        "Applikations-URL",
+        "0aef0"
+    ],
+    "__framelix_setup_dbhost_label__": [
+        "Datenbank Host",
+        "e9629"
+    ],
+    "__framelix_setup_dbname_label__": [
+        "Datenbank Name",
+        "82568"
+    ],
+    "__framelix_setup_dbpassword_label__": [
+        "Datenbank Passwort",
+        "7a51b"
+    ],
+    "__framelix_setup_dbport_label__": [
+        "Datenbank Port",
+        "268cb"
+    ],
+    "__framelix_setup_dbsocket_label__": [
+        "Datenbank Socket",
+        "9de67"
+    ],
+    "__framelix_setup_dbuser_label__": [
+        "Datenbank Benutzername",
+        "aa4fa"
+    ],
+    "__framelix_setup_developer_desc__": [
+        "Falls aktiviert, dann siehst du das Men\u00fc f\u00fcr Entwickleroptionen",
+        "1b245"
+    ],
+    "__framelix_setup_finish_description__": [
+        "Ok. Jetz wird's Zeit damit die Magie ihren Teil erledigt und das Setup abschlie\u00dft.<br\/>Das kann einen Moment, oder zwei, dauern.<br\/>Falls du bereit bist, dr\u00fcck den Knopf.",
+        "11d34"
+    ],
+    "__framelix_setup_finish_setup__": [
+        "Setup abschlie\u00dfen",
+        "85a18"
+    ],
+    "__framelix_setup_next__": [
+        "N\u00e4chster Schritt",
+        "c290a"
+    ],
+    "__framelix_setup_phpexecutable_desc__": [
+        "Pfad zur ausf\u00fchrbaren PHP Kommandozeile.<br\/>Dies sollte bereits automatisch mit dem passenden Pfad ausgef\u00fcllt sein.",
+        "23ca2"
+    ],
+    "__framelix_setup_phpexecutable_label__": [
+        "PHP Pfad",
+        "5edc4"
+    ],
+    "__framelix_setup_step_application_title__": [
+        "Grundeinstellungen",
+        "b8855"
+    ],
+    "__framelix_setup_step_database_title__": [
+        "Mysql Datenbank Verbindung",
+        "e1246"
+    ],
+    "__framelix_setup_step_finish_title__": [
+        "Finalisieren",
+        "a20dd"
+    ],
+    "__framelix_setup_step_security_desc__": [
+        "Administrator Accountdaten",
+        "58e87"
+    ],
+    "__framelix_setup_step_security_title__": [
+        "Sicherheit",
+        "2fae3"
+    ],
+    "__framelix_setup_step_welcome_title__": [
+        "Willkommen",
+        "83218"
+    ],
+    "__framelix_sidebar_settings__": [
+        "Deine Browsereinstellungen",
+        "c9e2c"
+    ],
+    "__framelix_simulateuser__": [
+        "Diesen Benutzer simulieren<br\/>Deine Ansicht ist dann wie wenn es dieser Benutzer sehen w\u00fcrde<br\/>Du kannst sehen\/nicht sehen was dieser Nutzer sieht<br\/>Datenbankaktionen wird aber weiterhin mit deinem echten Benutzer geloggt",
+        "c4ac4"
+    ],
+    "__framelix_simulateuser_cancel__": [
+        "Beende Benutzer-Simulation",
+        "61bf8"
+    ],
+    "__framelix_simulateuser_canceled__": [
+        "Benutzer-Simulation beendet",
+        "4ae35"
+    ],
+    "__framelix_simulateuser_done__": [
+        "Du bist nun {0}",
+        "a93c9"
+    ],
+    "__framelix_simulateuser_info__": [
+        "Du siehst diese Seite als simulierter Benutzer {0}",
+        "89699"
+    ],
+    "__framelix_stay_logged_in__": [
+        "F\u00fcr 60 Tage eingeloggt bleiben",
+        "5fef9"
+    ],
+    "__framelix_stop_edit__": [
+        "Bearbeitung abbrechen",
+        "12c11"
+    ],
+    "__framelix_stop_edit_tooltip__": [
+        "Verwirft alle \u00c4nderungen in diesem Formular und \u00f6ffnet einen neuen Eintrag",
+        "784f4"
+    ],
+    "__framelix_storable_systemeventlog_info_label__": [
+        "Info",
+        "4059b"
+    ],
+    "__framelix_storable_userwebauthn_devicename_label__": [
+        "Ger\u00e4tename",
+        "92394"
+    ],
+    "__framelix_sure__": [
+        "Bist du sicher?",
+        "729a5"
+    ],
+    "__framelix_systemeventlog_1__": [
+        "Eintrag #{id} erstellt: {info}",
+        "5be5e"
+    ],
+    "__framelix_systemeventlog_2__": [
+        "Eintrag #{id} aktualisiert: {info}",
+        "052bf"
+    ],
+    "__framelix_systemeventlog_3__": [
+        "Eintrag #{id} gel\u00f6scht: {info}",
+        "5abc2"
+    ],
+    "__framelix_systemeventlog_4__": [
+        "Login fehlgeschlagen mit E-Mail {email}",
+        "0ccdf"
+    ],
+    "__framelix_systemeventlog_5__": [
+        "Login erfolgreich mit E-Mail {email}",
+        "9932d"
+    ],
+    "__framelix_systemeventlog_6__": [
+        "Cron: {0}",
+        "33324"
+    ],
+    "__framelix_systemvalues__": [
+        "Grundeinstellungen",
+        "00422"
+    ],
+    "__framelix_systemvalues_active__": [
+        "Aktive Eintr\u00e4ge",
+        "265be"
+    ],
+    "__framelix_systemvalues_active_form_label__": [
+        "Aktiv",
+        "4d3d7"
+    ],
+    "__framelix_systemvalues_active_form_label_desc__": [
+        "Aktive Eintr\u00e4ge sind in Formularen w\u00e4hlbar, inaktive nicht mehr.\u00a0<br\/>Vorhandene Verkn\u00fcpfungen bleiben unabh\u00e4ngig davon bestehen.",
+        "4f067"
+    ],
+    "__framelix_systemvalues_inactive__": [
+        "Inaktive Eintr\u00e4ge",
+        "c7a85"
+    ],
+    "__framelix_table_dragsort__": [
+        "Sortiere Eintr\u00e4ge per Drag&Drop",
+        "6eab5"
+    ],
+    "__framelix_table_rendering__": [
+        "Die Tabelle wird gerendert... Bitte warten...",
+        "9b20e"
+    ],
+    "__framelix_table_savesort__": [
+        "Speichere diese Sortierung",
+        "c5aae"
+    ],
+    "__framelix_table_savesort_saved__": [
+        "Sortierung gespeichert",
+        "cbfcf"
+    ],
+    "__framelix_time_hours__": [
+        "{{0=1:{0} Stunde|0=*:{0} Stunden}}",
+        "7dac8"
+    ],
+    "__framelix_time_minutes__": [
+        "{{0=1:{0} Minute|0=*:{0} Minuten}}",
+        "39b4e"
+    ],
+    "__framelix_time_seconds__": [
+        "{{0=1:{0} Sekunde|0=*:{0} Sekunden}}",
+        "f97c6"
+    ],
+    "__framelix_toast_count__": [
+        "Anzahl der Nachrichten in der Warteschlange",
+        "e2405"
+    ],
+    "__framelix_toast_next__": [
+        "N\u00e4chste Nachricht anzeigen",
+        "1135f"
+    ],
+    "__framelix_unknown_user__": [
+        "System\/Gast",
+        "adbd4"
+    ],
+    "__framelix_user_edituser_validation_adminrequired__": [
+        "Es ist immer mindestens ein, nicht gesperrter, Administrator Account notwendig.",
+        "d4747"
+    ],
+    "__framelix_user_flag_locked__": [
+        "Gesperrt",
+        "6e09a"
+    ],
+    "__framelix_user_flag_locked_desc__": [
+        "Falls aktiviert, dann wird der Benutzer sofort gesperrt und kann sich nicht mehr einloggen.",
+        "a6146"
+    ],
+    "__framelix_user_role_admin__": [
+        "Administrator - Darf alles",
+        "979c8"
+    ],
+    "__framelix_view_backend_appupdate__": [
+        "App Update und Backup",
+        "16be4"
+    ],
+    "__framelix_view_backend_appupdate_backup__": [
+        "Vollst\u00e4ndiges Backup downloaden",
+        "f9bc9"
+    ],
+    "__framelix_view_backend_appupdate_backup_desc__": [
+        "Hier kannst du ein vollst\u00e4ndiges Backup deiner Applikation herunterladen.<br\/>Diese Aktion kann dauern, je nachdem wie gro\u00df deine App ist.<br\/>Achtung: Dieses Backup beinhaltet ALLE Daten und Konfigurationen deiner Applikation. Stelle also sicher das du das Backup an einer sicheren Stelle aufbewahrst.",
+        "9c9a6"
+    ],
+    "__framelix_view_backend_appupdate_backup_download__": [
+        "Jetzt downloaden",
+        "f2d2d"
+    ],
+    "__framelix_view_backend_appupdate_do_update1__": [
+        "Ausf\u00fchren",
+        "40cd0"
+    ],
+    "__framelix_view_backend_config_backuprestore__": [
+        "Backup\/Restore",
+        "d3cb3"
+    ],
+    "__framelix_view_backend_config_index__": [
+        "Systemkonfiguration",
+        "3c4e3"
+    ],
+    "__framelix_view_backend_config_systemcheck__": [
+        "Systemcheck",
+        "3f15a"
+    ],
+    "__framelix_view_backend_config_systemcheck_cron__": [
+        "Cronjob",
+        "163ca"
+    ],
+    "__framelix_view_backend_config_systemcheck_cron_error__": [
+        "Du solltest das angegebene Script alle 5 Minuten ausf\u00fchren lassen, f\u00fcr Update Checks und weitere Jobs.",
+        "dd1ba"
+    ],
+    "__framelix_view_backend_config_systemcheck_https__": [
+        "Https\/SSL",
+        "90372"
+    ],
+    "__framelix_view_backend_config_systemcheck_https_error__": [
+        "Manche Features sind nur verf\u00fcgbar wenn deine Seite mit https arbeitet.",
+        "7dc87"
+    ],
+    "__framelix_view_backend_config_systemcheck_versions__": [
+        "Versionsinformationen",
+        "35bef"
+    ],
+    "__framelix_view_backend_dev_langeditor__": [
+        "\u00dcbersetzungseditor",
+        "3bc96"
+    ],
+    "__framelix_view_backend_dev_langeditor_actions__": [
+        "Aktionen",
+        "06df3"
+    ],
+    "__framelix_view_backend_dev_langeditor_sort__": [
+        "Updaten, normalisieren und neu sortieren alles Language Dateien und deren Keys",
+        "08dd8"
+    ],
+    "__framelix_view_backend_dev_langeditor_sort_info__": [
+        "Mach das, nachdem du Language Files h\u00e4ndisch ver\u00e4ndert hast damit die Keys wieder richtig sortiert werden, damit du das nicht machen musst.",
+        "dd9d5"
+    ],
+    "__framelix_view_backend_dev_releasebuilder__": [
+        "Build Release Files",
+        "6b1cc"
+    ],
+    "__framelix_view_backend_dev_releasebuilder_create__": [
+        "Release files erstellen\/aktualisieren",
+        "bc1b2"
+    ],
+    "__framelix_view_backend_dev_releasebuilder_created__": [
+        "Release erstellt",
+        "6f022"
+    ],
+    "__framelix_view_backend_dev_update__": [
+        "Datenbank aktualisieren",
+        "7869d"
+    ],
+    "__framelix_view_backend_dev_updatedatabase__": [
+        "Datenbank aktualisieren",
+        "00bbb"
+    ],
+    "__framelix_view_backend_dev_updatedatabase_hashchanged__": [
+        "Schema hat sich ver\u00e4ndert. Bitte neu laden und neu probieren.",
+        "bdd4e"
+    ],
+    "__framelix_view_backend_dev_updatedatabase_noupdates__": [
+        "Keine Datenbank\u00e4nderungen notwendig. Gute Arbeit, Meister.",
+        "b009f"
+    ],
+    "__framelix_view_backend_dev_updatedatabase_safequeries__": [
+        "Sichere Abfragen die nur neue Tabellen und Spalten erzeugt",
+        "ee99d"
+    ],
+    "__framelix_view_backend_dev_updatedatabase_safequeries_execute__": [
+        "Sichere Abfragen ausf\u00fchren",
+        "709cd"
+    ],
+    "__framelix_view_backend_dev_updatedatabase_unsafequeries__": [
+        "Unsichere Abfrage die vorhandene Tabellen\/Spalten und evtl. auch Daten \u00e4ndern und l\u00f6schen.<br\/>Achtung: F\u00fchre diese Abfragen nur aus, wenn du sicher bist das sie ausgef\u00fchrt werden k\u00f6nnen. Mach immer ein Backup bevor die dies tust.",
+        "9d6f0"
+    ],
+    "__framelix_view_backend_dev_updatedatabase_unsafequeries_execute__": [
+        "Unsichere Abfragen ausf\u00fchren",
+        "090a0"
+    ],
+    "__framelix_view_backend_dev_updatedatabase_updatenow__": [
+        "Datenbank jetzt aktualisieren",
+        "65805"
+    ],
+    "__framelix_view_backend_dev_updatesourcecode__": [
+        "Source Code jetzt updaten",
+        "0f3e4"
+    ],
+    "__framelix_view_backend_dev_updatesourcecode_dbupdate_after__": [
+        "Datenbank nach diesem Update aktualisieren",
+        "bb7df"
+    ],
+    "__framelix_view_backend_dev_updatesourcecode_dbupdate_requireunsafe__": [
+        "Es gibt unsichere Abfragen die ausgef\u00fchrt werden m\u00fcssen.\u00a0Gehe auf die <a href=\"#tabs:update-database\">Update Seite<\/a>.",
+        "84848"
+    ],
+    "__framelix_view_backend_dev_updatesourcecode_gitpull__": [
+        "Pull changes from branch",
+        "eed52"
+    ],
+    "__framelix_view_backend_dev_updatesourcecode_noupdates__": [
+        "Es gibt keine anstehenden \u00c4nderungen. Gut gemacht.",
+        "e4a0d"
+    ],
+    "__framelix_view_backend_dev_updatesourcecode_svnupdate__": [
+        "Aktualisiere auf SVN Head Revision",
+        "08a69"
+    ],
+    "__framelix_view_backend_dev_updatesourcecode_updatedone__": [
+        "Source Code aktualisiert",
+        "05aec"
+    ],
+    "__framelix_view_backend_forgotpassword__": [
+        "Passwort vergessen",
+        "98f13"
+    ],
+    "__framelix_view_backend_forgotpassword_mailbody__": [
+        "Du hast einen Passwort Reset angefordert, f\u00fcr deinen Account auf {0}.<br\/>Bitte \u00f6ffne den Link um dein Passwort zur\u00fcck zu setzen.",
+        "461ea"
+    ],
+    "__framelix_view_backend_forgotpassword_resetdone__": [
+        "Du hast dein neues Passwort gesetzt. Du kannst dich jetzt damit einloggen.",
+        "44075"
+    ],
+    "__framelix_view_backend_forgotpassword_sendmail__": [
+        "Sende Best\u00e4tigungslink",
+        "0e1e0"
+    ],
+    "__framelix_view_backend_forgotpassword_sentmail__": [
+        "Falls die E-Mail {0} im System existiert, dann haben wir dir einen Best\u00e4tigungslink gesendet. Du musst die Mail innerhalb der n\u00e4chsten Stunde \u00f6ffnen.",
+        "d9ef2"
+    ],
+    "__framelix_view_backend_forgotpassword_token_invalid__": [
+        "Der Token ist nicht oder nicht mehr g\u00fcltig. Bitte probiere es erneut.",
+        "ccf87"
+    ],
+    "__framelix_view_backend_login2fa__": [
+        "Gib deinen 2-Faktor Code ein",
+        "a457a"
+    ],
+    "__framelix_view_backend_login2fa_back__": [
+        "Zur\u00fcck zur Loginseite",
+        "e12c0"
+    ],
+    "__framelix_view_backend_login__": [
+        "Login",
+        "99dea"
+    ],
+    "__framelix_view_backend_logs__": [
+        "Logs",
+        "b2d37"
+    ],
+    "__framelix_view_backend_logs_clear__": [
+        "L\u00f6sche alle Logs",
+        "a7dbf"
+    ],
+    "__framelix_view_backend_logs_errorlogs__": [
+        "Error Logs",
+        "2749d"
+    ],
+    "__framelix_view_backend_logs_nologs__": [
+        "Hier gibt es jetzt keine Logs",
+        "932b0"
+    ],
+    "__framelix_view_backend_logs_systemeventlogs__": [
+        "Event Logs",
+        "9e436"
+    ],
+    "__framelix_view_backend_setup__": [
+        "Set 'em up!",
+        "7180f"
+    ],
+    "__framelix_view_backend_user_basic__": [
+        "Basisdaten",
+        "c43ff"
+    ],
+    "__framelix_view_backend_user_index__": [
+        "Erstellen\/Bearbeiten",
+        "c1621"
+    ],
+    "__framelix_view_backend_user_password__": [
+        "Passwort \u00e4ndern",
+        "0b39c"
+    ],
+    "__framelix_view_backend_user_roles__": [
+        "Berechtigungen",
+        "d08cc"
+    ],
+    "__framelix_view_backend_user_search__": [
+        "Benutzer suchen",
+        "26728"
+    ],
+    "__framelix_view_backend_userprofile_2fa_disable__": [
+        "2-Faktor deaktivieren",
+        "74ce7"
+    ],
+    "__framelix_view_backend_userprofile_2fa_disable_info__": [
+        "Falls du ein weiteres Ger\u00e4t als 2ten Faktor hinzuf\u00fcgen willst, dann musst du zuerst den 2ten Faktor deaktivieren und dann alle 2-Faktor Ger\u00e4te mit dem selben QR Code scannen.",
+        "d987d"
+    ],
+    "__framelix_view_backend_userprofile_2fa_disable_warning__": [
+        "Bist du sicher? Das wird den 2ten Faktor deaktivieren!",
+        "3b9db"
+    ],
+    "__framelix_view_backend_userprofile_2fa_disabled__": [
+        "2-Faktor deaktiviert",
+        "b9fcb"
+    ],
+    "__framelix_view_backend_userprofile_2fa_download_codes__": [
+        "Downloade deine Backup Codes",
+        "02df8"
+    ],
+    "__framelix_view_backend_userprofile_2fa_enable__": [
+        "2-Faktor aktivieren",
+        "53f7c"
+    ],
+    "__framelix_view_backend_userprofile_2fa_enable_enter__": [
+        "Nachdem du den QR Code mit der App gescannt hast, gib den 6 stelligen Code aus der App hier ein. Nachdem du das getan hast, wird sich das Fenster automatisch schlie\u00dfen und der 2-Faktor ist aktiviert.",
+        "bcef4"
+    ],
+    "__framelix_view_backend_userprofile_2fa_enable_info__": [
+        "Du kannst den QR Code nun mit deiner Authenticator App scannen. Wir empfehlen Google Authenticator, andOTP oder Twilio.<br\/>Lade auch deine Backup Codes runter, im Fall wenn deine App oder Ger\u00e4t verloren geht",
+        "d2b7e"
+    ],
+    "__framelix_view_backend_userprofile_2fa_enable_name__": [
+        "W\u00e4hle einen Namen f\u00fcr die Authenticator App",
+        "207c2"
+    ],
+    "__framelix_view_backend_userprofile_2fa_enabled__": [
+        "2-Faktor aktiviert",
+        "fd546"
+    ],
+    "__framelix_view_backend_userprofile_2fa_info__": [
+        "Mit einer 2-Faktor Authentifizierung erh\u00f6hst du die Sicherheit deines Accounts, welcher dann einen 2-Faktor zum Login ben\u00f6tigt (TOTP - One Time Password). Wenn aktiviert, solltest du immer deine Backup Codes an einem sicheren Ort gespeichert haben, falls dein Ger\u00e4t verloren geht. Andernfalls, falls der 2-Faktor verloren geht und du keine Backup Codes hast, kannst du dich nicht mehr einloggen.",
+        "57a14"
+    ],
+    "__framelix_view_backend_userprofile_2fa_regenerate_codes__": [
+        "Erstelle neue Backup Codes",
+        "ab550"
+    ],
+    "__framelix_view_backend_userprofile_2fa_regenerate_codes_warning__": [
+        "Bist du sicher? Dies wird alle alten Backup Codes deaktivieren!",
+        "c3326"
+    ],
+    "__framelix_view_backend_userprofile_2fa_test__": [
+        "Teste deine 2-Faktor Authentifizierung",
+        "8e692"
+    ],
+    "__framelix_view_backend_userprofile_2fa_test_success__": [
+        "Code erfolgreich verifiziert",
+        "a4f17"
+    ],
+    "__framelix_view_backend_userprofile_email__": [
+        "Deine E-Mail",
+        "cd5b6"
+    ],
+    "__framelix_view_backend_userprofile_email_equal__": [
+        "Diese E-Mail ist die gleiche, die du bereits hast",
+        "65b38"
+    ],
+    "__framelix_view_backend_userprofile_email_info__": [
+        "Auf dieser Seite kannst du deine E-Mail \u00e4ndern. Wir schicken dir auf die alte und neue E-Mail einen Best\u00e4tigungslink den du \u00f6ffnen musst.",
+        "47443"
+    ],
+    "__framelix_view_backend_userprofile_email_mail_body__": [
+        "Du hast eine \u00c4nderung deiner E-Mail\u00a0 auf {0} beantragt.<br\/>Bitte \u00f6ffne den folgenden Link und best\u00e4tige den darin enthaltenen Link.",
+        "e9a8a"
+    ],
+    "__framelix_view_backend_userprofile_email_mail_changed__": [
+        "Deine E-Mail wurde ge\u00e4ndert",
+        "d761f"
+    ],
+    "__framelix_view_backend_userprofile_email_mail_sent__": [
+        "Wir haben der auf beide Adresse nun eine E-Mail geschickt. Bitte \u00f6ffnen die Best\u00e4tigungslink beider E-Mails.",
+        "bf938"
+    ],
+    "__framelix_view_backend_userprofile_email_mail_title__": [
+        "E-Mail \u00c4nderung angefordert",
+        "4abd1"
+    ],
+    "__framelix_view_backend_userprofile_emailverification__": [
+        "E-Mail \u00c4nderung best\u00e4tigen",
+        "862b1"
+    ],
+    "__framelix_view_backend_userprofile_emailverification_error__": [
+        "Fehler. Best\u00e4tigungslink ist ung\u00fcltig. Du musst den Link innerhalb 1 Stunde \u00f6ffnen.",
+        "7707e"
+    ],
+    "__framelix_view_backend_userprofile_emailverification_step1__": [
+        "Schritt 1 erledigt. Bitte \u00f6ffne nun den 2ten Best\u00e4tigungslink der anderen E-Mail. Du kannst das Fenster nun schlie\u00dfen.",
+        "3fece"
+    ],
+    "__framelix_view_backend_userprofile_emailverification_step2__": [
+        "Schritt 2 erledigt. Deine neue E-Mail ist nun {0}. Du kannst das Fenster nun schlie\u00dfen.",
+        "d776d"
+    ],
+    "__framelix_view_backend_userprofile_fido2_2fa_info__": [
+        "Falls du dich mit FIDO2 einloggst, dann braucht du den 2ten Faktor nicht, egal ob er aktiviert ist oder nicht. FIDO2 ist bereits sicherer als der 2te Faktor und wenn mans genau nimmt, FIDO2 ist der 2te Faktor.",
+        "e9df6"
+    ],
+    "__framelix_view_backend_userprofile_fido2__": [
+        "FIDO2 (Fingerprint, Hardware Token, etc...)",
+        "b3ac4"
+    ],
+    "__framelix_view_backend_userprofile_fido2_already_enabled__": [
+        "Du hast FIDO2 bereits auf diesem Ger\u00e4t aktiviert",
+        "fe7fe"
+    ],
+    "__framelix_view_backend_userprofile_fido2_authnid_error__": [
+        "Fehlende WebAuthnId. Bitte erneut probieren.",
+        "eed94"
+    ],
+    "__framelix_view_backend_userprofile_fido2_disable__": [
+        "Deaktiviere FIDO2 auf diesem Ger\u00e4t",
+        "62256"
+    ],
+    "__framelix_view_backend_userprofile_fido2_enable__": [
+        "Aktiviere jetzt FIDO2 auf diesem Ger\u00e4t",
+        "5b39d"
+    ],
+    "__framelix_view_backend_userprofile_fido2_error__": [
+        "Fehler: {0}",
+        "70ead"
+    ],
+    "__framelix_view_backend_userprofile_fido2_info__": [
+        "Mit FIDO2 kannst du einen weiteren sicheren Login f\u00fcr deinen Account aktivieren. Du kannst zwischen verschiedenen Methoden w\u00e4hlen, je nachdem was dein Ger\u00e4t unterst\u00fctzt. Fingerprint, Hardware Token, etc... Du kannst dich aber auch weiterhin mit deinem Passwort einloggen. Du kannst auch einen Eintrag wieder l\u00f6schen, dann wird der erweiterte Login f\u00fcr das jeweilige Ger\u00e4t wieder deaktiviert wird.",
+        "ac068"
+    ],
+    "__framelix_view_backend_userprofile_fido2_success__": [
+        "Authentifizierung erfolgreich hinzugef\u00fcgt. Du kannst dich mit der gew\u00e4hlten Methode nun einloggen.",
+        "f3bdc"
+    ],
+    "__framelix_view_backend_userprofile_fido2_unsupported__": [
+        "Upsi. FIDO2 ist auf deinem Ger\u00e4t\/Browser nicht verf\u00fcgbar.",
+        "70dbb"
+    ],
+    "__framelix_view_backend_userprofile_fido2_webauthn_error__": [
+        "Fehler vom WebAuthn Backend",
+        "bd8d5"
+    ],
+    "__framelix_view_backend_userprofile_index__": [
+        "Mein Profil",
+        "8746c"
+    ],
+    "__framelix_view_backend_userprofile_password__": [
+        "Dein Passwort",
+        "5afd8"
+    ],
+    "__framelix_view_backend_userprofile_twofactor__": [
+        "2-Faktor Authentifizierung",
+        "aaafe"
+    ],
+    "__framelix_view_loading__": [
+        "Die Ansicht wird geladen... Bitte warten...",
+        "acf1e"
+    ],
+    "__framelix_yes__": [
+        "Ja",
+        "93cba"
+    ]
 }
