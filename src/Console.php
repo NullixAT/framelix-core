@@ -122,14 +122,7 @@ class Console
         if (file_exists($updateAppUpdateFile)) {
             unlink($updateAppUpdateFile);
         }
-        $browser = Browser::create();
-        $browser->url = 'https://raw.githubusercontent.com/NullixAT/framelix-docker/main/docker-compose.yml';
-        $browser->sendRequest();
-
-        $dockerComposeData = $browser->getResponseText();
-        preg_match("~- FRAMELIX_DOCKER_VERSION=(.*)~", $dockerComposeData, $dockerVersion);
-
-        $cacheData = ['docker_version' => trim($dockerVersion[1])];
+        $cacheData = [];
         $packageJson = JsonUtils::getPackageJson(null);
         if ($packageJson) {
             try {
@@ -150,7 +143,22 @@ class Console
                         $releaseData = $browser->getResponseJson();
                         foreach ($releaseData as $row) {
                             if (version_compare($row['tag_name'], $currentVersion, '>')) {
+                                $cacheData = [];
                                 $currentVersion = $row['tag_name'];
+                                foreach ($row['assets'] as $assetRow) {
+                                    if ($assetRow['name'] === 'docker-version.txt') {
+                                        $browser = Browser::create();
+                                        $browser->url = $assetRow['browser_download_url'];
+                                        $browser->sendRequest();
+                                        $cacheData['docker_version'] = trim($browser->getResponseText());
+                                    }
+                                    if ($assetRow['name'] === 'docker-release.zip') {
+                                        $cacheData['docker_release_zip'] = $assetRow['browser_download_url'];
+                                    }
+                                    if ($assetRow['name'] === 'app-release.zip') {
+                                        $cacheData['app_release_zip'] = $assetRow['browser_download_url'];
+                                    }
+                                }
                                 $cacheData = ArrayUtils::merge($cacheData, $row);
                             }
                         }
@@ -183,22 +191,18 @@ class Console
             return 0;
         }
         $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
-        if (isset($updateData['assets'])) {
-            foreach ($updateData['assets'] as $row) {
-                if ($row['name'] === 'app-release.zip') {
-                    $browser = Browser::create();
-                    $browser->url = $row['browser_download_url'];
-                    $browser->sendRequest();
-                    $updateAppUpdateZipFile = substr($updateAppUpdateFile, 0, -5) . ".zip";
-                    file_put_contents(
-                        $updateAppUpdateZipFile,
-                        $browser->getResponseText()
-                    );
-                    Console::installZipPackage($updateAppUpdateZipFile, $summaryData);
-                    unlink($updateAppUpdateZipFile);
-                    unlink($updateAppUpdateFile);
-                }
-            }
+        if (isset($updateData['app_release_zip'])) {
+            $browser = Browser::create();
+            $browser->url = $updateData['app_release_zip'];
+            $browser->sendRequest();
+            $updateAppUpdateZipFile = substr($updateAppUpdateFile, 0, -5) . ".zip";
+            file_put_contents(
+                $updateAppUpdateZipFile,
+                $browser->getResponseText()
+            );
+            Console::installZipPackage($updateAppUpdateZipFile, $summaryData);
+            unlink($updateAppUpdateZipFile);
+            unlink($updateAppUpdateFile);
         }
         return 0;
     }
