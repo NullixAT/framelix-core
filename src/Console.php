@@ -5,6 +5,7 @@ namespace Framelix\Framelix;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
 use Framelix\Framelix\Storable\SystemEventLog;
+use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\Browser;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
@@ -121,6 +122,14 @@ class Console
         if (file_exists($updateAppUpdateFile)) {
             unlink($updateAppUpdateFile);
         }
+        $browser = Browser::create();
+        $browser->url = 'https://raw.githubusercontent.com/NullixAT/framelix-docker/main/docker-compose.yml';
+        $browser->sendRequest();
+
+        $dockerComposeData = $browser->getResponseText();
+        preg_match("~- FRAMELIX_DOCKER_VERSION=(.*)~", $dockerComposeData, $dockerVersion);
+
+        $cacheData = ['docker_version' => trim($dockerVersion[1])];
         $packageJson = JsonUtils::getPackageJson(null);
         if ($packageJson) {
             try {
@@ -142,7 +151,7 @@ class Console
                         foreach ($releaseData as $row) {
                             if (version_compare($row['tag_name'], $currentVersion, '>')) {
                                 $currentVersion = $row['tag_name'];
-                                JsonUtils::writeToFile($updateAppUpdateFile, $row);
+                                $cacheData = ArrayUtils::merge($cacheData, $row);
                             }
                         }
                     }
@@ -157,6 +166,7 @@ class Console
                 return 1;
             }
         }
+        JsonUtils::writeToFile($updateAppUpdateFile, $cacheData);
         return 0;
     }
 
@@ -270,6 +280,7 @@ class Console
                 if (!is_dir($destPath)) {
                     self::line('[ADDED] Directory "' . $destPath . '"');
                     $summaryData['dir_added']++;
+                    mkdir($destPath);
                 }
             } else {
                 if (!file_exists($destPath)) {
@@ -280,6 +291,7 @@ class Console
                     $summaryData['file_updated']++;
                 }
                 copy($file, $destPath);
+                chmod($destPath, 0777);
             }
         }
         FileUtils::deleteDirectory($tmpPath);

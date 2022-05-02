@@ -163,21 +163,31 @@ class AppUpdate extends View
                     echo '<div class="framelix-spacer-x4"></div>';
                 }
                 break;
+            case 'dockerupdate':
+                echo '<div class="framelix-spacer"></div>';
+                echo HtmlUtils::escape(Lang::get('__framelix_appupdate_tabs_dockerupdate_info__'), true);
+                break;
             case 'appupdate':
+                echo '<div class="framelix-spacer"></div>';
+                $hasUpdate = false;
                 if (file_exists($updateAppUpdateFile)) {
                     $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
-                    echo Lang::get('__framelix_appupdate_update_available__');
-                    echo '<div class="framelix-spacer"></div>';
-                    echo '<h2>' . Lang::get(
-                            '__framelix_appupdate_changelog__'
-                        ) . ' ' . $updateData['tag_name'] . '</h2>';
-                    echo '<div>' . HtmlUtils::escape($updateData['body'], true) . '</div>';
-                    echo '<div class="framelix-spacer-x2"></div>';
+                    if (isset($updateData['tag_name'])) {
+                        $hasUpdate = true;
+                        echo Lang::get('__framelix_appupdate_update_available__');
+                        echo '<div class="framelix-spacer"></div>';
+                        echo '<h2>' . Lang::get(
+                                '__framelix_appupdate_changelog__'
+                            ) . ' ' . $updateData['tag_name'] . '</h2>';
+                        echo '<div>' . HtmlUtils::escape($updateData['body'], true) . '</div>';
+                        echo '<div class="framelix-spacer-x2"></div>';
 
-                    echo '<button class="framelix-button framelix-button-primary auto-update" data-icon-left="save">' . Lang::get(
-                            '__framelix_appupdate_autoupdate__'
-                        ) . '</button>';
-                } else {
+                        echo '<button class="framelix-button framelix-button-primary auto-update" data-icon-left="save">' . Lang::get(
+                                '__framelix_appupdate_autoupdate__'
+                            ) . '</button>';
+                    }
+                }
+                if (!$hasUpdate) {
                     echo Lang::get('__framelix_appupdate_no_update_available__');
                 }
                 echo '<div class="framelix-spacer-x4"></div>';
@@ -213,7 +223,11 @@ class AppUpdate extends View
                 if (Session::get('appupdate-lastresult')) {
                     $tabs->addTab('update-log', '__framelix_appupdate_tabs_update_log__', new self());
                 }
+                $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
                 $tabs->addTab('appupdate', '__framelix_appupdate_tabs_appupdate__', new self());
+                if (isset($_SERVER['FRAMELIX_DOCKER_VERSION']) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version']) {
+                    $tabs->addTab('dockerupdate', '__framelix_appupdate_tabs_dockerupdate__', new self());
+                }
                 $tabs->addTab('backup', '__framelix_appupdate_tabs_backup__', new self());
                 $tabs->addTab('upload', '__framelix_appupdate_tabs_upload__', new self());
                 $tabs->show();
