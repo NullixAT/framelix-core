@@ -162,13 +162,15 @@ class AppUpdate extends View
                 }
                 break;
             case 'dockerupdate':
-                $updateData = JsonUtils::readFromFile(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE);
-                if (isset($updateData['docker_release_zip'])) {
+                if (file_exists(\Framelix\Framelix\AppUpdate::UPDATE_DOCKER_FILE)) {
                     echo '<div class="framelix-spacer"></div>';
                     echo HtmlUtils::escape(
                         Lang::get(
                             '__framelix_appupdate_tabs_dockerupdate_info__',
-                            ['<code>' . HtmlUtils::escape('update.sh ' . $updateData['docker_release_zip']) . '</code>']
+                            [
+                                '<code>' . HtmlUtils::escape('update.sh') . '</code>',
+                                file_get_contents(\Framelix\Framelix\AppUpdate::UPDATE_DOCKER_FILE)
+                            ]
                         ),
                         true
                     );
@@ -233,7 +235,9 @@ class AppUpdate extends View
                 $tabs->addTab('appupdate', '__framelix_appupdate_tabs_appupdate__', new self());
                 if (file_exists(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE)) {
                     $updateData = JsonUtils::readFromFile(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE);
-                    if (isset($_SERVER['FRAMELIX_DOCKER_VERSION']) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version'] && isset($updateData['docker_release_zip'])) {
+                    if (isset($_SERVER['FRAMELIX_DOCKER_VERSION']) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version'] && file_exists(
+                            \Framelix\Framelix\AppUpdate::UPDATE_DOCKER_FILE
+                        )) {
                         $tabs->addTab('dockerupdate', '__framelix_appupdate_tabs_dockerupdate__', new self());
                     }
                 }

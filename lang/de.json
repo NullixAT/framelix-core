@@ -40,8 +40,8 @@
         "70cd8"
     ],
     "__framelix_appupdate_tabs_dockerupdate_info__": [
-        "Du kannst deine Docker Instanz aktualisieren. \u00d6ffne eine Kommandozeile und f\u00fchre folgende Befehl im Root Verzeichnis aus: {0}",
-        "01249"
+        "Deine Docker Instanz kann aktualisiert werden. Bitte installiere zuerst alle App Updates auf dieser Seite, falls noch welche zu installieren sind. Diese Update beinhalten n\u00e4mlich die Updates f\u00fcr Docker auch. Nachdem das erledigt ist, \u00f6ffne eine Kommandozeile und f\u00fchre den Befehl {0} im Hauptordner deiner Docker Instanz aus.",
+        "b0bef"
     ],
     "__framelix_appupdate_tabs_update_log__": [
         "Update Log",

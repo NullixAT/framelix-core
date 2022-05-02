@@ -122,57 +122,56 @@ class Console
         }
         $cacheData = [];
         $packageJson = JsonUtils::getPackageJson(null);
-        if ($packageJson) {
-            try {
-                $currentVersion = $packageJson['version'];
-                if (($packageJson['repository']['type'] ?? '') === 'git') {
-                    $url = $packageJson['repository']['url'];
-                    if (str_contains($url, "github.com")) {
-                        if (str_starts_with($url, "git+")) {
-                            $url = substr($url, 4);
-                        }
-                        if (str_ends_with($url, ".git")) {
-                            $url = substr($url, 0, -4);
-                        }
-                        $url = substr($url, strpos($url, 'github.com/') + 11);
-                        $browser = Browser::create();
-                        $browser->url = 'https://api.github.com/repos/' . $url . '/releases';
-                        $browser->sendRequest();
-                        $releaseData = $browser->getResponseJson();
-                        foreach ($releaseData as $row) {
-                            if (version_compare($row['tag_name'], $currentVersion, '>')) {
-                                $cacheData = $row;
-                                $currentVersion = $row['tag_name'];
-                                foreach ($row['assets'] as $assetRow) {
-                                    if ($assetRow['name'] === 'docker-version.txt') {
-                                        $browser = Browser::create();
-                                        $browser->url = $assetRow['browser_download_url'];
-                                        $browser->sendRequest();
-                                        $cacheData['docker_version'] = trim($browser->getResponseText());
-                                    }
-                                    if ($assetRow['name'] === 'docker-release.zip') {
-                                        $cacheData['docker_release_zip'] = $assetRow['browser_download_url'];
-                                    }
-                                    if ($assetRow['name'] === 'docker-update.zip') {
-                                        $cacheData['docker_update_zip'] = $assetRow['browser_download_url'];
-                                    }
-                                    if ($assetRow['name'] === 'app-release.zip') {
-                                        $cacheData['app_release_zip'] = $assetRow['browser_download_url'];
-                                    }
+        if (!$packageJson) {
+            return 1;
+        }
+        try {
+            $currentVersion = $packageJson['version'];
+            if (($packageJson['repository']['type'] ?? '') === 'git') {
+                $url = $packageJson['repository']['url'];
+                if (str_contains($url, "github.com")) {
+                    if (str_starts_with($url, "git+")) {
+                        $url = substr($url, 4);
+                    }
+                    if (str_ends_with($url, ".git")) {
+                        $url = substr($url, 0, -4);
+                    }
+                    $url = substr($url, strpos($url, 'github.com/') + 11);
+                    $browser = Browser::create();
+                    $browser->url = 'https://api.github.com/repos/' . $url . '/releases';
+                    $browser->sendRequest();
+                    $releaseData = $browser->getResponseJson();
+                    foreach ($releaseData as $row) {
+                        if (version_compare($row['tag_name'], $currentVersion, '>')) {
+                            $cacheData = $row;
+                            $currentVersion = $row['tag_name'];
+                            foreach ($row['assets'] as $assetRow) {
+                                if ($assetRow['name'] === 'docker-version.txt') {
+                                    $browser = Browser::create();
+                                    $browser->url = $assetRow['browser_download_url'];
+                                    $browser->sendRequest();
+                                    $cacheData['docker_version'] = trim($browser->getResponseText());
+                                }
+                                if ($assetRow['name'] === 'docker-update.zip') {
+                                    $cacheData['docker_update_zip'] = $assetRow['browser_download_url'];
+                                    file_put_contents(AppUpdate::UPDATE_DOCKER_FILE, $assetRow['browser_download_url']);
+                                }
+                                if ($assetRow['name'] === 'app-release.zip') {
+                                    $cacheData['app_release_zip'] = $assetRow['browser_download_url'];
                                 }
                             }
                         }
                     }
                 }
-                if ($currentVersion && $packageJson['version'] !== $currentVersion) {
-                    self::line('New version ' . $currentVersion . ' available');
-                } else {
-                    self::line('No update available');
-                }
-            } catch (Throwable $e) {
-                self::error($e->getMessage());
-                return 1;
             }
+            if ($currentVersion && $packageJson['version'] !== $currentVersion) {
+                self::line('New version ' . $currentVersion . ' available');
+            } else {
+                self::line('No update available');
+            }
+        } catch (Throwable $e) {
+            self::error($e->getMessage());
+            return 1;
         }
         if ($cacheData) {
             JsonUtils::writeToFile(AppUpdate::UPDATE_CACHE_FILE, $cacheData);
@@ -196,6 +195,7 @@ class Console
             $browser = Browser::create();
             $browser->url = $updateData['app_release_zip'];
             $browser->sendRequest();
+
             $updateAppUpdateZipFile = substr(AppUpdate::UPDATE_CACHE_FILE, 0, -5) . ".zip";
             file_put_contents(
                 $updateAppUpdateZipFile,
@@ -203,6 +203,8 @@ class Console
             );
             Console::installZipPackage($updateAppUpdateZipFile, $summaryData);
             unlink($updateAppUpdateZipFile);
+            // create a file containing zip url for later docker update
+            file_put_contents(AppUpdate::UPDATE_DOCKER_FILE, $updateData['docker_update_zip']);
         }
         return 0;
     }
@@ -214,22 +216,20 @@ class Console
      */
     public static function prepareDockerUpdate(): int
     {
-        self::checkAppUpdate();
-        if (!file_exists(AppUpdate::UPDATE_CACHE_FILE)) {
-            return 0;
-        }
-        $updateData = JsonUtils::readFromFile(AppUpdate::UPDATE_CACHE_FILE);
-        if (isset($updateData['docker_update_zip'])) {
+        if (file_exists(AppUpdate::UPDATE_DOCKER_FILE)) {
             $tmpFolder = __DIR__ . "/../tmp/docker-update";
             $browser = Browser::create();
-            $browser->url = $updateData['docker_update_zip'];
+            $browser->url = file_get_contents(AppUpdate::UPDATE_DOCKER_FILE);
             $browser->sendRequest();
             FileUtils::deleteDirectory($tmpFolder);
             mkdir($tmpFolder);
             $tmpZip = $tmpFolder . "/tmp.zip";
             file_put_contents($tmpZip, $browser->getResponseText());
-            Zip::unzip($tmpZip, $tmpFolder);
+            Zip::unzip($tmpZip, $tmpFolder, true);
             unlink($tmpZip);
+        } else {
+            self::error('No update package exist');
+            return 1;
         }
         return 0;
     }
