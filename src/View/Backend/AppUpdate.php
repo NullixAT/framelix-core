@@ -64,10 +64,9 @@ class AppUpdate extends View
 
         if (Request::getGet('check-for-updates')) {
             Console::checkAppUpdate();
-            $updateAppUpdateFile = \Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE;
             Toast::success(
                 file_exists(
-                    $updateAppUpdateFile
+                    \Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE
                 ) ? '__framelix_appupdate_update_available__' : '__framelix_appupdate_no_update_available__'
             );
             Url::getBrowserUrl()->removeParameter('check-for-updates')->redirect();
@@ -141,7 +140,6 @@ class AppUpdate extends View
      */
     public function showContent(): void
     {
-        $updateAppUpdateFile = \Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE;
         switch ($this->tabId) {
             case 'update-log':
                 if ($lastResult = Session::get('appupdate-lastresult')) {
@@ -164,7 +162,7 @@ class AppUpdate extends View
                 }
                 break;
             case 'dockerupdate':
-                $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
+                $updateData = JsonUtils::readFromFile(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE);
                 if (isset($updateData['docker_release_zip'])) {
                     echo '<div class="framelix-spacer"></div>';
                     echo HtmlUtils::escape(
@@ -179,8 +177,8 @@ class AppUpdate extends View
             case 'appupdate':
                 echo '<div class="framelix-spacer"></div>';
                 $hasUpdate = false;
-                if (file_exists($updateAppUpdateFile)) {
-                    $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
+                if (file_exists(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE)) {
+                    $updateData = JsonUtils::readFromFile(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE);
                     if (isset($updateData['tag_name'])) {
                         $hasUpdate = true;
                         echo Lang::get('__framelix_appupdate_update_available__');
@@ -233,8 +231,8 @@ class AppUpdate extends View
                     $tabs->addTab('update-log', '__framelix_appupdate_tabs_update_log__', new self());
                 }
                 $tabs->addTab('appupdate', '__framelix_appupdate_tabs_appupdate__', new self());
-                if (file_exists($updateAppUpdateFile)) {
-                    $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
+                if (file_exists(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE)) {
+                    $updateData = JsonUtils::readFromFile(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE);
                     if (isset($_SERVER['FRAMELIX_DOCKER_VERSION']) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version'] && isset($updateData['docker_release_zip'])) {
                         $tabs->addTab('dockerupdate', '__framelix_appupdate_tabs_dockerupdate__', new self());
                     }

@@ -240,10 +240,9 @@ abstract class Sidebar
         $this->addLink(View\Backend\Logs\SystemEventLogs::class);
         $this->showHtmlForLinkData();
 
-        $updateAppUpdateFile = AppUpdate::UPDATE_CACHE_FILE;
         $badgeText = null;
-        if (file_exists($updateAppUpdateFile)) {
-            $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
+        if (file_exists(AppUpdate::UPDATE_CACHE_FILE)) {
+            $updateData = JsonUtils::readFromFile(AppUpdate::UPDATE_CACHE_FILE);
             if (isset($updateData['tag_name']) || (isset($_SERVER['FRAMELIX_DOCKER_VERSION'])) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version']) {
                 $badgeText = '1';
             }

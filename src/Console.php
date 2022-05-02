@@ -5,7 +5,6 @@ namespace Framelix\Framelix;
 use Framelix\Framelix\Db\Mysql;
 use Framelix\Framelix\Db\MysqlStorableSchemeBuilder;
 use Framelix\Framelix\Storable\SystemEventLog;
-use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\Browser;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
@@ -118,9 +117,8 @@ class Console
      */
     public static function checkAppUpdate(): int
     {
-        $updateAppUpdateFile = AppUpdate::UPDATE_CACHE_FILE;
-        if (file_exists($updateAppUpdateFile)) {
-            unlink($updateAppUpdateFile);
+        if (file_exists(AppUpdate::UPDATE_CACHE_FILE)) {
+            unlink(AppUpdate::UPDATE_CACHE_FILE);
         }
         $cacheData = [];
         $packageJson = JsonUtils::getPackageJson(null);
@@ -143,7 +141,7 @@ class Console
                         $releaseData = $browser->getResponseJson();
                         foreach ($releaseData as $row) {
                             if (version_compare($row['tag_name'], $currentVersion, '>')) {
-                                $cacheData = [];
+                                $cacheData = $row;
                                 $currentVersion = $row['tag_name'];
                                 foreach ($row['assets'] as $assetRow) {
                                     if ($assetRow['name'] === 'docker-version.txt') {
@@ -155,11 +153,13 @@ class Console
                                     if ($assetRow['name'] === 'docker-release.zip') {
                                         $cacheData['docker_release_zip'] = $assetRow['browser_download_url'];
                                     }
+                                    if ($assetRow['name'] === 'docker-update.zip') {
+                                        $cacheData['docker_update_zip'] = $assetRow['browser_download_url'];
+                                    }
                                     if ($assetRow['name'] === 'app-release.zip') {
                                         $cacheData['app_release_zip'] = $assetRow['browser_download_url'];
                                     }
                                 }
-                                $cacheData = ArrayUtils::merge($cacheData, $row);
                             }
                         }
                     }
@@ -174,7 +174,9 @@ class Console
                 return 1;
             }
         }
-        JsonUtils::writeToFile($updateAppUpdateFile, $cacheData);
+        if ($cacheData) {
+            JsonUtils::writeToFile(AppUpdate::UPDATE_CACHE_FILE, $cacheData);
+        }
         return 0;
     }
 
@@ -186,23 +188,48 @@ class Console
     public static function checkAndInstallAppUpdate(?array &$summaryData = null): int
     {
         self::checkAppUpdate();
-        $updateAppUpdateFile = AppUpdate::UPDATE_CACHE_FILE;
-        if (!file_exists($updateAppUpdateFile)) {
+        if (!file_exists(AppUpdate::UPDATE_CACHE_FILE)) {
             return 0;
         }
-        $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
+        $updateData = JsonUtils::readFromFile(AppUpdate::UPDATE_CACHE_FILE);
         if (isset($updateData['app_release_zip'])) {
             $browser = Browser::create();
             $browser->url = $updateData['app_release_zip'];
             $browser->sendRequest();
-            $updateAppUpdateZipFile = substr($updateAppUpdateFile, 0, -5) . ".zip";
+            $updateAppUpdateZipFile = substr(AppUpdate::UPDATE_CACHE_FILE, 0, -5) . ".zip";
             file_put_contents(
                 $updateAppUpdateZipFile,
                 $browser->getResponseText()
             );
             Console::installZipPackage($updateAppUpdateZipFile, $summaryData);
             unlink($updateAppUpdateZipFile);
-            unlink($updateAppUpdateFile);
+        }
+        return 0;
+    }
+
+    /**
+     * Prepare docker update by downloading current docker-update.zip and unpacking it to a tmp directory
+     * where the update script can grab it
+     * @return int Status Code, 0 = success
+     */
+    public static function prepareDockerUpdate(): int
+    {
+        self::checkAppUpdate();
+        if (!file_exists(AppUpdate::UPDATE_CACHE_FILE)) {
+            return 0;
+        }
+        $updateData = JsonUtils::readFromFile(AppUpdate::UPDATE_CACHE_FILE);
+        if (isset($updateData['docker_update_zip'])) {
+            $tmpFolder = __DIR__ . "/../tmp/docker-update";
+            $browser = Browser::create();
+            $browser->url = $updateData['docker_update_zip'];
+            $browser->sendRequest();
+            FileUtils::deleteDirectory($tmpFolder);
+            mkdir($tmpFolder);
+            $tmpZip = $tmpFolder . "/tmp.zip";
+            file_put_contents($tmpZip, $browser->getResponseText());
+            Zip::unzip($tmpZip, $tmpFolder);
+            unlink($tmpZip);
         }
         return 0;
     }
