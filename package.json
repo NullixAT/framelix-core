@@ -10,14 +10,5 @@
   },
   "scripts": {
     "start": "node nodejs/start.js"
-  },
-  "framelix": {
-    "module": "Framelix",
-    "release": {
-      "exclude": [
-        "^/build",
-        "^/dev"
-      ]
-    }
   }
 }
