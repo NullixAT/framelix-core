@@ -57,7 +57,7 @@
     "Docker Update"
   ],
   "__framelix_appupdate_tabs_dockerupdate_info__": [
-    "Your docker instance can be updated. Open a command line and run update.sh script in the instance root folder."
+    "Your docker instance can be updated. Open a command line and run {0} script in the instance root folder."
   ],
   "__framelix_appupdate_update_available__": [
     "There is a new app update available which you can install with just a click. Always make a backup before updating."

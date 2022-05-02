@@ -164,8 +164,17 @@ class AppUpdate extends View
                 }
                 break;
             case 'dockerupdate':
-                echo '<div class="framelix-spacer"></div>';
-                echo HtmlUtils::escape(Lang::get('__framelix_appupdate_tabs_dockerupdate_info__'), true);
+                $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
+                if (isset($updateData['docker_release_zip'])) {
+                    echo '<div class="framelix-spacer"></div>';
+                    echo HtmlUtils::escape(
+                        Lang::get(
+                            '__framelix_appupdate_tabs_dockerupdate_info__',
+                            ['<code>' . HtmlUtils::escape('update.sh ' . $updateData['docker_release_zip']) . '</code>']
+                        ),
+                        true
+                    );
+                }
                 break;
             case 'appupdate':
                 echo '<div class="framelix-spacer"></div>';
@@ -223,10 +232,12 @@ class AppUpdate extends View
                 if (Session::get('appupdate-lastresult')) {
                     $tabs->addTab('update-log', '__framelix_appupdate_tabs_update_log__', new self());
                 }
-                $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
                 $tabs->addTab('appupdate', '__framelix_appupdate_tabs_appupdate__', new self());
-                if (isset($_SERVER['FRAMELIX_DOCKER_VERSION']) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version']) {
-                    $tabs->addTab('dockerupdate', '__framelix_appupdate_tabs_dockerupdate__', new self());
+                if (file_exists($updateAppUpdateFile)) {
+                    $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
+                    if (isset($_SERVER['FRAMELIX_DOCKER_VERSION']) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version'] && isset($updateData['docker_release_zip'])) {
+                        $tabs->addTab('dockerupdate', '__framelix_appupdate_tabs_dockerupdate__', new self());
+                    }
                 }
                 $tabs->addTab('backup', '__framelix_appupdate_tabs_backup__', new self());
                 $tabs->addTab('upload', '__framelix_appupdate_tabs_upload__', new self());
