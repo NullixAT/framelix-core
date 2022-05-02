@@ -73,7 +73,7 @@ class LangEditor extends View
             Toast::success('Updated ' . $count . ' files in ' . count(Config::$loadedModules) . " modules");
             $this->getSelfUrl()->redirect();
         }
-        if (Request::getBody('save')) {
+        if (Request::getBody('framelix-form-button-save')) {
             $lang = Request::getBody('lang');
             $data = Request::getBody('values');
             $dataUnmodified = Request::getBody('valuesUnmodified');
@@ -130,7 +130,7 @@ class LangEditor extends View
             <?php
         } elseif ($this->tabId && str_starts_with($this->tabId, "lang-")) {
             $form = $this->getForm(substr($this->tabId, 5));
-            $form->addSubmitButton('save', '__framelix_save__', 'save');
+            $form->addSubmitButton();
             $form->show();
             ?>
             <script>

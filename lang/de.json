@@ -35,6 +35,14 @@
         "Backup",
         "3500b"
     ],
+    "__framelix_appupdate_tabs_dockerupdate__": [
+        "Docker Update",
+        "70cd8"
+    ],
+    "__framelix_appupdate_tabs_dockerupdate_info__": [
+        "Du kannst deine Docker Instanz aktualisieren. \u00d6ffne eine Kommandozeile und f\u00fchre folgende Befehl im Root Verzeichnis aus: {0}",
+        "01249"
+    ],
     "__framelix_appupdate_tabs_update_log__": [
         "Update Log",
         "cbc07"
@@ -69,7 +77,7 @@
     ],
     "__framelix_appupdate_tabs_upload__": [
         "Eine app-release.zip installieren",
-        "18a3d"
+        "523c6"
     ],
     "__framelix_appupdate_update_available__": [
         "Es gibt eine neue App Version welche du mit einem Klick installieren kannst. Mach immer ein Backup vor dem Update.",
