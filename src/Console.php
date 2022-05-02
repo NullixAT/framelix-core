@@ -20,7 +20,6 @@ use function array_values;
 use function copy;
 use function count;
 use function file_exists;
-use function hash_file;
 use function implode;
 use function in_array;
 use function is_array;
@@ -32,7 +31,6 @@ use function mkdir;
 use function readline;
 use function readline_add_history;
 use function realpath;
-use function rename;
 use function sleep;
 use function str_contains;
 use function str_ends_with;
@@ -127,26 +125,24 @@ class Console
         if ($packageJson) {
             try {
                 $currentVersion = $packageJson['version'];
-                if (isset($packageJson['repository']['url'])) {
+                if (($packageJson['repository']['type'] ?? '') === 'git') {
                     $url = $packageJson['repository']['url'];
-                    if (str_starts_with($url, "git+") || str_contains($url, "github.com")) {
+                    if (str_contains($url, "github.com")) {
                         if (str_starts_with($url, "git+")) {
                             $url = substr($url, 4);
                         }
                         if (str_ends_with($url, ".git")) {
-                            $url = substr($url, strpos($url, 'github.com/') + 11, -4);
-                            $browser = Browser::create();
-                            $browser->url = 'https://api.github.com/repos/' . $url . '/releases';
-                            $browser->sendRequest();
-                            $releaseData = $browser->getResponseJson();
-                            foreach ($releaseData as $row) {
-                                if ($row['draft']) {
-                                    continue;
-                                }
-                                if (version_compare($row['tag_name'], $currentVersion, '>')) {
-                                    $currentVersion = $row['tag_name'];
-                                    JsonUtils::writeToFile($updateAppUpdateFile, $row);
-                                }
+                            $url = substr($url, 0, -4);
+                        }
+                        $url = substr($url, strpos($url, 'github.com/') + 11);
+                        $browser = Browser::create();
+                        $browser->url = 'https://api.github.com/repos/' . $url . '/releases';
+                        $browser->sendRequest();
+                        $releaseData = $browser->getResponseJson();
+                        foreach ($releaseData as $row) {
+                            if (version_compare($row['tag_name'], $currentVersion, '>')) {
+                                $currentVersion = $row['tag_name'];
+                                JsonUtils::writeToFile($updateAppUpdateFile, $row);
                             }
                         }
                     }
@@ -179,7 +175,7 @@ class Console
         $updateData = JsonUtils::readFromFile($updateAppUpdateFile);
         if (isset($updateData['assets'])) {
             foreach ($updateData['assets'] as $row) {
-                if ($row['name'] === 'release-' . $updateData['tag_name'] . ".zip") {
+                if ($row['name'] === 'app-release.zip') {
                     $browser = Browser::create();
                     $browser->url = $row['browser_download_url'];
                     $browser->sendRequest();
@@ -255,138 +251,53 @@ class Console
         mkdir($tmpPath);
         Zip::unzip($zipPath, $tmpPath);
 
-        // check if is root package, then unpack package.zip which contains everything
-        if (file_exists($tmpPath . "/package.zip")) {
-            $tmpPathNew = $tmpPath . "-2";
-            FileUtils::deleteDirectory($tmpPathNew);
-            mkdir($tmpPathNew);
-            Zip::unzip($tmpPath . "/package.zip", $tmpPathNew);
-            FileUtils::deleteDirectory($tmpPath);
-            rename($tmpPathNew, $tmpPath);
-        }
-
-        $packageJson = JsonUtils::readFromFile($tmpPath . "/package.json");
-        $moduleName = $packageJson['framelix']['module'] ?? null;
-        $rootPackage = $packageJson['framelix']['isRootPackage'] ?? null;
-        if (!$moduleName && !$rootPackage) {
-            self::error("$zipPath is not a valid archive");
-            return 1;
-        }
-        if ($packageJson['framelix']['isRootPackage'] ?? null) {
-            $rootDirectory = realpath(__DIR__ . "/../../..");
-            self::line("Update App to " . $packageJson['version']);
-        } else {
-            $rootDirectory = FileUtils::getModuleRootPath($moduleName);
-            self::line("Update Module '" . $moduleName . "' to " . $packageJson['version']);
-        }
-        $filelistNew = JsonUtils::readFromFile($tmpPath . "/filelist.json");
-        if (!$filelistNew) {
-            self::error(
-                "$zipPath has no filelist. Build the archive with the build tools that generate the filelist for you."
-            );
-            return 1;
-        }
-        $filelistExist = file_exists($rootDirectory . "/filelist.json") ? JsonUtils::readFromFile(
-            $rootDirectory . "/filelist.json"
-        ) : [];
-        if (!is_dir($rootDirectory)) {
-            mkdir($rootDirectory);
-        }
-        if (!is_array($summaryData)) {
-            $summaryData = [];
-        }
         $keys = [
             'dir_added',
             'file_added',
-            'file_updated',
-            'dir_deleted',
-            'file_deleted',
-            'file_skipped',
-            'dir_skipped',
+            'file_updated'
         ];
         foreach ($keys as $key) {
             if (!isset($summaryData[$key])) {
                 $summaryData[$key] = 0;
             }
         }
-        foreach ($filelistNew as $relativeFile => $hash) {
-            $tmpFilePath = FileUtils::normalizePath(realpath($tmpPath . "/" . $relativeFile));
-            $newPath = $rootDirectory . "/" . $relativeFile;
-            if (is_dir($tmpFilePath)) {
-                if (!is_dir($newPath)) {
-                    mkdir($newPath);
-                    self::line('[ADDED] Directory "' . $newPath . '"');
+
+        $files = FileUtils::getFiles($tmpPath, null, true, true);
+        foreach ($files as $file) {
+            $relativePath = substr($file, strlen($tmpPath));
+            $destPath = realpath(__DIR__ . "/../../..") . $relativePath;
+            if (is_dir($file)) {
+                if (!is_dir($destPath)) {
+                    self::line('[ADDED] Directory "' . $destPath . '"');
                     $summaryData['dir_added']++;
-                } else {
-                    self::line('[SKIPPED] Directory "' . $newPath . '" already exist');
-                    $summaryData['dir_skipped']++;
                 }
-            } elseif (is_file($tmpFilePath)) {
-                if (file_exists($newPath)) {
-                    if (hash_file("crc32", $newPath) === $hash) {
-                        self::line('[SKIPPED] File "' . $newPath . '" exist and is not changed');
-                        $summaryData['file_skipped']++;
-                    } else {
-                        copy($tmpFilePath, $newPath);
-                        self::line('[UPDATED] File "' . $newPath . '"');
-                        $summaryData['file_updated']++;
-                    }
-                } else {
-                    copy($tmpFilePath, $newPath);
-                    self::line('[ADDED] File "' . $newPath . '"');
+            } else {
+                if (!file_exists($destPath)) {
+                    self::line('[ADDED] File "' . $destPath . '"');
                     $summaryData['file_added']++;
+                } else {
+                    self::line('[UPDATED] File "' . $destPath . '"');
+                    $summaryData['file_updated']++;
                 }
-            }
-            unset($filelistExist[$relativeFile]);
-        }
-        foreach ($filelistExist as $fileExist => $hash) {
-            $newPath = $rootDirectory . "/" . $fileExist;
-            if (is_dir($newPath)) {
-                self::line('[REMOVED] Obsolete Directory "' . $newPath . '"');
-                $summaryData['dir_deleted']++;
-            } elseif (is_file($newPath)) {
-                self::line('[REMOVED] Obsolete File "' . $newPath . '"');
-                $summaryData['file_deleted']++;
-                unlink($newPath);
-            }
-        }
-        if ($packageJson['framelix']['isRootPackage'] ?? null) {
-            FileUtils::deleteDirectory("$tmpPath-zips");
-            rename($tmpPath, "$tmpPath-zips");
-            $tmpPath .= "-zips";
-            $moduleZipFiles = FileUtils::getFiles($tmpPath . "/modules", "~\.zip$~");
-            foreach ($moduleZipFiles as $moduleZipFile) {
-                self::overrideParameter('skipDatabaseUpdate', [true]);
-                self::installZipPackage($moduleZipFile, $summaryData);
-                self::overrideParameter('skipDatabaseUpdate', [false]);
+                copy($file, $destPath);
             }
         }
         FileUtils::deleteDirectory($tmpPath);
         $labels = [
             'dir_added' => 'New directories',
-            'dir_skipped' => 'Skipped directories',
-            'dir_deleted' => 'Deleted directories',
             'file_added' => 'New files',
-            'file_updated' => 'Updated files',
-            'file_skipped' => 'Skipped files',
-            'file_deleted' => 'Deleted files'
+            'file_updated' => 'Updated files'
         ];
         foreach ($summaryData as $type => $count) {
             self::line("$count " . $labels[$type]);
         }
-        if (!self::getParameter('skipDatabaseUpdate')) {
-            // update database
-            // wait 3 seconds to prevent opcache in default configs
-            self::line("Update database");
-            sleep(3);
-            $shell = Console::callMethodInSeparateProcess('updateDatabaseSafe');
-            self::line(implode("\n", $shell->output));
-        }
-        if ($packageJson['framelix']['isRootPackage'] ?? null) {
-            self::success("App Update completed");
-        } else {
-            self::success("Module Update completed");
-        }
+        // update database
+        // wait 3 seconds to prevent opcache in default configs
+        self::line("Update database");
+        sleep(3);
+        $shell = Console::callMethodInSeparateProcess('updateDatabaseSafe');
+        self::line(implode("\n", $shell->output));
+        self::success("App Update completed");
         return 0;
     }
 

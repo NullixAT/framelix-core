@@ -73,7 +73,7 @@ class AppUpdate extends View
             Url::getBrowserUrl()->removeParameter('check-for-updates')->redirect();
         }
 
-        if (Request::getPost('update1')) {
+        if (Request::getPost('framelix-form-button-update1')) {
             $files = UploadedFile::createFromSubmitData('file');
             if ($files) {
                 $file = reset($files);
