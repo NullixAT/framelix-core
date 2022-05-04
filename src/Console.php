@@ -13,6 +13,7 @@ use Framelix\Framelix\Utils\Tar;
 use Framelix\Framelix\Utils\Zip;
 use JetBrains\PhpStorm\ExpectedValues;
 use Throwable;
+
 use function array_key_exists;
 use function array_shift;
 use function array_unshift;
@@ -39,6 +40,7 @@ use function strpos;
 use function substr;
 use function unlink;
 use function version_compare;
+
 use const FRAMELIX_MODULE;
 
 /**
@@ -171,6 +173,13 @@ class Console
             return 1;
         }
         if ($cacheData) {
+            // same docker version, unset docker update data
+            if (isset($cacheData['docker_version'])) {
+                if (!isset($_SERVER['FRAMELIX_DOCKER_VERSION']) || $_SERVER['FRAMELIX_DOCKER_VERSION'] === $cacheData['docker_version']) {
+                    unset($cacheData['docker_version']);
+                    unset($cacheData['docker_update_url']);
+                }
+            }
             JsonUtils::writeToFile(AppUpdate::UPDATE_CACHE_FILE, $cacheData);
         }
         return 0;
@@ -193,16 +202,22 @@ class Console
             $browser->url = $updateData['app_release_url'];
             $browser->sendRequest();
 
-            $updateAppUpdateFile = substr(AppUpdate::UPDATE_CACHE_FILE, 0,
-                    -5) . "." . substr($updateData['app_release_url'], -3);
+            $updateAppUpdateFile = substr(
+                    AppUpdate::UPDATE_CACHE_FILE,
+                    0,
+                    -5
+                ) . "." . substr($updateData['app_release_url'], -3);
             file_put_contents(
                 $updateAppUpdateFile,
                 $browser->getResponseText()
             );
             Console::installPackage($updateAppUpdateFile, $summaryData);
             unlink($updateAppUpdateFile);
-            // create a file containing update url for later docker update
-            file_put_contents(AppUpdate::UPDATE_DOCKER_FILE, $updateData['docker_update_url']);
+            unlink(AppUpdate::UPDATE_CACHE_FILE);
+            if (isset($updateData['docker_update_url'])) {
+                // create a file containing update url for later docker update
+                file_put_contents(AppUpdate::UPDATE_DOCKER_FILE, $updateData['docker_update_url']);
+            }
         }
         return 0;
     }
