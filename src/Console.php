@@ -9,10 +9,10 @@ use Framelix\Framelix\Utils\Browser;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\Utils\Shell;
+use Framelix\Framelix\Utils\Tar;
 use Framelix\Framelix\Utils\Zip;
 use JetBrains\PhpStorm\ExpectedValues;
 use Throwable;
-
 use function array_key_exists;
 use function array_shift;
 use function array_unshift;
@@ -39,14 +39,12 @@ use function strpos;
 use function substr;
 use function unlink;
 use function version_compare;
-
 use const FRAMELIX_MODULE;
 
 /**
  * Console runner
  *
  * As this do very complicated tasks ignore coverage for now
- * @todo At least tests for zip package installation should be added soon
  * @codeCoverageIgnore
  */
 class Console
@@ -146,19 +144,18 @@ class Console
                             $cacheData = $row;
                             $currentVersion = $row['tag_name'];
                             foreach ($row['assets'] as $assetRow) {
-                                if ($assetRow['name'] === 'docker-version.txt') {
-                                    $browser = Browser::create();
-                                    $browser->url = $assetRow['browser_download_url'];
-                                    $browser->sendRequest();
-                                    $cacheData['docker_version'] = trim($browser->getResponseText());
+                                if (str_starts_with($assetRow['name'], "docker-version-")) {
+                                    $cacheData['docker_version'] = substr($assetRow['name'], 15);
                                 }
-                                if ($assetRow['name'] === 'docker-update.zip') {
-                                    $cacheData['docker_update_zip'] = $assetRow['browser_download_url'];
-                                    file_put_contents(AppUpdate::UPDATE_DOCKER_FILE, $assetRow['browser_download_url']);
+                                if ($assetRow['name'] === 'docker-update.tar') {
+                                    $cacheData['docker_update_url'] = $assetRow['browser_download_url'];
                                 }
-                                if ($assetRow['name'] === 'app-release.zip') {
-                                    $cacheData['app_release_zip'] = $assetRow['browser_download_url'];
+                                if ($assetRow['name'] === 'app-release.tar') {
+                                    $cacheData['app_release_url'] = $assetRow['browser_download_url'];
                                 }
+                            }
+                            if (!isset($cacheData['docker_version']) || !isset($cacheData['docker_update_url']) || !isset($cacheData['app_release_url'])) {
+                                $cacheData = null;
                             }
                         }
                     }
@@ -191,26 +188,27 @@ class Console
             return 0;
         }
         $updateData = JsonUtils::readFromFile(AppUpdate::UPDATE_CACHE_FILE);
-        if (isset($updateData['app_release_zip'])) {
+        if (isset($updateData['app_release_url'])) {
             $browser = Browser::create();
-            $browser->url = $updateData['app_release_zip'];
+            $browser->url = $updateData['app_release_url'];
             $browser->sendRequest();
 
-            $updateAppUpdateZipFile = substr(AppUpdate::UPDATE_CACHE_FILE, 0, -5) . ".zip";
+            $updateAppUpdateFile = substr(AppUpdate::UPDATE_CACHE_FILE, 0,
+                    -5) . "." . substr($updateData['app_release_url'], -3);
             file_put_contents(
-                $updateAppUpdateZipFile,
+                $updateAppUpdateFile,
                 $browser->getResponseText()
             );
-            Console::installZipPackage($updateAppUpdateZipFile, $summaryData);
-            unlink($updateAppUpdateZipFile);
-            // create a file containing zip url for later docker update
-            file_put_contents(AppUpdate::UPDATE_DOCKER_FILE, $updateData['docker_update_zip']);
+            Console::installPackage($updateAppUpdateFile, $summaryData);
+            unlink($updateAppUpdateFile);
+            // create a file containing update url for later docker update
+            file_put_contents(AppUpdate::UPDATE_DOCKER_FILE, $updateData['docker_update_url']);
         }
         return 0;
     }
 
     /**
-     * Prepare docker update by downloading current docker-update.zip and unpacking it to a tmp directory
+     * Prepare docker update by downloading current docker-update.tar and unpacking it to a tmp directory
      * where the update script can grab it
      * @return int Status Code, 0 = success
      */
@@ -223,10 +221,10 @@ class Console
             $browser->sendRequest();
             FileUtils::deleteDirectory($tmpFolder);
             mkdir($tmpFolder);
-            $tmpZip = $tmpFolder . "/tmp.zip";
-            file_put_contents($tmpZip, $browser->getResponseText());
-            Zip::unzip($tmpZip, $tmpFolder, true);
-            unlink($tmpZip);
+            $tmpPath = $tmpFolder . "/tmp.tar";
+            file_put_contents($tmpPath, $browser->getResponseText());
+            Tar::extractTo($tmpPath, $tmpFolder, true);
+            unlink($tmpPath);
         } else {
             self::error('No update package exist');
             return 1;
@@ -269,28 +267,33 @@ class Console
     }
 
     /**
-     * Update/install module/app updates by given zip file
-     * @param string|null $zipPath If set, this action will update directly without asking for zipfile (is used from web based update)
+     * Update/install module/app updates by given archive file
+     * @param string|null $archiveFile If set, this action will update directly without asking for archive file (is used from web based update)
      * @param array|null $summaryData If set, summary data will be saved into this variable
      * @return int Status Code, 0 = success
      */
-    public static function installZipPackage(?string $zipPath = null, ?array &$summaryData = null): int
+    public static function installPackage(?string $archiveFile = null, ?array &$summaryData = null): int
     {
-        if (!is_string($zipPath)) {
-            $zipPath = self::getParameter('zipPath', 'string');
+        if (!is_string($archiveFile)) {
+            $archiveFile = self::getParameter('acrhiveFile', 'string');
             // try relative path
-            if (!is_file($zipPath)) {
-                $zipPath = __DIR__ . "/" . $zipPath;
+            if (!is_file($archiveFile)) {
+                $archiveFile = __DIR__ . "/" . $archiveFile;
             }
         }
-        if (!file_exists($zipPath)) {
-            self::error("$zipPath does not exist");
+        if (!file_exists($archiveFile)) {
+            self::error("$archiveFile does not exist");
             return 1;
         }
-        $tmpPath = __DIR__ . "/../tmp/unzip";
+        $tmpPath = __DIR__ . "/../tmp/install-package-files";
         FileUtils::deleteDirectory($tmpPath);
         mkdir($tmpPath);
-        Zip::unzip($zipPath, $tmpPath);
+
+        if (str_ends_with($archiveFile, ".tar")) {
+            Tar::extractTo($archiveFile, $tmpPath);
+        } elseif (str_ends_with($archiveFile, ".zip")) {
+            Zip::unzip($archiveFile, $tmpPath);
+        }
 
         $keys = [
             'dir_added',

@@ -78,7 +78,7 @@ class AppUpdate extends View
                 $file = reset($files);
                 $summary = [];
                 Buffer::start();
-                Console::installZipPackage($file->path, $summary);
+                Console::installPackage($file->path, $summary);
                 Session::set('appupdate-lastresult', ['summary' => $summary, 'log' => Buffer::get()]);
             }
             Url::getBrowserUrl()->removeParameter('update1')->setHash("tabs:update-log")->redirect();
