@@ -232,14 +232,14 @@ class AppUpdate extends View
                 if (Session::get('appupdate-lastresult')) {
                     $tabs->addTab('update-log', '__framelix_appupdate_tabs_update_log__', new self());
                 }
-                $tabs->addTab('appupdate', '__framelix_appupdate_tabs_appupdate__', new self());
-                if (file_exists(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE)) {
-                    $updateData = JsonUtils::readFromFile(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE);
-                    if (isset($_SERVER['FRAMELIX_DOCKER_VERSION']) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version'] && file_exists(
-                            \Framelix\Framelix\AppUpdate::UPDATE_DOCKER_FILE
-                        )) {
-                        $tabs->addTab('dockerupdate', '__framelix_appupdate_tabs_dockerupdate__', new self());
-                    }
+                $tabs->addTab(
+                    'appupdate',
+                    file_exists(\Framelix\Framelix\AppUpdate::UPDATE_CACHE_FILE)
+                        ? '__framelix_appupdate_tabs_appupdate_available__' : '__framelix_appupdate_tabs_appupdate__',
+                    new self()
+                );
+                if (file_exists(\Framelix\Framelix\AppUpdate::UPDATE_DOCKER_FILE)) {
+                    $tabs->addTab('dockerupdate', '__framelix_appupdate_tabs_dockerupdate__', new self());
                 }
                 $tabs->addTab('backup', '__framelix_appupdate_tabs_backup__', new self());
                 $tabs->addTab('upload', '__framelix_appupdate_tabs_upload__', new self());
