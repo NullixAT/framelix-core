@@ -16,6 +16,7 @@
 * added noAnimation option to FramelixModal
 * added QuickSearch->forceInitialQuery to set a initial query no matter what the user have stored
 * added fieldGroups to Forms, to be able to group fields under a collapsable
+* added `Tar` class to create and extract tar files
 * refactored language handling for more flexible way to load and add values
 * refactored update and release process
 * removed a few unused user roles
