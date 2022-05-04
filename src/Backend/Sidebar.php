@@ -17,7 +17,6 @@ use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\FileUtils;
-use Framelix\Framelix\Utils\JsonUtils;
 use Framelix\Framelix\View;
 
 use function class_exists;
@@ -241,11 +240,8 @@ abstract class Sidebar
         $this->showHtmlForLinkData();
 
         $badgeText = null;
-        if (file_exists(AppUpdate::UPDATE_CACHE_FILE)) {
-            $updateData = JsonUtils::readFromFile(AppUpdate::UPDATE_CACHE_FILE);
-            if (isset($updateData['tag_name']) || (isset($_SERVER['FRAMELIX_DOCKER_VERSION'])) && isset($updateData['docker_version']) && $_SERVER['FRAMELIX_DOCKER_VERSION'] !== $updateData['docker_version']) {
-                $badgeText = '1';
-            }
+        if (file_exists(AppUpdate::UPDATE_CACHE_FILE) || file_exists(AppUpdate::UPDATE_DOCKER_FILE)) {
+            $badgeText = 1;
         }
         $this->addLink(View\Backend\AppUpdate::class, icon: 'system_update', badgeText: $badgeText);
         $this->showHtmlForLinkData();
