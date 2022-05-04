@@ -241,7 +241,7 @@ abstract class Sidebar
 
         $badgeText = null;
         if (file_exists(AppUpdate::UPDATE_CACHE_FILE) || file_exists(AppUpdate::UPDATE_DOCKER_FILE)) {
-            $badgeText = 1;
+            $badgeText = '1';
         }
         $this->addLink(View\Backend\AppUpdate::class, icon: 'system_update', badgeText: $badgeText);
         $this->showHtmlForLinkData();
