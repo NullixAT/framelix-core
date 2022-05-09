@@ -12,12 +12,19 @@ class FramelixApi {
 
   /**
    * Call a PHP method
-   * @param {string} signedUrl The signed url which contains called method and action
+   * @param {string|{phpMethod:string, action:string}} signedUrlOrMethod The php method to call or signed url which contains called method and action
    * @param {Object=} parameters Parameters to pass by
+   * @param {boolean|Cash=} showProgressBar Show progress bar at top of page or in given container
    * @return {Promise<*>}
    */
-  static async callPhpMethod (signedUrl, parameters) {
-    const request = FramelixRequest.request('post', signedUrl, null, JSON.stringify(parameters))
+  static async callPhpMethod (signedUrlOrMethod, parameters, showProgressBar) {
+    const postData = parameters instanceof FormData ? parameters : JSON.stringify(parameters)
+    let request
+    if (typeof signedUrlOrMethod === 'string') {
+      request = FramelixRequest.request('post', signedUrlOrMethod, null, postData, showProgressBar)
+    } else {
+      request = FramelixRequest.request('post', FramelixConfig.applicationUrl + '/api/callPhpMethod', signedUrlOrMethod, postData, showProgressBar)
+    }
     return new Promise(async function (resolve) {
       if (await request.checkHeaders() === 0) {
         resolve(await request.getJson())
@@ -35,7 +42,7 @@ class FramelixApi {
    */
   static async request (requestType, method, urlParams, data) {
     if (FramelixApi.defaultUrlParams) {
-      urlParams = Object.assign({}, FramelixApi.defaultUrlParams, urlParams)
+      urlParams = Object.assign({}, FramelixApi.defaultUrlParams, urlParams || {})
     }
     const request = FramelixRequest.request(requestType, FramelixConfig.applicationUrl + '/api/' + method, urlParams, data ? JSON.stringify(data) : null)
     return new Promise(async function (resolve) {

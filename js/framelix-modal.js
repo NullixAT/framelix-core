@@ -227,16 +227,16 @@ class FramelixModal {
 
   /**
    * Open a modal that loads content of callPhpMethod into it
-   * @param {string} signedUrl The signed url which contains called method and action
+   * @param {string|{phpMethod:string, action:string}} signedUrlOrMethod The php method to call or signed url which contains called method and action
    * @param {Object=} parameters Parameters to pass by
    * @param {FramelixModalShowOptions=} modalOptions Modal options
    * @return {Promise<FramelixModal>} Resolved when content is loaded
    */
-  static async callPhpMethod (signedUrl, parameters, modalOptions) {
+  static async callPhpMethod (signedUrlOrMethod, parameters, modalOptions) {
     if (!modalOptions) modalOptions = {}
     modalOptions.bodyContent = '<div class="framelix-loading"></div>'
     const modal = FramelixModal.show(modalOptions)
-    modal.apiResponse = FramelixApi.callPhpMethod(signedUrl, parameters)
+    modal.apiResponse = FramelixApi.callPhpMethod(signedUrlOrMethod, parameters)
     modal.bodyContainer.html(await modal.apiResponse)
     return modal
   }

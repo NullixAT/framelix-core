@@ -7,10 +7,11 @@ use Framelix\Framelix\Exception;
 use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\View;
 use ReflectionClass;
-
+use ReflectionUnionType;
 use function class_exists;
 use function count;
 use function explode;
+use function get_class;
 use function method_exists;
 use function preg_replace;
 use function str_contains;
@@ -65,7 +66,7 @@ class JsCall
 
     /**
      * Call given callable method and passing this instance as parameter
-     * Does verify the target function if it accepts a JsCall parameter
+     * Does verify the target function if it accepts a valid JsCall parameter
      * @param string $callableMethod
      * @return mixed The result of the invoked call
      */
@@ -86,15 +87,26 @@ class JsCall
                     $parameters = $method->getParameters();
                     if (count($parameters) === 1) {
                         $parameter = $parameters[0];
-                        if ($parameter->getType()->getName() === JsCall::class) {
-                            $reflectionMethod = $method;
+                        $type = $parameter->getType();
+                        $types = [];
+                        if ($type instanceof ReflectionUnionType) {
+                            $types = $type->getTypes();
+                        } else {
+                            $types[] = $type;
+                        }
+                        foreach ($types as $type) {
+                            if ($type->getName() === get_class($this)) {
+                                $reflectionMethod = $method;
+                                break;
+                            }
                         }
                     }
                 }
             }
         }
         if (!$reflectionMethod) {
-            throw new Exception('Invalid php method', ErrorCode::API_INVALID_METHOD);
+            throw new Exception('Invalid php method - Expect a static method with first parameter must be of ' . get_class($this),
+                ErrorCode::API_INVALID_METHOD);
         }
         Buffer::start();
         $reflectionMethod->invoke(null, $this);

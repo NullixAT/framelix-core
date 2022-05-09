@@ -7,6 +7,7 @@
 * fixed a fiew field layout issues
 * fixed FramelixDom.isInDom() with some elements
 * fixed setStorableValues in case of storableFile properties without a fileUpload
+* fixed FramelixColorUtils.hexToRgb returning object instead of array
 * optimized email settings
 * optimized FramelixModal for different screen sizes
 * views with regex in url now remove parameters that are not used when generating urls
@@ -17,6 +18,7 @@
 * added QuickSearch->forceInitialQuery to set a initial query no matter what the user have stored
 * added fieldGroups to Forms, to be able to group fields under a collapsable
 * added `Tar` class to create and extract tar files
+* added JsCallUnsigned to call handcrafted PHP methods from frontend without a correctly backend signed url
 * refactored language handling for more flexible way to load and add values
 * refactored update and release process
 * removed a few unused user roles

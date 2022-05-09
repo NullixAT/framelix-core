@@ -4,6 +4,7 @@ namespace Framelix\Framelix\View;
 
 use Framelix\Framelix\Framelix;
 use Framelix\Framelix\Network\JsCall;
+use Framelix\Framelix\Network\JsCallUnsigned;
 use Framelix\Framelix\Network\Request;
 use Framelix\Framelix\Network\Response;
 use Framelix\Framelix\Storable\StorableFile;
@@ -76,11 +77,13 @@ class Api extends View
      */
     public function callPhpMethod(): void
     {
-        if (!Url::create()->verify(false)) {
+        $url = Url::create();
+        $signed = $url->verify(false);
+        if ($url->getParameter('__s') && !$signed) {
             http_response_code(404);
             return;
         }
-        $jsCall = new JsCall((string)Request::getGet('action'), Request::getBody());
+        $jsCall = $signed ? new JsCall((string)Request::getGet('action'), Request::getBody()) : new JsCallUnsigned((string)Request::getGet('action'), Request::getBody());
         $this->success($jsCall->call((string)Request::getGet('phpMethod')));
     }
 
