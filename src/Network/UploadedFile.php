@@ -39,6 +39,21 @@ class UploadedFile
     public string $type;
 
     /**
+     * Create an instance from a file on disk
+     * @param string $path
+     * @return self
+     */
+    public static function createFromFile(string $path): self
+    {
+        $instance = new self();
+        $instance->name = basename($path);
+        $instance->path = $path;
+        $instance->size = filesize($path);
+        $instance->type = "other";
+        return $instance;
+    }
+
+    /**
      * Return array of instances for all data in $_FILES
      * @param string $fieldName
      * @return self[]|null
