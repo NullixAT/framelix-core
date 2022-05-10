@@ -31,13 +31,17 @@
         "App Update",
         "0ea14"
     ],
+    "__framelix_appupdate_tabs_appupdate_available__": [
+        "App Update verf\u00fcgbar",
+        "bfb47"
+    ],
     "__framelix_appupdate_tabs_backup__": [
         "Backup",
         "3500b"
     ],
     "__framelix_appupdate_tabs_dockerupdate__": [
         "Docker Update",
-        "70cd8"
+        "43374"
     ],
     "__framelix_appupdate_tabs_dockerupdate_info__": [
         "Deine Docker Instanz kann aktualisiert werden. Bitte installiere zuerst alle App Updates auf dieser Seite, falls noch welche zu installieren sind. Diese Update beinhalten n\u00e4mlich die Updates f\u00fcr Docker auch. Nachdem das erledigt ist, \u00f6ffne eine Kommandozeile und f\u00fchre den Befehl {0} im Hauptordner deiner Docker Instanz aus.",
@@ -77,7 +81,7 @@
     ],
     "__framelix_appupdate_tabs_upload__": [
         "Eine app-release.tar installieren",
-        "523c6"
+        "9f1eb"
     ],
     "__framelix_appupdate_update_available__": [
         "Es gibt eine neue App Version welche du mit einem Klick installieren kannst. Mach immer ein Backup vor dem Update.",
