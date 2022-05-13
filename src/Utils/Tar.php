@@ -64,6 +64,10 @@ class Tar
                 throw new Exception("'$outputDirectory' is not empty", ErrorCode::TAR_EXTRACT_NOTEMPTY);
             }
         }
-        Shell::prepare('tar xf {*}', [$tarPath, $outputDirectory]);
+        $shell = Shell::prepare('tar xf {*}', [$tarPath, "-C", $outputDirectory]);
+        $shell->execute();
+        if ($shell->status) {
+            throw new \Exception("Error extracting tar file: " . Shell::convertCliOutputToHtml($shell->output, false));
+        }
     }
 }
