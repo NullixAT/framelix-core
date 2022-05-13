@@ -25,7 +25,7 @@ class Tar
         array $files
     ): void {
         $dirsCreated = [];
-        $tmpTarDir = __DIR__ . "/../../tmp/tar-extract-" . RandomGenerator::getRandomHtmlId();
+        $tmpTarDir = __DIR__ . "/../../tmp/tar-create-" . RandomGenerator::getRandomHtmlId();
         mkdir($tmpTarDir);
         foreach ($files as $relativeName => $fullPath) {
             $fullPath = FileUtils::normalizePath($fullPath);
