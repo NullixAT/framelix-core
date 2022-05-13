@@ -4,7 +4,6 @@ namespace Framelix\Framelix\Utils;
 
 use Framelix\Framelix\ErrorCode;
 use Framelix\Framelix\Exception;
-use PharData;
 
 use function file_exists;
 use function is_dir;
@@ -25,19 +24,23 @@ class Tar
         string $tarPath,
         array $files
     ): void {
-        $archive = new PharData($tarPath);
         $dirsCreated = [];
+        $tmpTarDir = __DIR__ . "/../../tmp/tar-extract-" . RandomGenerator::getRandomHtmlId();
+        mkdir($tmpTarDir);
         foreach ($files as $relativeName => $fullPath) {
             $fullPath = FileUtils::normalizePath($fullPath);
             if (is_dir($fullPath)) {
                 if (!isset($dirsCreated[$fullPath])) {
                     $dirsCreated[$fullPath] = true;
-                    $archive->addEmptyDir($relativeName);
+                    mkdir($tmpTarDir . "/" . $relativeName);
                 }
             } elseif (file_exists($fullPath)) {
-                $archive->addFile($fullPath, $relativeName);
+                copy($fullPath, $tmpTarDir . "/" . $relativeName);
             }
         }
+        $shell = Shell::prepare('cd {0} && tar cf {1} *', [$tmpTarDir, $tarPath]);
+        $shell->execute();
+        FileUtils::deleteDirectory($tmpTarDir);
     }
 
     /**
