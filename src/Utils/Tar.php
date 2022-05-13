@@ -24,8 +24,12 @@ class Tar
         string $tarPath,
         array $files
     ): void {
+        if (file_exists($tarPath)) {
+            unlink($tarPath);
+        }
         $dirsCreated = [];
         $tmpTarDir = __DIR__ . "/../../tmp/tar-create-" . RandomGenerator::getRandomHtmlId();
+        $tmpTarFilename = basename($tmpTarDir) . ".tar";
         mkdir($tmpTarDir);
         foreach ($files as $relativeName => $fullPath) {
             $fullPath = FileUtils::normalizePath($fullPath);
@@ -38,11 +42,14 @@ class Tar
                 copy($fullPath, $tmpTarDir . "/" . $relativeName);
             }
         }
-        $shell = Shell::prepare('cd {0} && tar cf {1} *', [$tmpTarDir, $tarPath]);
+        $shell = Shell::prepare('cd {0} && tar cf {1} *', [$tmpTarDir, "../" . $tmpTarFilename]);
         $shell->execute();
         if ($shell->status) {
-            throw new \Exception("Error creating tar file: " . Shell::convertCliOutputToHtml($shell->output, false));
+            throw new \Exception(
+                "Error creating tar file: " . Shell::convertCliOutputToHtml($shell->output, false) . " - " . $shell->cmd
+            );
         }
+        rename($tmpTarDir . "/../" . $tmpTarFilename, $tarPath);
         FileUtils::deleteDirectory($tmpTarDir);
     }
 
