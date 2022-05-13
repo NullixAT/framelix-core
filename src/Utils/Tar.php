@@ -40,6 +40,9 @@ class Tar
         }
         $shell = Shell::prepare('cd {0} && tar cf {1} *', [$tmpTarDir, $tarPath]);
         $shell->execute();
+        if ($shell->status) {
+            throw new \Exception("Error creating tar file: " . Shell::convertCliOutputToHtml($shell->output, false));
+        }
         FileUtils::deleteDirectory($tmpTarDir);
     }
 
