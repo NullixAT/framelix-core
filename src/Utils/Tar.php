@@ -31,6 +31,7 @@ class Tar
         $tmpTarDir = __DIR__ . "/../../tmp/tar-create-" . RandomGenerator::getRandomHtmlId();
         $tmpTarFilename = basename($tmpTarDir) . ".tar";
         mkdir($tmpTarDir);
+        $tmpTarDir = realpath($tmpTarDir);
         foreach ($files as $relativeName => $fullPath) {
             $fullPath = FileUtils::normalizePath($fullPath);
             if (is_dir($fullPath)) {
@@ -42,7 +43,19 @@ class Tar
                 copy($fullPath, $tmpTarDir . "/" . $relativeName);
             }
         }
-        $shell = Shell::prepare('cd {0} && tar cf {1} *', [$tmpTarDir, "../" . $tmpTarFilename]);
+        $filelistRelative = [];
+        $filelist = FileUtils::getFiles($tmpTarDir, recursive: true);
+        foreach ($filelist as $filePath) {
+            $relativeName = substr($filePath, strlen($tmpTarDir) + 1);
+            $filelistRelative[] = $relativeName;
+        }
+        $tmpTarFilelist = $tmpTarDir . "/filelist.txt";
+        file_put_contents($tmpTarFilelist, implode("\n", $filelistRelative));
+
+        $shell = Shell::prepare(
+            'cd {0} && tar cf {1} --files-from {2}',
+            [$tmpTarDir, "../" . $tmpTarFilename, $tmpTarFilelist]
+        );
         $shell->execute();
         if ($shell->status) {
             throw new \Exception(
