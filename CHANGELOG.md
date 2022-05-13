@@ -1,3 +1,30 @@
+## [1.8.0 - 2022-05-13]
+* changed hidden form submit names, now prefixed with framelix-form-
+* fixed wrong redirect after login, when a custom redirect is defined
+* fixed backend sidebar overflow when text is too long
+* fixed bug with error handler show dupe errors because of StopException catch
+* fixed field visibility condition for not* conditions
+* fixed number format/parse
+* fixed a fiew field layout issues
+* fixed FramelixDom.isInDom() with some elements
+* fixed setStorableValues in case of storableFile properties without a fileUpload
+* fixed FramelixColorUtils.hexToRgb returning object instead of array
+* optimized email settings
+* optimized FramelixModal for different screen sizes
+* views with regex in url now remove parameters that are not used when generating urls
+* backend pages now by default need a user to be logged in
+* added Lang::concatKeys to easily concat lang keys
+* added setIntegerOnly() to number field
+* added noAnimation option to FramelixModal
+* added QuickSearch->forceInitialQuery to set a initial query no matter what the user have stored
+* added fieldGroups to Forms, to be able to group fields under a collapsable
+* added `Tar` class to create and extract tar files
+* added JsCallUnsigned to call handcrafted PHP methods from frontend without a correctly backend signed url
+* refactored language handling for more flexible way to load and add values
+* refactored update and release process
+* removed a few unused user roles
+* removed release build script in favor of new https://github.com/NullixAT/framelix-release action
+
 ## [1.7.0 - 2022-02-04]
 * design refactoring to be more modern and clear
 
