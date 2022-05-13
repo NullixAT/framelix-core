@@ -4,8 +4,8 @@ namespace Framelix\Framelix\Utils;
 
 use Framelix\Framelix\ErrorCode;
 use Framelix\Framelix\Exception;
-use Phar;
 use PharData;
+
 use function file_exists;
 use function is_dir;
 use function is_file;
@@ -58,13 +58,12 @@ class Tar
         if (!is_dir($outputDirectory)) {
             throw new Exception("'$outputDirectory' is no directory", ErrorCode::TAR_EXTRACT_NODIRECTORY);
         }
-        $archive = new PharData($tarPath);
         if (!$skipNotEmptyDirectory) {
             $files = scandir($outputDirectory);
             if (count($files) > 2) {
                 throw new Exception("'$outputDirectory' is not empty", ErrorCode::TAR_EXTRACT_NOTEMPTY);
             }
         }
-        $archive->extractTo($outputDirectory, overwrite: true);
+        Shell::prepare('tar xf {*}', [$tarPath, $outputDirectory]);
     }
 }
