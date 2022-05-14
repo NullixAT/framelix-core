@@ -1,16 +1,13 @@
-# Framelix Core
-Framelix is a full-stack framework for PHP 8.1 and higher. It's main focus is to provide features for agile development of data management applications. A full featured responsive backend with a big set of features for your daily business in data manegement development.
+# Framelix Full-Stack PHP Framework
+Framelix is a full-stack framework for PHP 8.1 and higher. It's main focus is to provide features for agile development of data management applications. It contains a full-featured responsive backend with a big set of features for your daily business in data manegement development. Make your apps fast and reliable in no time.
 
-## Pre-Alpha
+## How to use
 
-This repository is currently in pre-alpha, in constant changes. I develop the core and tests from ground up. I let you know when there is something new to test it out. I will try to make some projects based on this framework available in early/mid 2022
-
-## Submodule
-This repository is only for developers. There are products and applications that are based on this core, but this repository only contains the core module where you can start developing your own modules from.
+We have (a work in progress) docs page, https://nullixat.github.io/framelix-docs/
 
 ## Main Features
 * Built-In responsive backend - Don't worry about layout, build business logic.
-* Full featured form generator - Data manegement requires forms very often. We focused on that from the beginning.
+* Full-featured form generator - Data manegement requires forms very often. We focused on that from the beginning.
 * Built-In JS/SCSS compiler/bundler - Write newest JS code, automatically compiled to browser standards
 * Model-View-Controller alike development - Kind of MVC but simplified and reduced to what is really required.
 * Nearly 100% auto-completion support in your editor out of the box. We have some neat dev-tricks that you might have not known yet.
