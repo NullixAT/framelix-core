@@ -69,7 +69,6 @@ class Setup extends View
             echo "This application is already setup";
             Framelix::stop();
         }
-        require __DIR__ . "/../../../public/check-requirements.php";
         $this->layout = self::LAYOUT_SMALL_CENTERED;
         $this->showSidebar = false;
         if (Form::isFormSubmitted('setup')) {
