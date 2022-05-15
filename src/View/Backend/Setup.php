@@ -33,7 +33,6 @@ use function sleep;
 use function strtolower;
 use function version_compare;
 
-use const FRAMELIX_MIN_PHP_VERSION;
 use const FRAMELIX_MODULE;
 
 /**
@@ -80,12 +79,9 @@ class Setup extends View
             try {
                 Config::set('shellAliases[php]', Request::getPost('phpExecutable'));
                 $shell = Shell::prepare("php {*}", ["-r", "echo PHP_VERSION;"])->execute();
-                if ($shell->status !== 0 || !($shell->output[0] ?? null) && version_compare(
-                        $shell->output[0],
-                        FRAMELIX_MIN_PHP_VERSION
-                    ) < 0) {
+                if ($shell->status !== 0) {
                     throw new Exception(
-                        "PHP Executable must point to a php command line which has at least version " . FRAMELIX_MIN_PHP_VERSION,
+                        "PHP Executable must point to a php command line",
                         ErrorCode::CORE_MINPHPVERSION
                     );
                 }
@@ -197,22 +193,19 @@ class Setup extends View
 
         // check for default php paths
         $paths = [
+            'php',
             '/usr/bin/php8.1',
             '/usr/bin/php8.2',
             '/usr/sbin/php8.1',
             '/usr/sbin/php8.2',
             'php8.1',
-            'php',
             '/usr/bin/php',
             'c:/php/php.exe'
         ];
         $phpPath = '';
         foreach ($paths as $path) {
             $shell = Shell::prepare("{*}", [$path, "-r", "echo PHP_VERSION;"])->execute();
-            if ($shell->status === 0 && $shell->output[0] && version_compare(
-                    $shell->output[0],
-                    FRAMELIX_MIN_PHP_VERSION
-                ) >= 0) {
+            if ($shell->status === 0) {
                 $phpPath = $path;
             }
         }
