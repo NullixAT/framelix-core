@@ -26,10 +26,12 @@ use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\Utils\Shell;
 use Throwable;
+
 use function file_exists;
 use function http_response_code;
 use function sleep;
 use function strtolower;
+
 use const FRAMELIX_MODULE;
 
 /**

@@ -83,7 +83,9 @@ class Api extends View
             http_response_code(404);
             return;
         }
-        $jsCall = $signed ? new JsCall((string)Request::getGet('action'), Request::getBody()) : new JsCallUnsigned((string)Request::getGet('action'), Request::getBody());
+        $jsCall = $signed ? new JsCall((string)Request::getGet('action'), Request::getBody()) : new JsCallUnsigned(
+            (string)Request::getGet('action'), Request::getBody()
+        );
         $this->success($jsCall->call((string)Request::getGet('phpMethod')));
     }
 

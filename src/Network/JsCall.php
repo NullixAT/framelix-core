@@ -8,6 +8,7 @@ use Framelix\Framelix\Utils\Buffer;
 use Framelix\Framelix\View;
 use ReflectionClass;
 use ReflectionUnionType;
+
 use function class_exists;
 use function count;
 use function explode;
@@ -105,8 +106,10 @@ class JsCall
             }
         }
         if (!$reflectionMethod) {
-            throw new Exception('Invalid php method - Expect a static method with first parameter must be of ' . get_class($this),
-                ErrorCode::API_INVALID_METHOD);
+            throw new Exception(
+                'Invalid php method - Expect a static method with first parameter must be of ' . get_class($this),
+                ErrorCode::API_INVALID_METHOD
+            );
         }
         Buffer::start();
         $reflectionMethod->invoke(null, $this);

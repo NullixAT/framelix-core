@@ -3,6 +3,7 @@
 namespace Framelix\Framelix\Utils;
 
 use Framelix\Framelix\Config;
+
 use function escapeshellarg;
 use function exec;
 use function implode;

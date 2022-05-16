@@ -148,6 +148,7 @@ class ErrorHandler
                 padding: 10px;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.3);
               }
+
               .framelix-erorr-log-title {
                 color: var(--color-error-text, red);
                 font-weight: bold;
@@ -157,6 +158,7 @@ class ErrorHandler
                 margin: 0;
                 font-size: 0.9rem;
               }
+
               .framelix-erorr-log-trace,
               .framelix-erorr-log-json {
                 max-width: 100%;
