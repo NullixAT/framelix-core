@@ -240,6 +240,7 @@ class Console
             file_put_contents($tmpPath, $browser->getResponseText());
             Tar::extractTo($tmpPath, $tmpFolder, true);
             unlink($tmpPath);
+            unlink(AppUpdate::UPDATE_DOCKER_FILE);
         } else {
             self::error('No update package exist');
             return 1;
