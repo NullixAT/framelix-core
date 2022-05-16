@@ -14,7 +14,6 @@ use Framelix\Framelix\Url;
 use Framelix\Framelix\Utils\HtmlUtils;
 use Framelix\Framelix\Utils\Shell;
 use Framelix\Framelix\View\Backend\View;
-
 use function sleep;
 
 /**
@@ -26,7 +25,7 @@ class UpdateDatabase extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin";
+    protected string|bool $accessRole = "dev";
 
     /**
      * On request

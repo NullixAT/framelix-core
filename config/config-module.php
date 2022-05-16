@@ -218,6 +218,7 @@ if (!defined("FRAMELIX_MODULE")) {
         },
         "userRoles": {
             "admin": "__framelix_user_role_admin__",
+            "dev": "__framelix_user_role_dev__",
             "usermanagement": "__framelix_edituser_sidebar_title__"
         },
         "userTokenCookieName": "{module}_user_token",

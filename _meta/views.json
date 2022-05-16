@@ -65,7 +65,7 @@
             "url": "\/backend\/dev\/langeditor"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\Update": {
-            "accessRole": "admin",
+            "accessRole": "dev",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,
@@ -74,7 +74,7 @@
             "url": "\/backend\/dev\/update"
         },
         "Framelix\\Framelix\\View\\Backend\\Dev\\UpdateDatabase": {
-            "accessRole": "admin",
+            "accessRole": "dev",
             "customUrl": null,
             "devModeOnly": false,
             "multilanguage": true,

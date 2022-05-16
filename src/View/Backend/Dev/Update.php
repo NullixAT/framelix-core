@@ -14,7 +14,7 @@ class Update extends View
      * Access role
      * @var string|bool
      */
-    protected string|bool $accessRole = "admin";
+    protected string|bool $accessRole = "dev";
 
     /**
      * On request

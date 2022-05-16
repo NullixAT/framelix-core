@@ -18,14 +18,12 @@ use Framelix\Framelix\Utils\ArrayUtils;
 use Framelix\Framelix\Utils\ClassUtils;
 use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\View;
-
 use function class_exists;
 use function file_exists;
 use function get_class;
 use function in_array;
 use function is_string;
 use function str_starts_with;
-
 use const SORT_ASC;
 
 /**
@@ -256,8 +254,7 @@ abstract class Sidebar
                 View\Backend\UserProfile\Index::class,
                 '<div>' . Lang::get(
                     '__framelix_view_backend_userprofile_index__'
-                ) . '</div><div class="framelix-sidebar-label-nowrap framelix-sidebar-label-small">' . User::get(
-                )->email . '</div>',
+                ) . '</div><div class="framelix-sidebar-label-nowrap framelix-sidebar-label-small">' . User::get()->email . '</div>',
                 "person"
             );
             $this->addLink(View\Backend\Logout::class, "__framelix_logout__", "logout");

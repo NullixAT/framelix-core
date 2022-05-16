@@ -26,13 +26,10 @@ use Framelix\Framelix\Utils\FileUtils;
 use Framelix\Framelix\Utils\RandomGenerator;
 use Framelix\Framelix\Utils\Shell;
 use Throwable;
-
 use function file_exists;
 use function http_response_code;
 use function sleep;
 use function strtolower;
-use function version_compare;
-
 use const FRAMELIX_MODULE;
 
 /**
@@ -118,10 +115,11 @@ class Setup extends View
                 if (!$user) {
                     $user = new User();
                     $user->email = Request::getPost('email');
-                    $user->roles = ['admin'];
+                    $user->roles = ['admin', 'dev'];
                 }
                 $user->flagLocked = false;
                 $user->addRole("admin");
+                $user->addRole("dev");
                 $user->setPassword(Request::getPost('password'));
                 $user->store();
 

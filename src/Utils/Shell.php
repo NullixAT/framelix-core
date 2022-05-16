@@ -3,7 +3,6 @@
 namespace Framelix\Framelix\Utils;
 
 use Framelix\Framelix\Config;
-
 use function escapeshellarg;
 use function exec;
 use function implode;
@@ -151,5 +150,15 @@ class Shell
     {
         exec($this->cmd, $this->output, $this->status);
         return $this;
+    }
+
+    /**
+     * Get output as string
+     * @param bool $nl2br convertNewLines into <br/>
+     * @return string
+     */
+    public function getOutput(bool $nl2br = false): string
+    {
+        return self::convertCliOutputToHtml($this->output, $nl2br);
     }
 }
