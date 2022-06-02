@@ -115,7 +115,7 @@ class FramelixTabs {
   setActiveTab (id) {
     this.activeTab = id
     if (this.tabs[id] === undefined) return
-    FramelixLocalStorage.set('tabs-active-' + location.pathname, this.getFullPath(id))
+    FramelixLocalStorage.set('tabs-active-' + location.pathname + '-' + this.id, this.getFullPath(id))
     const buttons = this.buttonContainer.children()
     const contents = this.contentContainer.children()
     buttons.attr('data-active', '0')
@@ -179,7 +179,7 @@ class FramelixTabs {
     const basePath = this.getFullPath()
     let matchedHashActiveTabId = null
     let matchedStoredActiveTabId = null
-    let storedActiveTabId = FramelixLocalStorage.get('tabs-active-' + location.pathname)
+    let storedActiveTabId = FramelixLocalStorage.get('tabs-active-' + location.pathname + '-' + this.id)
     let hashTabId = location.hash.substr(1)
     this.buttonContainer = $(`<div class="framelix-tab-buttons"></div>`)
     this.contentContainer = $(`<div class="framelix-tab-contents"></div>`)
