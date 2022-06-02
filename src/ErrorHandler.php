@@ -111,7 +111,7 @@ class ErrorHandler
             $id = RandomGenerator::getRandomHtmlId();
             $html = [
                 'title' => htmlentities($logData['message']) . ' in ' . $logData['file'] . '(' . $logData['line'] . ')',
-                'trace' => implode('</pre><pre class="framelix-erorr-log-trace">', $logData['traceSimple'])
+                'trace' => implode('</pre><pre class="framelix-error-log-trace">', $logData['traceSimple'])
             ];
             $root = str_replace("/", DIRECTORY_SEPARATOR, FRAMELIX_APP_ROOT);
             foreach ($html as $key => $value) {
@@ -134,22 +134,22 @@ class ErrorHandler
                 $html[$key] = $value;
             }
             ?>
-            <div id="<?= $id ?>" class="framelix-erorr-log">
+            <div id="<?= $id ?>" class="framelix-error-log">
                 <small><?= DateTime::anyToFormat($logData['time'] ?? null, "d.m.Y H:i:s") ?></small>
-                <pre class="framelix-erorr-log-title"><?= $html['title'] ?></pre>
-                <pre class="framelix-erorr-log-trace"><?= $html['trace'] ?></pre>
-                <pre class="framelix-erorr-log-json"><?= JsonUtils::encode(
+                <pre class="framelix-error-log-title"><?= $html['title'] ?></pre>
+                <pre class="framelix-error-log-trace"><?= $html['trace'] ?></pre>
+                <pre class="framelix-error-log-json"><?= JsonUtils::encode(
                         $logData['additionalData'] ?? null,
                         true
                     ) ?></pre>
             </div>
             <style>
-              .framelix-erorr-log {
+              .framelix-error-log {
                 padding: 10px;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.3);
               }
 
-              .framelix-erorr-log-title {
+              .framelix-error-log-title {
                 color: var(--color-error-text, red);
                 font-weight: bold;
                 max-width: 100%;
@@ -159,8 +159,8 @@ class ErrorHandler
                 font-size: 0.9rem;
               }
 
-              .framelix-erorr-log-trace,
-              .framelix-erorr-log-json {
+              .framelix-error-log-trace,
+              .framelix-error-log-json {
                 max-width: 100%;
                 overflow-x: auto;
                 white-space: pre-wrap;
