@@ -81,7 +81,6 @@ class Response
         self::header('Expires: 0');
         self::header('Cache-Control: must-revalidate');
         self::header('Pragma: public');
-        self::header('Content-Length: ' . ($isFile ? filesize($fileOrData) : strlen($fileOrData)));
         if ($isFile) {
             readfile($fileOrData);
         } else {
