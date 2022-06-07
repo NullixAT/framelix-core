@@ -110,7 +110,7 @@ abstract class View extends LayoutView
                     <?= $sidebarContent ?>
                 </div>
             </nav>
-            <button class="framelix-button framelix-sidebar-toggle framelix-button-trans"
+            <button class="framelix-button framelix-sidebar-toggle"
                     data-icon-left="menu"></button>
             <?php
         }

@@ -43,9 +43,10 @@ h2, h3 {
 
 .framelix-page-title {
   padding-left: 60px;
-  min-height: 50px;
+  min-height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
+  border-bottom: 2px solid var(--color-page-bg-stencil);
 }
 
 hr {
@@ -71,6 +72,8 @@ hr {
   z-index: 2;
   font-size: 24px;
   padding: 33px;
+  background: var(--color-page-bg-stencil-weak);
+  color: var(--color-page-text);
 
   &[data-icon-left]::before {
     font-size: 24px;
@@ -88,6 +91,10 @@ hr {
   transition: .2s;
   box-sizing: border-box;
   z-index: 2;
+
+  html[data-screen-size=s] & {
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 20px;
+  }
 
   &::-webkit-scrollbar {
     width: 0;
@@ -250,6 +257,7 @@ hr {
     display: none;
     font-size: 90%;
     font-weight: normal;
+    opacity: 0.9;
   }
 
   &.framelix-sidebar-collapsable-active {

@@ -1049,6 +1049,7 @@ html[data-touch="1"] .framelix-table > table > tfoot > tr > *[data-flag-icon="1"
   white-space: nowrap;
   border-radius: var(--border-radius);
   min-width: 50px;
+  align-self: flex-end;
 }
 .framelix-table .framelix-table-header-sort-info-number {
   background-color: hsla(var(--color-primary-hue), 50%, 50%, 0.5);
