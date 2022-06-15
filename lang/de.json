@@ -1149,7 +1149,11 @@
     ],
     "__framelix_user_role_admin__": [
         "Administrator - Darf alles",
-        "979c8"
+        "7b7bc"
+    ],
+    "__framelix_user_role_dev__": [
+        "Entwickler",
+        "672ca"
     ],
     "__framelix_view_backend_appupdate__": [
         "App Update und Backup",
