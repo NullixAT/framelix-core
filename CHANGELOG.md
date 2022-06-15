@@ -1,4 +1,15 @@
+## [1.9.0 - 2022-06-15]
+
+* some cleanup and removements of old files
+* added dev role and set dev pages under this dev role
+* added `Shell->getOutput()` for nice formatting
+* fixed modal width on small screens
+* fixed bug docker update will still be marked as available after update
+* fixed remember active tab bug with multiple tabs instances on same page
+* removed content-length header for response download to fix issues with corrupt downloads
+
 ## [1.8.0 - 2022-05-13]
+
 * changed hidden form submit names, now prefixed with framelix-form-
 * fixed wrong redirect after login, when a custom redirect is defined
 * fixed backend sidebar overflow when text is too long
@@ -26,30 +37,41 @@
 * removed release build script in favor of new https://github.com/NullixAT/framelix-release action
 
 ## [1.7.0 - 2022-02-04]
+
 * design refactoring to be more modern and clear
 
 ### :pencil: Changed
-* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
+
+* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when
+  parameter gets removed
 
 ### :heart: Added
+
 * added maxWidth option to framelix modal and use it for alert, confirm and prompt by default
 
 ### :pencil: Changed
-* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
+
+* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when
+  parameter gets removed
 
 ### :wrench: Fixed
+
 * fixed modal window prompt enter key not working
 * fixed url signature check
 
 ## [1.6.2 - 2022-03-08]
 
 ### :heart: Added
+
 * added maxWidth option to framelix modal and use it for alert, confirm and prompt by default
 
 ### :pencil: Changed
-* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when parameter gets removed
+
+* changed url anti cache parameter to be always included instead of only 7 days to fix fallback to old cache when
+  parameter gets removed
 
 ### :wrench: Fixed
+
 * fixed modal window prompt enter key not working
 * fixed url signature check
 
@@ -60,6 +82,7 @@
 ### :heart: Added
 
 ### :pencil: Changed
+
 * changed language key syntax for singular/plurar to must include the number itself for more flexibility
 * changed sass compiler to `sass` instead of deprecated `node-sass`
 * changed default value for `captchaScoreThreshold` in default config
@@ -69,20 +92,23 @@
 ### :x: Removed
 
 ### :wrench: Fixed
+
 * fixed typo in `captchaScoreTreshold`
-* fixed error when app update throws an error during update result in update never work again because tmp folder was not cleared
+* fixed error when app update throws an error during update result in update never work again because tmp folder was not
+  cleared
 
 ### :police_car: Security
-
 
 ## [1.5.0 - 2022-02-09]
 
 ### :heart: Added
+
 * added config key backendDefaultView which will point to default backend view after login
 * added application and module version info to systemcheck page
 * added userpwd and requestBody to browser
 
 ### :pencil: Changed
+
 * upgraded node-sass compiler and babel compiler to newest version
 * updated backend small layout a bit, so it has a blurry bg
 * changed modal window now use semi-transparent page in background instead of blur
@@ -90,9 +116,11 @@
 ### :construction: Deprecated
 
 ### :x: Removed
+
 * module config key setupDoneRedirect and replaced it with "backendDefaultView"
 
 ### :wrench: Fixed
+
 * fixed typo in Config function
 * fixed modal window blur filter will result in repaint a "broken" sidebar
 

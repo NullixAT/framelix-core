@@ -1,7 +1,7 @@
 {
   "name": "framelix",
   "description": "A full featured PHP framework with built-in backend and data management capabilities.",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@babel/plugin-proposal-class-properties": "^7.16.7",
