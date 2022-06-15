@@ -47,7 +47,7 @@ class ArrayUtils
     /**
      * Sort given array by using given keys as value to sort by
      * @param array|null $array
-     * @param string[]|string|null $keys If null, than use array value. If given, sort by given keys values, can also be object methods, see self::getValue() for all possible options
+     * @param string[]|string|null $keys If null, then use array value. If given, sort by given keys values, can also be object methods, see self::getValue() for all possible options
      * @param int[]|int[][] $sortOptions One sort option for each key in $keys. For numeric DESC use [SORT_DESC, SORT_NUMERIC]
      * @param mixed $keyParameters If key is expected to be a method, pass the given parameters, see self::getValue() for all possible options
      */
