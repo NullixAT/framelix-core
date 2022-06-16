@@ -19,14 +19,9 @@ use function in_array;
 use function json_encode;
 use function ksort;
 use function php_sapi_name;
-use function preg_match_all;
-use function preg_quote;
-use function str_replace;
 use function syslog;
 use function time;
-use function urlencode;
 
-use const DIRECTORY_SEPARATOR;
 use const E_COMPILE_ERROR;
 use const E_COMPILE_WARNING;
 use const E_CORE_ERROR;
@@ -113,26 +108,6 @@ class ErrorHandler
                 'title' => htmlentities($logData['message']) . ' in ' . $logData['file'] . '(' . $logData['line'] . ')',
                 'trace' => implode('</pre><pre class="framelix-error-log-trace">', $logData['traceSimple'])
             ];
-            $root = str_replace("/", DIRECTORY_SEPARATOR, FRAMELIX_APP_ROOT);
-            foreach ($html as $key => $value) {
-                preg_match_all(
-                    "~(" . preg_quote($root, "~") . "[^\s]+)([(:]| on line )([0-9]+)\)*~i",
-                    $value,
-                    $matches
-                );
-                if ($matches[0] ?? null) {
-                    foreach ($matches[0] as $matchKey => $match) {
-                        $value = str_replace(
-                            $match,
-                            '<a href="phpstorm://open?' . urlencode(
-                                "file=" . $matches[1][$matchKey] . '&line=' . $matches[3][$matchKey]
-                            ) . '">' . $match . '</a>',
-                            $value
-                        );
-                    }
-                }
-                $html[$key] = $value;
-            }
             ?>
             <div id="<?= $id ?>" class="framelix-error-log">
                 <small><?= DateTime::anyToFormat($logData['time'] ?? null, "d.m.Y H:i:s") ?></small>
